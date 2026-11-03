@@ -53,7 +53,7 @@ public class MinecraftMixin {
                     return;
                 }
                 Direction direction = blockhitresult.getDirection();
-                if (LittleTilesClient.INTERACTION_HANDLER.continueDestroyBlock(result.level.asLevel(), blockpos, direction) && inputEvent.shouldSwingHand()) {
+                if (LittleTilesClient.INTERACTION_HANDLER != null && LittleTilesClient.INTERACTION_HANDLER.continueDestroyBlock(result.level.asLevel(), blockpos, direction) && inputEvent.shouldSwingHand()) {
                     mc.player.swing(InteractionHand.MAIN_HAND);
                 }
             }
@@ -63,7 +63,7 @@ public class MinecraftMixin {
     
     @Inject(method = "continueAttack", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;stopDestroyBlock()V"), require = 1)
     private void continueAttackStop(CallbackInfo info) {
-        LittleTilesClient.INTERACTION_HANDLER.stopDestroyBlock();
+        if (LittleTilesClient.INTERACTION_HANDLER != null) LittleTilesClient.INTERACTION_HANDLER.stopDestroyBlock();
     }
     
     @Inject(method = "startAttack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/HitResult;getType()Lnet/minecraft/world/phys/HitResult$Type;"), require = 1,
@@ -72,14 +72,14 @@ public class MinecraftMixin {
         Minecraft mc = asMinecraft();
         if (mc.hitResult instanceof LittleHitResult hit) {
             if (hit.isEntity()) {
-                LittleTilesClient.INTERACTION_HANDLER.attack(hit.level.asLevel(), mc.player, hit.asEntityHit().getEntity());
+                if (LittleTilesClient.INTERACTION_HANDLER != null) LittleTilesClient.INTERACTION_HANDLER.attack(hit.level.asLevel(), mc.player, hit.asEntityHit().getEntity());
                 info.setReturnValue(false);
             }
             
             BlockHitResult blockhitresult = hit.asBlockHit();
             BlockPos blockpos = blockhitresult.getBlockPos();
             if (!hit.level.isEmptyBlock(blockpos)) {
-                LittleTilesClient.INTERACTION_HANDLER.startDestroyBlock(hit.level.asLevel(), blockpos, blockhitresult.getDirection());
+                if (LittleTilesClient.INTERACTION_HANDLER != null) LittleTilesClient.INTERACTION_HANDLER.startDestroyBlock(hit.level.asLevel(), blockpos, blockhitresult.getDirection());
                 info.setReturnValue(hit.level.getBlockState(blockpos).isAir());
             }
             
@@ -88,7 +88,7 @@ public class MinecraftMixin {
     
     @WrapOperation(method = "startUseItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;isDestroying()Z"), require = 1)
     private boolean isDestroying(MultiPlayerGameMode mode, Operation<Boolean> original) {
-        return original.call(mode) || LittleTilesClient.INTERACTION_HANDLER.isDestroying();
+        return original.call(mode) || (LittleTilesClient.INTERACTION_HANDLER != null && LittleTilesClient.INTERACTION_HANDLER.isDestroying());
     }
     
     // TODO: port Forge's startUseItem local-capture injection

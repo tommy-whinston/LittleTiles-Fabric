@@ -10,7 +10,8 @@ base; this branch contains the imported upstream source.
 - **Compile status: `compileJava` and `build` succeed with 0 errors.**
 - **Dedicated server: starts successfully and reaches `Done (17.274s)!`**
 - **Client: launches, initializes LWJGL/OpenAL, reloads resources and builds the texture
-  atlases.** The process stays alive at this point; a world/gameplay test has not been done yet.
+  atlases.** It also **connects to a dedicated server and enters the world**; no crash was
+  observed during the first 20 seconds in the world.
 
 Known runtime issues and temporary shortcuts:
 
@@ -25,7 +26,7 @@ Known runtime issues and temporary shortcuts:
 - Some client-only behavior was removed from common classes so the dedicated server can load
   them (tool handler, client interaction paths, client-only particles).
 
-The next stage is entering a world and testing tile placement/rendering.
+The next stage is placing a tile block in the world and checking its rendering.
 
 ## Русский
 
@@ -38,7 +39,8 @@ The next stage is entering a world and testing tile placement/rendering.
 - **Статус компиляции: `compileJava` и `build` проходят без ошибок.**
 - **Выделенный сервер: успешно запускается и доходит до `Done (17.274s)!`**
 - **Клиент: запускается, инициализирует LWJGL/OpenAL, перезагружает ресурсы и собирает
-  текстурные атласы.** Процесс остаётся живым; тест входа в мир и геймплея ещё не проводился.
+  текстурные атласы.** Он также **подключается к выделенному серверу и входит в мир**; краша
+  за первые 20 секунд в мире не было.
 
 Известные проблемы и временные упрощения:
 
@@ -55,4 +57,4 @@ The next stage is entering a world and testing tile placement/rendering.
 - Из общих классов убрано часть клиентского поведения, чтобы выделенный сервер мог их
   загрузить (tool handler, клиентские пути взаимодействия, клиентские частицы).
 
-Следующий этап — вход в мир и проверка установки/рендера тайлов.
+Следующий этап — поставить блок тайлов в мире и проверить его рендер.

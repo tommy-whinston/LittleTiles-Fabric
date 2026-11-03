@@ -43,21 +43,21 @@ public abstract class RebuildTaskMixin implements RebuildTaskExtender {
     public ChunkLayerMap<BufferCollection> caches;
     
     @Shadow(aliases = { "this$0" })
-    public RenderChunk this$1;
+    public RenderChunk field_20839;
     
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/block/ModelBlockRenderer;enableCaching()V"),
             method = "compile(FFFLnet/minecraft/client/renderer/ChunkBufferBuilderPack;)Lnet/minecraft/client/renderer/chunk/ChunkRenderDispatcher$RenderChunk$RebuildTask$CompileResults;",
             require = 1)
     private void compileStart(float f1, float f2, float f3, ChunkBufferBuilderPack pack, CallbackInfoReturnable info) {
         this.pack = pack;
-        LittleRenderPipelineType.startCompile((RenderChunkExtender) this$1, this);
+        LittleRenderPipelineType.startCompile((RenderChunkExtender) field_20839, this);
     }
     
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/block/ModelBlockRenderer;clearCache()V"),
             method = "compile(FFFLnet/minecraft/client/renderer/ChunkBufferBuilderPack;)Lnet/minecraft/client/renderer/chunk/ChunkRenderDispatcher$RenderChunk$RebuildTask$CompileResults;",
             require = 1)
     private void compile(CallbackInfoReturnable info) {
-        LittleRenderPipelineType.endCompile((RenderChunkExtender) this$1, this);
+        LittleRenderPipelineType.endCompile((RenderChunkExtender) field_20839, this);
         
         this.pack = null;
         this.renderTypes = null;
@@ -76,17 +76,17 @@ public abstract class RebuildTaskMixin implements RebuildTaskExtender {
             require = 1)
     private void handleBlockEntity(@Coerce Object object, BlockEntity block, CallbackInfo info) {
         if (block instanceof BETiles tiles)
-            LittleRenderPipelineType.compile((RenderChunkExtender) this$1, tiles, this);
+            LittleRenderPipelineType.compile((RenderChunkExtender) field_20839, tiles, this);
     }
     
     @Inject(method = "doTask(Lnet/minecraft/client/renderer/ChunkBufferBuilderPack;)Ljava/util/concurrent/CompletableFuture;", at = @At("RETURN"), cancellable = true, require = 1)
     private void injected(CallbackInfoReturnable<CompletableFuture> cir) {
         cir.setReturnValue(cir.getReturnValue().whenComplete((result, exception) -> {
             if (((Enum) result).ordinal() == 0) { // Successful
-                ((RenderChunkExtender) this$1).prepareUpload();
+                ((RenderChunkExtender) field_20839).prepareUpload();
                 if (caches != null)
                     for (Tuple<RenderType, BufferCollection> tuple : caches.tuples())
-                        ((RenderChunkExtender) this$1).uploaded(tuple.key, tuple.value);
+                        ((RenderChunkExtender) field_20839).uploaded(tuple.key, tuple.value);
             }
             this.caches = null;
         }));
@@ -96,7 +96,7 @@ public abstract class RebuildTaskMixin implements RebuildTaskExtender {
     public BufferBuilder builder(RenderType layer) {
         BufferBuilder builder = pack.builder(layer);
         if (renderTypes.add(layer))
-            ((RenderChunkExtender) this$1).begin(builder);
+            ((RenderChunkExtender) field_20839).begin(builder);
         return builder;
     }
     

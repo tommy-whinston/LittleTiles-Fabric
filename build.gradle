@@ -53,6 +53,9 @@ loom {
     runs {
         client {
             programArgs '--username', 'Dev'
+            if (project.hasProperty('quickPlay')) {
+                programArgs '--quickPlayMultiplayer', project.property('quickPlay')
+            }
         }
     }
 }

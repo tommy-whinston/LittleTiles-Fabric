@@ -15,10 +15,10 @@ source (618 main Java files, data, assets, mixins) and **compiles and builds wit
 The default `1.20.1` branch remains the buildable base.
 
 The Fabric entrypoints are adapted, the **dedicated server starts successfully** (`Done`) and the
-**client launches, initializes LWJGL/OpenAL and reloads resources**. Entering a world and testing
-gameplay are the next stage. Several client/render pieces are still temporary stubs or no-ops
-(`ModelData`, `QuadLighter`, CreativeCore model classes, buffer uploads, capabilities and some
-interaction paths), so the mod is **not playable yet**. Sodium, The One Probe,
+**client launches, connects to a server and enters the world**. Placing a tile block and checking
+its rendering are the next stage. Several client/render pieces are still temporary stubs or
+no-ops (`ModelData`, `QuadLighter`, CreativeCore model classes, buffer uploads, capabilities and
+some interaction paths), so the mod is **not fully playable yet**. Sodium, The One Probe,
 Chisel/ChiselsAndBits and Oculus are disabled for the first compile pass.
 
 See [PORTING.md](PORTING.md) and the staged [PLAN.md](PLAN.md).
@@ -94,11 +94,11 @@ with the original source and, later, so addons can be recompiled against it.
 ошибок**. Основная ветка `1.20.1` остаётся рабочей базой.
 
 Точки входа Fabric адаптированы, **выделенный сервер успешно запускается** (`Done`), а
-**клиент запускается, инициализирует LWJGL/OpenAL и перезагружает ресурсы**. Следующий этап —
-вход в мир и проверка геймплея. Часть клиента и рендера пока являются временными заглушками или
+**клиент запускается, подключается к серверу и входит в мир**. Следующий этап — поставить блок
+тайлов и проверить его рендер. Часть клиента и рендера пока являются временными заглушками или
 no-op (`ModelData`, `QuadLighter`, модельные классы CreativeCore, загрузка буферов, capabilities
-и некоторые пути взаимодействия), поэтому мод **ещё не играбельный**. Sodium, The One Probe,
-Chisel/ChiselsAndBits и Oculus отключены для первого прохода компиляции.
+и некоторые пути взаимодействия), поэтому мод **ещё не полностью играбельный**. Sodium, The One
+Probe, Chisel/ChiselsAndBits и Oculus отключены для первого прохода компиляции.
 
 Подробнее — в [PORTING.md](PORTING.md) и поэтапном [PLAN.md](PLAN.md).
 
