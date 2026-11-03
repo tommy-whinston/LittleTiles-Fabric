@@ -10,20 +10,17 @@ Unofficial Fabric 1.20.1 port of [LittleTiles](https://github.com/CreativeMD/Lit
 
 ### Status
 
-The project is being ported in stages. The current stage is the **port foundation**:
+The project is being ported in stages. The `port` branch now contains the imported upstream
+source (618 main Java files, data, assets, mixins) and **compiles and builds with 0 errors**.
+The default `1.20.1` branch remains the buildable base.
 
-- Fabric 1.20.1 toolchain and entrypoints.
-- CreativeCore Fabric dependency.
-- **Mojang official mappings** (the upstream LittleTiles 1.20 source uses them, so the port can
-  be compared with the original line by line).
-- A small Forge compatibility layer under `src/main/java/net/minecraftforge` plus a Fabric
-  replacement for CreativeCore's `BlockEntityCreative`. It is compile-only for now and is not
-  used by the running mod yet.
+The Fabric entrypoints are adapted and the **dedicated server starts successfully** (`Done`).
+Client launch and rendering are the next stage. Several client/render pieces are still temporary
+stubs or no-ops (`ModelData`, `QuadLighter`, CreativeCore model classes, buffer uploads,
+capabilities and some interaction paths), so the mod is **not playable yet**. Sodium, The One
+Probe, Chisel/ChiselsAndBits and Oculus are disabled for the first compile pass.
 
-The upstream 656-file / ~77k-line source is **not imported yet**. The next stage is to copy the
-`1.20` source in and fix it module by module. See [PORTING.md](PORTING.md).
-
-> This is an early **base skeleton**, not a playable port yet.
+See [PORTING.md](PORTING.md) and the staged [PLAN.md](PLAN.md).
 
 ### Requirements
 
@@ -91,18 +88,17 @@ with the original source and, later, so addons can be recompiled against it.
 
 ### Статус
 
-Проект переносится поэтапно. Сейчас готов **фундамент порта**:
+Проект переносится поэтапно. В ветке `port` теперь лежат импортированные исходники оригинала
+(618 основных Java-файлов, данные, ресурсы, миксины), и она **компилируется и собирается без
+ошибок**. Основная ветка `1.20.1` остаётся рабочей базой.
 
-- Сборочная система Fabric 1.20.1 и точки входа.
-- Зависимость от CreativeCore Fabric.
-- **Официальные маппинги Mojang** — исходники LittleTiles 1.20 написаны под них, поэтому порт
-  можно сравнивать с оригиналом строка в строку.
-- Небольшой слой совместимости с Forge в `src/main/java/net/minecraftforge` и Fabric-замена
-  `BlockEntityCreative` из CreativeCore. Пока он нужен только для компиляции и в запущенном
-  моде не используется.
+Точки входа Fabric адаптированы, и **выделенный сервер успешно запускается** (`Done`).
+Следующий этап — запуск клиента и рендер. Часть клиента и рендера пока являются временными
+заглушками или no-op (`ModelData`, `QuadLighter`, модельные классы CreativeCore, загрузка
+буферов, capabilities и некоторые пути взаимодействия), поэтому мод **ещё не играбельный**.
+Sodium, The One Probe, Chisel/ChiselsAndBits и Oculus отключены для первого прохода компиляции.
 
-Исходники оригинала (656 файлов, ~77 тыс. строк) **ещё не импортированы**. Следующий этап —
-перенести код из ветки `1.20` и разбирать его по модулям. Подробнее — в [PORTING.md](PORTING.md).
+Подробнее — в [PORTING.md](PORTING.md) и поэтапном [PLAN.md](PLAN.md).
 
 > Это ранний **каркас**, а не играбельный порт.
 

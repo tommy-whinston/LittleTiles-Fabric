@@ -20,7 +20,7 @@ Status markers: `[x]` done, `[~]` in progress, `[ ]` planned.
 
 **Done when:** the upstream tree is in the repository. The `port` branch does not compile yet.
 
-### Stage 2 — Compile the common core — `[~]` in progress
+### Stage 2 — Compile the common core — `[x]` done (with stubs)
 
 Scope: registries, blocks/items, block entities, tile data, structures, networking, chunk data.
 
@@ -33,7 +33,7 @@ Scope: registries, blocks/items, block entities, tile data, structures, networki
 **Done when:** common/server code compiles and `runServer` loads the registries without crashing.
 This is the largest stage.
 
-### Stage 3 — Compile the client — `[ ]` planned
+### Stage 3 — Compile the client — `[x]` done (with stubs)
 
 - Replace Forge client events (`RenderLevelStageEvent`, `RenderGuiEvent`, `ModelEvent`, key
   mappings, overlays) with Fabric callbacks/mixins.
@@ -43,7 +43,7 @@ This is the largest stage.
 
 **Done when:** `compileJava` finishes with zero errors.
 
-### Stage 4 — First real launch — `[ ]` planned
+### Stage 4 — First real launch — `[~]` in progress
 
 - Adapt the upstream `LittleTiles` class to Fabric `ModInitializer` / `ClientModInitializer`.
 - Register blocks, items, block entities and the creative tab.
@@ -113,7 +113,7 @@ milestone.
 
 **Готово, когда:** дерево исходников лежит в репозитории. Ветка `port` пока не собирается.
 
-### Этап 2 — Компиляция общего ядра — `[~]` в работе
+### Этап 2 — Компиляция общего ядра — `[x]` готово (с заглушками)
 
 Область: реестры, блоки/предметы, block entities, данные тайлов, структуры, сеть, данные чанков.
 
@@ -127,7 +127,7 @@ milestone.
 **Готово, когда:** общий и серверный код компилируется, а `runServer` загружает реестры без
 краша. Это самый большой этап.
 
-### Этап 3 — Компиляция клиента — `[ ]` запланировано
+### Этап 3 — Компиляция клиента — `[x]` готово (с заглушками)
 
 - Заменить клиентские события Forge (`RenderLevelStageEvent`, `RenderGuiEvent`, `ModelEvent`,
   кейбинды, оверлеи) на колбэки/миксины Fabric.
@@ -137,7 +137,7 @@ milestone.
 
 **Готово, когда:** `compileJava` завершается без ошибок.
 
-### Этап 4 — Первый настоящий запуск — `[ ]` запланировано
+### Этап 4 — Первый настоящий запуск — `[~]` в работе
 
 - Адаптировать класс `LittleTiles` из оригинала под Fabric `ModInitializer` /
   `ClientModInitializer`.
