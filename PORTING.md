@@ -14,7 +14,8 @@ This repository is a Fabric 1.20.1 port of the upstream LittleTiles `1.20` branc
 
 The Fabric project compiles against 1.20.1, starts on a dedicated server, declares CreativeCore
 and contains the entrypoints for the actual port. The upstream LittleTiles source is imported on
-the `port` branch and currently compiles with 0 errors; runtime launch is the next stage.
+the `port` branch and currently compiles with 0 errors. The dedicated server reaches `Done`;
+client launch and rendering are the next stage.
 
 The project uses **Mojang official mappings** because the upstream `1.20` branch is written
 against them. This avoids remapping the whole 77k-line source by hand and lets the port be
@@ -95,7 +96,8 @@ before porting LittleTiles' client code.
 
 Проект собирается под Fabric 1.20.1, запускается на выделенном сервере, подключает CreativeCore
 и содержит точки входа для будущего порта. Исходники LittleTiles импортированы в ветку `port`
-и сейчас компилируются без ошибок; следующий этап — запуск в рантайме.
+и сейчас компилируются без ошибок. Выделенный сервер доходит до `Done`; следующий этап —
+запуск клиента и рендер.
 
 Проект использует **официальные маппинги Mojang**, потому что оригинальная ветка `1.20` написана
 под них. Это избавляет от ручного переименования 77 тысяч строк и позволяет сравнивать порт
