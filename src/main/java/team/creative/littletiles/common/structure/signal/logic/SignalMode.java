@@ -1,0 +1,747 @@
+package team.creative.littletiles.common.structure.signal.logic;
+
+import java.util.List;
+
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.IntArrayTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import team.creative.creativecore.common.gui.GuiParent;
+import team.creative.creativecore.common.gui.controls.simple.GuiLabel;
+import team.creative.creativecore.common.gui.controls.simple.GuiTextfield;
+import team.creative.littletiles.LittleTiles;
+import team.creative.littletiles.common.structure.LittleStructure;
+import team.creative.littletiles.common.structure.exception.CorruptedConnectionException;
+import team.creative.littletiles.common.structure.exception.NotYetConnectedException;
+import team.creative.littletiles.common.structure.signal.SignalState;
+import team.creative.littletiles.common.structure.signal.component.ISignalComponent;
+import team.creative.littletiles.common.structure.signal.output.SignalOutputHandler;
+import team.creative.littletiles.common.structure.signal.schedule.SignalScheduleTicket;
+
+public enum SignalMode {
+    
+    EQUAL("signal.mode.equal") {
+        public SignalOutputHandler create(ISignalComponent component, int delay, CompoundTag nbt, boolean hasWorld) {
+            SignalOutputHandler handler = new SignalOutputHandler(component, delay, nbt) {
+                
+                public SignalMode getMode() {
+                    return SignalMode.EQUAL;
+                }
+                
+                public void queue(SignalState state) {
+                    LittleTiles.TICKERS.schedule(this, state, delay);
+                }
+                
+                public void write(boolean preview, CompoundTag nbt) {
+                    if (preview)
+                        return;
+                    List<SignalScheduleTicket> tickets = LittleTiles.TICKERS.findTickets(component, this);
+                    ListTag list = new ListTag();
+                    for (int i = 0; i < tickets.size(); i++) {
+                        SignalScheduleTicket ticket = tickets.get(i);
+                        list.add(new IntArrayTag(new int[] { ticket.getDelay(), ticket.getState().number() }));
+                    }
+                    if (!list.isEmpty())
+                        nbt.put("tickets", list);
+                }
+                
+            };
+            if (hasWorld) {
+                ListTag list = nbt.getList("tickets", 11);
+                for (int i = 0; i < list.size(); i++) {
+                    int[] array = list.getIntArray(i);
+                    if (array.length == 2) {
+                        try {
+                            SignalState state = SignalState.create(component.getBandwidth()).load(array[1]);
+                            LittleTiles.TICKERS.schedule(handler, state, array[0]);
+                        } catch (CorruptedConnectionException | NotYetConnectedException e) {}
+                        
+                    }
+                }
+            }
+            return handler;
+        }
+        
+        @OnlyIn(Dist.CLIENT)
+        public GuiSignalModeConfiguration createConfiguration(SignalOutputHandler handler) {
+            return new GuiSignalModeConfigurationEqual(handler);
+        }
+        
+        @OnlyIn(Dist.CLIENT)
+        public void createControls(GuiParent parent, GuiSignalModeConfiguration configuration) {}
+        
+        @OnlyIn(Dist.CLIENT)
+        public GuiSignalModeConfiguration parseControls(GuiParent parent, int delay) {
+            return new GuiSignalModeConfigurationEqual(delay);
+        }
+        
+    },
+    TOGGLE("signal.mode.toggle") {
+        
+        public SignalOutputHandler create(ISignalComponent component, int delay, CompoundTag nbt, boolean hasWorld) {
+            SignalState before;
+            SignalState result;
+            int bandwidth = nbt.getInt("bandwidth");
+            if (bandwidth > 0) {
+                before = SignalState.create(bandwidth);
+                result = SignalState.create(bandwidth);
+                before = before.load(nbt.get("before"));
+                result = result.load(nbt.get("result"));
+            } else {
+                before = null;
+                result = null;
+            }
+            
+            SignalOutputHandler handler = new SignalOutputHandlerToggle(component, delay, nbt, before, result);
+            if (hasWorld) {
+                ListTag list = nbt.getList("tickets", 11);
+                for (int i = 0; i < list.size(); i++) {
+                    int[] array = list.getIntArray(i);
+                    if (array.length == 2) {
+                        try {
+                            SignalState state = SignalState.create(component.getBandwidth()).load(array[1]);
+                            LittleTiles.TICKERS.schedule(handler, state, array[0]);
+                        } catch (CorruptedConnectionException | NotYetConnectedException e) {}
+                    }
+                }
+            }
+            return handler;
+        }
+        
+        @OnlyIn(Dist.CLIENT)
+        public GuiSignalModeConfiguration createConfiguration(SignalOutputHandler handler) {
+            return new GuiSignalModeConfigurationToggle(handler);
+        }
+        
+        @OnlyIn(Dist.CLIENT)
+        public void createControls(GuiParent parent, GuiSignalModeConfiguration configuration) {}
+        
+        @OnlyIn(Dist.CLIENT)
+        public GuiSignalModeConfiguration parseControls(GuiParent parent, int delay) {
+            return new GuiSignalModeConfigurationToggle(delay);
+        }
+        
+    },
+    PULSE("signal.mode.pulse") {
+        
+        public SignalOutputHandler create(ISignalComponent component, int delay, CompoundTag nbt, boolean hasWorld) {
+            SignalOutputHandler condition = new SignalOutputHandlerPulse(component, delay, nbt);
+            if (hasWorld) {
+                if (nbt.contains("start")) {
+                    LittleTiles.TICKERS.schedule(condition, SignalState.TRUE, nbt.getInt("start"));
+                    LittleTiles.TICKERS.schedule(condition, SignalState.FALSE, nbt.getInt("end"));
+                } else if (nbt.contains("end"))
+                    LittleTiles.TICKERS.schedule(condition, SignalState.FALSE, nbt.getInt("end"));
+            }
+            return condition;
+        }
+        
+        @OnlyIn(Dist.CLIENT)
+        public GuiSignalModeConfiguration createConfiguration(SignalOutputHandler handler) {
+            return new GuiSignalModeConfigurationPulse(handler);
+        }
+        
+        @OnlyIn(Dist.CLIENT)
+        public void createControls(GuiParent parent, GuiSignalModeConfiguration configuration) {
+            parent.add(new GuiLabel("length:").setTitle(Component.translatable("gui.signal.length").append(":")));
+            parent.add(new GuiTextfield("length", "" + (configuration instanceof GuiSignalModeConfigurationPulse ? ((GuiSignalModeConfigurationPulse) configuration).length : 10))
+                    .setNumbersOnly());
+        }
+        
+        @OnlyIn(Dist.CLIENT)
+        public GuiSignalModeConfiguration parseControls(GuiParent parent, int delay) {
+            GuiTextfield length = (GuiTextfield) parent.get("length");
+            return new GuiSignalModeConfigurationPulse(delay, Math.max(1, length.parseInteger()));
+        }
+    },
+    THRESHOLD("signal.mode.threshold") {
+        
+        public SignalOutputHandler create(ISignalComponent component, int delay, CompoundTag nbt, boolean hasWorld) {
+            SignalOutputHandlerStoreOne handler = new SignalOutputHandlerStoreOne(component, delay, nbt) {
+                
+                public void queue(SignalState state) {
+                    if (ticket != null)
+                        ticket.overwriteState(state);
+                    else
+                        ticket = LittleTiles.TICKERS.schedule(this, state, delay);
+                }
+                
+                public void performStateChange(SignalState state) {
+                    ticket = null;
+                    super.performStateChange(state);
+                }
+                
+                public SignalMode getMode() {
+                    return SignalMode.THRESHOLD;
+                }
+                
+                public void write(boolean preview, CompoundTag nbt) {
+                    if (!preview && ticket != null)
+                        nbt.putIntArray("ticket", new int[] { ticket.getDelay(), ticket.getState().number() });
+                }
+            };
+            
+            if (hasWorld) {
+                if (nbt.contains("ticket")) {
+                    int[] array = nbt.getIntArray("ticket");
+                    if (array.length == 2) {
+                        try {
+                            SignalState state = SignalState.create(component.getBandwidth()).load(array[1]);
+                            handler.ticket = LittleTiles.TICKERS.schedule(handler, state, array[0]);
+                        } catch (CorruptedConnectionException | NotYetConnectedException e) {}
+                    }
+                }
+            }
+            return handler;
+        }
+        
+        @OnlyIn(Dist.CLIENT)
+        public GuiSignalModeConfiguration createConfiguration(SignalOutputHandler handler) {
+            return new GuiSignalModeConfigurationThreshold(handler);
+        }
+        
+        @OnlyIn(Dist.CLIENT)
+        public void createControls(GuiParent parent, GuiSignalModeConfiguration configuration) {}
+        
+        @OnlyIn(Dist.CLIENT)
+        public GuiSignalModeConfiguration parseControls(GuiParent parent, int delay) {
+            return new GuiSignalModeConfigurationThreshold(delay);
+        }
+    },
+    STABILIZER("signal.mode.stabilizer") {
+        
+        public SignalOutputHandler create(ISignalComponent component, int delay, CompoundTag nbt, boolean hasWorld) {
+            SignalOutputHandlerStoreOne handler = new SignalOutputHandlerStoreOne(component, delay, nbt) {
+                
+                public void queue(SignalState state) {
+                    if (ticket != null)
+                        ticket.markObsolete();
+                    ticket = LittleTiles.TICKERS.schedule(this, state, delay);
+                }
+                
+                public void performStateChange(SignalState state) {
+                    ticket = null;
+                    super.performStateChange(state);
+                }
+                
+                public SignalMode getMode() {
+                    return SignalMode.STABILIZER;
+                }
+                
+                public void write(boolean preview, CompoundTag nbt) {
+                    if (preview)
+                        return;
+                    if (ticket != null)
+                        nbt.putIntArray("ticket", new int[] { ticket.getDelay(), ticket.getState().number() });
+                }
+            };
+            
+            if (hasWorld) {
+                if (nbt.contains("ticket")) {
+                    int[] array = nbt.getIntArray("ticket");
+                    if (array.length == 2) {
+                        try {
+                            SignalState state = SignalState.create(component.getBandwidth()).load(array[1]);
+                            handler.ticket = LittleTiles.TICKERS.schedule(handler, state, array[0]);
+                        } catch (CorruptedConnectionException | NotYetConnectedException e) {}
+                    }
+                }
+            }
+            return handler;
+        }
+        
+        @OnlyIn(Dist.CLIENT)
+        public GuiSignalModeConfiguration createConfiguration(SignalOutputHandler handler) {
+            return new GuiSignalModeConfigurationStabilizer(handler);
+        }
+        
+        @OnlyIn(Dist.CLIENT)
+        public void createControls(GuiParent parent, GuiSignalModeConfiguration configuration) {}
+        
+        @OnlyIn(Dist.CLIENT)
+        public GuiSignalModeConfiguration parseControls(GuiParent parent, int delay) {
+            return new GuiSignalModeConfigurationStabilizer(delay);
+        }
+    },
+    EXTENDER("signal.mode.extender") {
+        
+        public SignalOutputHandler create(ISignalComponent component, int delay, CompoundTag nbt, boolean hasWorld) {
+            SignalOutputHandler condition = new SignalOutputHandlerExtender(component, delay, nbt);
+            if (hasWorld) {
+                if (nbt.contains("start")) {
+                    LittleTiles.TICKERS.schedule(condition, SignalState.TRUE, nbt.getInt("start"));
+                    LittleTiles.TICKERS.schedule(condition, SignalState.FALSE, nbt.getInt("end"));
+                } else if (nbt.contains("end"))
+                    LittleTiles.TICKERS.schedule(condition, SignalState.FALSE, nbt.getInt("end"));
+            }
+            return condition;
+        }
+        
+        @OnlyIn(Dist.CLIENT)
+        public GuiSignalModeConfiguration createConfiguration(SignalOutputHandler handler) {
+            return new GuiSignalModeConfigurationExtender(handler);
+        }
+        
+        @OnlyIn(Dist.CLIENT)
+        public void createControls(GuiParent parent, GuiSignalModeConfiguration configuration) {
+            parent.add(new GuiLabel("length:").setTitle(Component.translatable("gui.signal.length").append(":")));
+            parent.add(
+                new GuiTextfield("length", "" + (configuration instanceof GuiSignalModeConfigurationExtender ? ((GuiSignalModeConfigurationExtender) configuration).length : 10))
+                        .setNumbersOnly());
+        }
+        
+        @OnlyIn(Dist.CLIENT)
+        public GuiSignalModeConfiguration parseControls(GuiParent parent, int delay) {
+            GuiTextfield length = (GuiTextfield) parent.get("length");
+            return new GuiSignalModeConfigurationExtender(delay, Math.max(1, length.parseInteger()));
+        }
+        
+    };
+    
+    public final String translateKey;
+    
+    private SignalMode(String translateKey) {
+        this.translateKey = translateKey;
+    }
+    
+    public abstract SignalOutputHandler create(ISignalComponent component, int delay, CompoundTag nbt, boolean hasWorld);
+    
+    @OnlyIn(Dist.CLIENT)
+    public abstract GuiSignalModeConfiguration createConfiguration(SignalOutputHandler handler);
+    
+    @OnlyIn(Dist.CLIENT)
+    public abstract void createControls(GuiParent parent, GuiSignalModeConfiguration configuration);
+    
+    @OnlyIn(Dist.CLIENT)
+    public abstract GuiSignalModeConfiguration parseControls(GuiParent parent, int delay);
+    
+    public static abstract class SignalOutputHandlerStoreOne extends SignalOutputHandler {
+        
+        SignalScheduleTicket ticket;
+        
+        public SignalOutputHandlerStoreOne(ISignalComponent component, int delay, CompoundTag nbt) {
+            super(component, delay, nbt);
+        }
+        
+    }
+    
+    public static class SignalOutputHandlerToggle extends SignalOutputHandler {
+        
+        public SignalState stateBefore;
+        public SignalState result;
+        
+        public SignalOutputHandlerToggle(ISignalComponent component, int delay, CompoundTag nbt, SignalState stateBefore, SignalState result) {
+            super(component, delay, nbt);
+            this.stateBefore = stateBefore;
+            this.result = result;
+        }
+        
+        public SignalMode getMode() {
+            return SignalMode.TOGGLE;
+        }
+        
+        public void triggerToggle() {
+            if (result == null) {
+                try {
+                    int bandwidth = component.getBandwidth();
+                    result = SignalState.create(bandwidth);
+                    result = result.fill(component.getState());
+                } catch (CorruptedConnectionException | NotYetConnectedException e) {}
+            }
+            
+            result = result.invert();
+            performStateChange(result);
+        }
+        
+        public void queue(SignalState state) {
+            try {
+                int bandwidth = component.getBandwidth();
+                if (stateBefore == null) {
+                    stateBefore = SignalState.create(bandwidth);
+                    result = SignalState.create(bandwidth);
+                }
+                
+                for (int i = 0; i < bandwidth; i++) {
+                    if (!stateBefore.is(i) && state.is(i))
+                        result = result.set(i, !result.is(i));
+                    stateBefore = stateBefore.set(i, state.is(i));
+                }
+                LittleTiles.TICKERS.schedule(this, result, delay);
+            } catch (CorruptedConnectionException | NotYetConnectedException e) {}
+        }
+        
+        public void write(boolean preview, CompoundTag nbt) {
+            if (stateBefore != null) {
+                try {
+                    nbt.putInt("bandwidth", component.getBandwidth());
+                    nbt.put("before", stateBefore.save());
+                    nbt.put("result", result.save());
+                } catch (CorruptedConnectionException | NotYetConnectedException e) {}
+            }
+            if (preview)
+                return;
+            List<SignalScheduleTicket> tickets = LittleTiles.TICKERS.findTickets(component, this);
+            ListTag list = new ListTag();
+            for (int i = 0; i < tickets.size(); i++) {
+                SignalScheduleTicket ticket = tickets.get(i);
+                list.add(new IntArrayTag(new int[] { ticket.getDelay(), ticket.getState().number() }));
+            }
+            if (!list.isEmpty())
+                nbt.put("tickets", list);
+        }
+    }
+    
+    public static class SignalOutputHandlerPulse extends SignalOutputHandler {
+        
+        public final int pulseLength;
+        public boolean stateBefore;
+        public SignalScheduleTicket pulseStart;
+        public SignalScheduleTicket pulseEnd;
+        
+        public SignalOutputHandlerPulse(ISignalComponent component, int delay, CompoundTag nbt) {
+            super(component, delay, nbt);
+            this.pulseLength = nbt.contains("length") ? nbt.getInt("length") : 10;
+            this.stateBefore = nbt.getBoolean("before");
+        }
+        
+        public int getBandwidth() throws CorruptedConnectionException, NotYetConnectedException {
+            return super.getBandwidth();
+        }
+        
+        public SignalMode getMode() {
+            return SignalMode.PULSE;
+        }
+        
+        public void performStateChange(SignalState state) {
+            super.performStateChange(state);
+            if (state.any())
+                pulseStart = null;
+            else {
+                pulseStart = null;
+                pulseEnd = null;
+            }
+        }
+        
+        public void queue(SignalState state) {
+            boolean current = state.any();
+            if (pulseEnd == null && !stateBefore && current) {
+                try {
+                    int bandwidth = getBandwidth();
+                    SignalState startState = SignalState.create(bandwidth).fill(true);
+                    SignalState endState = SignalState.create(bandwidth);
+                    pulseStart = LittleTiles.TICKERS.schedule(this, startState, delay);
+                    pulseEnd = LittleTiles.TICKERS.schedule(this, endState, delay + pulseLength);
+                } catch (CorruptedConnectionException | NotYetConnectedException e) {}
+            }
+            stateBefore = current;
+        }
+        
+        public void write(boolean preview, CompoundTag nbt) {
+            nbt.putInt("length", pulseLength);
+            nbt.putBoolean("before", stateBefore);
+            if (preview)
+                return;
+            if (pulseStart != null)
+                nbt.putInt("start", pulseStart.getDelay());
+            if (pulseEnd != null)
+                nbt.putInt("end", pulseEnd.getDelay());
+        }
+        
+    }
+    
+    public static class SignalOutputHandlerExtender extends SignalOutputHandler {
+        
+        public final int pulseLength;
+        public boolean stateBefore;
+        public SignalScheduleTicket pulseStart;
+        public SignalScheduleTicket pulseEnd;
+        
+        public SignalOutputHandlerExtender(ISignalComponent component, int delay, CompoundTag nbt) {
+            super(component, delay, nbt);
+            this.pulseLength = nbt.contains("length") ? nbt.getInt("length") : 10;
+            this.stateBefore = nbt.getBoolean("before");
+        }
+        
+        public int getBandwidth() throws CorruptedConnectionException, NotYetConnectedException {
+            return super.getBandwidth();
+        }
+        
+        public SignalMode getMode() {
+            return SignalMode.EXTENDER;
+        }
+        
+        public void performStateChange(SignalState state) {
+            super.performStateChange(state);
+            if (state.any())
+                pulseStart = null;
+            else {
+                pulseStart = null;
+                pulseEnd = null;
+            }
+        }
+        
+        public void queue(SignalState state) {
+            try {
+                int bandwidth = getBandwidth();
+                boolean current = state.any();
+                if (!stateBefore && current) { // switch from off to on
+                    if (pulseEnd != null) {
+                        pulseEnd.markObsolete();
+                        pulseEnd = null;
+                    } else if (pulseStart == null) {
+                        
+                        SignalState startState = SignalState.create(bandwidth).fill(true);
+                        pulseStart = LittleTiles.TICKERS.schedule(this, startState, delay);
+                    }
+                } else if (stateBefore && !current) { // switch from on to off
+                    if (pulseEnd != null) {
+                        pulseEnd.markObsolete();
+                        pulseEnd = null;
+                    }
+                    
+                    pulseEnd = LittleTiles.TICKERS.schedule(this, SignalState.create(bandwidth), delay + pulseLength);
+                }
+                stateBefore = current;
+            } catch (CorruptedConnectionException | NotYetConnectedException e) {}
+        }
+        
+        public void write(boolean preview, CompoundTag nbt) {
+            nbt.putInt("length", pulseLength);
+            nbt.putBoolean("before", stateBefore);
+            if (preview)
+                return;
+            if (pulseStart != null)
+                nbt.putInt("start", pulseStart.getDelay());
+            if (pulseEnd != null)
+                nbt.putInt("end", pulseEnd.getDelay());
+        }
+        
+    }
+    
+    @OnlyIn(Dist.CLIENT)
+    public static GuiSignalModeConfiguration getConfigDefault() {
+        return EQUAL.createConfiguration(null);
+    }
+    
+    public static SignalMode get(String test) {
+        try {
+            return SignalMode.valueOf(test);
+        } catch (IllegalArgumentException e) {
+            return EQUAL;
+        }
+    }
+    
+    public static SignalMode get(String test, SignalMode defaultMode) {
+        try {
+            return SignalMode.valueOf(test);
+        } catch (IllegalArgumentException e) {
+            return defaultMode;
+        }
+    }
+    
+    @OnlyIn(Dist.CLIENT)
+    public static abstract class GuiSignalModeConfiguration {
+        
+        public int delay;
+        
+        public GuiSignalModeConfiguration(SignalOutputHandler handler) {
+            this(handler != null ? handler.delay : 1);
+        }
+        
+        public GuiSignalModeConfiguration(int delay) {
+            this.delay = delay;
+        }
+        
+        public abstract SignalMode getMode();
+        
+        public abstract GuiSignalModeConfiguration copy();
+        
+        public abstract SignalOutputHandler getHandler(ISignalComponent component, LittleStructure structure);
+
+        public MutableComponent description(int configuredDelay) {
+            return Component.translatable(getMode().translateKey).append(" ").append(Component.translatable("gui.delay")).append(": " + configuredDelay);
+        }
+    }
+    
+    @OnlyIn(Dist.CLIENT)
+    private static class GuiSignalModeConfigurationEqual extends GuiSignalModeConfiguration {
+        
+        public GuiSignalModeConfigurationEqual(int delay) {
+            super(delay);
+        }
+        
+        public GuiSignalModeConfigurationEqual(SignalOutputHandler handler) {
+            this(handler != null ? handler.delay : 1);
+        }
+        
+        public SignalMode getMode() {
+            return EQUAL;
+        }
+        
+        public GuiSignalModeConfiguration copy() {
+            return new GuiSignalModeConfigurationEqual(delay);
+        }
+        
+        public SignalOutputHandler getHandler(ISignalComponent component, LittleStructure structure) {
+            CompoundTag nbt = new CompoundTag();
+            nbt.putInt("delay", delay);
+            return getMode().create(component, delay, nbt, false);
+        }
+        
+    }
+    
+    @OnlyIn(Dist.CLIENT)
+    private static class GuiSignalModeConfigurationToggle extends GuiSignalModeConfiguration {
+        
+        public GuiSignalModeConfigurationToggle(int delay) {
+            super(delay);
+        }
+        
+        public GuiSignalModeConfigurationToggle(SignalOutputHandler handler) {
+            super(handler);
+        }
+        
+        public SignalMode getMode() {
+            return TOGGLE;
+        }
+        
+        public GuiSignalModeConfiguration copy() {
+            return new GuiSignalModeConfigurationToggle(delay);
+        }
+        
+        public SignalOutputHandler getHandler(ISignalComponent component, LittleStructure structure) {
+            CompoundTag nbt = new CompoundTag();
+            nbt.putInt("delay", delay);
+            return getMode().create(component, delay, nbt, false);
+        }
+        
+    }
+    
+    @OnlyIn(Dist.CLIENT)
+    private static class GuiSignalModeConfigurationPulse extends GuiSignalModeConfiguration {
+        
+        public int length;
+        
+        public GuiSignalModeConfigurationPulse(int delay, int length) {
+            super(delay);
+            this.length = length;
+        }
+        
+        public GuiSignalModeConfigurationPulse(SignalOutputHandler handler) {
+            super(handler);
+            this.length = handler instanceof SignalOutputHandlerPulse pulse ? pulse.pulseLength : 10;
+        }
+        
+        public SignalMode getMode() {
+            return PULSE;
+        }
+        
+        public GuiSignalModeConfiguration copy() {
+            return new GuiSignalModeConfigurationPulse(delay, length);
+        }
+        
+        public SignalOutputHandler getHandler(ISignalComponent component, LittleStructure structure) {
+            CompoundTag nbt = new CompoundTag();
+            nbt.putInt("delay", delay);
+            nbt.putInt("length", length);
+            return getMode().create(component, delay, nbt, false);
+        }
+
+        public MutableComponent description(int configuredDelay) {
+            return super.description(configuredDelay).append(" ").append(Component.translatable("gui.signal.length").append(": " + length));
+        }
+    }
+    
+    @OnlyIn(Dist.CLIENT)
+    private static class GuiSignalModeConfigurationExtender extends GuiSignalModeConfiguration {
+        
+        public int length;
+        
+        public GuiSignalModeConfigurationExtender(int delay, int length) {
+            super(delay);
+            this.length = length;
+        }
+        
+        public GuiSignalModeConfigurationExtender(SignalOutputHandler handler) {
+            super(handler);
+            this.length = handler instanceof SignalOutputHandlerExtender extender ? extender.pulseLength : 10;
+        }
+        
+        public SignalMode getMode() {
+            return EXTENDER;
+        }
+        
+        public GuiSignalModeConfiguration copy() {
+            return new GuiSignalModeConfigurationExtender(delay, length);
+        }
+        
+        public SignalOutputHandler getHandler(ISignalComponent component, LittleStructure structure) {
+            CompoundTag nbt = new CompoundTag();
+            nbt.putInt("delay", delay);
+            nbt.putInt("length", length);
+            return getMode().create(component, delay, nbt, false);
+        }
+
+        public MutableComponent description(int configuredDelay) {
+            return super.description(configuredDelay).append(" ").append(Component.translatable("gui.signal.length").append(": " + length));
+        }
+
+    }
+    
+    @OnlyIn(Dist.CLIENT)
+    private static class GuiSignalModeConfigurationThreshold extends GuiSignalModeConfiguration {
+        
+        public GuiSignalModeConfigurationThreshold(int delay) {
+            super(delay);
+        }
+        
+        public GuiSignalModeConfigurationThreshold(SignalOutputHandler handler) {
+            super(handler);
+        }
+        
+        public SignalMode getMode() {
+            return THRESHOLD;
+        }
+        
+        public GuiSignalModeConfiguration copy() {
+            return new GuiSignalModeConfigurationThreshold(delay);
+        }
+        
+        public SignalOutputHandler getHandler(ISignalComponent component, LittleStructure structure) {
+            CompoundTag nbt = new CompoundTag();
+            nbt.putInt("delay", delay);
+            return getMode().create(component, delay, nbt, false);
+        }
+        
+    }
+    
+    @OnlyIn(Dist.CLIENT)
+    private static class GuiSignalModeConfigurationStabilizer extends GuiSignalModeConfiguration {
+        
+        public GuiSignalModeConfigurationStabilizer(int delay) {
+            super(delay);
+        }
+        
+        public GuiSignalModeConfigurationStabilizer(SignalOutputHandler handler) {
+            super(handler);
+        }
+        
+        public SignalMode getMode() {
+            return STABILIZER;
+        }
+        
+        public GuiSignalModeConfiguration copy() {
+            return new GuiSignalModeConfigurationStabilizer(delay);
+        }
+        
+        public SignalOutputHandler getHandler(ISignalComponent component, LittleStructure structure) {
+            CompoundTag nbt = new CompoundTag();
+            nbt.putInt("delay", delay);
+            return getMode().create(component, delay, nbt, false);
+        }
+        
+    }
+}

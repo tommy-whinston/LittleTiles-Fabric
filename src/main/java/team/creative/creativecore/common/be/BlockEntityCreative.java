@@ -28,7 +28,6 @@ public abstract class BlockEntityCreative extends BlockEntity {
         return FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT;
     }
 
-    @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
@@ -46,7 +45,6 @@ public abstract class BlockEntityCreative extends BlockEntity {
 
     public abstract void handleUpdate(CompoundTag nbt, boolean chunkUpdate);
 
-    @Override
     public CompoundTag getUpdateTag() {
         return saveWithFullMetadata();
     }

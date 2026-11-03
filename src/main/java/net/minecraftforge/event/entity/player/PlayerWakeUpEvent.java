@@ -7,6 +7,11 @@ public class PlayerWakeUpEvent extends PlayerEvent {
     private final boolean wakeImmediately;
     private final boolean updateLevel;
 
+    public PlayerWakeUpEvent() {
+        this.wakeImmediately = false;
+        this.updateLevel = false;
+    }
+
     public PlayerWakeUpEvent(Player player, boolean wakeImmediately, boolean updateLevel) {
         super(player);
         this.wakeImmediately = wakeImmediately;

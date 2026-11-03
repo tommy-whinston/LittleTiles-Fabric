@@ -7,6 +7,10 @@ public class ServerStartingEvent extends Event {
 
     private final MinecraftServer server;
 
+    public ServerStartingEvent() {
+        this.server = null;
+    }
+
     public ServerStartingEvent(MinecraftServer server) {
         this.server = server;
     }

@@ -9,6 +9,11 @@ public class ChunkEvent extends Event {
     private final LevelChunk chunk;
     private final boolean newChunk;
 
+    public ChunkEvent() {
+        this.chunk = null;
+        this.newChunk = false;
+    }
+
     public ChunkEvent(LevelChunk chunk, boolean newChunk) {
         this.chunk = chunk;
         this.newChunk = newChunk;
@@ -28,12 +33,18 @@ public class ChunkEvent extends Event {
 
     public static class Load extends ChunkEvent {
 
+        public Load() {
+        }
+
         public Load(LevelChunk chunk, boolean newChunk) {
             super(chunk, newChunk);
         }
     }
 
     public static class Unload extends ChunkEvent {
+
+        public Unload() {
+        }
 
         public Unload(LevelChunk chunk) {
             super(chunk, false);

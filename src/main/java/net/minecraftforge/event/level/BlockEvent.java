@@ -16,6 +16,12 @@ public class BlockEvent extends Event {
     private final BlockPos pos;
     private final BlockState state;
 
+    public BlockEvent() {
+        this.level = null;
+        this.pos = null;
+        this.state = null;
+    }
+
     public BlockEvent(LevelAccessor level, BlockPos pos, BlockState state) {
         this.level = level;
         this.pos = pos;
@@ -38,6 +44,10 @@ public class BlockEvent extends Event {
 
         private final Player player;
 
+        public BreakEvent() {
+            this.player = null;
+        }
+
         public BreakEvent(LevelAccessor level, BlockPos pos, BlockState state, Player player) {
             super(level, pos, state);
             this.player = player;
@@ -46,12 +56,21 @@ public class BlockEvent extends Event {
         public Player getPlayer() {
             return player;
         }
+
+        public int getExpToDrop() {
+            return 0;
+        }
     }
 
     public static class EntityMultiPlaceEvent extends BlockEvent {
 
         private final List<BlockSnapshot> snapshots;
         private final Entity entity;
+
+        public EntityMultiPlaceEvent() {
+            this.snapshots = null;
+            this.entity = null;
+        }
 
         public EntityMultiPlaceEvent(List<BlockSnapshot> snapshots, BlockState state, Entity entity) {
             super(entity.level(), entity.blockPosition(), state);

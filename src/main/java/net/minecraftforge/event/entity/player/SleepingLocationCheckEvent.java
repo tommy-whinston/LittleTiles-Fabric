@@ -2,11 +2,14 @@ package net.minecraftforge.event.entity.player;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.eventbus.api.Event;
 
 public class SleepingLocationCheckEvent extends PlayerEvent {
 
     private final BlockPos sleepingLocation;
+
+    public SleepingLocationCheckEvent() {
+        this.sleepingLocation = null;
+    }
 
     public SleepingLocationCheckEvent(Player player, BlockPos sleepingLocation) {
         super(player);

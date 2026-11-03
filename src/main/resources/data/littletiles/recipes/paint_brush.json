@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "XXX",
+        " L ",
+        " L "
+    ],
+    "key": {
+        "X": {
+            "item": "minecraft:white_wool"
+        },
+        "L": {
+            "item": "minecraft:lapis_lazuli"
+        }
+    },
+    "result": {
+        "item": "littletiles:paint_brush"
+    }
+}

@@ -9,8 +9,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
 
+@Cancelable
 public class PlayerInteractEvent extends PlayerEvent {
 
     private final InteractionHand hand;
@@ -20,6 +22,10 @@ public class PlayerInteractEvent extends PlayerEvent {
     private Result useBlock = Result.DEFAULT;
     private Result useItem = Result.DEFAULT;
     private final BlockHitResult hitResult;
+
+    public PlayerInteractEvent() {
+        this(null, null, null, null, null);
+    }
 
     public PlayerInteractEvent(Player player, InteractionHand hand, BlockPos pos, Direction face) {
         this(player, hand, pos, face, null);
@@ -81,7 +87,11 @@ public class PlayerInteractEvent extends PlayerEvent {
         this.cancellationResult = result;
     }
 
+    @Cancelable
     public static class LeftClickBlock extends PlayerInteractEvent {
+
+        public LeftClickBlock() {
+        }
 
         public LeftClickBlock(Player player, BlockPos pos, Direction face) {
             super(player, InteractionHand.MAIN_HAND, pos, face);
@@ -92,14 +102,22 @@ public class PlayerInteractEvent extends PlayerEvent {
         }
     }
 
+    @Cancelable
     public static class LeftClickEmpty extends PlayerInteractEvent {
+
+        public LeftClickEmpty() {
+        }
 
         public LeftClickEmpty(Player player) {
             super(player, InteractionHand.MAIN_HAND, player.blockPosition(), Direction.UP);
         }
     }
 
+    @Cancelable
     public static class RightClickBlock extends PlayerInteractEvent {
+
+        public RightClickBlock() {
+        }
 
         public RightClickBlock(Player player, InteractionHand hand, BlockPos pos, BlockHitResult hitResult) {
             super(player, hand, pos, hitResult.getDirection(), hitResult);

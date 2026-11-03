@@ -1,0 +1,23 @@
+{
+    "result": {
+        "item": "littletiles:blueprint",
+        "count": 4
+    },
+    "pattern": [
+        "XXX",
+        "XLX",
+        "XRX"
+    ],
+    "type": "minecraft:crafting_shaped",
+    "key": {
+        "X": {
+            "item": "minecraft:paper"
+        },
+        "L": {
+            "item": "minecraft:lapis_lazuli"
+        },
+        "R": {
+            "item": "minecraft:redstone"
+        }
+    }
+}

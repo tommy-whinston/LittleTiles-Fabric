@@ -10,6 +10,10 @@ public class PlayerEvent extends Event {
 
     private final Player player;
 
+    public PlayerEvent() {
+        this.player = null;
+    }
+
     public PlayerEvent(Player player) {
         this.player = player;
     }
@@ -23,6 +27,12 @@ public class PlayerEvent extends Event {
         private final BlockState state;
         private final BlockPos pos;
         private float newSpeed;
+
+        public BreakSpeed() {
+            this.state = null;
+            this.pos = null;
+            this.newSpeed = 0;
+        }
 
         public BreakSpeed(Player player, BlockState state, float originalSpeed, BlockPos pos) {
             super(player);
@@ -50,12 +60,18 @@ public class PlayerEvent extends Event {
 
     public static class PlayerLoggedInEvent extends PlayerEvent {
 
+        public PlayerLoggedInEvent() {
+        }
+
         public PlayerLoggedInEvent(Player player) {
             super(player);
         }
     }
 
     public static class PlayerLoggedOutEvent extends PlayerEvent {
+
+        public PlayerLoggedOutEvent() {
+        }
 
         public PlayerLoggedOutEvent(Player player) {
             super(player);
@@ -65,6 +81,10 @@ public class PlayerEvent extends Event {
     public static class StartTracking extends PlayerEvent {
 
         private final Entity target;
+
+        public StartTracking() {
+            this.target = null;
+        }
 
         public StartTracking(Player player, Entity target) {
             super(player);
@@ -79,6 +99,10 @@ public class PlayerEvent extends Event {
     public static class StopTracking extends PlayerEvent {
 
         private final Entity target;
+
+        public StopTracking() {
+            this.target = null;
+        }
 
         public StopTracking(Player player, Entity target) {
             super(player);

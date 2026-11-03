@@ -15,7 +15,6 @@ public class RegistryObject<T> implements Supplier<T> {
         this.supplier = supplier;
     }
 
-    @Override
     public T get() {
         if (value == null)
             value = supplier.get();

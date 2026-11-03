@@ -1,0 +1,180 @@
+package team.creative.littletiles.common.item;
+
+import java.util.List;
+
+import org.apache.commons.io.IOUtils;
+
+import com.google.common.base.Charsets;
+
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.TagParser;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import team.creative.creativecore.common.util.inventory.ContainerSlotView;
+import team.creative.creativecore.common.util.mc.ColorUtils;
+import team.creative.littletiles.LittleTiles;
+import team.creative.littletiles.LittleTilesRegistry;
+import team.creative.littletiles.api.common.tool.ILittlePlacer;
+import team.creative.littletiles.client.LittleTilesClient;
+import team.creative.littletiles.common.block.little.element.LittleElement;
+import team.creative.littletiles.common.block.little.tile.group.LittleGroup;
+import team.creative.littletiles.common.convertion.OldLittleTilesDataParser;
+import team.creative.littletiles.common.grid.LittleGrid;
+import team.creative.littletiles.common.gui.tool.GuiConfigure;
+import team.creative.littletiles.common.gui.tool.GuiModeSelector;
+import team.creative.littletiles.common.item.tooltip.IItemTooltip;
+import team.creative.littletiles.common.math.box.LittleBox;
+import team.creative.littletiles.common.math.vec.LittleVecGrid;
+import team.creative.littletiles.common.placement.PlacementPosition;
+import team.creative.littletiles.common.placement.PlacementPreview;
+import team.creative.littletiles.common.placement.mode.PlacementMode;
+import team.creative.littletiles.common.placement.setting.PlacementPlayerSetting;
+import team.creative.littletiles.common.structure.type.premade.LittleStructurePremade;
+
+public class ItemMultiTiles extends Item implements ILittlePlacer, IItemTooltip {
+    
+    public static ItemStack of(LittleElement element) {
+        return of(element, LittleGrid.MIN, LittleGrid.MIN.box());
+    }
+    
+    public static ItemStack of(LittleGroup group) {
+        ItemStack stack = new ItemStack(LittleTilesRegistry.ITEM_TILES.get());
+        stack.setTag(LittleGroup.save(group));
+        return stack;
+    }
+    
+    public static ItemStack of(LittleElement element, LittleGrid grid, LittleBox box) {
+        ItemStack stack = new ItemStack(LittleTilesRegistry.ITEM_TILES.get());
+        LittleGroup group = new LittleGroup();
+        group.add(grid, element, box);
+        stack.setTag(LittleGroup.save(group));
+        return stack;
+    }
+    
+    public ItemMultiTiles() {
+        super(new Item.Properties());
+    }
+    
+    public static String getStructure(ItemStack stack) {
+        if (stack.getOrCreateTag().contains(LittleGroup.STRUCTURE_KEY))
+            return stack.getTag().getCompound(LittleGroup.STRUCTURE_KEY).getString("id");
+        return "";
+    }
+    
+    public Component getName(ItemStack stack) {
+        if (stack.getOrCreateTag().contains(LittleGroup.STRUCTURE_KEY) && stack.getOrCreateTagElement(LittleGroup.STRUCTURE_KEY).contains("n"))
+            return Component.literal(stack.getOrCreateTagElement(LittleGroup.STRUCTURE_KEY).getString("n"));
+        return super.getName(stack);
+    }
+    
+    public boolean hasTiles(ItemStack stack) {
+        return true;
+    }
+    
+    public LittleGroup getTiles(ItemStack stack) {
+        LittleGroup group = LittleGroup.load(stack.getOrCreateTag());
+        if (group.isEmptyIncludeChildren() && !group.hasStructure()) {
+            // A plain multi_tiles item has no payload. Use a full stone tile as a
+            // sensible default so the item is usable while the port is incomplete.
+            LittleGrid grid = LittleGrid.overallDefault();
+            if (grid == null)
+                grid = LittleGrid.MIN;
+            group.convertTo(grid);
+            group.add(grid, new LittleElement(Blocks.STONE.defaultBlockState(), ColorUtils.WHITE), grid.box());
+        }
+        return group;
+    }
+    
+    public LittleGroup getLow(ItemStack stack) {
+        return LittleGroup.loadLow(stack.getOrCreateTag());
+    }
+    
+    public boolean shouldRenderInHand(ItemStack stack) {
+        return LittleGroup.shouldRenderInHand(stack.getOrCreateTag());
+    }
+    
+    public PlacementPreview getPlacement(Player player, Level level, ItemStack stack, PlacementPosition position, boolean allowLowResolution) {
+        return PlacementPreview.relative(level, stack, position, allowLowResolution);
+    }
+    
+    public void saveTiles(ItemStack stack, LittleGroup group) {
+        stack.setTag(LittleGroup.save(group));
+    }
+    
+    public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
+        String id = "none";
+        if (stack.getOrCreateTag().contains(LittleGroup.STRUCTURE_KEY))
+            id = stack.getOrCreateTagElement(LittleGroup.STRUCTURE_KEY).getString("id");
+        tooltip.add(Component.translatable("gui.structure").append(": ").append(Component.translatable("structure." + id)));
+        tooltip.add(LittleGroup.printTooltip(stack.getOrCreateTag()));
+    }
+    
+    public GuiConfigure getConfigure(Player player, ContainerSlotView view) {
+        return new GuiModeSelector(view, PlacementPlayerSetting.grid(player), PlacementPlayerSetting.placementMode(player)) {
+            
+            public CompoundTag saveConfiguration(CompoundTag nbt, LittleGrid grid, PlacementMode mode) {
+                LittleTilesClient.setPlace(grid, mode);
+                return null;
+            }
+            
+        };
+    }
+    
+    public boolean containsIngredients(ItemStack stack) {
+        return true;
+    }
+    
+    public LittleVecGrid getCachedSize(ItemStack stack) {
+        return LittleGroup.getSize(stack.getOrCreateTag());
+    }
+    
+    public LittleVecGrid getCachedMin(ItemStack stack) {
+        return LittleGroup.getMin(stack.getOrCreateTag());
+    }
+    
+    public String tooltipTranslateKey(ItemStack stack, String defaultKey) {
+        return "littletiles.tiles.tooltip";
+    }
+    
+    public Object[] tooltipData(ItemStack stack) {
+        return new Object[] { LittleTilesClient.configure.getTranslatedKeyMessage(), LittleTilesClient.arrowKeysTooltip(), LittleTilesClient.mirror.getTranslatedKeyMessage() };
+    }
+    
+    public static void reloadExampleStructures() {
+        for (ExampleStructures example : ExampleStructures.values()) {
+            try {
+                example.stack = new ItemStack(LittleTilesRegistry.ITEM_TILES.get());
+                CompoundTag nbt = TagParser.parseTag(IOUtils.toString(LittleStructurePremade.class.getClassLoader().getResourceAsStream(example.getFileName()), Charsets.UTF_8));
+                if (OldLittleTilesDataParser.isOld(nbt))
+                    nbt = OldLittleTilesDataParser.convert(nbt);
+                example.stack.setTag(nbt);
+            } catch (Exception e) {
+                e.printStackTrace();
+                LittleTiles.LOGGER.error("Could not load '{}' example structure!", example.name());
+            }
+        }
+    }
+    
+    public static enum ExampleStructures {
+        
+        BASIC_LEVER,
+        DOUBLE_DOOR,
+        LIGHT_SWITCH,
+        SIMPLE_LIGHT,
+        STONE_PLATE,
+        WOODEN_PLATE;
+        
+        public ItemStack stack;
+        
+        public String getFileName() {
+            return "data/" + LittleTiles.MODID + "/example/" + name().toLowerCase() + ".struct";
+        }
+        
+    }
+    
+}
