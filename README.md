@@ -21,7 +21,8 @@ The project is being ported in stages. The current stage is the **port foundatio
   used by the running mod yet.
 
 The upstream 656-file / ~77k-line source is **not imported yet**. The next stage is to copy the
-`1.20` source in and fix it module by module. See [PORTING.md](PORTING.md).
+`1.20` source in and fix it module by module. See [PORTING.md](PORTING.md) and the staged
+[PLAN.md](PLAN.md).
 
 > This is an early **base skeleton**, not a playable port yet.
 
@@ -102,7 +103,8 @@ with the original source and, later, so addons can be recompiled against it.
   моде не используется.
 
 Исходники оригинала (656 файлов, ~77 тыс. строк) **ещё не импортированы**. Следующий этап —
-перенести код из ветки `1.20` и разбирать его по модулям. Подробнее — в [PORTING.md](PORTING.md).
+перенести код из ветки `1.20` и разбирать его по модулям. Подробнее — в [PORTING.md](PORTING.md)
+и поэтапном [PLAN.md](PLAN.md).
 
 > Это ранний **каркас**, а не играбельный порт.
 
