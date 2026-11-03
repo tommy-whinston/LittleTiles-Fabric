@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "littletiles",
+  "version": "${version}",
+  "name": "LittleTiles-Fabric",
+  "description": "Unofficial Fabric 1.20.1 port of LittleTiles. Original mod by CreativeMD and contributors. This port is AI-assisted and is not affiliated with or endorsed by the original author.",
+  "authors": [
+    "CreativeMD",
+    "N247S"
+  ],
+  "contributors": [
+    "LittleTiles-Fabric port contributors (AI-assisted)"
+  ],
+  "contact": {
+    "homepage": "https://github.com/tommy-whinston/LittleTiles-Fabric",
+    "sources": "https://github.com/tommy-whinston/LittleTiles-Fabric",
+    "issues": "https://github.com/tommy-whinston/LittleTiles-Fabric/issues"
+  },
+  "license": "LGPL-3.0-only",
+  "icon": "assets/littletiles/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "team.creative.littletiles.LittleTiles"
+    ],
+    "client": [
+      "team.creative.littletiles.client.LittleTilesClient"
+    ]
+  },
+  "mixins": [
+    "littletiles.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.14",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "fabric-api": "*",
+    "creativecore": ">=2.12.30"
+  }
+}
