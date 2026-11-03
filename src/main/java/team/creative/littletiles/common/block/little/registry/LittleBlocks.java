@@ -1,6 +1,5 @@
 package team.creative.littletiles.common.block.little.registry;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -43,11 +42,7 @@ public class LittleBlocks {
             
             @OnlyIn(Dist.CLIENT)
             public void randomDisplayTick(IParentCollection parent, LittleTile tile, RandomSource rand) {
-                Minecraft mc = Minecraft.getInstance();
-                ItemStack itemstack = mc.player.getMainHandItem();
-                if (mc.player.isCreative() && itemstack.is(Blocks.BARRIER.asItem()))
-                    mc.level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK_MARKER, tile.getState()), parent.getPos().getX() + 0.5D, parent.getPos().getY() + 0.5D, parent
-                            .getPos().getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
+                // client-only particle effect
             }
         });
         

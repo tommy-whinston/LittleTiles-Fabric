@@ -13,6 +13,12 @@ public class InputEvent extends Event {
         private final InteractionHand hand;
         private boolean swingHand = true;
 
+        public InteractionKeyMappingTriggered() {
+            this.button = 0;
+            this.keyMapping = null;
+            this.hand = null;
+        }
+
         public InteractionKeyMappingTriggered(int button, KeyMapping keyMapping, InteractionHand hand) {
             this.button = button;
             this.keyMapping = keyMapping;

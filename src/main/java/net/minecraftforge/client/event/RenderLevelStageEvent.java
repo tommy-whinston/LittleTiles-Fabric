@@ -28,6 +28,15 @@ public class RenderLevelStageEvent extends Event {
     private final Frustum frustum;
     private final Matrix4f projectionMatrix;
 
+    public RenderLevelStageEvent() {
+        this.stage = null;
+        this.poseStack = null;
+        this.partialTick = 0;
+        this.camera = null;
+        this.frustum = null;
+        this.projectionMatrix = null;
+    }
+
     public RenderLevelStageEvent(Stage stage, PoseStack poseStack, float partialTick, Camera camera, Frustum frustum, Matrix4f projectionMatrix) {
         this.stage = stage;
         this.poseStack = poseStack;

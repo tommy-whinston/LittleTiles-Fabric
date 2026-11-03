@@ -9,6 +9,10 @@ public class RegisterClientCommandsEvent extends Event {
 
     private final CommandDispatcher<CommandSourceStack> dispatcher;
 
+    public RegisterClientCommandsEvent() {
+        this.dispatcher = null;
+    }
+
     public RegisterClientCommandsEvent(CommandDispatcher<CommandSourceStack> dispatcher) {
         this.dispatcher = dispatcher;
     }

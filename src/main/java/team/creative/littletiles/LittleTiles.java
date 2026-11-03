@@ -20,13 +20,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.fabricmc.api.ModInitializer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.ForgeConfig;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import team.creative.creativecore.common.config.holder.CreativeConfigRegistry;
@@ -100,8 +99,7 @@ import team.creative.littletiles.common.structure.type.bed.LittleBedEventHandler
 import team.creative.littletiles.mixin.server.level.ChunkMapAccessor;
 import team.creative.littletiles.server.LittleTilesServer;
 
-@Mod(LittleTiles.MODID)
-public class LittleTiles {
+public class LittleTiles implements ModInitializer {
     
     public static final String MODID = "littletiles";
     
@@ -113,9 +111,9 @@ public class LittleTiles {
     
     public static TagKey<Block> STORAGE_BLOCKS;
     
-    public LittleTiles() {
+    @Override
+    public void onInitialize() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::init);
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> LittleTilesClient.load(FMLJavaModLoadingContext.get().getModEventBus()));
         
         MinecraftForge.EVENT_BUS.addListener(this::serverStarting);
         
@@ -127,12 +125,17 @@ public class LittleTiles {
         LittleTilesRegistry.RECIPE_SERIALIZERS.register(FMLJavaModLoadingContext.get().getModEventBus());
         
         LittlePacketTypes.init();
+        MinecraftForge.EVENT_BUS.post(new FMLCommonSetupEvent());
     }
     
     private void init(final FMLCommonSetupEvent event) {
         
         IngredientRules.loadRules();
-        LittleStructureRegistry.initStructures();
+        try {
+            LittleStructureRegistry.initStructures();
+        } catch (Throwable t) {
+            LOGGER.error("Failed to initialize LittleTiles structures", t);
+        }
         
         NETWORK.registerType(ActionMessagePacket.class, ActionMessagePacket::new);
         NETWORK.registerType(VanillaBlockPacket.class, VanillaBlockPacket::new);
@@ -183,7 +186,7 @@ public class LittleTiles {
         MinecraftForge.EVENT_BUS.register(new LittleBedEventHandler());
         MinecraftForge.EVENT_BUS.register(LittleAnimationHandlers.class);
         // MinecraftForge.EVENT_BUS.register(ChiselAndBitsConveration.class);
-        MinecraftForge.EVENT_BUS.register(new LittleToolHandler());
+        // MinecraftForge.EVENT_BUS.register(new LittleToolHandler()); // client-only tool handler
         
         LittleTilesServer.init(event);
         

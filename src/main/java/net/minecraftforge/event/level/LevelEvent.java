@@ -7,6 +7,10 @@ public class LevelEvent extends Event {
 
     private final LevelAccessor level;
 
+    public LevelEvent() {
+        this.level = null;
+    }
+
     public LevelEvent(LevelAccessor level) {
         this.level = level;
     }
@@ -17,6 +21,9 @@ public class LevelEvent extends Event {
 
     public static class Load extends LevelEvent {
 
+        public Load() {
+        }
+
         public Load(LevelAccessor level) {
             super(level);
         }
@@ -24,12 +31,18 @@ public class LevelEvent extends Event {
 
     public static class Unload extends LevelEvent {
 
+        public Unload() {
+        }
+
         public Unload(LevelAccessor level) {
             super(level);
         }
     }
 
     public static class Save extends LevelEvent {
+
+        public Save() {
+        }
 
         public Save(LevelAccessor level) {
             super(level);

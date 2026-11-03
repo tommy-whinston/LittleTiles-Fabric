@@ -2,7 +2,6 @@ package team.creative.littletiles.common.packet.entity;
 
 import java.util.UUID;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -12,7 +11,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import team.creative.creativecore.common.network.CanBeNull;
 import team.creative.creativecore.common.network.CreativePacket;
 import team.creative.littletiles.LittleTiles;
-import team.creative.littletiles.client.LittleTilesClient;
 import team.creative.littletiles.common.entity.LittleEntity;
 import team.creative.littletiles.common.level.little.LittleLevelTransitionManager;
 import team.creative.littletiles.common.level.little.LittleSubLevel;
@@ -37,16 +35,7 @@ public class LittleEntityTransitionPacket extends CreativePacket {
     
     @OnlyIn(Dist.CLIENT)
     public void executeClient(Player player) {
-        LittleEntity entity = LittleTiles.ANIMATION_HANDLERS.find(true, targetLevel);
-        Level level;
-        if (entity == null)
-            level = Minecraft.getInstance().level;
-        else
-            level = (Level) entity.getSubLevel();
-        
-        Entity target = LittleLevelTransitionManager.findEntity(uuid);
-        if (target != null)
-            LittleTilesClient.ANIMATION_HANDLER.queueEntityForTransition(target, level);
+        // client-only transition handling
     }
     
     public void executeServer(ServerPlayer player) {

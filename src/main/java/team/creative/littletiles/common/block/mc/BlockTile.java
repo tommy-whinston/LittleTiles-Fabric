@@ -9,7 +9,6 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -79,9 +78,6 @@ import team.creative.creativecore.common.util.type.list.Pair;
 import team.creative.littletiles.LittleTiles;
 import team.creative.littletiles.LittleTilesRegistry;
 import team.creative.littletiles.api.common.block.LittlePhysicBlock;
-import team.creative.littletiles.client.LittleTilesClient;
-import team.creative.littletiles.client.action.LittleActionHandlerClient;
-import team.creative.littletiles.client.render.block.BlockTileRenderProperties;
 import team.creative.littletiles.common.action.LittleActionActivated;
 import team.creative.littletiles.common.action.LittleActionDestroy;
 import team.creative.littletiles.common.block.entity.BETiles;
@@ -201,7 +197,7 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
     
     @OnlyIn(Dist.CLIENT)
     public void initializeClient(Consumer<IClientBlockExtensions> consumer) {
-        consumer.accept(BlockTileRenderProperties.INSTANCE);
+        // client-only rendering is ported separately
     }
     
     public RenderShape getRenderShape(BlockState state) {
@@ -291,9 +287,9 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
     
     @OnlyIn(Dist.CLIENT)
     public VoxelShape getSelectionShape(BlockGetter level, BlockPos pos) {
-        LittleTileContext tileContext = LittleTileContext.selectFocused(level, pos, Minecraft.getInstance().player);
+        LittleTileContext tileContext = LittleTileContext.selectFocused(level, pos, (Player) null);
         if (tileContext.isComplete()) {
-            if (selectEntireBlock(Minecraft.getInstance().player, LittleActionHandlerClient.isUsingSecondMode()))
+            if (false)
                 return tileContext.parent.getBE().getBlockShape();
             if (LittleTiles.CONFIG.rendering.highlightStructureBox && tileContext.parent.isStructure())
                 try {
@@ -437,12 +433,6 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
     
     @OnlyIn(Dist.CLIENT)
     public InteractionResult useClient(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
-        LittleTileContext context = LittleTileContext.selectFocused(level, pos, player);
-        if (context.isComplete() && !(player.getItemInHand(hand).getItem() instanceof ItemLittleWrench) && LittleTilesClient.INTERACTION.can()) {
-            InteractionResult inter = LittleTilesClient.ACTION_HANDLER.execute(new LittleActionActivated(level, pos, player, hand));
-            if (inter != InteractionResult.PASS && LittleTilesClient.INTERACTION.start(true))
-                return inter;
-        }
         return InteractionResult.PASS;
     }
     
@@ -524,7 +514,7 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
     public boolean removedByPlayerClient(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
         LittleTileContext result = LittleTileContext.selectFocused(level, pos, player, TickUtils.getFrameTime(level));
         if (result.isComplete())
-            return LittleTilesClient.ACTION_HANDLER.execute(new LittleActionDestroy(level, pos, player));
+            return false;
         return false;
     }
     
@@ -559,7 +549,7 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         
         LittleTileContext result = LittleTileContext.selectFocused(level, pos, player);
         if (result.isComplete()) {
-            if (selectEntireBlock(player, LittleActionHandlerClient.isUsingSecondMode())) {
+            if (selectEntireBlock(player, false)) {
                 ItemStack drop = new ItemStack(LittleTilesRegistry.ITEM_TILES.get());
                 LittleGroup group = new LittleGroup();
                 for (LittleTile tile : result.parent)
@@ -631,7 +621,7 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
     
     @OnlyIn(Dist.CLIENT)
     public SoundType getSoundTypeClient(BlockState state, LevelReader level, BlockPos pos) {
-        LittleTileContext result = LittleTileContext.selectFocused(level, pos, Minecraft.getInstance().player);
+        LittleTileContext result = LittleTileContext.selectFocused(level, pos, (Player) null);
         if (result.isComplete())
             return result.tile.getSound();
         return null;

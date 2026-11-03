@@ -42,8 +42,10 @@ import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.client.settings.IKeyConflictContext;
 import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.common.MinecraftForge;
+import net.fabricmc.api.ClientModInitializer;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import team.creative.creativecore.client.CreativeCoreClient;
 import team.creative.creativecore.client.render.box.RenderBox;
 import team.creative.littletiles.client.compat.ClientRegistryCompat;
@@ -89,8 +91,19 @@ import team.creative.littletiles.common.placement.mode.PlacementMode;
 import team.creative.littletiles.common.structure.type.premade.LittleStructurePremade.LittlePremadeType;
 
 @OnlyIn(Dist.CLIENT)
-public class LittleTilesClient {
+public class LittleTilesClient implements ClientModInitializer {
     
+    @Override
+    public void onInitializeClient() {
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        load(bus);
+        bus.post(new FMLClientSetupEvent());
+        bus.post(new RegisterKeyMappingsEvent());
+        bus.post(new RegisterColorHandlersEvent.Item());
+        bus.post(new RegisterColorHandlersEvent.Block());
+        bus.post(new RegisterAdditional());
+        bus.post(new RegisterGeometryLoaders());
+    }
     public static final Minecraft mc = Minecraft.getInstance();
     
     public static final IKeyConflictContext LITTLE_KEY_CONTEXT = new IKeyConflictContext() {

@@ -15,6 +15,14 @@ public class RenderHighlightEvent extends Event {
     private final Camera camera;
     private final float partialTick;
 
+    public RenderHighlightEvent() {
+        this.target = null;
+        this.poseStack = null;
+        this.multiBufferSource = null;
+        this.camera = null;
+        this.partialTick = 0;
+    }
+
     public RenderHighlightEvent(HitResult target, PoseStack poseStack, MultiBufferSource multiBufferSource, Camera camera, float partialTick) {
         this.target = target;
         this.poseStack = poseStack;
@@ -44,6 +52,9 @@ public class RenderHighlightEvent extends Event {
     }
 
     public static class Block extends RenderHighlightEvent {
+
+        public Block() {
+        }
 
         public Block(HitResult target, PoseStack poseStack, MultiBufferSource multiBufferSource, Camera camera, float partialTick) {
             super(target, poseStack, multiBufferSource, camera, partialTick);

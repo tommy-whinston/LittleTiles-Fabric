@@ -23,9 +23,11 @@ public class EntityMixin {
         return (Entity) (Object) this;
     }
     
-    @Inject(method = "pick", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true, require = 1)
-    public void pick(double reach, float partialTicks, boolean fluid, CallbackInfoReturnable<HitResult> info, Vec3 pos, Vec3 view, Vec3 look) {
+    @Inject(method = "pick", at = @At("RETURN"), cancellable = true, require = 1)
+    public void pick(double reach, float partialTicks, boolean fluid, CallbackInfoReturnable<HitResult> info) {
         Entity entity = asEntity();
+        Vec3 pos = entity.getEyePosition(partialTicks);
+        Vec3 look = entity.getViewVector(partialTicks);
         HitResult result = info.getReturnValue();
         double reachDistance = result != null ? pos.distanceTo(result.getLocation()) : (entity instanceof Player p ? PlayerUtils.getReach(p) : 4);
         LittleHitResult hit = LittleTiles.ANIMATION_HANDLERS.get(entity.level()).getHit(pos, look, reachDistance);

@@ -8,7 +8,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import team.creative.creativecore.common.network.CreativePacket;
-import team.creative.littletiles.client.LittleTilesClient;
 
 public class ActionMessagePacket extends CreativePacket {
     
@@ -22,7 +21,7 @@ public class ActionMessagePacket extends CreativePacket {
     
     @OnlyIn(Dist.CLIENT)
     public void executeClient(Player player) {
-        LittleTilesClient.displayActionMessage(message);
+        // client-only action message
     }
     
     public void executeServer(ServerPlayer player) {}

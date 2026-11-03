@@ -21,6 +21,10 @@ public class PlayerInteractEvent extends PlayerEvent {
     private Result useItem = Result.DEFAULT;
     private final BlockHitResult hitResult;
 
+    public PlayerInteractEvent() {
+        this(null, null, null, null, null);
+    }
+
     public PlayerInteractEvent(Player player, InteractionHand hand, BlockPos pos, Direction face) {
         this(player, hand, pos, face, null);
     }
@@ -83,6 +87,9 @@ public class PlayerInteractEvent extends PlayerEvent {
 
     public static class LeftClickBlock extends PlayerInteractEvent {
 
+        public LeftClickBlock() {
+        }
+
         public LeftClickBlock(Player player, BlockPos pos, Direction face) {
             super(player, InteractionHand.MAIN_HAND, pos, face);
         }
@@ -94,12 +101,18 @@ public class PlayerInteractEvent extends PlayerEvent {
 
     public static class LeftClickEmpty extends PlayerInteractEvent {
 
+        public LeftClickEmpty() {
+        }
+
         public LeftClickEmpty(Player player) {
             super(player, InteractionHand.MAIN_HAND, player.blockPosition(), Direction.UP);
         }
     }
 
     public static class RightClickBlock extends PlayerInteractEvent {
+
+        public RightClickBlock() {
+        }
 
         public RightClickBlock(Player player, InteractionHand hand, BlockPos pos, BlockHitResult hitResult) {
             super(player, hand, pos, hitResult.getDirection(), hitResult);

@@ -9,6 +9,11 @@ public class ClientPlayerNetworkEvent extends Event {
     private final Player player;
     private final Connection connection;
 
+    public ClientPlayerNetworkEvent() {
+        this.player = null;
+        this.connection = null;
+    }
+
     public ClientPlayerNetworkEvent(Player player, Connection connection) {
         this.player = player;
         this.connection = connection;
@@ -24,12 +29,18 @@ public class ClientPlayerNetworkEvent extends Event {
 
     public static class LoggingOut extends ClientPlayerNetworkEvent {
 
+        public LoggingOut() {
+        }
+
         public LoggingOut(Player player, Connection connection) {
             super(player, connection);
         }
     }
 
     public static class LoggingIn extends ClientPlayerNetworkEvent {
+
+        public LoggingIn() {
+        }
 
         public LoggingIn(Player player, Connection connection) {
             super(player, connection);

@@ -18,6 +18,13 @@ public class RenderBlockScreenEffectEvent extends Event {
     private final BlockState blockState;
     private final BlockPos blockPos;
 
+    public RenderBlockScreenEffectEvent() {
+        this.overlayType = null;
+        this.player = null;
+        this.blockState = null;
+        this.blockPos = null;
+    }
+
     public RenderBlockScreenEffectEvent(OverlayType overlayType, Player player, BlockState blockState, BlockPos blockPos) {
         this.overlayType = overlayType;
         this.player = player;

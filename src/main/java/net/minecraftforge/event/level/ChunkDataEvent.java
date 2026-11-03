@@ -11,6 +11,11 @@ public class ChunkDataEvent extends Event {
     private final LevelChunk chunk;
     private final CompoundTag data;
 
+    public ChunkDataEvent() {
+        this.chunk = null;
+        this.data = new CompoundTag();
+    }
+
     public ChunkDataEvent(LevelChunk chunk, CompoundTag data) {
         this.chunk = chunk;
         this.data = data;
@@ -32,6 +37,10 @@ public class ChunkDataEvent extends Event {
 
         private final ChunkStatus.ChunkType type;
 
+        public Load() {
+            this.type = null;
+        }
+
         public Load(LevelChunk chunk, CompoundTag data, ChunkStatus.ChunkType type) {
             super(chunk, data);
             this.type = type;
@@ -43,6 +52,9 @@ public class ChunkDataEvent extends Event {
     }
 
     public static class Save extends ChunkDataEvent {
+
+        public Save() {
+        }
 
         public Save(LevelChunk chunk, Level level, CompoundTag data) {
             super(chunk, data);
