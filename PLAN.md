@@ -51,6 +51,9 @@ This is the largest stage.
 
 **Done when:** the mod loads in the dev client and on a dedicated server without a crash.
 
+The dedicated server reaches `Done`, and the client launches and reloads resources. Entering a
+world and testing gameplay remain.
+
 ### Stage 5 — Basic gameplay — `[ ]` planned
 
 - Place/break the tile block.
@@ -145,6 +148,9 @@ milestone.
 - Убедиться, что клиент доходит до главного меню и создаёт мир.
 
 **Готово, когда:** мод загружается в dev-клиенте и на выделенном сервере без краша.
+
+Выделенный сервер доходит до `Done`, клиент запускается и перезагружает ресурсы. Остались
+вход в мир и проверка геймплея.
 
 ### Этап 5 — Базовая играбельность — `[ ]` запланировано
 

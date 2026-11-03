@@ -1,4 +1,4 @@
-﻿{
+{
     "required":  true,
     "package":  "team.creative.littletiles.mixin",
     "compatibilityLevel":  "JAVA_17",
@@ -33,6 +33,7 @@
                ],
     "client":  [
                    "client.MinecraftMixin",
+                   "client.EntityRenderersAccessor",
                    "client.MultiPlayerGameModeAccessor",
                    "client.level.ClientLevelMixin",
                    "client.level.ClientChunkCacheAccessor",

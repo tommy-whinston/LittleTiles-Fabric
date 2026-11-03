@@ -91,49 +91,5 @@ public class MinecraftMixin {
         return original.call(mode) || LittleTilesClient.INTERACTION_HANDLER.isDestroying();
     }
     
-    @Inject(method = "startUseItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/HitResult;getType()Lnet/minecraft/world/phys/HitResult$Type;"), require = 1,
-            cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
-    private void startUseItem(CallbackInfo info, InteractionHand[] hands, int delay, int type, InteractionHand interactionhand, InteractionKeyMappingTriggered inputEvent, ItemStack itemstack) {
-        Minecraft mc = asMinecraft();
-        LocalPlayer player = mc.player;
-        if (mc.hitResult instanceof LittleHitResult hit) {
-            if (hit.isEntity()) {
-                EntityHitResult entityhitresult = hit.asEntityHit();
-                Entity entity = entityhitresult.getEntity();
-                if (!hit.level.getWorldBorder().isWithinBounds(entity.blockPosition()))
-                    return;
-                
-                //if (!player.canInteractWith(entityhitresult.getEntity(), 0)) Not there in 1.20 Forge 46.0.10
-                //    return; //Forge: Entity may be traced via attack range, but the player may not have sufficient reach.  No padding in client code.
-                InteractionResult interactionresult = LittleTilesClient.INTERACTION_HANDLER.interactAt(hit.level.asLevel(), player, entity, entityhitresult, interactionhand);
-                if (!interactionresult.consumesAction())
-                    interactionresult = LittleTilesClient.INTERACTION_HANDLER.interact(hit.level.asLevel(), player, entity, interactionhand);
-                
-                if (interactionresult.consumesAction()) {
-                    if (interactionresult.shouldSwing() && inputEvent.shouldSwingHand())
-                        player.swing(interactionhand);
-                    info.cancel();
-                }
-                return;
-            }
-            
-            BlockHitResult blockhitresult = hit.asBlockHit();
-            int i = itemstack.getCount();
-            InteractionResult interactionresult1 = LittleTilesClient.INTERACTION_HANDLER.useItemOn(hit.level.asLevel(), player, interactionhand, blockhitresult);
-            if (interactionresult1.consumesAction()) {
-                if (interactionresult1.shouldSwing() && inputEvent.shouldSwingHand()) {
-                    player.swing(interactionhand);
-                    if (!itemstack.isEmpty() && (itemstack.getCount() != i || mc.gameMode.hasInfiniteItems()))
-                        mc.gameRenderer.itemInHandRenderer.itemUsed(interactionhand);
-                }
-                
-                info.cancel();
-                return;
-            }
-            
-            if (interactionresult1 == InteractionResult.FAIL)
-                info.cancel();
-        }
-    }
-    
+    // TODO: port Forge's startUseItem local-capture injection
 }

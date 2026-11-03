@@ -43,6 +43,7 @@ import net.minecraftforge.client.settings.IKeyConflictContext;
 import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.common.MinecraftForge;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -97,12 +98,14 @@ public class LittleTilesClient implements ClientModInitializer {
     public void onInitializeClient() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         load(bus);
-        bus.post(new FMLClientSetupEvent());
-        bus.post(new RegisterKeyMappingsEvent());
-        bus.post(new RegisterColorHandlersEvent.Item());
-        bus.post(new RegisterColorHandlersEvent.Block());
-        bus.post(new RegisterAdditional());
-        bus.post(new RegisterGeometryLoaders());
+        ClientLifecycleEvents.CLIENT_STARTED.register(client -> {
+            bus.post(new FMLClientSetupEvent());
+            bus.post(new RegisterKeyMappingsEvent());
+            bus.post(new RegisterColorHandlersEvent.Item());
+            bus.post(new RegisterColorHandlersEvent.Block());
+            bus.post(new RegisterAdditional());
+            bus.post(new RegisterGeometryLoaders());
+        });
     }
     public static final Minecraft mc = Minecraft.getInstance();
     
