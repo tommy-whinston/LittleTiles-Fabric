@@ -144,8 +144,6 @@ public class LittlePremadeRegistry {
         register("workbench", LittleTiles.MODID, LittleWorkbench.class, LittleWorkbench::new);
         register("importer", LittleTiles.MODID, LittleImporter.class, LittleImporter::new);
         register("exporter", LittleTiles.MODID, LittleExporter.class, LittleExporter::new);
-        register(new LittleStructureTypeParticleEmitter("particle_emitter", LittleParticleEmitter.class, LittleParticleEmitter::new, new LittleAttributeBuilder()
-                .ticking(), LittleTiles.MODID)).addOutput("disabled", 1, SignalMode.TOGGLE, true).setFieldDefault("facing", Facing.UP);
         register("blankomatic", LittleTiles.MODID, LittleBlankOMatic.class, LittleBlankOMatic::new);
         
         register(new LittleStructureTypeCable("single_cable1", LittleSignalCable.class, LittleSignalCable::new, new LittleAttributeBuilder()
@@ -173,6 +171,10 @@ public class LittlePremadeRegistry {
                 .addOutput("pixels", 16, SignalMode.EQUAL, true);
         
         register("structure_builder", LittleTiles.MODID, LittleStructureBuilder.class, LittleStructureBuilder::new);
+        
+        if (net.fabricmc.loader.api.FabricLoader.getInstance().getEnvironmentType() == net.fabricmc.api.EnvType.CLIENT)
+            register(new LittleStructureTypeParticleEmitter("particle_emitter", LittleParticleEmitter.class, LittleParticleEmitter::new, new LittleAttributeBuilder()
+                    .ticking(), LittleTiles.MODID)).addOutput("disabled", 1, SignalMode.TOGGLE, true).setFieldDefault("facing", Facing.UP);
         
         // Sensors
         register((LittlePremadeType) new LittlePremadeType("daylight_sensor", "sensor", LittleDayLightSensor.class, LittleDayLightSensor::new, new LittleAttributeBuilder()

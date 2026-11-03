@@ -9,8 +9,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
 
+@Cancelable
 public class PlayerInteractEvent extends PlayerEvent {
 
     private final InteractionHand hand;
@@ -85,6 +87,7 @@ public class PlayerInteractEvent extends PlayerEvent {
         this.cancellationResult = result;
     }
 
+    @Cancelable
     public static class LeftClickBlock extends PlayerInteractEvent {
 
         public LeftClickBlock() {
@@ -99,6 +102,7 @@ public class PlayerInteractEvent extends PlayerEvent {
         }
     }
 
+    @Cancelable
     public static class LeftClickEmpty extends PlayerInteractEvent {
 
         public LeftClickEmpty() {
@@ -109,6 +113,7 @@ public class PlayerInteractEvent extends PlayerEvent {
         }
     }
 
+    @Cancelable
     public static class RightClickBlock extends PlayerInteractEvent {
 
         public RightClickBlock() {

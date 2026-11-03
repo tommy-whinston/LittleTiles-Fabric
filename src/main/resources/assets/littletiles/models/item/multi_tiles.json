@@ -1,4 +1,6 @@
 {
-    "loader": "creativecore:rendered",
-    "item": "littletiles:tiles"
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "littletiles:block/colored_stone"
+    }
 }

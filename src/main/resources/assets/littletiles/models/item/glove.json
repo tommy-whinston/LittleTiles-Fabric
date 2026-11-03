@@ -1,4 +1,6 @@
 {
-    "loader": "creativecore:rendered",
-    "item": "littletiles:glove"
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "littletiles:item/glove"
+    }
 }

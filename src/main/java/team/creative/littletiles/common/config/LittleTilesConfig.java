@@ -281,15 +281,12 @@ public class LittleTilesConfig {
         
         public void configured(Side side) {
             LittleGrid.configure(highest);
-            if (side.isClient())
-                configuredClient();
             LittlePremadeRegistry.reload();
-            ItemMultiTiles.reloadExampleStructures();
-        }
-        
-        @OnlyIn(Dist.CLIENT)
-        private void configuredClient() {
-            // client-only grid refresh
+            try {
+                ItemMultiTiles.reloadExampleStructures();
+            } catch (Throwable t) {
+                LittleTiles.LOGGER.error("Could not reload example structures", t);
+            }
         }
     }
     

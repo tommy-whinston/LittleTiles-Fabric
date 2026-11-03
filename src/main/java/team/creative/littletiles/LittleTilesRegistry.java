@@ -181,6 +181,8 @@ public class LittleTilesRegistry {
     // Recipe Serializer
     
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, LittleTiles.MODID);
+    public static final RegistryObject<RecipeSerializer<? extends CraftingRecipe>> PREMADE_RECIPES = RECIPE_SERIALIZERS.register("crafting_shaped_premade",
+        team.creative.littletiles.common.recipe.PremadeShapedRecipeSerializer::new);
     
     
     // CREATIVE_TAB
@@ -189,13 +191,21 @@ public class LittleTilesRegistry {
     
     public static final RegistryObject<CreativeModeTab> TAB = CREATIVE_TABS.register("items", () -> CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0).icon(() -> new ItemStack(LittleTilesRegistry.HAMMER
             .get())).title(Component.translatable("creative_tab.littletiles")).displayItems((features, output) -> {
+                java.util.Set<ItemStack> added = new java.util.HashSet<>();
                 for (ExampleStructures example : ExampleStructures.values())
-                    if (example.stack != null)
+                    if (example.stack != null && added.stream().noneMatch(x -> ItemStack.isSameItemSameTags(x, example.stack))) {
+                        added.add(example.stack);
                         output.accept(example.stack);
+                    }
                     
                 for (LittlePremadeType entry : LittlePremadeRegistry.types())
-                    if (entry.showInCreativeTab && !entry.hasCustomTab())
-                        output.accept(entry.createItemStack());
+                    if (entry.showInCreativeTab && !entry.hasCustomTab()) {
+                        ItemStack stack = entry.createItemStack();
+                        if (added.stream().noneMatch(x -> ItemStack.isSameItemSameTags(x, stack))) {
+                            added.add(stack);
+                            output.accept(stack);
+                        }
+                    }
                     
                 output.accept(LittleTilesRegistry.HAMMER.get());
                 output.accept(LittleTilesRegistry.CHISEL.get());

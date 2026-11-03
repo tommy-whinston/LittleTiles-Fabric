@@ -1,14 +1,10 @@
 {
-    "result": {
-        "item": "littletiles:bag",
-        "data": 0
-    },
+    "type": "minecraft:crafting_shaped",
     "pattern": [
         " S ",
         "LIL",
         " L "
     ],
-    "type": "minecraft:crafting_shaped",
     "key": {
         "L": {
             "item": "minecraft:leather"
@@ -19,5 +15,8 @@
         "S": {
             "item": "minecraft:string"
         }
+    },
+    "result": {
+        "item": "littletiles:bag"
     }
 }

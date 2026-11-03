@@ -33,7 +33,7 @@ public class LittleInventory implements Iterable<ItemStack> {
     public boolean allowDrop = true;
     
     public LittleInventory(Player player) {
-        this(player, null);
+        this(player, player == null ? null : new PlayerItemHandler(player.getInventory()));
     }
     
     public LittleInventory(IItemHandler inventory) {

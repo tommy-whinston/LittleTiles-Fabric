@@ -8,7 +8,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import team.creative.littletiles.LittleTiles;
 import team.creative.littletiles.common.action.LittleActionActivated;
@@ -29,6 +31,7 @@ public class LittleTilesServer {
         NEIGHBOR = new NeighborUpdateOrganizer();
         INTERACTION = new LittleInteractionHandlerServer();
         MinecraftForge.EVENT_BUS.addListener(LittleActionHandlerServer::playerLoggedIn);
+        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> LittleActionHandlerServer.playerLoggedIn(new PlayerLoggedInEvent(handler.player)));
     }
     
     /** activates blocks and animations from littletiles on server side

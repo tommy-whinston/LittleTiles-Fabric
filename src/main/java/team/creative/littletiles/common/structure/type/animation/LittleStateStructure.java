@@ -12,7 +12,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import team.creative.creativecore.client.sound.EntitySound;
 import team.creative.creativecore.common.gui.GuiControl;
 import team.creative.creativecore.common.util.math.vec.Vec1d;
 import team.creative.creativecore.common.util.mc.ColorUtils;
@@ -300,11 +299,7 @@ public abstract class LittleStateStructure<T extends AnimationState> extends Lit
     
     @OnlyIn(Dist.CLIENT)
     private void playClient(SoundEvent event, float volume, float pitch) {
-        var entity = getAnimationEntity();
-        if (entity != null)
-            GuiControl.playSound(new EntitySound(event, getAnimationEntity(), volume, pitch, SoundSource.BLOCKS));
-        else
-            getStructureLevel().playLocalSound(getStructurePos(), event, SoundSource.BLOCKS, volume, pitch, false);
+        getStructureLevel().playLocalSound(getStructurePos(), event, SoundSource.BLOCKS, volume, pitch, false);
     }
     
     public void finishedPlacement(Placement placement) {

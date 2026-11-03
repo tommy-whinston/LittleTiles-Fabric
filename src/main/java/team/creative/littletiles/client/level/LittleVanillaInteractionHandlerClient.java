@@ -244,7 +244,10 @@ public class LittleVanillaInteractionHandlerClient extends LevelHandler {
         try (BlockStatePredictionHandler blockstatepredictionhandler = ((ClientLevelExtender) level).blockStatePredictionHandler().startPredicting()) {
             int i = blockstatepredictionhandler.currentSequence();
             Packet<ServerGamePacketListener> packet = action.predict(i);
-            LittleTilesClient.PLAYER_CONNECTION.send(level, packet);
+            if (level instanceof team.creative.littletiles.common.level.little.LittleLevel)
+                LittleTilesClient.PLAYER_CONNECTION.send(level, packet);
+            else
+                getVanillaConnection().send(packet);
         }
         
     }

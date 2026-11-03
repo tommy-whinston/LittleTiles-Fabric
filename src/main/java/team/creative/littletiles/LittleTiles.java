@@ -197,7 +197,8 @@ public class LittleTiles implements ModInitializer {
         STORAGE_BLOCKS = net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, new ResourceLocation(MODID, "storage_blocks"));
         
         
-        LittleTilesGuiRegistry.init();
+        if (net.fabricmc.loader.api.FabricLoader.getInstance().getEnvironmentType() == net.fabricmc.api.EnvType.CLIENT)
+            LittleTilesGuiRegistry.init();
         LittleBlocks.init();
     }
     

@@ -68,6 +68,8 @@ public class PreviewRenderer implements LevelAwareHandler {
     
     public static final ResourceLocation WHITE_TEXTURE = new ResourceLocation(LittleTiles.MODID, "textures/preview.png");
     public static Minecraft mc = Minecraft.getInstance();
+    public static boolean previewTickLogged = false;
+    public static boolean previewResultLogged = false;
     
     private boolean lastLowResolution;
     private CompoundTag lastCached;
@@ -183,6 +185,11 @@ public class PreviewRenderer implements LevelAwareHandler {
             ItemStack stack = mc.player.getMainHandItem();
             PoseStack pose = new PoseStack();
             
+            if (!previewTickLogged) {
+                previewTickLogged = true;
+                LittleTiles.LOGGER.info("PreviewRenderer.tick stack={} hit={} isLittle={}", stack, mc.hitResult, PlacementHelper.isLittleBlock(stack));
+            }
+            
             if (!LittleAction.canPlace(player)) {
                 handleUndoAndRedo(false);
                 return;
@@ -212,6 +219,7 @@ public class PreviewRenderer implements LevelAwareHandler {
                     
                     if (mode.getPreviewMode() == PreviewMode.PREVIEWS) {
                         RenderSystem.enableBlend();
+                        RenderSystem.disableDepthTest();
                         
                         if (LittleTiles.CONFIG.rendering.darkerPreviewBoxShading) {
                             GL14.glBlendColor(0.25F, 0.25F, 0.25F, 0.25F);
@@ -232,6 +240,11 @@ public class PreviewRenderer implements LevelAwareHandler {
                         boolean allowLowResolution = marked != null ? marked.allowLowResolution() : true;
                         PlacementPreview result = getPreviews(player, level, stack, position, isCentered(stack, iTile), isFixed(stack, iTile), allowLowResolution);
                         
+                        if (!previewResultLogged) {
+                            previewResultLogged = true;
+                            LittleTiles.LOGGER.info("Preview result={} mode={} position={} stack={}", result, mode, position, stack);
+                        }
+                        
                         if (result != null) {
                             BlockPos pos = result.position.getPos();
                             
@@ -244,8 +257,16 @@ public class PreviewRenderer implements LevelAwareHandler {
                             double alpha = (float) (Math.sin(System.nanoTime() / 200000000D) * 0.2 + 0.5);
                             int colorAlpha = (int) (alpha * iTile.getPreviewAlphaFactor() * 255);
                             
-                            for (RenderBox box : result.previews.getPlaceBoxes(result.position.getVec()))
+                            List<RenderBox> previewBoxes = result.previews.getPlaceBoxes(result.position.getVec());
+                            for (RenderBox box : previewBoxes) {
+                                box.setColor(0x33CCFF);
                                 box.renderPreview(pose, builder, colorAlpha);
+                            }
+                            
+                            VertexConsumer lineConsumer = mc.renderBuffers().bufferSource().getBuffer(RenderType.lines());
+                            for (RenderBox box : previewBoxes)
+                                box.renderLines(pose, lineConsumer, 0xFF33CCFF);
+                            mc.renderBuffers().bufferSource().endBatch(RenderType.lines());
                             
                             if (LittleActionHandlerClient.isUsingSecondMode() != iTile.snapToGridByDefault(stack)) {
                                 List<RenderBox> cubes = iTile.getPositingCubes(level, pos, stack);
@@ -258,6 +279,7 @@ public class PreviewRenderer implements LevelAwareHandler {
                         }
                         
                         RenderSystem.depthMask(true);
+                        RenderSystem.enableDepthTest();
                         RenderSystem.disableBlend();
                         RenderSystem.defaultBlendFunc();
                     }

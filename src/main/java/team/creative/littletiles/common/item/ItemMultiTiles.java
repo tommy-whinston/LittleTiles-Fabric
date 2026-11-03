@@ -14,7 +14,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import team.creative.creativecore.common.util.inventory.ContainerSlotView;
+import team.creative.creativecore.common.util.mc.ColorUtils;
 import team.creative.littletiles.LittleTiles;
 import team.creative.littletiles.LittleTilesRegistry;
 import team.creative.littletiles.api.common.tool.ILittlePlacer;
@@ -75,7 +77,17 @@ public class ItemMultiTiles extends Item implements ILittlePlacer, IItemTooltip 
     }
     
     public LittleGroup getTiles(ItemStack stack) {
-        return LittleGroup.load(stack.getOrCreateTag());
+        LittleGroup group = LittleGroup.load(stack.getOrCreateTag());
+        if (group.isEmptyIncludeChildren() && !group.hasStructure()) {
+            // A plain multi_tiles item has no payload. Use a full stone tile as a
+            // sensible default so the item is usable while the port is incomplete.
+            LittleGrid grid = LittleGrid.overallDefault();
+            if (grid == null)
+                grid = LittleGrid.MIN;
+            group.convertTo(grid);
+            group.add(grid, new LittleElement(Blocks.STONE.defaultBlockState(), ColorUtils.WHITE), grid.box());
+        }
+        return group;
     }
     
     public LittleGroup getLow(ItemStack stack) {

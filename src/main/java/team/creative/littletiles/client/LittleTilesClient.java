@@ -44,6 +44,12 @@ import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.common.MinecraftForge;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -87,6 +93,7 @@ import team.creative.littletiles.common.item.ItemLittleChisel;
 import team.creative.littletiles.common.item.ItemLittleGlove;
 import team.creative.littletiles.common.item.ItemLittlePaintBrush;
 import team.creative.littletiles.common.item.ItemPremadeStructure;
+import team.creative.littletiles.common.item.LittleToolHandler;
 import team.creative.littletiles.common.item.glove.GloveMode;
 import team.creative.littletiles.common.placement.mode.PlacementMode;
 import team.creative.littletiles.common.structure.type.premade.LittleStructurePremade.LittlePremadeType;
@@ -106,7 +113,25 @@ public class LittleTilesClient implements ClientModInitializer {
             bus.post(new RegisterAdditional());
             bus.post(new RegisterGeometryLoaders());
         });
+        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
+            if (client.level != null)
+                bus.post(new LevelEvent.Load(client.level));
+            if (ACTION_HANDLER != null)
+                ACTION_HANDLER.setting.refreshGrid(client.player);
+        });
+        ClientTickEvents.END_CLIENT_TICK.register(client -> bus.post(new TickEvent.ClientTickEvent(TickEvent.Phase.END)));
+        WorldRenderEvents.END.register(context -> {
+            if (!renderEventLogged) {
+                renderEventLogged = true;
+                LittleTiles.LOGGER.info("WorldRenderEvents.END fired");
+            }
+            bus.post(new TickEvent.RenderTickEvent(TickEvent.Phase.END));
+            bus.post(new RenderLevelStageEvent(RenderLevelStageEvent.Stage.AFTER_WEATHER, context.matrixStack(), context.tickDelta(), context.camera(), context.frustum(), context
+                    .projectionMatrix()));
+        });
     }
+    
+    public static boolean renderEventLogged = false;
     public static final Minecraft mc = Minecraft.getInstance();
     
     public static final IKeyConflictContext LITTLE_KEY_CONTEXT = new IKeyConflictContext() {
@@ -211,6 +236,7 @@ public class LittleTilesClient implements ClientModInitializer {
         
         // overlay.add(new OverlayControl(new GuiAxisIndicatorControl("axis"), OverlayPositionType.CENTER).setShouldRender(() -> PreviewRenderer.marked != null));
         MinecraftForge.EVENT_BUS.register(new LittleClientEventHandler());
+        MinecraftForge.EVENT_BUS.register(new LittleToolHandler());
         
         LEVEL_HANDLERS.register(LittleActionHandlerClient::new, x -> ACTION_HANDLER = x);
         LEVEL_HANDLERS.register(LittleVanillaInteractionHandlerClient::new, x -> INTERACTION_HANDLER = x);
@@ -242,6 +268,7 @@ public class LittleTilesClient implements ClientModInitializer {
         EntityRendererHelper.register(LittleTilesRegistry.SIT_TYPE.get(), LittleSitRenderer::new);
         
         blockEntityRenderer = new BETilesRenderer();
+        BlockEntityRenderers.register(LittleTilesRegistry.BE_TILES_TYPE.get(), x -> blockEntityRenderer);
         BlockEntityRenderers.register(LittleTilesRegistry.BE_TILES_TYPE_RENDERED.get(), x -> blockEntityRenderer);
         
         ResourceLocation filled = new ResourceLocation(LittleTiles.MODID, "filled");

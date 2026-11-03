@@ -59,7 +59,8 @@ public class LittleShapeBox extends LittleShape {
         List<GuiControl> controls = new ArrayList<>();
         controls.add(new GuiCheckBox("hollow", nbt.getBoolean("hollow")).setTranslate("gui.hollow"));
         controls.add(new GuiLabel("label").setTranslate("gui.thickness"));
-        controls.add(new GuiSteppedSlider("thickness", nbt.getInt("thickness"), 1, grid.count));
+        if (grid != null)
+            controls.add(new GuiSteppedSlider("thickness", nbt.getInt("thickness"), 1, grid.count));
         
         return controls;
     }
@@ -68,9 +69,11 @@ public class LittleShapeBox extends LittleShape {
     public void saveCustomSettings(GuiParent gui, CompoundTag nbt, LittleGrid grid) {
         
         GuiCheckBox box = gui.get("hollow");
-        nbt.putBoolean("hollow", box.value);
+        if (box != null)
+            nbt.putBoolean("hollow", box.value);
         GuiSteppedSlider slider = gui.get("thickness");
-        nbt.putInt("thickness", (int) slider.getValue());
+        if (slider != null)
+            nbt.putInt("thickness", (int) slider.getValue());
     }
     
     public void rotate(CompoundTag nbt, Rotation rotation) {}

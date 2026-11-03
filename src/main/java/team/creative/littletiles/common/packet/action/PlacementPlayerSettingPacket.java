@@ -17,12 +17,11 @@ public class PlacementPlayerSettingPacket extends CreativePacket {
     public PlacementPlayerSettingPacket() {}
     
     public void executeClient(Player player) {
-        // client-only placement setting
+        // The client keeps its own placement settings; the server-side copy is only used for validation.
     }
     
     public void executeServer(ServerPlayer player) {
-        CompoundTag nbt = new CompoundTag();
-        nbt.put(PlacementPlayerSetting.SETTING_KEY, setting.save());
+        PlacementPlayerSetting.setServer(player, setting);
     }
     
 }

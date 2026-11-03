@@ -1,4 +1,6 @@
 {
-    "loader": "creativecore:rendered",
-    "item": "littletiles:blueprint"
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "littletiles:item/blueprint"
+    }
 }
