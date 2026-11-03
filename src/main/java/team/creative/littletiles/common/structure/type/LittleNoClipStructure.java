@@ -26,17 +26,14 @@ public class LittleNoClipStructure extends LittleStructure {
         super(type, mainBlock);
     }
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {
         web = nbt.getBoolean("web");
     }
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {
         nbt.putBoolean("web", web);
     }
     
-    @Override
     public void onEntityCollidedWithBlock(Level level, IStructureParentCollection parent, BlockPos pos, Entity entityIn) {
         if (web)
             entityIn.makeStuckInBlock(Blocks.COBWEB.defaultBlockState(), new Vec3(0.25D, 0.05F, 0.25D));
@@ -59,7 +56,6 @@ public class LittleNoClipStructure extends LittleStructure {
         queueForNextTick();
     }
     
-    @Override
     public boolean queuedTick() {
         int players = 0;
         for (Entity entity : entities)

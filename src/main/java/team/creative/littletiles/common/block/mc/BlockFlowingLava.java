@@ -48,42 +48,34 @@ public class BlockFlowingLava extends Block implements ILittleMCBlock, IFakeRend
         this.still = still;
     }
     
-    @Override
     public Block asVanillaBlock() {
         return this;
     }
     
-    @Override
     public BlockState rotate(BlockState state, net.minecraft.world.level.block.Rotation rotation) {
         return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
     
-    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
     }
     
-    @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return this.defaultBlockState().setValue(FACING, context.getClickedFace());
     }
     
-    @Override
     public boolean noCollision() {
         return true;
     }
     
-    @Override
     public boolean isFluid(TagKey<Fluid> fluid) {
         return fluid.equals(FluidTags.LAVA);
     }
     
-    @Override
     public boolean checkEntityCollision() {
         return true;
     }
     
-    @Override
     public void entityCollided(IParentCollection parent, LittleTile tile, Entity entity) {
         AABB box = entity.getBoundingBox();
         LittleVec center = new LittleVec(parent.getGrid(), new Vec3((box.minX + box.maxX) / 2, (box.minY + box.maxY) / 2, (box.minZ + box.maxZ) / 2).subtract(Vec3.atLowerCornerOf(
@@ -96,22 +88,18 @@ public class BlockFlowingLava extends Block implements ILittleMCBlock, IFakeRend
         }
     }
     
-    @Override
     public boolean canBeConvertedToVanilla() {
         return false;
     }
     
-    @Override
     public BlockState getFakeState(BlockState state) {
         return Blocks.LAVA.defaultBlockState();
     }
     
-    @Override
     public boolean canInteract() {
         return true;
     }
     
-    @Override
     public InteractionResult use(IParentCollection parent, LittleTile tile, LittleBox box, Player player, BlockHitResult result, InteractionHand hand) {
         if (player.getMainHandItem().getItem() instanceof BucketItem && LittleTiles.CONFIG.general.allowFlowingLava) {
             BlockState newState;
@@ -134,12 +122,10 @@ public class BlockFlowingLava extends Block implements ILittleMCBlock, IFakeRend
         return ILittleMCBlock.super.use(parent, tile, box, player, result, hand);
     }
     
-    @Override
     public Vector3d getFogColor(IParentCollection parent, LittleTile tile, Entity entity, Vector3d originalColor, float partialTicks) {
         return new Vector3d(0.6F, 0.1F, 0.0F);
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public boolean canBeRenderCombined(LittleTile one, LittleTile two) {
         if (two.getBlock() == this)
@@ -149,12 +135,10 @@ public class BlockFlowingLava extends Block implements ILittleMCBlock, IFakeRend
         return false;
     }
     
-    @Override
     public BlockState rotate(BlockState state, Rotation rotation, LittleVec doubledCenter) {
         return state.setValue(FACING, rotation.rotate(Facing.get(state.getValue(FACING))).toVanilla());
     }
     
-    @Override
     public BlockState mirror(BlockState state, Axis axis, LittleVec doubledCenter) {
         return state.setValue(FACING, axis.mirror(state.getValue(FACING)));
     }

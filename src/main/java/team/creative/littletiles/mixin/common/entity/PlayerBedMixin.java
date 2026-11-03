@@ -33,17 +33,14 @@ public abstract class PlayerBedMixin extends LivingEntity implements ILittleBedP
     @Shadow
     private int sleepCounter;
     
-    @Override
     public LittleBed getBed() {
         return bed;
     }
     
-    @Override
     public void setBed(LittleBed bed) {
         this.bed = bed;
     }
     
-    @Override
     public Direction getBedOrientation() {
         LittleBed bed = getBed();
         if (bed != null)
@@ -51,7 +48,6 @@ public abstract class PlayerBedMixin extends LivingEntity implements ILittleBedP
         return super.getBedOrientation();
     }
     
-    @Override
     @Unique
     public void setSleepingCounter(int counter) {
         this.sleepCounter = counter;
@@ -63,7 +59,6 @@ public abstract class PlayerBedMixin extends LivingEntity implements ILittleBedP
             setPositionToBed();
     }
     
-    @Override
     public boolean setPositionToBed() {
         if (bed != null)
             try {

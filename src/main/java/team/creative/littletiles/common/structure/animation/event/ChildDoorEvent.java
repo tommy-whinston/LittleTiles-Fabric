@@ -17,12 +17,10 @@ public class ChildDoorEvent extends AnimationEvent<IntTag> {
         this.childId = childId;
     }
     
-    @Override
     public IntTag save() {
         return IntTag.valueOf(childId);
     }
     
-    @Override
     public void start(AnimationContext context) {
         if (context.isGui() || context.isClient())
             return;
@@ -34,7 +32,6 @@ public class ChildDoorEvent extends AnimationEvent<IntTag> {
         door.toggleState();
     }
     
-    @Override
     public boolean isDone(int ticksActive, AnimationContext context) {
         LittleDoor door = getDoor(context);
         if (door == null)
@@ -49,12 +46,10 @@ public class ChildDoorEvent extends AnimationEvent<IntTag> {
         return null;
     }
     
-    @Override
     public ChildDoorEvent copy() {
         return new ChildDoorEvent(childId);
     }
     
-    @Override
     public int reverseTick(int start, int duration, AnimationContext context) {
         LittleDoor door = getDoor(context);
         if (door == null)

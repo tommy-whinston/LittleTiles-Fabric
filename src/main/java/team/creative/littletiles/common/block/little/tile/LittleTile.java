@@ -124,7 +124,6 @@ public final class LittleTile extends LittleElement implements Iterable<LittleBo
             box.add(vec);
     }
     
-    @Override
     public Iterator<LittleBox> iterator() {
         return boxes.iterator();
     }
@@ -202,7 +201,6 @@ public final class LittleTile extends LittleElement implements Iterable<LittleBo
             box.split(grid, pos, offset, boxes, volume);
     }
     
-    @Override
     @Deprecated
     public CompoundTag save(CompoundTag nbt) {
         return super.save(nbt);
@@ -223,12 +221,10 @@ public final class LittleTile extends LittleElement implements Iterable<LittleBo
         return new LittleTile(this, new CopyArrayCollection<>());
     }
     
-    @Override
     public int hashCode() {
         return block.hashCode() + color;
     }
     
-    @Override
     /** note this does not check for boxes, just for the type */
     public boolean equals(Object obj) {
         if (obj instanceof LittleTile)
@@ -508,7 +504,6 @@ public final class LittleTile extends LittleElement implements Iterable<LittleBo
         return IngredientUtils.getBlockIngredient(block, getPercentVolume(context));
     }
     
-    @Override
     public String toString() {
         return "[" + getBlockName() + "|" + color + "|" + boxes + "]";
     }

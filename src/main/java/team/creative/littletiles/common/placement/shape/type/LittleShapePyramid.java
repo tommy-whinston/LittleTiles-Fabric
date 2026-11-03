@@ -31,7 +31,6 @@ public class LittleShapePyramid extends LittleShape {
         return Facing.UP;
     }
     
-    @Override
     protected void addBoxes(LittleBoxes boxes, ShapeSelection selection, boolean lowResolution) {
         LittleBox box = selection.getOverallBox();
         Facing facing = getFacing(selection.getNBT());
@@ -71,12 +70,10 @@ public class LittleShapePyramid extends LittleShape {
             }
     }
     
-    @Override
     public void addExtraInformation(CompoundTag nbt, List<Component> list) {
         list.add(Component.translatable("gui.facing").append(": ").append(Component.translatable("gui.direction." + getFacing(nbt).name().toLowerCase())));
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public List<GuiControl> getCustomSettings(CompoundTag nbt, LittleGrid grid) {
         List<GuiControl> controls = new ArrayList<>();
@@ -87,21 +84,18 @@ public class LittleShapePyramid extends LittleShape {
         return controls;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void saveCustomSettings(GuiParent gui, CompoundTag nbt, LittleGrid grid) {
         GuiStateButton state = (GuiStateButton) gui.get("direction");
         nbt.putInt("facing", state.getState());
     }
     
-    @Override
     public void rotate(CompoundTag nbt, Rotation rotation) {
         Facing facing = getFacing(nbt);
         facing = rotation.rotate(facing);
         nbt.putInt("facing", facing.ordinal());
     }
     
-    @Override
     public void mirror(CompoundTag nbt, Axis axis) {
         Facing facing = getFacing(nbt);
         facing = axis.mirror(facing);

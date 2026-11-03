@@ -55,7 +55,6 @@ public class LittleDoorAdvancedGui extends LittleStructureGuiControl {
         super(gui, item);
     }
     
-    @Override
     public void create(LittleStructure structure) {
         LittleGrid grid;
         LittleBox box;
@@ -209,7 +208,6 @@ public class LittleDoorAdvancedGui extends LittleStructureGuiControl {
         item.recipe.animation.setTimeline(item, timeline);
     }
     
-    @Override
     public LittleStructure save(LittleStructure structure) {
         LittleAdvancedDoor door = (LittleAdvancedDoor) structure;
         
@@ -273,7 +271,6 @@ public class LittleDoorAdvancedGui extends LittleStructureGuiControl {
             super(item, handler, duration, setup(closed, opened, duration, timeline), false);
         }
         
-        @Override
         public PhysicalState openedState() {
             PhysicalState state = new PhysicalState();
             for (PhysicalPart part : PhysicalPart.values()) {
@@ -284,7 +281,6 @@ public class LittleDoorAdvancedGui extends LittleStructureGuiControl {
             return state;
         }
         
-        @Override
         public PhysicalState closedState() {
             PhysicalState state = new PhysicalState();
             for (PhysicalPart part : PhysicalPart.values()) {
@@ -295,7 +291,6 @@ public class LittleDoorAdvancedGui extends LittleStructureGuiControl {
             return state;
         }
         
-        @Override
         public AnimationTimeline generateTimeline(int duration, ValueInterpolation interpolation, boolean opening) {
             AnimationTimeline timeline = generateTimeline(duration, interpolation);
             if (!opening)
@@ -303,7 +298,6 @@ public class LittleDoorAdvancedGui extends LittleStructureGuiControl {
             return timeline;
         }
         
-        @Override
         public boolean openingAnimation() {
             return true;
         }
@@ -341,27 +335,22 @@ public class LittleDoorAdvancedGui extends LittleStructureGuiControl {
             tabs.select(0);
         }
         
-        @Override
         public PhysicalState openedState() {
             return opened.create();
         }
         
-        @Override
         public PhysicalState closedState() {
             return closed.create();
         }
         
-        @Override
         public AnimationTimeline generateTimeline(int duration, ValueInterpolation interpolation, boolean opening) {
             return opening ? this.opening.generateTimeline(duration, interpolation) : this.closing.generateTimeline(duration, interpolation);
         }
         
-        @Override
         public boolean openingAnimation() {
             return get("timelineTabs", GuiTabs.class).index() == 0;
         }
         
-        @Override
         public void durationChanged(int duration) {
             opening.durationChanged(duration);
             closing.durationChanged(duration);
@@ -379,7 +368,6 @@ public class LittleDoorAdvancedGui extends LittleStructureGuiControl {
             this.limited = limited;
         }
         
-        @Override
         public boolean isSpaceFor(GuiTimelineKey<Double> key, int tick) {
             if (limited && (tick == 0 || tick == timeline.getDuration()))
                 return false;

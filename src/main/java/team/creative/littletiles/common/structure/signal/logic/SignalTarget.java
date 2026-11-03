@@ -142,12 +142,10 @@ public abstract class SignalTarget {
             this.subTarget = subTarget;
         }
         
-        @Override
         protected SignalState getState(ISignalComponent component) throws CorruptedConnectionException, NotYetConnectedException {
             return subTarget.getState(component);
         }
         
-        @Override
         public ISignalComponent getTarget(LittleStructure structure) {
             try {
                 return subTarget.getTarget(structure.children.getChild(child).getStructure());
@@ -155,22 +153,18 @@ public abstract class SignalTarget {
             return null;
         }
         
-        @Override
         public String writeBase() {
             return "c" + child + "." + subTarget.writeBase();
         }
         
-        @Override
         public String write() {
             return "c" + child + "." + subTarget.write();
         }
         
-        @Override
         public boolean isIndexVariable() {
             return subTarget.isIndexVariable();
         }
         
-        @Override
         public SignalTarget getNestedTarget() {
             return subTarget;
         }
@@ -185,7 +179,6 @@ public abstract class SignalTarget {
             this.subTarget = subTarget;
         }
         
-        @Override
         public ISignalComponent getTarget(LittleStructure structure) {
             if (structure.getParent() != null)
                 try {
@@ -195,27 +188,22 @@ public abstract class SignalTarget {
             return null;
         }
         
-        @Override
         protected SignalState getState(ISignalComponent component) throws CorruptedConnectionException, NotYetConnectedException {
             return subTarget.getState(component);
         }
         
-        @Override
         public String writeBase() {
             return "p." + subTarget.writeBase();
         }
         
-        @Override
         public String write() {
             return "p." + subTarget.write();
         }
         
-        @Override
         public boolean isIndexVariable() {
             return subTarget.isIndexVariable();
         }
         
-        @Override
         public SignalTarget getNestedTarget() {
             return subTarget;
         }
@@ -227,22 +215,18 @@ public abstract class SignalTarget {
             super(index);
         }
         
-        @Override
         public ISignalComponent getTarget(LittleStructure structure) {
             return null;
         }
         
-        @Override
         public String writeBase() {
             return "d" + child;
         }
         
-        @Override
         public String write() {
             return "d" + child;
         }
         
-        @Override
         public boolean isIndexVariable() {
             return true;
         }
@@ -261,26 +245,22 @@ public abstract class SignalTarget {
             this.external = external;
         }
         
-        @Override
         public ISignalComponent getTarget(LittleStructure structure) {
             return input ? SignalUtils.getInput(structure, child, external) : SignalUtils.getOutput(structure, child, external);
         }
         
-        @Override
         public String writeBase() {
             if (external)
                 return (input ? "i" : "o") + child;
             return (input ? "a" : "b") + child;
         }
         
-        @Override
         public String write() {
             if (external)
                 return (input ? "i" : "o") + child;
             return (input ? "a" : "b") + child;
         }
         
-        @Override
         public boolean isIndexVariable() {
             return false;
         }
@@ -296,7 +276,6 @@ public abstract class SignalTarget {
             this.index = index;
         }
         
-        @Override
         protected SignalState getState(ISignalComponent component) throws CorruptedConnectionException, NotYetConnectedException {
             SignalState state = component.getState();
             if (component.getBandwidth() > index)
@@ -304,12 +283,10 @@ public abstract class SignalTarget {
             return SignalState.FALSE;
         }
         
-        @Override
         public String write() {
             return super.write() + "[" + index + "]";
         }
         
-        @Override
         public int getBandwidth(LittleStructure structure) {
             return 1;
         }
@@ -327,7 +304,6 @@ public abstract class SignalTarget {
             this.length = length;
         }
         
-        @Override
         protected SignalState getState(ISignalComponent component) throws CorruptedConnectionException, NotYetConnectedException {
             SignalState state = component.getState();
             SignalState newState = SignalState.create(length);
@@ -337,12 +313,10 @@ public abstract class SignalTarget {
             return newState;
         }
         
-        @Override
         public String write() {
             return super.write() + "[" + index + "-" + index + length + "]";
         }
         
-        @Override
         public int getBandwidth(LittleStructure structure) {
             return length;
         }
@@ -358,7 +332,6 @@ public abstract class SignalTarget {
             this.indexes = indexes;
         }
         
-        @Override
         protected SignalState getState(ISignalComponent component) throws CorruptedConnectionException, NotYetConnectedException {
             SignalState state = component.getState();
             int bandwidth = getBandwidth(component.getStructure());
@@ -371,7 +344,6 @@ public abstract class SignalTarget {
             return newState;
         }
         
-        @Override
         public String write() {
             String result = super.write() + "[";
             for (int i = 0; i < indexes.length; i++) {
@@ -382,7 +354,6 @@ public abstract class SignalTarget {
             return result + "]";
         }
         
-        @Override
         public int getBandwidth(LittleStructure structure) {
             int length = 0;
             for (int i = 0; i < indexes.length; i++)
@@ -412,23 +383,19 @@ public abstract class SignalTarget {
             this.index = index;
         }
         
-        @Override
         public boolean is(SignalState state) {
             return state.is(index);
         }
         
-        @Override
         public int set(SignalState toModify, int index, SignalState value) {
             toModify.set(index, value.is(index));
             return 1;
         }
         
-        @Override
         public String write() {
             return index + "";
         }
         
-        @Override
         public int length() {
             return 1;
         }
@@ -444,24 +411,20 @@ public abstract class SignalTarget {
             this.length = end - index + 1;
         }
         
-        @Override
         public boolean is(SignalState state) {
             return state.is(index);
         }
         
-        @Override
         public int set(SignalState toModify, int index, SignalState value) {
             for (int i = 0; i < length; i++)
                 toModify.set(index + i, value.is(index + i));
             return length;
         }
         
-        @Override
         public String write() {
             return index + "-" + (index + length - 1);
         }
         
-        @Override
         public int length() {
             return length;
         }

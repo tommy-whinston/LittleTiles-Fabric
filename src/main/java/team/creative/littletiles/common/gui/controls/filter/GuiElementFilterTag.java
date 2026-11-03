@@ -31,7 +31,6 @@ public class GuiElementFilterTag extends GuiElementFilter {
         box.select(selected);
     }
     
-    @Override
     public BiFilter<IParentCollection, LittleTile> get() {
         TagKey<Block> selected = box.getSelected();
         if (selected != null)

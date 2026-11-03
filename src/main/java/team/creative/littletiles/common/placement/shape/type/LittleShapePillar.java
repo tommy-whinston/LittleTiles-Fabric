@@ -74,12 +74,10 @@ public class LittleShapePillar extends LittleShape {
         super(2);
     }
     
-    @Override
     public int maxAllowed() {
         return 2;
     }
     
-    @Override
     protected void addBoxes(LittleBoxes boxes, ShapeSelection selection, boolean lowResolution) {
         int thickness = Math.max(0, selection.getNBT().getInt("thickness") - 1);
         
@@ -194,10 +192,8 @@ public class LittleShapePillar extends LittleShape {
         boxes.add(box);
     }
     
-    @Override
     public void addExtraInformation(CompoundTag nbt, List<Component> list) {}
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public List<GuiControl> getCustomSettings(CompoundTag nbt, LittleGrid grid) {
         List<GuiControl> controls = new ArrayList<>();
@@ -207,7 +203,6 @@ public class LittleShapePillar extends LittleShape {
         return controls;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void saveCustomSettings(GuiParent gui, CompoundTag nbt, LittleGrid grid) {
         GuiSteppedSlider slider = (GuiSteppedSlider) gui.get("thickness");
@@ -215,10 +210,8 @@ public class LittleShapePillar extends LittleShape {
         nbt.putBoolean("simple", gui.get("simple", GuiCheckBox.class).value);
     }
     
-    @Override
     public void rotate(CompoundTag nbt, Rotation rotation) {}
     
-    @Override
     public void mirror(CompoundTag nbt, Axis axis) {}
     
 }

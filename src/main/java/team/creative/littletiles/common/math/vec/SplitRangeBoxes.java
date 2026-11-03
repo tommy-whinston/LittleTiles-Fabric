@@ -25,7 +25,6 @@ public class SplitRangeBoxes implements Iterable<SplitRangeBoxes.SplitRangeBox> 
         this.zList = zList;
     }
     
-    @Override
     public Iterator<SplitRangeBox> iterator() {
         
         SplitRangeBox box = new SplitRangeBox();
@@ -39,12 +38,10 @@ public class SplitRangeBoxes implements Iterable<SplitRangeBoxes.SplitRangeBox> 
             public int total = xList.size() * yList.size() * zList.size();
             public int current = 0;
             
-            @Override
             public boolean hasNext() {
                 return current < total;
             }
             
-            @Override
             public SplitRangeBox next() {
                 box.set(xList.get(x), yList.get(y), zList.get(z));
                 z++;

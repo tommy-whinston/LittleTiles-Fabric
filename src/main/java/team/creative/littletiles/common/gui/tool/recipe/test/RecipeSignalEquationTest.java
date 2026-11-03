@@ -26,10 +26,8 @@ import team.creative.littletiles.common.structure.signal.logic.SignalTarget.Sign
 
 public class RecipeSignalEquationTest extends RecipeTestModule {
     
-    @Override
     public void startTest(GuiRecipe recipe, RecipeTestResults results) {}
     
-    @Override
     public void test(GuiTreeItemStructure item, RecipeTestResults results) {
         if (item.structure == null)
             return;
@@ -94,7 +92,6 @@ public class RecipeSignalEquationTest extends RecipeTestModule {
         return true;
     }
     
-    @Override
     public void endTest(GuiRecipe recipe, RecipeTestResults results) {}
     
     public static class SignalTargetNotFound extends RecipeTestError {
@@ -113,27 +110,22 @@ public class RecipeSignalEquationTest extends RecipeTestModule {
             this.targets.add(target.writeBase());
         }
         
-        @Override
         public Component header() {
             return GuiControl.translatable("gui.recipe.test.signal.title", event.component.name());
         }
         
-        @Override
         public Component description() {
             return GuiControl.translatable("gui.recipe.test.signal.desc", String.join(",", targets));
         }
         
-        @Override
         public Component tooltip(GuiTreeItemStructure structure) {
             return header();
         }
         
-        @Override
         public Iterator<GuiTreeItemStructure> iterator() {
             return new SingleIterator<>(structure);
         }
         
-        @Override
         public void create(GuiRecipe recipe, GuiParent parent, Runnable refresh) {
             List<GuiSignalComponent> inputs = structure.signalSearch.search(true, true, true);
             

@@ -100,7 +100,6 @@ public abstract class RebuildTaskMixin implements RebuildTaskExtender {
         return builder;
     }
     
-    @Override
     public BufferCache upload(RenderType layer, BufferCache cache) {
         if (cache.upload((ChunkBufferUploader) builder(layer))) {
             getOrCreateBuffers(layer).queueForUpload(cache);

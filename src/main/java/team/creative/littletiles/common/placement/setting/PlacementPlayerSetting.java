@@ -22,7 +22,7 @@ public class PlacementPlayerSetting {
     public static LittleGrid grid(Player player) {
         if (player.level().isClientSide)
             return gridClient();
-        CompoundTag nbt = player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).getCompound(PlacementPlayerSetting.SETTING_KEY);
+        CompoundTag nbt = new CompoundTag();
         return LittleTiles.CONFIG.build.get(player).getOrDefault(nbt.contains(LittleGrid.GRID_KEY) ? nbt.getInt(LittleGrid.GRID_KEY) : -1);
     }
     
@@ -34,7 +34,7 @@ public class PlacementPlayerSetting {
     public static PlacementMode placementMode(Player player) {
         if (player.level().isClientSide)
             return placementModeClient();
-        CompoundTag nbt = player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).getCompound(PlacementPlayerSetting.SETTING_KEY);
+        CompoundTag nbt = new CompoundTag();
         return PlacementMode.getMode(nbt.getString("mode"));
     }
     

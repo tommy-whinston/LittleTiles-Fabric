@@ -27,7 +27,6 @@ public class AnimationState extends PhysicalState {
         this.backToBlockform = backToBlockform;
     }
     
-    @Override
     public CompoundTag save() {
         CompoundTag nbt = super.save();
         nbt.putString("n", name);

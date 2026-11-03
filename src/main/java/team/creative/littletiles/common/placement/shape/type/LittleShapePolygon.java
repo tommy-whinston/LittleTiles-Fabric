@@ -71,7 +71,6 @@ public class LittleShapePolygon extends LittleShape {
         }
     }
     
-    @Override
     protected void addBoxes(LittleBoxes boxes, ShapeSelection selection, boolean lowResolution) {
         ShapeSelectPos first = null;
         ShapeSelectPos second = null;
@@ -95,30 +94,24 @@ public class LittleShapePolygon extends LittleShape {
                 boxes.add(selection.getOverallBox());
     }
     
-    @Override
     public boolean requiresNoOverlap(ShapeSelection selection) {
         return true;
     }
     
-    @Override
     public void addExtraInformation(CompoundTag nbt, List<Component> list) {}
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public List<GuiControl> getCustomSettings(CompoundTag nbt, LittleGrid grid) {
         return Collections.EMPTY_LIST;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void saveCustomSettings(GuiParent gui, CompoundTag nbt, LittleGrid grid) {
         
     }
     
-    @Override
     public void rotate(CompoundTag nbt, Rotation rotation) {}
     
-    @Override
     public void mirror(CompoundTag nbt, Axis axis) {}
     
 }

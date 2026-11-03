@@ -19,10 +19,8 @@ public class ScrewdriverSelectionPacket extends CreativePacket {
     
     public ScrewdriverSelectionPacket() {}
     
-    @Override
     public void executeClient(Player player) {}
     
-    @Override
     public void executeServer(ServerPlayer player) {
         ItemStack stack = player.getMainHandItem();
         if (stack.getItem() instanceof ItemLittleScrewdriver)

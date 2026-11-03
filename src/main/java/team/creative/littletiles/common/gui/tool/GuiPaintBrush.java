@@ -41,7 +41,6 @@ public class GuiPaintBrush extends GuiConfigureTool {
         align = Align.STRETCH;
     }
     
-    @Override
     public CompoundTag saveConfiguration(CompoundTag nbt) {
         GuiComboBoxMapped<LittleShape> box = (GuiComboBoxMapped<LittleShape>) get("shape");
         GuiScrollY scroll = (GuiScrollY) get("settings");
@@ -57,7 +56,6 @@ public class GuiPaintBrush extends GuiConfigureTool {
         return nbt;
     }
     
-    @Override
     public void create() {
         if (!isClient())
             return;

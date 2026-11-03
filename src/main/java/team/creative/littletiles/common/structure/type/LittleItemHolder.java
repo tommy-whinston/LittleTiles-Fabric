@@ -42,22 +42,18 @@ public class LittleItemHolder extends LittleStructure {
         super(type, mainBlock);
     }
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {
         stack = ItemStack.of(nbt.getCompound("stack"));
     }
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {
         nbt.put("stack", stack.save(new CompoundTag()));
     }
     
-    @Override
     public boolean canInteract() {
         return true;
     }
     
-    @Override
     public InteractionResult use(Level level, LittleTileContext context, BlockPos pos, Player player, BlockHitResult result, InteractionHand hand) {
         if (level.isClientSide)
             return InteractionResult.SUCCESS;
@@ -81,7 +77,6 @@ public class LittleItemHolder extends LittleStructure {
         getInput(0).updateState(SignalState.of(!stack.isEmpty()));
     }
     
-    @Override
     public void getRenderingBoxes(BlockPos pos, RenderType layer, IndexedCollector<LittleRenderBox> cubes) {
         if (layer == RenderType.cutout()) {
             LittleBox littleBox = frame.getBox();

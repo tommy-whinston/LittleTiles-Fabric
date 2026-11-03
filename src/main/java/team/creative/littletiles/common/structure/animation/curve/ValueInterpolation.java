@@ -8,45 +8,37 @@ import team.creative.creativecore.common.util.math.vec.Vec3d;
 public enum ValueInterpolation {
     
     LINEAR {
-        @Override
         public ValueCurveInterpolation<Vec1d> create1d() {
             return new ValueCurveInterpolation.LinearCurve<>();
         }
         
-        @Override
         public ValueCurveInterpolation<Vec3d> create3d() {
             return new ValueCurveInterpolation.LinearCurve<>();
         }
     },
     COSINE {
-        @Override
         public ValueCurveInterpolation<Vec1d> create1d() {
             return new ValueCurveInterpolation.CosineCurve<>();
         }
         
-        @Override
         public ValueCurveInterpolation<Vec3d> create3d() {
             return new ValueCurveInterpolation.CosineCurve<>();
         }
     },
     CUBIC {
-        @Override
         public ValueCurveInterpolation<Vec1d> create1d() {
             return new ValueCurveInterpolation.CubicCurve<>();
         }
         
-        @Override
         public ValueCurveInterpolation<Vec3d> create3d() {
             return new ValueCurveInterpolation.CubicCurve<>();
         }
     },
     HERMITE {
-        @Override
         public ValueCurveInterpolation<Vec1d> create1d() {
             return new ValueCurveInterpolation.HermiteCurve<>();
         }
         
-        @Override
         public ValueCurveInterpolation<Vec3d> create3d() {
             return new ValueCurveInterpolation.HermiteCurve<>();
         }

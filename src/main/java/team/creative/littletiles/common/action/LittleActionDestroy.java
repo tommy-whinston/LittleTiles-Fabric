@@ -40,12 +40,10 @@ public class LittleActionDestroy extends LittleActionInteract<Boolean> {
     
     public LittleActionDestroy() {}
     
-    @Override
     public boolean canBeReverted() {
         return destroyedTiles != null || structurePreview != null;
     }
     
-    @Override
     public LittleAction revert(Player player) {
         if (structurePreview != null)
             return structurePreview.getPlaceAction();
@@ -53,12 +51,10 @@ public class LittleActionDestroy extends LittleActionInteract<Boolean> {
         return new LittleActionPlace(PlaceAction.ABSOLUTE, PlacementPreview.load(uuid, PlacementMode.NORMAL, destroyedTiles, Facing.EAST));
     }
     
-    @Override
     protected boolean requiresBreakEvent() {
         return true;
     }
     
-    @Override
     protected Boolean action(Level level, BETiles be, LittleTileContext context, ItemStack stack, Player player, BlockHitResult hit, BlockPos pos, boolean secondMode, InteractionHand hand) throws LittleActionException {
         if (context.parent.isStructure()) {
             try {
@@ -99,12 +95,10 @@ public class LittleActionDestroy extends LittleActionInteract<Boolean> {
         return true;
     }
     
-    @Override
     protected boolean isRightClick() {
         return false;
     }
     
-    @Override
     public LittleAction mirror(Axis axis, LittleBoxAbsolute box) {
         LittleBoxes boxes;
         if (structurePreview != null) {
@@ -123,17 +117,14 @@ public class LittleActionDestroy extends LittleActionInteract<Boolean> {
         return new LittleActionDestroyBoxes(uuid, boxes);
     }
     
-    @Override
     public Boolean failed() {
         return false;
     }
     
-    @Override
     protected Boolean ignored() {
         return false;
     }
     
-    @Override
     public boolean wasSuccessful(Boolean result) {
         return result;
     }
@@ -157,12 +148,10 @@ public class LittleActionDestroy extends LittleActionInteract<Boolean> {
                 previews, Facing.EAST));
         }
         
-        @Override
         public int hashCode() {
             return previews.getStructureTag().hashCode();
         }
         
-        @Override
         public boolean equals(Object paramObject) {
             if (paramObject instanceof StructurePreview s)
                 return structure == s.structure;

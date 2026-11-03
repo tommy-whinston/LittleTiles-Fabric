@@ -17,22 +17,18 @@ public class ItemLittleSaw extends Item implements IItemTooltip {
         super(new Item.Properties().stacksTo(1));
     }
     
-    @Override
     public boolean canAttackBlock(BlockState state, Level level, BlockPos pos, Player player) {
         return false;
     }
     
-    @Override
     public float getDestroySpeed(ItemStack stack, BlockState state) {
         return 0F;
     }
     
-    @Override
     public InteractionResult useOn(UseOnContext context) {
         return InteractionResult.PASS;
     }
     
-    @Override
     public Object[] tooltipData(ItemStack stack) {
         return new Object[] { Minecraft.getInstance().options.keyAttack.getTranslatedKeyMessage(), Minecraft.getInstance().options.keyUse.getTranslatedKeyMessage() };
     }

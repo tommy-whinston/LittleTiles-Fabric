@@ -22,19 +22,16 @@ public class ItemIngredient extends LittleIngredient<ItemIngredient> implements 
             content.add(new ItemIngredientEntry(ingredients[i], 1));
     }
     
-    @Override
     public Iterator<ItemIngredientEntry> iterator() {
         return content.iterator();
     }
     
-    @Override
     public ItemIngredient copy() {
         ItemIngredient copy = new ItemIngredient();
         content.forEach((x) -> copy.content.add(x.copy()));
         return copy;
     }
     
-    @Override
     public TextBuilder toText() {
         TextBuilder text = new TextBuilder();
         for (ItemIngredientEntry entry : content)
@@ -54,7 +51,6 @@ public class ItemIngredient extends LittleIngredient<ItemIngredient> implements 
         return ingredient;
     }
     
-    @Override
     public ItemIngredient add(ItemIngredient ingredient) {
         ItemIngredient remaings = null;
         for (ItemIngredientEntry entry : ingredient.content) {
@@ -92,7 +88,6 @@ public class ItemIngredient extends LittleIngredient<ItemIngredient> implements 
         return ingredient;
     }
     
-    @Override
     public ItemIngredient sub(ItemIngredient ingredient) {
         ItemIngredient remaings = null;
         for (ItemIngredientEntry entry : ingredient.content) {
@@ -106,24 +101,20 @@ public class ItemIngredient extends LittleIngredient<ItemIngredient> implements 
         return remaings;
     }
     
-    @Override
     public boolean isEmpty() {
         return content.isEmpty();
     }
     
-    @Override
     public void scale(int count) {
         for (ItemIngredientEntry entry : content)
             entry.scale(count);
     }
     
-    @Override
     public void scaleAdvanced(double scale) {
         for (ItemIngredientEntry entry : content)
             entry.scaleAdvanced(scale);
     }
     
-    @Override
     public int getMinimumCount(ItemIngredient other, int availableCount) {
         throw new UnsupportedOperationException();
     }
@@ -132,7 +123,6 @@ public class ItemIngredient extends LittleIngredient<ItemIngredient> implements 
         return content;
     }
     
-    @Override
     public void print(TextBuilder text) {
         if (content.size() <= 4)
             for (ItemIngredientEntry entry : content)
@@ -142,7 +132,6 @@ public class ItemIngredient extends LittleIngredient<ItemIngredient> implements 
                 text.stack(entry.ingredient.getExample()).text(" " + entry.count + " ");
     }
     
-    @Override
     public String toString() {
         return content.toString();
     }

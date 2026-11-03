@@ -28,7 +28,6 @@ public class InternalSignalOutput extends InternalSignal<InternalComponentOutput
         this.syncToClient = component.syncToClient;
     }
     
-    @Override
     public void changed() {
         parent.performInternalOutputChange(this);
         parent.schedule();
@@ -36,12 +35,10 @@ public class InternalSignalOutput extends InternalSignal<InternalComponentOutput
             LittleTiles.NETWORK.sendToClient(new OutputUpdate(parent.getStructureLocation(), component.index, getState()), getStructureLevel(), parent.getStructurePos());
     }
     
-    @Override
     public SignalComponentType getComponentType() {
         return SignalComponentType.OUTPUT;
     }
     
-    @Override
     public void load(CompoundTag nbt) {
         overwrite(getState().load(nbt.get("state")));
         try {
@@ -61,7 +58,6 @@ public class InternalSignalOutput extends InternalSignal<InternalComponentOutput
         handler = SignalOutputHandler.create(this, mode, delay, nbt, parent);
     }
     
-    @Override
     public CompoundTag save(boolean preview, CompoundTag nbt) {
         nbt.put("state", getState().save());
         if (condition != null)

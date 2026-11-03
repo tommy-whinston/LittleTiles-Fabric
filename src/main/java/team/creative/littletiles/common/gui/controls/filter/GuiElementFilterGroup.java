@@ -53,7 +53,6 @@ public class GuiElementFilterGroup extends GuiElementFilter {
         return filters.toArray(new BiFilter[filters.size()]);
     }
     
-    @Override
     public BiFilter<IParentCollection, LittleTile> get() {
         return operator.getSelected(GuiElementFilterOperator.OR).create(getSubFilters());
     }
@@ -61,7 +60,6 @@ public class GuiElementFilterGroup extends GuiElementFilter {
     public static enum GuiElementFilterOperator {
         
         OR {
-            @Override
             public BiFilter<IParentCollection, LittleTile> create(BiFilter<IParentCollection, LittleTile>[] subFilters) {
                 if (subFilters.length == 1)
                     return subFilters[0];
@@ -69,7 +67,6 @@ public class GuiElementFilterGroup extends GuiElementFilter {
             }
         },
         AND {
-            @Override
             public BiFilter<IParentCollection, LittleTile> create(BiFilter<IParentCollection, LittleTile>[] subFilters) {
                 if (subFilters.length == 1)
                     return subFilters[0];
@@ -77,7 +74,6 @@ public class GuiElementFilterGroup extends GuiElementFilter {
             }
         },
         NOT_OR {
-            @Override
             public BiFilter<IParentCollection, LittleTile> create(BiFilter<IParentCollection, LittleTile>[] subFilters) {
                 if (subFilters.length == 1)
                     return TileFilters.not(subFilters[0]);
@@ -85,7 +81,6 @@ public class GuiElementFilterGroup extends GuiElementFilter {
             }
         },
         NOT_AND {
-            @Override
             public BiFilter<IParentCollection, LittleTile> create(BiFilter<IParentCollection, LittleTile>[] subFilters) {
                 if (subFilters.length == 1)
                     return TileFilters.not(subFilters[0]);

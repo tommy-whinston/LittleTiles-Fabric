@@ -183,7 +183,7 @@ public interface RenderChunkExtender {
                         builder.restoreSortState(state);
                 }
                 
-                builder.putBulkData(vanillaBuffer);
+                // TODO: port Forge BufferBuilder#putBulkData(ByteBuffer)
             }
             
             for (LayeredBufferCache data : blocks)

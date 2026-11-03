@@ -22,34 +22,28 @@ public final class LittleBoxesSimple extends LittleBoxes implements IGridBased, 
         super(pos, context);
     }
     
-    @Override
     public void add(LittleBox box) {
         boxes.add(box);
     }
     
-    @Override
     public boolean isEmpty() {
         return boxes.isEmpty();
     }
     
-    @Override
     public void clear() {
         boxes.clear();
     }
     
-    @Override
     public int size() {
         return boxes.size();
     }
     
-    @Override
     public void convertTo(LittleGrid to) {
         for (LittleBox box : boxes)
             box.convertTo(this.grid, to);
         this.grid = to;
     }
     
-    @Override
     public int getSmallest() {
         int size = LittleGrid.MIN.count;
         for (LittleBox box : boxes)
@@ -57,7 +51,6 @@ public final class LittleBoxesSimple extends LittleBoxes implements IGridBased, 
         return size;
     }
     
-    @Override
     public LittleBox getSurroundingBox() {
         if (isEmpty())
             return null;
@@ -81,17 +74,14 @@ public final class LittleBoxesSimple extends LittleBoxes implements IGridBased, 
         return new LittleBox(minX, minY, minZ, maxX, maxY, maxZ);
     }
     
-    @Override
     public Iterator<LittleBox> iterator() {
         return boxes.iterator();
     }
     
-    @Override
     public Iterable<LittleBox> all() {
         return this;
     }
     
-    @Override
     public HashMapList<BlockPos, LittleBox> generateBlockWise() {
         HashMapList<BlockPos, LittleBox> map = new HashMapList<>();
         for (LittleBox box : this)
@@ -99,7 +89,6 @@ public final class LittleBoxesSimple extends LittleBoxes implements IGridBased, 
         return map;
     }
     
-    @Override
     public void mirror(Axis axis, LittleBoxAbsolute absoluteBox) {
         sameGrid(absoluteBox, () -> {
             LittleVec center = absoluteBox.getDoubledCenter(pos);
@@ -108,14 +97,12 @@ public final class LittleBoxesSimple extends LittleBoxes implements IGridBased, 
         });
     }
     
-    @Override
     public LittleBoxes copy() {
         LittleBoxesSimple boxes = new LittleBoxesSimple(pos, grid);
         boxes.addBoxes(grid, pos, this);
         return boxes;
     }
     
-    @Override
     public void combineBoxesBlocks() {
         HashMapList<BlockPos, LittleBox> chunked = new HashMapList<>();
         for (int i = 0; i < boxes.size(); i++)
@@ -128,7 +115,6 @@ public final class LittleBoxesSimple extends LittleBoxes implements IGridBased, 
         }
     }
     
-    @Override
     public int littleVolume() {
         int volume = 0;
         for (LittleBox box : boxes)

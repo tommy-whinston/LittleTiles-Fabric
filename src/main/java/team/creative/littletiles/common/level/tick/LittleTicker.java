@@ -179,18 +179,15 @@ public class LittleTicker extends LevelHandler implements Iterable<LittleTickTic
         }
     }
     
-    @Override
     public Iterator<LittleTickTicket> iterator() {
         return new Iterator<LittleTickTicket>() {
             
             public LittleTickTicket next = LittleTicker.this.next;
             
-            @Override
             public boolean hasNext() {
                 return next != null;
             }
             
-            @Override
             public LittleTickTicket next() {
                 LittleTickTicket ticket = next;
                 next = next.next;
@@ -199,7 +196,6 @@ public class LittleTicker extends LevelHandler implements Iterable<LittleTickTic
         };
     }
     
-    @Override
     public void unload() {
         super.unload();
         MinecraftForge.EVENT_BUS.unregister(this);

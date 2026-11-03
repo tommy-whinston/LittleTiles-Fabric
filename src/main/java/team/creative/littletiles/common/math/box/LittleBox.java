@@ -1057,12 +1057,10 @@ public class LittleBox {
     
     // ================Basic Object Overrides================
     
-    @Override
     public int hashCode() {
         return minX + minY + minZ + maxX + maxY + maxZ;
     }
     
-    @Override
     public boolean equals(Object object) {
         if (object instanceof LittleBox)
             return object.getClass() == this
@@ -1070,7 +1068,6 @@ public class LittleBox {
         return super.equals(object);
     }
     
-    @Override
     public String toString() {
         return "[" + minX + "," + minY + "," + minZ + " -> " + maxX + "," + maxY + "," + maxZ + "]";
     }

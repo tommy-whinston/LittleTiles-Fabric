@@ -11,7 +11,6 @@ public class ItemChildrenList extends ChildrenList<LittleGroup> {
         this.parent = parent;
     }
     
-    @Override
     protected void added(LittleGroup child) {
         child.children.parent = parent;
     }

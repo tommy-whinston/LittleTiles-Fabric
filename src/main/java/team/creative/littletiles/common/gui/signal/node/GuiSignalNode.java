@@ -76,7 +76,6 @@ public abstract class GuiSignalNode extends GuiButton implements Iterable<GuiSig
         setDefaultColor(ColorUtils.RED);
     }
     
-    @Override
     public boolean testForDoubleClick(Rect rect, double x, double y, int button) {
         return button != 1;
     }

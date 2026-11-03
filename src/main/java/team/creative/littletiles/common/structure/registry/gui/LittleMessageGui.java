@@ -19,7 +19,6 @@ public class LittleMessageGui extends LittleStructureGuiControl {
         super(gui, item);
     }
     
-    @Override
     public void create(@Nullable LittleStructure structure) {
         flow = GuiFlow.STACK_Y;
         add(new GuiTextfield("text", structure instanceof LittleStructureMessage m ? m.text : "Hello World!", LittleTiles.CONFIG.general.messageStructureLength).setExpandableX());
@@ -27,7 +26,6 @@ public class LittleMessageGui extends LittleStructureGuiControl {
         add(new GuiCheckBox("status", structure instanceof LittleStructureMessage m ? m.status : false).setTranslate("gui.message.status"));
     }
     
-    @Override
     public LittleStructure save(LittleStructure structure) {
         LittleStructureMessage message = (LittleStructureMessage) structure;
         message.text = get("text", GuiTextfield.class).getText();

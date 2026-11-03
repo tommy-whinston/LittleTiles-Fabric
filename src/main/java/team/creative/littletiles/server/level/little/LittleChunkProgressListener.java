@@ -8,16 +8,12 @@ public class LittleChunkProgressListener implements ChunkProgressListener {
     
     public static final LittleChunkProgressListener INSTANCE = new LittleChunkProgressListener();
     
-    @Override
     public void updateSpawnPos(ChunkPos pos) {}
     
-    @Override
     public void onStatusChange(ChunkPos pos, ChunkStatus status) {}
     
-    @Override
     public void start() {}
     
-    @Override
     public void stop() {}
     
 }

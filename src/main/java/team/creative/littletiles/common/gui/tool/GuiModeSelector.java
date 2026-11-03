@@ -33,7 +33,6 @@ public abstract class GuiModeSelector extends GuiConfigure {
         });
     }
     
-    @Override
     public void create() {
         GuiParent place = new GuiParent(GuiFlow.STACK_Y);
         add(place);
@@ -54,7 +53,6 @@ public abstract class GuiModeSelector extends GuiConfigure {
     
     public abstract CompoundTag saveConfiguration(CompoundTag nbt, LittleGrid grid, PlacementMode mode);
     
-    @Override
     public CompoundTag saveConfiguration(CompoundTag nbt) {
         mode = getMode();
         grid = get("grid", GuiGridConfig.class).get();

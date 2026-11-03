@@ -168,7 +168,6 @@ public class PhysicalState {
         rotation.transform(this.rotation);
     }
     
-    @Override
     public String toString() {
         return "off" + offset + ",rot" + rotation;
     }
@@ -185,7 +184,6 @@ public class PhysicalState {
         rotation.set(0, 0, 0);
     }
     
-    @Override
     public boolean equals(Object obj) {
         if (obj instanceof PhysicalState s)
             return s.offset.equals(offset) && s.rotation.equals(rotation);

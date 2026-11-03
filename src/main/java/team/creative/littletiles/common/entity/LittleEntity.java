@@ -84,7 +84,6 @@ public abstract class LittleEntity<T extends LittleEntityPhysic> extends Entity 
     
     // ================Origin================
     
-    @Override
     public void markOriginChange() {
         hasOriginChanged = true;
         for (OrientationAwareEntity child : children())
@@ -95,10 +94,8 @@ public abstract class LittleEntity<T extends LittleEntityPhysic> extends Entity 
         hasOriginChanged = false;
     }
     
-    @Override
     protected void defineSynchedData() {}
     
-    @Override
     public IVecOrigin getOrigin() {
         return origin;
     }
@@ -133,17 +130,14 @@ public abstract class LittleEntity<T extends LittleEntityPhysic> extends Entity 
         physic.setSubLevel(subLevel);
     }
     
-    @Override
     public void parentVecOriginChange(IVecOrigin origin) {
         ((ChildVecOrigin) origin).parent = origin;
     }
     
-    @Override
     public void transform(CollisionCoordinator coordinator) {
         physic.transform(coordinator);
     }
     
-    @Override
     public void changedLevel(Level oldLevel, Level newLevel) {
         changedLevel = true;
     }
@@ -181,7 +175,6 @@ public abstract class LittleEntity<T extends LittleEntityPhysic> extends Entity 
     
     public abstract void internalTick();
     
-    @Override
     public void performTick() {
         if (entitiesToAdd != null) {
             for (Entity entity : entitiesToAdd)
@@ -216,7 +209,6 @@ public abstract class LittleEntity<T extends LittleEntityPhysic> extends Entity 
     
     protected abstract Vec3d loadCenter(CompoundTag nbt);
     
-    @Override
     public void readAdditionalSaveData(CompoundTag nbt) {
         setSubLevel(createLevel(), loadCenter(nbt));
         
@@ -236,7 +228,6 @@ public abstract class LittleEntity<T extends LittleEntityPhysic> extends Entity 
     
     public abstract void loadEntity(CompoundTag nbt);
     
-    @Override
     public void addAdditionalSaveData(CompoundTag nbt) {
         nbt.put("physic", physic.save());
         
@@ -254,46 +245,38 @@ public abstract class LittleEntity<T extends LittleEntityPhysic> extends Entity 
     
     public abstract void saveEntity(CompoundTag nbt);
     
-    @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return new ClientboundAddEntityPacket(this);
     }
     
-    @Override
     public void onAddedToWorld() {
-        super.onAddedToWorld();
+
         LittleTiles.ANIMATION_HANDLERS.get(level()).add(this);
     }
     
-    @Override
     public void onRemovedFromWorld() {
-        super.onRemovedFromWorld();
+
         LittleTiles.ANIMATION_HANDLERS.get(level()).remove(this);
     }
     
     // ================MC Hooks================
     
-    @Override
     public void setPos(double x, double y, double z) {
         super.setPosRaw(x, y, z); // Fixes bounding box
     }
     
-    @Override
     protected AABB makeBoundingBox() {
         return origin.getAABB(physic.getOBB()).toVanilla();
     }
     
-    @Override
     public boolean isOnFire() {
         return false;
     }
     
-    @Override
     public boolean fireImmune() {
         return true;
     }
     
-    @Override
     public boolean displayFireAnimation() {
         return false;
     }
@@ -302,23 +285,19 @@ public abstract class LittleEntity<T extends LittleEntityPhysic> extends Entity 
         this.kill();
     }
     
-    @Override
     public void kill() {
         subLevel.unload();
         super.kill();
     }
     
-    @Override
     public boolean canBeCollidedWith() {
         return false;
     }
     
-    @Override
     public InteractionResult interact(Player player, InteractionHand hand) {
         return InteractionResult.PASS;
     }
     
-    @Override
     public InteractionResult interactAt(Player player, Vec3 vec, InteractionHand hand) {
         return InteractionResult.PASS;
     }
@@ -371,7 +350,6 @@ public abstract class LittleEntity<T extends LittleEntityPhysic> extends Entity 
     
     // ================CLIENT================
     
-    @Override
     public boolean shouldRender(double x, double y, double z) {
         Vec3 center = getRealCenter();
         double d0 = center.x - x;
@@ -380,7 +358,6 @@ public abstract class LittleEntity<T extends LittleEntityPhysic> extends Entity 
         return this.shouldRenderAtSqrDistance(d0 * d0 + d1 * d1 + d2 * d2);
     }
     
-    @Override
     public boolean hasLoaded() {
         return subLevel != null;
     }

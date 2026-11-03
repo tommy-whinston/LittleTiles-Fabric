@@ -39,7 +39,6 @@ public class SignalNetwork implements ISignalSchedulable {
         return containsUnloadedComponents;
     }
     
-    @Override
     public void notifyChange() {
         if (!forceUpdate) {
             SignalState oldState = SignalState.copy(state);
@@ -62,17 +61,14 @@ public class SignalNetwork implements ISignalSchedulable {
             inputs.get(i).updateState(state);
     }
     
-    @Override
     public boolean hasChanged() {
         return changed;
     }
     
-    @Override
     public void markChanged() {
         changed = true;
     }
     
-    @Override
     public void markUnchanged() {
         changed = false;
     }
@@ -81,7 +77,6 @@ public class SignalNetwork implements ISignalSchedulable {
         schedule();
     }
     
-    @Override
     public Level getComponentLevel() {
         if (!inputs.isEmpty())
             return inputs.get(0).getStructureLevel();
@@ -225,12 +220,10 @@ public class SignalNetwork implements ISignalSchedulable {
         return false;
     }
     
-    @Override
     public String toString() {
         return Integer.toHexString(hashCode());
     }
     
-    @Override
     public boolean isStillAvailable() {
         return true;
     }

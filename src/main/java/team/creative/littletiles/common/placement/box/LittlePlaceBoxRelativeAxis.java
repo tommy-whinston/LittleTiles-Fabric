@@ -23,7 +23,6 @@ public class LittlePlaceBoxRelativeAxis extends LittlePlaceBoxRelative {
         this.max = max - box.getMax(axis);
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public LittleRenderBox getRenderBox(LittleGrid grid, LittleVec vec) {
         LittleRenderBox cube = super.getRenderBox(grid, vec);

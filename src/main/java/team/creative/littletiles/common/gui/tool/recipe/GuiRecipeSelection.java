@@ -82,12 +82,10 @@ public class GuiRecipeSelection extends GuiConfigure {
         });
     }
     
-    @Override
     public CompoundTag saveConfiguration(CompoundTag nbt) {
         return null;
     }
     
-    @Override
     public void create() {
         ItemStack stack = tool.get();
         SelectionMode mode = ItemLittleBlueprint.getSelectionMode(stack);

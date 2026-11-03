@@ -33,17 +33,14 @@ public class LittleGroupAbsolute implements IGridBased {
         this(pos, new LittleGroup());
     }
     
-    @Override
     public LittleGrid getGrid() {
         return group.getGrid();
     }
     
-    @Override
     public void convertTo(LittleGrid to) {
         group.convertTo(to);
     }
     
-    @Override
     public int getSmallest() {
         return group.getSmallest();
     }

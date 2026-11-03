@@ -35,7 +35,6 @@ public class GuiStorage extends GuiLayer {
             this.storage.openContainer(this);
     }
     
-    @Override
     public void create() {
         flow = GuiFlow.STACK_Y;
         align = Align.CENTER;
@@ -52,7 +51,6 @@ public class GuiStorage extends GuiLayer {
             if (i + 1 == storage.numberOfSlots && storage.lastSlotStackSize > 0)
                 return new Slot(c, i, 0, 0) {
                     
-                    @Override
                     public int getMaxStackSize() {
                         return storage.lastSlotStackSize;
                     }
@@ -78,7 +76,6 @@ public class GuiStorage extends GuiLayer {
             get("storage", GuiInventoryGrid.class).setChanged();
     }
     
-    @Override
     public void closed() {
         super.closed();
         if (storage != null && !isClient())

@@ -55,12 +55,10 @@ public class ItemColorIngredient extends Item implements ILittleIngredientInvent
         return stack;
     }
     
-    @Override
     public boolean overrideStackedOnOther(ItemStack stack, Slot slot, ClickAction action, Player player) {
         return false;
     }
     
-    @Override
     public boolean overrideOtherStackedOnMe(ItemStack me, ItemStack other, Slot p_150894_, ClickAction action, Player player, SlotAccess slot) {
         return false;
     }
@@ -99,24 +97,20 @@ public class ItemColorIngredient extends Item implements ILittleIngredientInvent
         stack.getOrCreateTag().putInt("value", type.getIngredient(color));
     }
     
-    @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn) {
         ColorIngredient entry = loadIngredient(stack);
         if (entry != null)
             tooltip.add(type.print(entry));
     }
     
-    @Override
     public LittleIngredients getInventory(ItemStack stack) {
         ColorIngredient color = loadIngredient(stack);
         if (color != null) {
             return new LittleIngredients(color) {
-                @Override
                 protected boolean canAddNewIngredients() {
                     return false;
                 }
                 
-                @Override
                 protected boolean removeEmptyIngredients() {
                     return false;
                 }
@@ -125,7 +119,6 @@ public class ItemColorIngredient extends Item implements ILittleIngredientInvent
         return null;
     }
     
-    @Override
     public void setInventory(ItemStack stack, LittleIngredients ingredients, LittleInventory inventory) {
         ColorIngredient color = ingredients.get(ColorIngredient.class);
         if (color != null && type.getIngredient(color) > 0) {
@@ -137,72 +130,59 @@ public class ItemColorIngredient extends Item implements ILittleIngredientInvent
         stack.setCount(0);
     }
     
-    @Override
     public boolean shouldBeMerged() {
         return true;
     }
     
     public static enum ColorIngredientType {
         black {
-            @Override
             public int getIngredient(ColorIngredient ingredient) {
                 return ingredient.black;
             }
             
-            @Override
             public void setIngredient(ColorIngredient ingredient, int value) {
                 ingredient.black = value;
             }
             
-            @Override
             public Component print(ColorIngredient ingredient) {
                 return Component.literal(ingredient.getBlackDescription());
             }
         },
         cyan {
-            @Override
             public int getIngredient(ColorIngredient ingredient) {
                 return ingredient.cyan;
             }
             
-            @Override
             public void setIngredient(ColorIngredient ingredient, int value) {
                 ingredient.cyan = value;
             }
             
-            @Override
             public Component print(ColorIngredient ingredient) {
                 return Component.literal(ingredient.getCyanDescription());
             }
         },
         magenta {
-            @Override
             public int getIngredient(ColorIngredient ingredient) {
                 return ingredient.magenta;
             }
             
-            @Override
             public void setIngredient(ColorIngredient ingredient, int value) {
                 ingredient.magenta = value;
             }
             
-            @Override
             public Component print(ColorIngredient ingredient) {
                 return Component.literal(ingredient.getMagentaDescription());
             }
         },
         yellow {
-            @Override
             public int getIngredient(ColorIngredient ingredient) {
                 return ingredient.yellow;
             }
             
-            @Override
             public void setIngredient(ColorIngredient ingredient, int value) {
                 ingredient.yellow = value;
             }
             
-            @Override
             public Component print(ColorIngredient ingredient) {
                 return Component.literal(ingredient.getYellowDescription());
             }

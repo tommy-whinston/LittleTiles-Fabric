@@ -35,7 +35,6 @@ public class LittleModelItemBackground extends CreativeItemModel {
         return ((ILittlePlacer) stack.getItem()).shouldRenderInHand(stack);
     }
     
-    @Override
     public void applyCustomOpenGLHackery(PoseStack pose, ItemStack stack, ItemDisplayContext cameraTransformType) {
         if (cameraTransformType == ItemDisplayContext.GUI || shouldRenderFake(stack)) {
             

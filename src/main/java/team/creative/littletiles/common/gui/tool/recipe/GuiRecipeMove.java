@@ -44,7 +44,6 @@ public class GuiRecipeMove extends GuiLayer {
         init();
     }
     
-    @Override
     public void closed() {
         if (tree == null)
             return;
@@ -53,7 +52,6 @@ public class GuiRecipeMove extends GuiLayer {
                 move.structure.resetOffset();
     }
     
-    @Override
     public void create() {
         if (recipe == null)
             return;
@@ -136,7 +134,6 @@ public class GuiRecipeMove extends GuiLayer {
         
         DEFAULT(false) {
             
-            @Override
             public Iterable<GuiRecipeMoveItem> iterator(GuiTree tree) {
                 if (tree.selected() == null)
                     return Collections.EMPTY_LIST;
@@ -144,7 +141,6 @@ public class GuiRecipeMove extends GuiLayer {
             }
         },
         CHECKBOX(true) {
-            @Override
             public Iterable<GuiRecipeMoveItem> iterator(GuiTree tree) {
                 return new FunctionIterator<>(tree.itemsChecked(), x -> (GuiRecipeMoveItem) x);
             }

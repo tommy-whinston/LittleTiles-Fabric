@@ -28,7 +28,6 @@ public class LittleShapeSlice extends LittleShape {
         super(2);
     }
     
-    @Override
     protected void addBoxes(LittleBoxes boxes, ShapeSelection selection, boolean lowResolution) {
         LittleTransformableBox box = new LittleTransformableBox(selection.getOverallBox(), new int[1]);
         CornerCache cache = box.new CornerCache(false);
@@ -71,25 +70,20 @@ public class LittleShapeSlice extends LittleShape {
         nbt.putIntArray("vec", new int[] { vec.getX(), vec.getY(), vec.getZ() });
     }
     
-    @Override
     public void addExtraInformation(CompoundTag nbt, List<Component> list) {}
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public List<GuiControl> getCustomSettings(CompoundTag nbt, LittleGrid grid) {
         return new ArrayList<>();
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void saveCustomSettings(GuiParent gui, CompoundTag nbt, LittleGrid grid) {}
     
-    @Override
     public void rotate(CompoundTag nbt, Rotation rotation) {
         setVec(nbt, rotation.transform(getVec(nbt)));
     }
     
-    @Override
     public void mirror(CompoundTag nbt, Axis axis) {
         setVec(nbt, axis.mirror(getVec(nbt)));
     }

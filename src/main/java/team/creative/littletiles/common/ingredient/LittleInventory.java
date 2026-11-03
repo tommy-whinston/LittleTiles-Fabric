@@ -33,7 +33,7 @@ public class LittleInventory implements Iterable<ItemStack> {
     public boolean allowDrop = true;
     
     public LittleInventory(Player player) {
-        this(player, player.getCapability(ForgeCapabilities.ITEM_HANDLER, null).orElse(null));
+        this(player, null);
     }
     
     public LittleInventory(IItemHandler inventory) {
@@ -64,7 +64,7 @@ public class LittleInventory implements Iterable<ItemStack> {
                     inventoriesId.add(i);
                 }
             } else if (!onlyIngredientInventories) {
-                LazyOptional<IItemHandler> optional = stack.getCapability(ForgeCapabilities.ITEM_HANDLER, null);
+                LazyOptional<IItemHandler> optional = LazyOptional.empty();
                 if (optional.isPresent())
                     subInventories.add(new LittleInventory(player, optional.orElse(null)));
             }
@@ -164,7 +164,6 @@ public class LittleInventory implements Iterable<ItemStack> {
         return simulate ? cachedInventory.size() : inventory.getSlots();
     }
     
-    @Override
     public Iterator<ItemStack> iterator() {
         if (simulate)
             return cachedInventory.iterator();
@@ -172,12 +171,10 @@ public class LittleInventory implements Iterable<ItemStack> {
             
             public int index = 0;
             
-            @Override
             public boolean hasNext() {
                 return index < inventory.getSlots();
             }
             
-            @Override
             public ItemStack next() {
                 return inventory.getStackInSlot(index++);
             }

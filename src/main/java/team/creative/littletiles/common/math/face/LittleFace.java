@@ -50,22 +50,18 @@ public non-sealed class LittleFace implements ILittleFace {
         this.filled = new boolean[maxOne - minOne][maxTwo - minTwo];
     }
     
-    @Override
     public LittleGrid getGrid() {
         return grid;
     }
     
-    @Override
     public LittleBox box() {
         return box;
     }
     
-    @Override
     public int getSmallest() {
         return grid.count;
     }
     
-    @Override
     /** converting a face to another grid will remove all the filled in information */
     public void convertTo(LittleGrid to) {
         int ratio = to.count / this.grid.count;
@@ -129,15 +125,12 @@ public non-sealed class LittleFace implements ILittleFace {
         return oldOrigin;
     }
     
-    @Override
     public void setPartiallyFilled() {}
     
-    @Override
     public boolean supportsCutting() {
         return true;
     }
     
-    @Override
     public void cut(List<VectorFan> fans) {
         if (toCut == null)
             toCut = new ArrayList<>();
@@ -231,47 +224,38 @@ public non-sealed class LittleFace implements ILittleFace {
         origin = facing.positive ? 0 : grid.count;
     }
     
-    @Override
     public Facing facing() {
         return facing;
     }
     
-    @Override
     public Axis one() {
         return one;
     }
     
-    @Override
     public Axis two() {
         return two;
     }
     
-    @Override
     public int origin() {
         return origin;
     }
     
-    @Override
     public int minOne() {
         return minOne;
     }
     
-    @Override
     public int minTwo() {
         return minTwo;
     }
     
-    @Override
     public int maxOne() {
         return maxOne;
     }
     
-    @Override
     public int maxTwo() {
         return maxTwo;
     }
     
-    @Override
     public void set(int one, int two, boolean value) {
         filled[one][two] = value;
     }

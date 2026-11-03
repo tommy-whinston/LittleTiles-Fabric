@@ -121,22 +121,18 @@ public class LittleRenderChunk implements RenderChunkExtender {
                 .ordinal()]) && doesChunkExistAt(neighbors[Direction.SOUTH.ordinal()]);
     }
     
-    @Override
     public ChunkLayerMap<BufferCollection> getLastUploaded() {
         return lastUploaded;
     }
     
-    @Override
     public void setLastUploaded(ChunkLayerMap<BufferCollection> uploaded) {
         this.lastUploaded = uploaded;
     }
     
-    @Override
     public int getQueued() {
         return queued;
     }
     
-    @Override
     public void setQueued(int queued) {
         this.queued = queued;
     }
@@ -145,12 +141,10 @@ public class LittleRenderChunk implements RenderChunkExtender {
         return this.bb;
     }
     
-    @Override
     public BlockPos standardOffset() {
         return pos;
     }
     
-    @Override
     public VertexBuffer getVertexBuffer(RenderType layer) {
         return this.buffers.get(layer);
     }
@@ -169,7 +163,6 @@ public class LittleRenderChunk implements RenderChunkExtender {
         return this.compiled.get();
     }
     
-    @Override
     public void begin(BufferBuilder builder) {
         builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.BLOCK);
     }
@@ -200,7 +193,6 @@ public class LittleRenderChunk implements RenderChunkExtender {
         return this.dirty;
     }
     
-    @Override
     public void markReadyForUpdate(boolean playerChanged) {
         setDirty(playerChanged);
     }
@@ -266,29 +258,24 @@ public class LittleRenderChunk implements RenderChunkExtender {
         manager.updateGlobalBlockEntities(set1, set);
     }
     
-    @Override
     public SortState getTransparencyState() {
         return ((CompiledChunkAccessor) getCompiledChunk()).getTransparencyState();
     }
     
-    @Override
     public void setHasBlock(RenderType layer) {
         CompiledChunk compiled = getCompiledChunk();
         if (compiled != CompiledChunk.UNCOMPILED)
             ((CompiledChunkAccessor) compiled).getHasBlocks().add(layer);
     }
     
-    @Override
     public boolean isEmpty(RenderType layer) {
         return getCompiledChunk().isEmpty(layer);
     }
     
-    @Override
     public void setQuadSorting(BufferBuilder builder, double x, double y, double z) {
         builder.setQuadSorting(VertexSorting.byDistance((float) x - pos.getX(), (float) y - pos.getY(), (float) z - pos.getZ()));
     }
     
-    @Override
     public LittleRenderPipelineType getPipeline() {
         return LittleRenderPipelineType.FORGE;
     }
@@ -308,7 +295,7 @@ public class LittleRenderChunk implements RenderChunkExtender {
         public ChunkCompileTask(@Nullable ChunkPos pos, double distAtCreation, boolean isHighPriority) {
             this.distAtCreation = distAtCreation;
             this.isHighPriority = isHighPriority;
-            this.modelData = pos == null ? Collections.EMPTY_MAP : level().getModelDataManager().getAt(pos);
+            this.modelData = pos == null ? Collections.EMPTY_MAP : team.creative.littletiles.client.compat.ModelDataHelper.get(level().getParent()).getAt(pos);
         }
         
         public abstract CompletableFuture<ChunkTaskResult> doTask(ChunkBufferBuilderPack p_112853_);
@@ -317,7 +304,6 @@ public class LittleRenderChunk implements RenderChunkExtender {
         
         public abstract String name();
         
-        @Override
         public int compareTo(ChunkCompileTask other) {
             return Doubles.compare(this.distAtCreation, other.distAtCreation);
         }
@@ -345,12 +331,10 @@ public class LittleRenderChunk implements RenderChunkExtender {
             this.level = level;
         }
         
-        @Override
         public String name() {
             return "rend_chk_rebuild";
         }
         
-        @Override
         public CompletableFuture<ChunkTaskResult> doTask(ChunkBufferBuilderPack pack) {
             if (this.isCancelled.get())
                 return CompletableFuture.completedFuture(ChunkTaskResult.CANCELLED);
@@ -456,14 +440,14 @@ public class LittleRenderChunk implements RenderChunkExtender {
                         var model = blockrenderdispatcher.getBlockModel(blockstate);
                         var modelData = getModelData(blockpos2);
                         randomsource.setSeed(blockstate.getSeed(blockpos2));
-                        for (RenderType rendertype2 : model.getRenderTypes(blockstate, randomsource, modelData)) {
+                        for (RenderType rendertype2 : java.util.List.of(net.minecraft.client.renderer.ItemBlockRenderTypes.getRenderType(blockstate, false))) {
                             BufferBuilder bufferbuilder2 = pack.builder(rendertype2);
                             if (renderTypes.add(rendertype2))
                                 LittleRenderChunk.this.begin(bufferbuilder2);
                             
                             posestack.pushPose();
                             posestack.translate(blockpos2.getX() & 15, blockpos2.getY() & 15, blockpos2.getZ() & 15);
-                            blockrenderdispatcher.renderBatched(blockstate, blockpos2, renderchunkregion, posestack, bufferbuilder2, true, randomsource, modelData, rendertype2);
+                            blockrenderdispatcher.renderBatched(blockstate, blockpos2, renderchunkregion, posestack, bufferbuilder2, true, randomsource);
                             posestack.popPose();
                         }
                     }
@@ -504,7 +488,6 @@ public class LittleRenderChunk implements RenderChunkExtender {
                     results.blockEntities.add(entity); //FORGE: Fix MC-112730
         }
         
-        @Override
         public void cancel() {
             this.level = null;
             if (this.isCancelled.compareAndSet(false, true))
@@ -528,7 +511,6 @@ public class LittleRenderChunk implements RenderChunkExtender {
             return cache;
         }
         
-        @Override
         public BufferCache upload(RenderType layer, BufferCache cache) {
             if (cache.upload((ChunkBufferUploader) builder(layer))) {
                 getOrCreateBuffers(layer).queueForUpload(cache);
@@ -569,12 +551,10 @@ public class LittleRenderChunk implements RenderChunkExtender {
             this.compiledChunk = chunk;
         }
         
-        @Override
         public String name() {
             return "rend_chk_sort";
         }
         
-        @Override
         public CompletableFuture<ChunkTaskResult> doTask(ChunkBufferBuilderPack p_112893_) {
             if (this.isCancelled.get())
                 return CompletableFuture.completedFuture(ChunkTaskResult.CANCELLED);
@@ -611,7 +591,6 @@ public class LittleRenderChunk implements RenderChunkExtender {
             return CompletableFuture.completedFuture(ChunkTaskResult.CANCELLED);
         }
         
-        @Override
         public void cancel() {
             this.isCancelled.set(true);
         }

@@ -11,9 +11,7 @@ public class LittleFixedStructure extends LittleStructure {
         super(type, mainBlock);
     }
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {}
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {}
 }

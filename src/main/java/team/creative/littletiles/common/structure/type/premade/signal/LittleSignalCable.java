@@ -26,22 +26,18 @@ public class LittleSignalCable extends LittleSignalCableBase implements ISignalS
         super(type, mainBlock);
     }
     
-    @Override
     public boolean canConnect(Facing facing) {
         return true;
     }
     
-    @Override
     public int getIndex(Facing facing) {
         return facing.ordinal();
     }
     
-    @Override
     public Facing getFacing(int index) {
         return Facing.values()[index];
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void render(SurroundingBox box, LittleBox overallBox, IndexedCollector<LittleRenderBox> cubes) {
         super.render(box, overallBox, cubes);
@@ -57,7 +53,6 @@ public class LittleSignalCable extends LittleSignalCableBase implements ISignalS
             super(id, structureClass, factory, attribute, modid, bandwidth, 6);
         }
         
-        @Override
         @OnlyIn(Dist.CLIENT)
         public List<RenderBox> getItemPreview(LittleGroup previews, boolean translucent) {
             List<RenderBox> cubes = new ArrayList<>();
@@ -71,23 +66,18 @@ public class LittleSignalCable extends LittleSignalCableBase implements ISignalS
             return cubes;
         }
         
-        @Override
         public int getBandwidth() {
             return bandwidth;
         }
         
-        @Override
         public void changed() {}
         
-        @Override
         public SignalState getState() {
             return null;
         }
         
-        @Override
         public void overwriteState(SignalState state) {}
         
-        @Override
         public SignalComponentType getComponentType() {
             return SignalComponentType.TRANSMITTER;
         }

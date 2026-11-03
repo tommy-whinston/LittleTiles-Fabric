@@ -128,7 +128,6 @@ public abstract class SignalInputCondition {
         return internalDelay() * LittleTiles.CONFIG.signal.overallDurationScale;
     }
     
-    @Override
     public String toString() {
         return write();
     }
@@ -139,7 +138,6 @@ public abstract class SignalInputCondition {
     
     public static abstract class SignalInputConditionOperator extends SignalInputCondition {
         
-        @Override
         public SignalState test(LittleStructure structure, boolean forceBitwise) {
             return test(structure);
         }
@@ -156,32 +154,26 @@ public abstract class SignalInputCondition {
             this.condition = condition;
         }
         
-        @Override
         public SignalState test(LittleStructure structure) {
             return SignalState.copy(condition.test(structure, true)).invert();
         }
         
-        @Override
         public boolean testIndex(SignalState state) {
             return !condition.testIndex(state);
         }
         
-        @Override
         public String write() {
             return "~(" + condition.write() + ")";
         }
         
-        @Override
         protected double internalDelay() {
             return LittleTiles.CONFIG.signal.bnotDuration + condition.calculateDelay();
         }
         
-        @Override
         public Iterator<SignalInputCondition> nested() {
             return new SingleIterator<>(condition);
         }
         
-        @Override
         public SignalTarget target() {
             return null;
         }
@@ -195,32 +187,26 @@ public abstract class SignalInputCondition {
             this.condition = condition;
         }
         
-        @Override
         public SignalState test(LittleStructure structure) {
             return SignalState.copy(condition.test(structure, false)).invert();
         }
         
-        @Override
         public boolean testIndex(SignalState state) {
             return !condition.testIndex(state);
         }
         
-        @Override
         public String write() {
             return "!(" + condition.write() + ")";
         }
         
-        @Override
         protected double internalDelay() {
             return LittleTiles.CONFIG.signal.notDuration + condition.calculateDelay();
         }
         
-        @Override
         public Iterator<SignalInputCondition> nested() {
             return new SingleIterator<>(condition);
         }
         
-        @Override
         public SignalTarget target() {
             return null;
         }
@@ -234,32 +220,26 @@ public abstract class SignalInputCondition {
             this.number = number;
         }
         
-        @Override
         public SignalState test(LittleStructure structure, boolean forceBitwise) {
             return SignalState.of(number);
         }
         
-        @Override
         public boolean testIndex(SignalState state) {
             return false;
         }
         
-        @Override
         public String write() {
             return "n" + number;
         }
         
-        @Override
         protected double internalDelay() {
             return 0;
         }
         
-        @Override
         public Iterator<SignalInputCondition> nested() {
             return Collections.emptyIterator();
         }
         
-        @Override
         public SignalTarget target() {
             return null;
         }
@@ -274,7 +254,6 @@ public abstract class SignalInputCondition {
             this.conditions = conditions;
         }
         
-        @Override
         public SignalState test(LittleStructure structure, boolean forceBitwise) {
             SignalState state = SignalState.create(conditions.length);
             for (int i = 0; i < conditions.length; i++)
@@ -282,12 +261,10 @@ public abstract class SignalInputCondition {
             return state;
         }
         
-        @Override
         public boolean testIndex(SignalState state) {
             return false;
         }
         
-        @Override
         public String write() {
             String result = "v[";
             for (int i = 0; i < conditions.length; i++) {
@@ -298,7 +275,6 @@ public abstract class SignalInputCondition {
             return result + "]";
         }
         
-        @Override
         protected double internalDelay() {
             double delay = LittleTiles.CONFIG.signal.andDuration * conditions.length;
             for (int i = 0; i < conditions.length; i++)
@@ -306,12 +282,10 @@ public abstract class SignalInputCondition {
             return delay;
         }
         
-        @Override
         public Iterator<SignalInputCondition> nested() {
             return new ArrayIterator<>(conditions);
         }
         
-        @Override
         public SignalTarget target() {
             return null;
         }

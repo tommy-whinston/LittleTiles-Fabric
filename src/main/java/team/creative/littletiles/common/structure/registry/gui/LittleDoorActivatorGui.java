@@ -37,7 +37,6 @@ public class LittleDoorActivatorGui extends LittleStructureGuiControl {
         registerEventChanged(x -> updateTimeline());
     }
     
-    @Override
     public void create(@Nullable LittleStructure structure) {
         boolean rightClick = true;
         int[] activated = new int[0];
@@ -88,7 +87,6 @@ public class LittleDoorActivatorGui extends LittleStructureGuiControl {
         return new AnimationTimeline(duration, entries);
     }
     
-    @Override
     public LittleStructure save(LittleStructure structure) {
         LittleActivatorDoor door = (LittleActivatorDoor) structure;
         

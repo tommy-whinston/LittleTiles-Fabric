@@ -23,7 +23,6 @@ public abstract class LittleStructurePremade extends LittleStructure {
         super(type, mainBlock);
     }
     
-    @Override
     public ItemStack getStructureDrop() throws CorruptedConnectionException, NotYetConnectedException {
         ItemStack stack = LittlePremadeRegistry.createStack(type.id);
         
@@ -90,7 +89,6 @@ public abstract class LittleStructurePremade extends LittleStructure {
             return this;
         }
         
-        @Override
         public boolean canOnlyBePlacedByItemStack() {
             return true;
         }
@@ -99,12 +97,10 @@ public abstract class LittleStructurePremade extends LittleStructure {
             return true;
         }
         
-        @Override
         public boolean tileCountAsIngredient(LittleGroup group) {
             return false;
         }
         
-        @Override
         public void addIngredients(LittleGroup group, LittleIngredients ingredients) {
             super.addIngredients(group, ingredients);
             ingredients.add(new StackIngredient(createItemStack()));

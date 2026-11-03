@@ -24,21 +24,17 @@ import team.creative.littletiles.common.structure.signal.schedule.SignalSchedule
 public enum SignalMode {
     
     EQUAL("signal.mode.equal") {
-        @Override
         public SignalOutputHandler create(ISignalComponent component, int delay, CompoundTag nbt, boolean hasWorld) {
             SignalOutputHandler handler = new SignalOutputHandler(component, delay, nbt) {
                 
-                @Override
                 public SignalMode getMode() {
                     return SignalMode.EQUAL;
                 }
                 
-                @Override
                 public void queue(SignalState state) {
                     LittleTiles.TICKERS.schedule(this, state, delay);
                 }
                 
-                @Override
                 public void write(boolean preview, CompoundTag nbt) {
                     if (preview)
                         return;
@@ -69,17 +65,14 @@ public enum SignalMode {
             return handler;
         }
         
-        @Override
         @OnlyIn(Dist.CLIENT)
         public GuiSignalModeConfiguration createConfiguration(SignalOutputHandler handler) {
             return new GuiSignalModeConfigurationEqual(handler);
         }
         
-        @Override
         @OnlyIn(Dist.CLIENT)
         public void createControls(GuiParent parent, GuiSignalModeConfiguration configuration) {}
         
-        @Override
         @OnlyIn(Dist.CLIENT)
         public GuiSignalModeConfiguration parseControls(GuiParent parent, int delay) {
             return new GuiSignalModeConfigurationEqual(delay);
@@ -88,7 +81,6 @@ public enum SignalMode {
     },
     TOGGLE("signal.mode.toggle") {
         
-        @Override
         public SignalOutputHandler create(ISignalComponent component, int delay, CompoundTag nbt, boolean hasWorld) {
             SignalState before;
             SignalState result;
@@ -119,17 +111,14 @@ public enum SignalMode {
             return handler;
         }
         
-        @Override
         @OnlyIn(Dist.CLIENT)
         public GuiSignalModeConfiguration createConfiguration(SignalOutputHandler handler) {
             return new GuiSignalModeConfigurationToggle(handler);
         }
         
-        @Override
         @OnlyIn(Dist.CLIENT)
         public void createControls(GuiParent parent, GuiSignalModeConfiguration configuration) {}
         
-        @Override
         @OnlyIn(Dist.CLIENT)
         public GuiSignalModeConfiguration parseControls(GuiParent parent, int delay) {
             return new GuiSignalModeConfigurationToggle(delay);
@@ -138,7 +127,6 @@ public enum SignalMode {
     },
     PULSE("signal.mode.pulse") {
         
-        @Override
         public SignalOutputHandler create(ISignalComponent component, int delay, CompoundTag nbt, boolean hasWorld) {
             SignalOutputHandler condition = new SignalOutputHandlerPulse(component, delay, nbt);
             if (hasWorld) {
@@ -151,13 +139,11 @@ public enum SignalMode {
             return condition;
         }
         
-        @Override
         @OnlyIn(Dist.CLIENT)
         public GuiSignalModeConfiguration createConfiguration(SignalOutputHandler handler) {
             return new GuiSignalModeConfigurationPulse(handler);
         }
         
-        @Override
         @OnlyIn(Dist.CLIENT)
         public void createControls(GuiParent parent, GuiSignalModeConfiguration configuration) {
             parent.add(new GuiLabel("length:").setTitle(Component.translatable("gui.signal.length").append(":")));
@@ -165,7 +151,6 @@ public enum SignalMode {
                     .setNumbersOnly());
         }
         
-        @Override
         @OnlyIn(Dist.CLIENT)
         public GuiSignalModeConfiguration parseControls(GuiParent parent, int delay) {
             GuiTextfield length = (GuiTextfield) parent.get("length");
@@ -174,11 +159,9 @@ public enum SignalMode {
     },
     THRESHOLD("signal.mode.threshold") {
         
-        @Override
         public SignalOutputHandler create(ISignalComponent component, int delay, CompoundTag nbt, boolean hasWorld) {
             SignalOutputHandlerStoreOne handler = new SignalOutputHandlerStoreOne(component, delay, nbt) {
                 
-                @Override
                 public void queue(SignalState state) {
                     if (ticket != null)
                         ticket.overwriteState(state);
@@ -186,18 +169,15 @@ public enum SignalMode {
                         ticket = LittleTiles.TICKERS.schedule(this, state, delay);
                 }
                 
-                @Override
                 public void performStateChange(SignalState state) {
                     ticket = null;
                     super.performStateChange(state);
                 }
                 
-                @Override
                 public SignalMode getMode() {
                     return SignalMode.THRESHOLD;
                 }
                 
-                @Override
                 public void write(boolean preview, CompoundTag nbt) {
                     if (!preview && ticket != null)
                         nbt.putIntArray("ticket", new int[] { ticket.getDelay(), ticket.getState().number() });
@@ -218,17 +198,14 @@ public enum SignalMode {
             return handler;
         }
         
-        @Override
         @OnlyIn(Dist.CLIENT)
         public GuiSignalModeConfiguration createConfiguration(SignalOutputHandler handler) {
             return new GuiSignalModeConfigurationThreshold(handler);
         }
         
-        @Override
         @OnlyIn(Dist.CLIENT)
         public void createControls(GuiParent parent, GuiSignalModeConfiguration configuration) {}
         
-        @Override
         @OnlyIn(Dist.CLIENT)
         public GuiSignalModeConfiguration parseControls(GuiParent parent, int delay) {
             return new GuiSignalModeConfigurationThreshold(delay);
@@ -236,29 +213,24 @@ public enum SignalMode {
     },
     STABILIZER("signal.mode.stabilizer") {
         
-        @Override
         public SignalOutputHandler create(ISignalComponent component, int delay, CompoundTag nbt, boolean hasWorld) {
             SignalOutputHandlerStoreOne handler = new SignalOutputHandlerStoreOne(component, delay, nbt) {
                 
-                @Override
                 public void queue(SignalState state) {
                     if (ticket != null)
                         ticket.markObsolete();
                     ticket = LittleTiles.TICKERS.schedule(this, state, delay);
                 }
                 
-                @Override
                 public void performStateChange(SignalState state) {
                     ticket = null;
                     super.performStateChange(state);
                 }
                 
-                @Override
                 public SignalMode getMode() {
                     return SignalMode.STABILIZER;
                 }
                 
-                @Override
                 public void write(boolean preview, CompoundTag nbt) {
                     if (preview)
                         return;
@@ -281,17 +253,14 @@ public enum SignalMode {
             return handler;
         }
         
-        @Override
         @OnlyIn(Dist.CLIENT)
         public GuiSignalModeConfiguration createConfiguration(SignalOutputHandler handler) {
             return new GuiSignalModeConfigurationStabilizer(handler);
         }
         
-        @Override
         @OnlyIn(Dist.CLIENT)
         public void createControls(GuiParent parent, GuiSignalModeConfiguration configuration) {}
         
-        @Override
         @OnlyIn(Dist.CLIENT)
         public GuiSignalModeConfiguration parseControls(GuiParent parent, int delay) {
             return new GuiSignalModeConfigurationStabilizer(delay);
@@ -299,7 +268,6 @@ public enum SignalMode {
     },
     EXTENDER("signal.mode.extender") {
         
-        @Override
         public SignalOutputHandler create(ISignalComponent component, int delay, CompoundTag nbt, boolean hasWorld) {
             SignalOutputHandler condition = new SignalOutputHandlerExtender(component, delay, nbt);
             if (hasWorld) {
@@ -312,13 +280,11 @@ public enum SignalMode {
             return condition;
         }
         
-        @Override
         @OnlyIn(Dist.CLIENT)
         public GuiSignalModeConfiguration createConfiguration(SignalOutputHandler handler) {
             return new GuiSignalModeConfigurationExtender(handler);
         }
         
-        @Override
         @OnlyIn(Dist.CLIENT)
         public void createControls(GuiParent parent, GuiSignalModeConfiguration configuration) {
             parent.add(new GuiLabel("length:").setTitle(Component.translatable("gui.signal.length").append(":")));
@@ -327,7 +293,6 @@ public enum SignalMode {
                         .setNumbersOnly());
         }
         
-        @Override
         @OnlyIn(Dist.CLIENT)
         public GuiSignalModeConfiguration parseControls(GuiParent parent, int delay) {
             GuiTextfield length = (GuiTextfield) parent.get("length");
@@ -374,7 +339,6 @@ public enum SignalMode {
             this.result = result;
         }
         
-        @Override
         public SignalMode getMode() {
             return SignalMode.TOGGLE;
         }
@@ -392,7 +356,6 @@ public enum SignalMode {
             performStateChange(result);
         }
         
-        @Override
         public void queue(SignalState state) {
             try {
                 int bandwidth = component.getBandwidth();
@@ -410,7 +373,6 @@ public enum SignalMode {
             } catch (CorruptedConnectionException | NotYetConnectedException e) {}
         }
         
-        @Override
         public void write(boolean preview, CompoundTag nbt) {
             if (stateBefore != null) {
                 try {
@@ -445,17 +407,14 @@ public enum SignalMode {
             this.stateBefore = nbt.getBoolean("before");
         }
         
-        @Override
         public int getBandwidth() throws CorruptedConnectionException, NotYetConnectedException {
             return super.getBandwidth();
         }
         
-        @Override
         public SignalMode getMode() {
             return SignalMode.PULSE;
         }
         
-        @Override
         public void performStateChange(SignalState state) {
             super.performStateChange(state);
             if (state.any())
@@ -466,7 +425,6 @@ public enum SignalMode {
             }
         }
         
-        @Override
         public void queue(SignalState state) {
             boolean current = state.any();
             if (pulseEnd == null && !stateBefore && current) {
@@ -481,7 +439,6 @@ public enum SignalMode {
             stateBefore = current;
         }
         
-        @Override
         public void write(boolean preview, CompoundTag nbt) {
             nbt.putInt("length", pulseLength);
             nbt.putBoolean("before", stateBefore);
@@ -508,17 +465,14 @@ public enum SignalMode {
             this.stateBefore = nbt.getBoolean("before");
         }
         
-        @Override
         public int getBandwidth() throws CorruptedConnectionException, NotYetConnectedException {
             return super.getBandwidth();
         }
         
-        @Override
         public SignalMode getMode() {
             return SignalMode.EXTENDER;
         }
         
-        @Override
         public void performStateChange(SignalState state) {
             super.performStateChange(state);
             if (state.any())
@@ -529,7 +483,6 @@ public enum SignalMode {
             }
         }
         
-        @Override
         public void queue(SignalState state) {
             try {
                 int bandwidth = getBandwidth();
@@ -555,7 +508,6 @@ public enum SignalMode {
             } catch (CorruptedConnectionException | NotYetConnectedException e) {}
         }
         
-        @Override
         public void write(boolean preview, CompoundTag nbt) {
             nbt.putInt("length", pulseLength);
             nbt.putBoolean("before", stateBefore);
@@ -625,17 +577,14 @@ public enum SignalMode {
             this(handler != null ? handler.delay : 1);
         }
         
-        @Override
         public SignalMode getMode() {
             return EQUAL;
         }
         
-        @Override
         public GuiSignalModeConfiguration copy() {
             return new GuiSignalModeConfigurationEqual(delay);
         }
         
-        @Override
         public SignalOutputHandler getHandler(ISignalComponent component, LittleStructure structure) {
             CompoundTag nbt = new CompoundTag();
             nbt.putInt("delay", delay);
@@ -655,17 +604,14 @@ public enum SignalMode {
             super(handler);
         }
         
-        @Override
         public SignalMode getMode() {
             return TOGGLE;
         }
         
-        @Override
         public GuiSignalModeConfiguration copy() {
             return new GuiSignalModeConfigurationToggle(delay);
         }
         
-        @Override
         public SignalOutputHandler getHandler(ISignalComponent component, LittleStructure structure) {
             CompoundTag nbt = new CompoundTag();
             nbt.putInt("delay", delay);
@@ -689,17 +635,14 @@ public enum SignalMode {
             this.length = handler instanceof SignalOutputHandlerPulse pulse ? pulse.pulseLength : 10;
         }
         
-        @Override
         public SignalMode getMode() {
             return PULSE;
         }
         
-        @Override
         public GuiSignalModeConfiguration copy() {
             return new GuiSignalModeConfigurationPulse(delay, length);
         }
         
-        @Override
         public SignalOutputHandler getHandler(ISignalComponent component, LittleStructure structure) {
             CompoundTag nbt = new CompoundTag();
             nbt.putInt("delay", delay);
@@ -707,7 +650,6 @@ public enum SignalMode {
             return getMode().create(component, delay, nbt, false);
         }
 
-        @Override
         public MutableComponent description(int configuredDelay) {
             return super.description(configuredDelay).append(" ").append(Component.translatable("gui.signal.length").append(": " + length));
         }
@@ -728,17 +670,14 @@ public enum SignalMode {
             this.length = handler instanceof SignalOutputHandlerExtender extender ? extender.pulseLength : 10;
         }
         
-        @Override
         public SignalMode getMode() {
             return EXTENDER;
         }
         
-        @Override
         public GuiSignalModeConfiguration copy() {
             return new GuiSignalModeConfigurationExtender(delay, length);
         }
         
-        @Override
         public SignalOutputHandler getHandler(ISignalComponent component, LittleStructure structure) {
             CompoundTag nbt = new CompoundTag();
             nbt.putInt("delay", delay);
@@ -746,7 +685,6 @@ public enum SignalMode {
             return getMode().create(component, delay, nbt, false);
         }
 
-        @Override
         public MutableComponent description(int configuredDelay) {
             return super.description(configuredDelay).append(" ").append(Component.translatable("gui.signal.length").append(": " + length));
         }
@@ -764,17 +702,14 @@ public enum SignalMode {
             super(handler);
         }
         
-        @Override
         public SignalMode getMode() {
             return THRESHOLD;
         }
         
-        @Override
         public GuiSignalModeConfiguration copy() {
             return new GuiSignalModeConfigurationThreshold(delay);
         }
         
-        @Override
         public SignalOutputHandler getHandler(ISignalComponent component, LittleStructure structure) {
             CompoundTag nbt = new CompoundTag();
             nbt.putInt("delay", delay);
@@ -794,17 +729,14 @@ public enum SignalMode {
             super(handler);
         }
         
-        @Override
         public SignalMode getMode() {
             return STABILIZER;
         }
         
-        @Override
         public GuiSignalModeConfiguration copy() {
             return new GuiSignalModeConfigurationStabilizer(delay);
         }
         
-        @Override
         public SignalOutputHandler getHandler(ISignalComponent component, LittleStructure structure) {
             CompoundTag nbt = new CompoundTag();
             nbt.putInt("delay", delay);

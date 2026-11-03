@@ -52,7 +52,6 @@ public abstract class ElementGloveMode extends GloveMode {
     
     public ElementGloveMode() {}
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public boolean wheelClickBlock(Level level, Player player, ItemStack stack, BlockHitResult result) {
         BlockState state = level.getBlockState(result.getBlockPos());
@@ -72,25 +71,21 @@ public abstract class ElementGloveMode extends GloveMode {
         return LittleGrid.get(stack.getTag());
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public boolean hasPreviewElement(ItemStack stack) {
         return true;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public LittleElement getPreviewElement(ItemStack stack) {
         return getElement(stack);
     }
     
-    @Override
     public void vanillaBlockAction(Level level, ItemStack stack, BlockPos pos, BlockState state) {
         if (LittleAction.isBlockValid(state))
             setElement(stack, new LittleElement(state, ColorUtils.WHITE));
     }
     
-    @Override
     public void littleBlockAction(Level level, BETiles be, LittleTileContext context, ItemStack stack, BlockPos pos, CompoundTag nbt) {
         if (LittleAction.isBlockValid(context.tile.getState()))
             setElement(stack, new LittleElement(context.tile.getState(), ColorUtils.WHITE));

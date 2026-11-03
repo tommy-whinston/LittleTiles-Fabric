@@ -44,7 +44,6 @@ public class GuiDialogSignalVirtualInput extends GuiLayer {
         super.init();
     }
     
-    @Override
     public void create() {
         if (input == null)
             return;
@@ -122,7 +121,6 @@ public class GuiDialogSignalVirtualInput extends GuiLayer {
             update();
         }
         
-        @Override
         public void update() {
             GuiLabel label = (GuiLabel) panel.get("label");
             GuiStateButton type = (GuiStateButton) panel.get("type");
@@ -143,32 +141,26 @@ public class GuiDialogSignalVirtualInput extends GuiLayer {
             return new SignalInputVirtualNumber(0);
         }
         
-        @Override
         public GuiSignalComponent getOutput() {
             return output;
         }
         
-        @Override
         public SignalInputCondition getCondition() {
             return condition;
         }
         
-        @Override
         public void setCondition(SignalInputCondition condition) {
             this.condition = condition;
         }
         
-        @Override
         public boolean hasModeConfiguration() {
             return false;
         }
         
-        @Override
         public GuiSignalModeConfiguration getModeConfiguration() {
             return null;
         }
         
-        @Override
         public void setModeConfiguration(GuiSignalModeConfiguration config) {
             
         }

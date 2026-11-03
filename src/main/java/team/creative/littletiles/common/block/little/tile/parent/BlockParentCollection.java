@@ -34,7 +34,6 @@ public class BlockParentCollection extends ParentCollection {
         this.client = client;
     }
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {
         ListTag list = nbt.getList("children", Tag.TAG_COMPOUND);
         HashMap<Integer, StructureParentCollection> previous = new HashMap<>(structures);
@@ -53,7 +52,6 @@ public class BlockParentCollection extends ParentCollection {
         reloadAttributes();
     }
     
-    @Override
     protected void saveExtra(CompoundTag nbt, LittleServerFace face) {
         ListTag list = new ListTag();
         for (StructureParentCollection child : structures.values())
@@ -95,7 +93,6 @@ public class BlockParentCollection extends ParentCollection {
             Iterator<StructureParentCollection> itr = structures.values().iterator();
             StructureParentCollection next = null;
             
-            @Override
             public boolean hasNext() {
                 while (next == null) {
                     if (itr.hasNext())
@@ -112,7 +109,6 @@ public class BlockParentCollection extends ParentCollection {
                 return next != null;
             }
             
-            @Override
             public LittleStructure next() {
                 try {
                     StructureParentCollection temp = next;
@@ -130,12 +126,10 @@ public class BlockParentCollection extends ParentCollection {
             
             Iterator<StructureParentCollection> iterator = structures.values().iterator();
             
-            @Override
             public boolean hasNext() {
                 return iterator.hasNext();
             }
             
-            @Override
             public IStructureParentCollection next() {
                 return iterator.next();
             }
@@ -173,12 +167,10 @@ public class BlockParentCollection extends ParentCollection {
                     next = null;
                 }
                 
-                @Override
                 public boolean hasNext() {
                     return next != null;
                 }
                 
-                @Override
                 public LittleStructure next() {
                     LittleStructure toReturn = next;
                     findNext();
@@ -188,12 +180,10 @@ public class BlockParentCollection extends ParentCollection {
         }
         return new IterableIterator<LittleStructure>() {
             
-            @Override
             public boolean hasNext() {
                 return false;
             }
             
-            @Override
             public LittleStructure next() {
                 return null;
             }
@@ -223,7 +213,6 @@ public class BlockParentCollection extends ParentCollection {
             IParentCollection current = BlockParentCollection.this;
             Iterator<IStructureParentCollection> children = structures().iterator();
             
-            @Override
             public boolean hasNext() {
                 if (current != null)
                     return true;
@@ -233,7 +222,6 @@ public class BlockParentCollection extends ParentCollection {
                 return true;
             }
             
-            @Override
             public IParentCollection next() {
                 IParentCollection result = current;
                 current = null;
@@ -249,7 +237,6 @@ public class BlockParentCollection extends ParentCollection {
             Iterator<LittleTile> inBlock = null;
             Pair<IParentCollection, LittleTile> pair = null;
             
-            @Override
             public boolean hasNext() {
                 while (inBlock == null || !inBlock.hasNext()) {
                     if (!iterator.hasNext())
@@ -261,7 +248,6 @@ public class BlockParentCollection extends ParentCollection {
                 return true;
             }
             
-            @Override
             public Pair<IParentCollection, LittleTile> next() {
                 pair.setValue(inBlock.next());
                 return pair;
@@ -269,7 +255,6 @@ public class BlockParentCollection extends ParentCollection {
         };
     }
     
-    @Override
     public int totalSize() {
         int size = size();
         for (StructureParentCollection list : structures.values())
@@ -290,27 +275,22 @@ public class BlockParentCollection extends ParentCollection {
             attributes |= structure.getAttribute();
     }
     
-    @Override
     public BETiles getBE() {
         return be;
     }
     
-    @Override
     public boolean isStructure() {
         return false;
     }
     
-    @Override
     public boolean isMain() {
         return false;
     }
     
-    @Override
     public boolean isStructureChild(LittleStructure structure) throws CorruptedConnectionException, NotYetConnectedException {
         return false;
     }
     
-    @Override
     public LittleStructure getStructure() throws CorruptedLinkException {
         throw new CorruptedLinkException();
     }
@@ -319,15 +299,12 @@ public class BlockParentCollection extends ParentCollection {
         return structures.get(index);
     }
     
-    @Override
     public int getAttribute() {
         return 0;
     }
     
-    @Override
     public void setAttribute(int attribute) {}
     
-    @Override
     public boolean isClient() {
         return client;
     }
@@ -380,7 +357,6 @@ public class BlockParentCollection extends ParentCollection {
         return super.combine(getGrid(), optimized);
     }
     
-    @Override
     public void unload() {
         super.unload();
         for (StructureParentCollection child : structures.values())

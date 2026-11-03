@@ -29,12 +29,10 @@ public class LittleStructureMessage extends LittleStructure {
         super(type, mainBlock);
     }
     
-    @Override
     public boolean canInteract() {
         return allowRightClick;
     }
     
-    @Override
     public InteractionResult use(Level level, LittleTileContext context, BlockPos pos, Player player, BlockHitResult result, InteractionHand hand) {
         if (allowRightClick) {
             if (!level.isClientSide)
@@ -44,14 +42,12 @@ public class LittleStructureMessage extends LittleStructure {
         return super.use(level, context, pos, player, result, hand);
     }
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {
         text = StringUtils.truncate(nbt.getString("text"), LittleTiles.CONFIG.general.messageStructureLength);
         allowRightClick = nbt.getBoolean("right");
         status = nbt.getBoolean("status");
     }
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {
         nbt.putString("text", text);
         nbt.putBoolean("right", allowRightClick);
@@ -66,7 +62,6 @@ public class LittleStructureMessage extends LittleStructure {
         }
     }
     
-    @Override
     public void performInternalOutputChange(InternalSignalOutput output) {
         if (output.component.is("message")) {
             Level level = getStructureLevel();

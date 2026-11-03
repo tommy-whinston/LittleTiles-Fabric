@@ -47,7 +47,6 @@ public abstract class LittleDoorBaseGui extends LittleStructureGuiControl {
     
     protected abstract boolean hasAxis();
     
-    @Override
     public void create(@Nullable LittleStructure structure) {
         LittleGrid grid;
         LittleBox box;
@@ -130,7 +129,6 @@ public abstract class LittleDoorBaseGui extends LittleStructureGuiControl {
         });
     }
     
-    @Override
     public LittleStructure save(LittleStructure structure) {
         LittleDoor door = (LittleDoor) structure;
         

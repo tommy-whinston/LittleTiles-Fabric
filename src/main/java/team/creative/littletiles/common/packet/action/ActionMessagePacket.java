@@ -20,13 +20,11 @@ public class ActionMessagePacket extends CreativePacket {
     
     public ActionMessagePacket() {}
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void executeClient(Player player) {
         LittleTilesClient.displayActionMessage(message);
     }
     
-    @Override
     public void executeServer(ServerPlayer player) {}
     
 }

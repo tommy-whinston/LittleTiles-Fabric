@@ -45,7 +45,6 @@ public class LittleActionHandlerServer {
     
     public static void playerLoggedIn(PlayerLoggedInEvent event) {
         ServerPlayer player = (ServerPlayer) event.getEntity();
-        LittleTiles.NETWORK.sendToClient(new PlacementPlayerSettingPacket(new PlacementPlayerSetting(player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).getCompound(
-            PlacementPlayerSetting.SETTING_KEY))), player);
+        LittleTiles.NETWORK.sendToClient(new PlacementPlayerSettingPacket(new PlacementPlayerSetting()), player);
     }
 }

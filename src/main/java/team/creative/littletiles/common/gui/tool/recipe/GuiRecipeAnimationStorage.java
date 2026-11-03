@@ -61,17 +61,14 @@ public class GuiRecipeAnimationStorage implements Iterable<Entry<GuiTreeItemStru
         this.tree = tree;
     }
     
-    @Override
     public boolean highlightSelected() {
         return highlightSelected;
     }
     
-    @Override
     public void highlightSelected(boolean value) {
         this.highlightSelected = value;
     }
     
-    @Override
     public boolean isReady() {
         return overall != null && !availablePreviews.isEmpty();
     }
@@ -99,7 +96,6 @@ public class GuiRecipeAnimationStorage implements Iterable<Entry<GuiTreeItemStru
                 overlappingBoxes.addBox(boxes.getGrid(), boxes.pos, box.copy());
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public Iterable<AnimationPreview> previewsToRender() {
         return Collections.EMPTY_LIST;
@@ -132,7 +128,6 @@ public class GuiRecipeAnimationStorage implements Iterable<Entry<GuiTreeItemStru
         pose.popPose();
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void renderAll(PoseStack pose, Matrix4f projection, Minecraft mc) {
         
@@ -240,17 +235,14 @@ public class GuiRecipeAnimationStorage implements Iterable<Entry<GuiTreeItemStru
         }
     }
     
-    @Override
     public Vec3d center() {
         return new Vec3d(offX.current(), offY.current(), offZ.current());
     }
     
-    @Override
     public double longestSide() {
         return Math.max(overall.maxX - overall.minX, Math.max(overall.maxY - overall.minY, overall.maxZ - overall.minZ));
     }
     
-    @Override
     public AABB overall() {
         return overall;
     }
@@ -331,7 +323,6 @@ public class GuiRecipeAnimationStorage implements Iterable<Entry<GuiTreeItemStru
             preview.tick();
     }
     
-    @Override
     public Iterator<Entry<GuiTreeItemStructure, AnimationPreview>> iterator() {
         return availablePreviews.entrySet().iterator();
     }

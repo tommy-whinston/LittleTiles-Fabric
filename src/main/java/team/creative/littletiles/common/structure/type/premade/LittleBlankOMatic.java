@@ -22,25 +22,21 @@ public class LittleBlankOMatic extends LittleStructurePremade {
         super(type, mainBlock);
     }
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {
         inventory = InventoryUtils.load(nbt.getCompound("inv"), 1);
         inventory.addListener(x -> markDirty());
         whiteColor = nbt.getInt("white");
     }
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {
         nbt.put("inv", InventoryUtils.save(inventory));
         nbt.putInt("white", whiteColor);
     }
     
-    @Override
     public boolean canInteract() {
         return true;
     }
     
-    @Override
     public InteractionResult use(Level level, LittleTileContext context, BlockPos pos, Player player, BlockHitResult result, InteractionHand hand) {
         if (!level.isClientSide)
             LittleTilesGuiRegistry.BLANKOMATIC.open(player, this);

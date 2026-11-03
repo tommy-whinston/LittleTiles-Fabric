@@ -77,9 +77,9 @@ public interface GuiAnimationViewerStorage {
         preview.animation.getRenderManager().compileChunks(FAKE_CAMERA);
         
         renderChunkLayer(preview, RenderType.solid(), pose, projection);
-        mc.getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS).setBlurMipmap(false, mc.options.mipmapLevels().get() > 0); // FORGE: fix flickering leaves when mods mess up the blurMipmap settings
+        
         renderChunkLayer(preview, RenderType.cutoutMipped(), pose, projection);
-        mc.getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS).restoreLastBlurMipmap();
+        
         renderChunkLayer(preview, RenderType.cutout(), pose, projection);
         
         renderChunkLayer(preview, RenderType.translucent(), pose, projection);

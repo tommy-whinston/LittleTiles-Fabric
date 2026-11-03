@@ -28,7 +28,6 @@ public class LittleShapeCylinder extends LittleShape {
         super(2);
     }
     
-    @Override
     protected void addBoxes(LittleBoxes boxes, ShapeSelection selection, boolean lowResolution) {
         LittleBox box = selection.getOverallBox();
         
@@ -117,7 +116,6 @@ public class LittleShapeCylinder extends LittleShape {
         boxes.combineBoxesBlocks();
     }
     
-    @Override
     public void addExtraInformation(CompoundTag nbt, List<Component> list) {
         if (nbt.getBoolean("hollow")) {
             list.add(Component.translatable("gui.type").append(": ").append(Component.translatable("gui.hollow")));
@@ -141,7 +139,6 @@ public class LittleShapeCylinder extends LittleShape {
         list.add(Component.translatable("gui.facing").append(": ").append(Component.translatable("gui.axis." + text)));
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public List<GuiControl> getCustomSettings(CompoundTag nbt, LittleGrid grid) {
         List<GuiControl> controls = new ArrayList<>();
@@ -153,7 +150,6 @@ public class LittleShapeCylinder extends LittleShape {
         return controls;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void saveCustomSettings(GuiParent gui, CompoundTag nbt, LittleGrid grid) {
         
@@ -167,7 +163,6 @@ public class LittleShapeCylinder extends LittleShape {
         
     }
     
-    @Override
     public void rotate(CompoundTag nbt, Rotation rotation) {
         int direction = nbt.getInt("direction");
         if (rotation.axis != Axis.Y)
@@ -182,7 +177,6 @@ public class LittleShapeCylinder extends LittleShape {
         nbt.putInt("direction", direction);
     }
     
-    @Override
     public void mirror(CompoundTag nbt, Axis axis) {}
     
 }

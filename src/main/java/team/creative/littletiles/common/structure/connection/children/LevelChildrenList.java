@@ -42,7 +42,6 @@ public class LevelChildrenList extends ChildrenList<StructureChildConnection> {
         return ex;
     }
     
-    @Override
     protected void added(StructureChildConnection child) {}
     
     public void load(CompoundTag nbt) {

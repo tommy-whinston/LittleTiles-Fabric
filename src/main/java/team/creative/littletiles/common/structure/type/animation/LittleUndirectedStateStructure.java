@@ -28,12 +28,10 @@ public abstract class LittleUndirectedStateStructure extends LittleStateStructur
         super(type, mainBlock);
     }
     
-    @Override
     protected AnimationState getEmptyState() {
         return EMPTY;
     }
     
-    @Override
     protected boolean shouldStayAnimatedAfterTransitionEnd() {
         if (startTransitionIfNecessary(getOutput(0))) // Check if the state has changed already
             return true;
@@ -84,18 +82,15 @@ public abstract class LittleUndirectedStateStructure extends LittleStateStructur
         return false;
     }
     
-    @Override
     public void performInternalOutputChange(InternalSignalOutput output) {
         if (output.component.is("state"))
             startTransitionIfNecessary(output);
     }
     
-    @Override
     public boolean canInteract() {
         return canRightClick();
     }
     
-    @Override
     public InteractionResult use(Level level, LittleTileContext context, BlockPos pos, Player player, BlockHitResult result, InteractionHand hand) {
         if (canRightClick()) {
             if (!isClient())

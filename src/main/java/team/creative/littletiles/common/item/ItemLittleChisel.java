@@ -53,17 +53,14 @@ public class ItemLittleChisel extends Item implements ILittlePlacer, IItemToolti
         super(new Item.Properties().stacksTo(1));
     }
     
-    @Override
     public boolean canAttackBlock(BlockState state, Level level, BlockPos pos, Player player) {
         return false;
     }
     
-    @Override
     public float getDestroySpeed(ItemStack stack, BlockState state) {
         return 0F;
     }
     
-    @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
         LittleShape shape = getShape(stack);
         tooltip.add(Component.translatable("gui.shape").append(": ").append(Component.translatable(shape.getTranslatableName())));
@@ -113,27 +110,22 @@ public class ItemLittleChisel extends Item implements ILittlePlacer, IItemToolti
         nbt.put("element", tag);
     }
     
-    @Override
     public boolean hasTiles(ItemStack stack) {
         return true;
     }
     
-    @Override
     public LittleGroup getTiles(ItemStack stack) {
         return null;
     }
     
-    @Override
     public boolean shouldRenderInHand(ItemStack stack) {
         return true;
     }
     
-    @Override
     public LittleGroup getLow(ItemStack stack) {
         return null;
     }
     
-    @Override
     public PlacementPreview getPlacement(Player player, Level level, ItemStack stack, PlacementPosition position, boolean allowLowResolution) {
         var sel = selection;
         if (sel != null) {
@@ -145,14 +137,12 @@ public class ItemLittleChisel extends Item implements ILittlePlacer, IItemToolti
         return null;
     }
     
-    @Override
     public void saveTiles(ItemStack stack, LittleGroup group) {}
     
     protected ShapeSelection createSelection(ItemStack stack) {
         return new ShapeSelection(stack, getPlacementMode(stack).placeInside);
     }
     
-    @Override
     public void rotate(Player player, ItemStack stack, Rotation rotation, boolean client) {
         if (!client)
             return;
@@ -162,7 +152,6 @@ public class ItemLittleChisel extends Item implements ILittlePlacer, IItemToolti
             createSelection(stack).rotate(player, stack, rotation);
     }
     
-    @Override
     public void mirror(Player player, ItemStack stack, Axis axis, boolean client) {
         if (!client)
             return;
@@ -172,13 +161,11 @@ public class ItemLittleChisel extends Item implements ILittlePlacer, IItemToolti
             createSelection(stack).mirror(player, stack, axis);
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public float getPreviewAlphaFactor() {
         return 0.4F;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void tick(Player player, ItemStack stack, PlacementPosition position, BlockHitResult result) {
         if (selection == null)
@@ -186,31 +173,26 @@ public class ItemLittleChisel extends Item implements ILittlePlacer, IItemToolti
         selection.setLast(player, stack, position, result);
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public boolean shouldCache() {
         return false;
     }
     
-    @Override
     public void configured(ItemStack stack, CompoundTag nbt) {
         ILittlePlacer.super.configured(stack, nbt);
         if (selection != null && selection.countPositions() <= 1)
             selection = null;
     }
     
-    @Override
     public void onDeselect(Level level, ItemStack stack, Player player) {
         selection = null;
     }
     
-    @Override
     public void onClickAir(Player player, ItemStack stack) {
         if (selection != null)
             selection.click(player);
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public boolean onClickBlock(Level level, Player player, ItemStack stack, PlacementPosition position, BlockHitResult result) {
         if (selection != null)
@@ -218,7 +200,6 @@ public class ItemLittleChisel extends Item implements ILittlePlacer, IItemToolti
         return false;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public boolean onRightClick(Level level, Player player, ItemStack stack, PlacementPosition position, BlockHitResult result) {
         if (LittleActionHandlerClient.isUsingSecondMode()) {
@@ -229,7 +210,6 @@ public class ItemLittleChisel extends Item implements ILittlePlacer, IItemToolti
         return false;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public boolean onMouseWheelClickBlock(Level level, Player player, ItemStack stack, PlacementPosition position, BlockHitResult result) {
         BlockState state = level.getBlockState(result.getBlockPos());
@@ -243,12 +223,10 @@ public class ItemLittleChisel extends Item implements ILittlePlacer, IItemToolti
         return false;
     }
     
-    @Override
     public GuiConfigure getConfigure(Player player, ContainerSlotView view) {
         return new GuiChisel(view);
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public IMarkMode onMark(Player player, ItemStack stack, PlacementPosition position, BlockHitResult result, PlacementPreview previews) {
         if (selection != null)
@@ -256,12 +234,10 @@ public class ItemLittleChisel extends Item implements ILittlePlacer, IItemToolti
         return selection;
     }
     
-    @Override
     public boolean containsIngredients(ItemStack stack) {
         return false;
     }
     
-    @Override
     public Object[] tooltipData(ItemStack stack) {
         return new Object[] { getShape(stack).getTranslatable(), Minecraft.getInstance().options.keyPickItem.getTranslatedKeyMessage(), LittleTilesClient.mark
                 .getTranslatedKeyMessage(), LittleTilesClient.arrowKeysTooltip(), LittleTilesClient.configure.getTranslatedKeyMessage() };

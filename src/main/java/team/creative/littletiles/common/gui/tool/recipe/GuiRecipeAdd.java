@@ -158,7 +158,6 @@ public class GuiRecipeAdd extends GuiLayer implements GuiAnimationViewerStorage 
         get("save").setEnabled(false);
     }
     
-    @Override
     public void create() {
         GuiParent upper = new GuiParent();
         add(upper.setExpandable());
@@ -203,7 +202,6 @@ public class GuiRecipeAdd extends GuiLayer implements GuiAnimationViewerStorage 
         }).setTranslate("gui.import").setEnabled(false));
     }
     
-    @Override
     public void render(GuiGraphics graphics, GuiChildControl control, Rect controlRect, Rect realRect, double scale, int mouseX, int mouseY) {
         synchronized (scheduled) {
             GuiRecipeAddAnimationRequest request = scheduled.getAndSet(null);
@@ -236,7 +234,6 @@ public class GuiRecipeAdd extends GuiLayer implements GuiAnimationViewerStorage 
         return new LittleGroup((CompoundTag) null, children);
     }
     
-    @Override
     public void closed() {
         super.closed();
         requestedPreview = -1;
@@ -260,7 +257,6 @@ public class GuiRecipeAdd extends GuiLayer implements GuiAnimationViewerStorage 
                 right.add(new GuiLabel("label").setTitle(line));
         }
         
-        @Override
         public boolean mouseClicked(Rect rect, double x, double y, int button) {
             select(stack);
             playSound(SoundEvents.UI_BUTTON_CLICK);
@@ -269,41 +265,33 @@ public class GuiRecipeAdd extends GuiLayer implements GuiAnimationViewerStorage 
         
     }
     
-    @Override
     public boolean isReady() {
         return current != null;
     }
     
-    @Override
     public double longestSide() {
         return Math.max(current.box.maxX - current.box.minX, Math.max(current.box.maxY - current.box.minY, current.box.maxZ - current.box.minZ));
     }
     
-    @Override
     public AABB overall() {
         return current.box;
     }
     
-    @Override
     public Vec3d center() {
         return new Vec3d(current.box.getCenter());
     }
     
-    @Override
     public boolean highlightSelected() {
         return false;
     }
     
-    @Override
     public void highlightSelected(boolean value) {}
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public Iterable<AnimationPreview> previewsToRender() {
         return Collections.EMPTY_LIST;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void renderAll(PoseStack pose, Matrix4f projection, Minecraft mc) {
         renderPreview(pose, projection, current, mc);

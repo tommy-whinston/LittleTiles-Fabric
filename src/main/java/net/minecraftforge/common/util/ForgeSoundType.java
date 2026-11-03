@@ -1,4 +1,4 @@
-package net.minecraftforge.common;
+package net.minecraftforge.common.util;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.level.block.SoundType;

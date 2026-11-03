@@ -41,7 +41,6 @@ public class LittleRenderBox extends RenderBox {
         this.box = box;
     }
     
-    @Override
     public LittleRenderBox setColor(int color) {
         return (LittleRenderBox) super.setColor(color);
     }

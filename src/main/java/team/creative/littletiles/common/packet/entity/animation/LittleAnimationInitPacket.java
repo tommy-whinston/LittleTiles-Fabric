@@ -19,7 +19,6 @@ public class LittleAnimationInitPacket extends LittleEntityPacket<LittleAnimatio
         this.extraData = entity.saveExtraClientData();
     }
     
-    @Override
     public void execute(Player player, LittleAnimationEntity entity) {
         requiresClient(player);
         

@@ -42,91 +42,74 @@ public class ItemLittleGlove extends Item implements ILittlePlacer, IItemTooltip
         super(new Item.Properties().stacksTo(1));
     }
     
-    @Override
     public boolean canAttackBlock(BlockState state, Level level, BlockPos pos, Player player) {
         return false;
     }
     
-    @Override
     public float getDestroySpeed(ItemStack stack, BlockState state) {
         return 0F;
     }
     
-    @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
         getMode(stack).addExtraInformation(stack.getTag(), tooltip);
     }
     
-    @Override
     public boolean hasTiles(ItemStack stack) {
         return getMode(stack).hasTiles(stack);
     }
     
-    @Override
     public LittleGroup getTiles(ItemStack stack) {
         return getMode(stack).getTiles(stack);
     }
     
-    @Override
     public boolean shouldRenderInHand(ItemStack stack) {
         return true;
     }
     
-    @Override
     public LittleGroup getLow(ItemStack stack) {
         return getTiles(stack);
     }
     
-    @Override
     public PlacementPreview getPlacement(Player player, Level level, ItemStack stack, PlacementPosition position, boolean allowLowResolution) {
         return PlacementPreview.relative(level, stack, position, allowLowResolution);
     }
     
-    @Override
     public void saveTiles(ItemStack stack, LittleGroup previews) {
         getMode(stack).setTiles(previews, stack);
     }
     
-    @Override
     public boolean containsIngredients(ItemStack stack) {
         return false;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void onClickAir(Player player, ItemStack stack) {
         getMode(stack).leftClickAir(player.level(), player, stack);
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public boolean onClickBlock(Level level, Player player, ItemStack stack, PlacementPosition position, BlockHitResult result) {
         getMode(stack).leftClickBlock(level, player, stack, result);
         return true;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public boolean onRightClick(Level level, Player player, ItemStack stack, PlacementPosition position, BlockHitResult result) {
         return getMode(stack).rightClickBlock(level, player, stack, result);
     }
     
-    @Override
     public boolean onMouseWheelClickBlock(Level level, Player player, ItemStack stack, PlacementPosition position, BlockHitResult result) {
         return getMode(stack).wheelClickBlock(level, player, stack, result);
     }
     
-    @Override
     public GuiConfigure getConfigure(Player player, ContainerSlotView view) {
         return new GuiGlove(getMode(view.get()), view, 140, 140, ((ILittlePlacer) view.get().getItem()).getPositionGrid(player, view.get()));
     }
     
-    @Override
     public String tooltipTranslateKey(ItemStack stack, String defaultKey) {
         return getMode(stack).tooltipTranslateKey(stack, defaultKey);
     }
     
-    @Override
     public Object[] tooltipData(ItemStack stack) {
         return getMode(stack).tooltipData(stack);
     }

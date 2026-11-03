@@ -72,7 +72,6 @@ public abstract class SignalState {
     public static final SignalState TRUE = new PrimitveState(true);
     public static final SignalState FALSE = new PrimitveState(false);
     
-    @Override
     public abstract boolean equals(Object object);
     
     public abstract SignalState overwrite(SignalState state);
@@ -117,7 +116,6 @@ public abstract class SignalState {
     
     public abstract long longNumber();
     
-    @Override
     public abstract String toString();
     
     public abstract String print(int length);
@@ -138,51 +136,42 @@ public abstract class SignalState {
             this.value = value;
         }
         
-        @Override
         public boolean is(int index) {
             if (index == 0)
                 return value;
             return false;
         }
         
-        @Override
         public String toString() {
             return "[" + value + "]";
         }
         
-        @Override
         public String print(int length) {
             return toString();
         }
         
-        @Override
         public SignalState overwrite(SignalState state) {
             return of(state.any());
         }
         
-        @Override
         public SignalState set(int index, boolean value) {
             if (index == 0)
                 return of(value);
             return this;
         }
         
-        @Override
         public SignalState reset() {
             return FALSE;
         }
         
-        @Override
         public boolean equals(int bandwidth, SignalState state) {
             return value == state.any();
         }
         
-        @Override
         public boolean any() {
             return value;
         }
         
-        @Override
         public SignalState load(Tag tag) {
             if (tag instanceof NumericTag num)
                 return num.getAsByte() == 0 ? FALSE : TRUE;
@@ -190,71 +179,57 @@ public abstract class SignalState {
                 return FALSE;
         }
         
-        @Override
         public Tag save() {
             return ByteTag.valueOf(value);
         }
         
-        @Override
         public int number() {
             return value ? 1 : 0;
         }
         
-        @Override
         public void write(FriendlyByteBuf buffer) {
             buffer.writeInt(0);
             buffer.writeBoolean(value);
         }
         
-        @Override
         public SignalState setNumber(int value) {
             return of(value != 0);
         }
         
-        @Override
         public SignalState setLongNumber(long value) {
             return of(value != 0);
         }
         
-        @Override
         public SignalState fill(boolean value) {
             return of(value);
         }
         
-        @Override
         public SignalState fill(SignalState other) {
             return of(other.any());
         }
         
-        @Override
         public SignalState or(SignalState other) {
             return of(value || other.any());
         }
         
-        @Override
         public SignalState load(int number) {
             return of(number != 0);
         }
         
-        @Override
         public long longNumber() {
             return value ? 1 : 0;
         }
         
-        @Override
         public SignalState invert() {
             return of(!value);
         }
         
-        @Override
         public SignalStateSize size() {
             return SignalStateSize.SINGLE;
         }
         
-        @Override
         public void shrinkTo(int bandwidth) {}
         
-        @Override
         public boolean equals(Object object) {
             if (object instanceof PrimitveState)
                 return this == object;
@@ -275,19 +250,16 @@ public abstract class SignalState {
             this.value = value;
         }
         
-        @Override
         public boolean is(int index) {
             if (index < 32)
                 return IntegerUtils.bitIs(value, index);
             return false;
         }
         
-        @Override
         public String toString() {
             return "[" + value + "]";
         }
         
-        @Override
         public String print(int length) {
             String result = "[";
             for (int i = 0; i < length; i++)
@@ -295,7 +267,6 @@ public abstract class SignalState {
             return result + "]";
         }
         
-        @Override
         public SignalState load(Tag tag) {
             if (tag instanceof NumericTag num)
                 value = num.getAsInt();
@@ -304,108 +275,89 @@ public abstract class SignalState {
             return this;
         }
         
-        @Override
         public Tag save() {
             return IntTag.valueOf(value);
         }
         
-        @Override
         public SignalState overwrite(SignalState state) {
             this.value = state.number();
             return this;
         }
         
-        @Override
         public SignalState set(int index, boolean value) {
             this.value = IntegerUtils.set(this.value, index, value);
             return this;
         }
         
-        @Override
         public SignalState setNumber(int value) {
             this.value = value;
             return this;
         }
         
-        @Override
         public SignalState setLongNumber(long value) {
             this.value = (int) value;
             return this;
         }
         
-        @Override
         public SignalState fill(boolean value) {
             this.value = value ? -1 : 0;
             return this;
         }
         
-        @Override
         public SignalState fill(SignalState other) {
             this.value = other.number();
             return this;
         }
         
-        @Override
         public SignalState reset() {
             this.value = 0;
             return this;
         }
         
-        @Override
         public boolean equals(int bandwidth, SignalState state) {
             return shrinkTo(state.number(), bandwidth) == shrinkTo(value, bandwidth);
         }
         
-        @Override
         public boolean any() {
             return value != 0;
         }
         
-        @Override
         public SignalState or(SignalState other) {
             this.value |= other.number();
             return this;
         }
         
-        @Override
         public SignalState load(int number) {
             this.value = number;
             return this;
         }
         
-        @Override
         public int number() {
             return value;
         }
         
-        @Override
         public long longNumber() {
             return value;
         }
         
-        @Override
         public void write(FriendlyByteBuf buffer) {
             buffer.writeInt(1);
             buffer.writeInt(value);
         }
         
-        @Override
         public SignalState invert() {
             value = ~value;
             return this;
         }
         
-        @Override
         public SignalStateSize size() {
             return SignalStateSize.INT;
         }
         
-        @Override
         public void shrinkTo(int bandwidth) {
             value = shrinkTo(value, bandwidth);
         }
         
-        @Override
         public boolean equals(Object object) {
             if (object instanceof IntegerState integer)
                 return this.value == integer.value;
@@ -423,19 +375,16 @@ public abstract class SignalState {
     public static enum SignalStateSize {
         
         SINGLE(1) {
-            @Override
             public SignalState create() {
                 return FALSE;
             }
         },
         INT(32) {
-            @Override
             public SignalState create() {
                 return new IntegerState(0);
             }
         },
         LONG(64) {
-            @Override
             public SignalState create() {
                 throw new UnsupportedOperationException();
             }

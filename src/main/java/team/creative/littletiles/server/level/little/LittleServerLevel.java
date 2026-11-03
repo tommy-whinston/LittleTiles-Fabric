@@ -60,31 +60,25 @@ public abstract class LittleServerLevel extends ServerLevel implements LittleLev
             server), LittleChunkProgressListener.INSTANCE, debug, seed, Collections.EMPTY_LIST, false, null);
     }
     
-    @Override
     public void removeEntityById(int id, RemovalReason reason) {}
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public LittleEntityRenderManager getRenderManager() {
         return null;
     }
     
-    @Override
     public Entity getHolder() {
         return holder;
     }
     
-    @Override
     public void setHolder(Entity entity) {
         this.holder = entity;
     }
     
-    @Override
     public void registerBlockChangeListener(LevelBlockChangeListener listener) {
         blockChangeListeners.add(listener);
     }
     
-    @Override
     public void neighborChanged(BlockPos pos, Block block, BlockPos fromPos) {
         if (preventNeighborUpdate)
             return;
@@ -110,54 +104,49 @@ public abstract class LittleServerLevel extends ServerLevel implements LittleLev
             super.neighborChanged(pos, block, fromPos);
     }
     
-    @Override
     public void updateNeighborsAtExceptFromFacing(BlockPos pos, Block block, Direction facing) {
         if (preventNeighborUpdate)
             return;
         super.updateNeighborsAtExceptFromFacing(pos, block, facing);
     }
     
-    @Override
     public void updateNeighborsAt(BlockPos pos, Block block) {
         if (preventNeighborUpdate)
             return;
         super.updateNeighborsAt(pos, block);
     }
     
-    @Override
     public void setBlocksDirty(BlockPos pos, BlockState actualState, BlockState setState) {
         blockChangeListeners.forEach(x -> x.blockChanged(pos, setState));
     }
     
-    @Override
     public LittleServerChunkCache getChunkSource() {
         return (LittleServerChunkCache) super.getChunkSource();
     }
     
-    @Override
+    public void unloadChunk(LevelChunk chunk) {
+        unload(chunk);
+    }
+    
     public void unload(LevelChunk chunk) {
         super.unload(chunk);
         this.getChunkSource().getLightEngine().setLightEnabled(chunk.getPos(), false);
     }
     
-    @Override
     public void unload() {
         try {
             close();
         } catch (IOException e) {}
     }
     
-    @Override
     public int getFreeMapId() {
         return 0;
     }
     
-    @Override
     public Iterable<Entity> entities() {
         return getEntities().getAll();
     }
     
-    @Override
     public void tick() {
         while (getChunkSource().pollTask()) {}
         tick(((MinecraftServerAccessor) getServer())::callHaveTime);
@@ -167,12 +156,10 @@ public abstract class LittleServerLevel extends ServerLevel implements LittleLev
         getChunkSource().loadLevelChunk(pos, nbt);
     }
     
-    @Override
     public Iterable<? extends ChunkAccess> chunks() {
         return getChunkSource().all();
     }
     
-    @Override
     public void destroyBlockProgress(int id, BlockPos pos, int progress) {
         Level toCompare = this;
         if (this instanceof LittleSubLevel sub)

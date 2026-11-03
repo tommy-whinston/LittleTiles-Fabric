@@ -13,7 +13,6 @@ public class ItemIngredientEntry {
         this.count = count;
     }
     
-    @Override
     public String toString() {
         return ingredient.toString();
     }

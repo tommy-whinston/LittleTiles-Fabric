@@ -84,27 +84,22 @@ public class GuiSignalController extends GuiParent {
         setOutput(4, output);
     }
     
-    @Override
     public double getOffsetX() {
         return -scrolledX.current();
     }
     
-    @Override
     public double getOffsetY() {
         return -scrolledY.current();
     }
     
-    @Override
     public Iterator<GuiChildControl> iterator() {
         return new ConsecutiveIterator<>(hoverControls.iterator(), controls.iterator(), FilterIterator.skipNull(new NestedIterator<>(grid)));
     }
     
-    @Override
     public ControlFormatting getControlFormatting() {
         return ControlFormatting.NESTED_NO_PADDING;
     }
     
-    @Override
     public GuiChildControl find(GuiControl control) {
         GuiChildControl child = super.find(control);
         if (child != null)
@@ -120,7 +115,6 @@ public class GuiSignalController extends GuiParent {
         return null;
     }
     
-    @Override
     @Environment(EnvType.CLIENT)
     @OnlyIn(Dist.CLIENT)
     protected void renderContent(GuiGraphics graphics, GuiChildControl control, Rect contentRect, Rect realContentRect, double scale, int mouseX, int mouseY) {
@@ -150,7 +144,6 @@ public class GuiSignalController extends GuiParent {
         super.renderContent(graphics, control, contentRect, realContentRect, scale, mouseX, mouseY);
     }
     
-    @Override
     @Environment(EnvType.CLIENT)
     @OnlyIn(Dist.CLIENT)
     protected void renderControl(GuiGraphics graphics, GuiChildControl child, GuiControl control, Rect controlRect, Rect realRect, double scale, int mouseX, int mouseY, boolean hover) {
@@ -218,7 +211,6 @@ public class GuiSignalController extends GuiParent {
         child.flowY();
     }
     
-    @Override
     public void flowX(int width, int preferred) {
         super.flowX(width, preferred);
         for (int x = 0; x < grid.size(); x++) {
@@ -235,7 +227,6 @@ public class GuiSignalController extends GuiParent {
         }
     }
     
-    @Override
     public void flowY(int width, int height, int preferred) {
         super.flowX(width, preferred);
         for (int x = 0; x < grid.size(); x++) {
@@ -252,7 +243,6 @@ public class GuiSignalController extends GuiParent {
         }
     }
     
-    @Override
     public boolean mouseClicked(Rect rect, double x, double y, int button) {
         startedDragging = false;
         if (button == 2) {
@@ -272,14 +262,12 @@ public class GuiSignalController extends GuiParent {
         return true;
     }
     
-    @Override
     public boolean mouseScrolled(Rect rect, double x, double y, double delta) {
         if (!super.mouseScrolled(rect, x, y, delta))
             zoom.set(Mth.clamp(zoom.aimed() + delta * 0.2, 0.1, 2));
         return true;
     }
     
-    @Override
     public void mouseDragged(Rect rect, double x, double y, int button, double dragX, double dragY, double time) {
         super.mouseDragged(rect, x, y, button, dragX, dragY, time);
         if (time > 0.2 && dragged != null) {
@@ -288,7 +276,6 @@ public class GuiSignalController extends GuiParent {
         }
     }
     
-    @Override
     public void mouseMoved(Rect rect, double x, double y) {
         if (scrolling) {
             scrolledX.set(Mth.clamp(dragX - x + startScrollX, -40, sizeX() * cellWidth));
@@ -297,7 +284,6 @@ public class GuiSignalController extends GuiParent {
         super.mouseMoved(rect, x, y);
     }
     
-    @Override
     public void mouseReleased(Rect rect, double x, double y, int button) {
         super.mouseReleased(rect, x, y, button);
         scrolling = false;

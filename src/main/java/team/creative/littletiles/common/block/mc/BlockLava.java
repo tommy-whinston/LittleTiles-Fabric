@@ -30,22 +30,18 @@ public class BlockLava extends Block implements ILittleMCBlock, IFakeRenderingBl
         super(properties);
     }
     
-    @Override
     public Block asVanillaBlock() {
         return this;
     }
     
-    @Override
     public boolean isFluid(TagKey<Fluid> fluid) {
         return fluid.equals(FluidTags.LAVA);
     }
     
-    @Override
     public boolean canBeConvertedToVanilla() {
         return false;
     }
     
-    @Override
     public InteractionResult use(IParentCollection parent, LittleTile tile, LittleBox box, Player player, BlockHitResult result, InteractionHand hand) {
         if (player.getMainHandItem().getItem() instanceof BucketItem && LittleTiles.CONFIG.general.allowFlowingWater) {
             if (this == LittleTilesRegistry.LAVA.get())
@@ -68,12 +64,10 @@ public class BlockLava extends Block implements ILittleMCBlock, IFakeRenderingBl
         return ILittleMCBlock.super.use(parent, tile, box, player, result, hand);
     }
     
-    @Override
     public BlockState getFakeState(BlockState state) {
         return Blocks.LAVA.defaultBlockState();
     }
     
-    @Override
     public Vector3d getFogColor(IParentCollection parent, LittleTile tile, Entity entity, Vector3d originalColor, float partialTicks) {
         return new Vector3d(0.6F, 0.1F, 0.0F);
     }

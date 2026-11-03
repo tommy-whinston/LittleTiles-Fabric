@@ -122,7 +122,6 @@ public class GuiIsoAnimationViewer extends GuiControl {
             raiseEvent(new GuiAnimationViewChangedEvent(this));
     }
     
-    @Override
     public void mouseMoved(Rect rect, double x, double y) {
         super.mouseMoved(rect, x, y);
         if (!grabbed)
@@ -134,7 +133,6 @@ public class GuiIsoAnimationViewer extends GuiControl {
         grabY = y;
     }
     
-    @Override
     public boolean mouseClicked(Rect rect, double x, double y, int button) {
         switch (button) {
             case 0 -> {
@@ -148,12 +146,10 @@ public class GuiIsoAnimationViewer extends GuiControl {
         return true;
     }
     
-    @Override
     public void mouseReleased(Rect rect, double x, double y, int button) {
         grabbed = false;
     }
     
-    @Override
     public boolean mouseScrolled(Rect rect, double x, double y, double delta) {
         scale.add(0.05 * delta * (Screen.hasControlDown() ? 5 : 1));
         if (Math.pow(scale.aimed(), 2) > MAXIMUM_ZOOM)
@@ -188,7 +184,6 @@ public class GuiIsoAnimationViewer extends GuiControl {
         playSound(SoundEvents.WOODEN_BUTTON_CLICK_ON);
     }
     
-    @Override
     public ControlFormatting getControlFormatting() {
         return ControlFormatting.NESTED_NO_PADDING;
     }
@@ -225,7 +220,6 @@ public class GuiIsoAnimationViewer extends GuiControl {
         return (float) (dimensionScale * Math.pow(this.scale.current(), 2));
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     protected void renderContent(GuiGraphics graphics, GuiChildControl control, Rect rect, int mouseX, int mouseY) {
         GuiRecipeAnimationStorage storage = item.recipe.storage;
@@ -362,27 +356,20 @@ public class GuiIsoAnimationViewer extends GuiControl {
         
     }
     
-    @Override
     public void closed() {}
     
-    @Override
     public void init() {}
     
-    @Override
     public void tick() {}
     
-    @Override
     public void flowX(int width, int preferred) {}
     
-    @Override
     public void flowY(int width, int height, int preferred) {}
     
-    @Override
     protected int preferredWidth(int availableWidth) {
         return 10;
     }
     
-    @Override
     protected int preferredHeight(int width, int availableHeight) {
         return 10;
     }

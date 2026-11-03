@@ -95,7 +95,6 @@ public class GuiChildEventPanel extends GuiTimelinePanel {
         return true;
     }
     
-    @Override
     protected void addBefore() {
         add(new GuiLabel("childLabel").setTitle(translatable("gui.door.child").append(":")));
     }
@@ -116,7 +115,6 @@ public class GuiChildEventPanel extends GuiTimelinePanel {
             this.childId = childId;
         }
         
-        @Override
         protected ChildDoorEvent getValueAt(int time) {
             return new ChildDoorEvent(childId);
         }

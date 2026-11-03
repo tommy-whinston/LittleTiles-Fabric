@@ -56,7 +56,7 @@ public class LittleAnimationEntity extends LittleEntity<LittleAnimationEntityPhy
     }
     
     public static CompoundTag saveBE(BETiles tiles) {
-        CompoundTag nbt = tiles.serializeNBT();
+        CompoundTag nbt = tiles.saveWithFullMetadata();
         nbt.putBoolean("ticking", tiles.isTicking());
         nbt.putBoolean("rendered", tiles.isRendered());
         return nbt;
@@ -86,12 +86,10 @@ public class LittleAnimationEntity extends LittleEntity<LittleAnimationEntityPhy
             getSubLevel().renderManager = LittleAnimationRenderManager.of(this);
     }
     
-    @Override
     protected LittleSubLevel createLevel() {
         return new LittleAnimationLevel(level());
     }
     
-    @Override
     public LittleAnimationLevel getSubLevel() {
         return (LittleAnimationLevel) super.getSubLevel();
     }
@@ -148,13 +146,11 @@ public class LittleAnimationEntity extends LittleEntity<LittleAnimationEntityPhy
         nbt.put("b", blocks);
     }
     
-    @Override
     protected Vec3d loadCenter(CompoundTag nbt) {
         this.center = new StructureAbsolute("c", nbt);
         return center.rotationCenter;
     }
     
-    @Override
     public void loadEntity(CompoundTag nbt) {
         setCenter(center); // center half way loaded due to loadCenter called before
         loadBlocks(nbt);
@@ -162,14 +158,12 @@ public class LittleAnimationEntity extends LittleEntity<LittleAnimationEntityPhy
         this.structure = new StructureConnection((Level) subLevel, nbt.getCompound("s"));
     }
     
-    @Override
     public void saveEntity(CompoundTag nbt) {
         nbt.put("s", structure.write());
         center.save("c", nbt);
         saveBlocks(nbt);
     }
     
-    @Override
     public CreativePacket initClientPacket() {
         return new LittleAnimationInitPacket(this);
     }
@@ -182,7 +176,6 @@ public class LittleAnimationEntity extends LittleEntity<LittleAnimationEntityPhy
         return nbt;
     }
     
-    @Override
     public void prepareChangeLevel(Level oldLevel, Level newLevel) {
         setParentLevel(newLevel);
         try {
@@ -207,41 +200,33 @@ public class LittleAnimationEntity extends LittleEntity<LittleAnimationEntityPhy
         physic.updateBoundingBox();
     }
     
-    @Override
     public void performTick() {
         super.performTick();
         if (!level().isClientSide && getSubLevel().isEmpty())
             destroyAnimation();
     }
     
-    @Override
     public void internalTick() {}
     
-    @Override
     public void initialTick() {
         getSubLevel().initialTick();
     }
     
-    @Override
     protected LittleAnimationEntityPhysic createPhysic() {
         return new LittleAnimationEntityPhysic(this);
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public LittleEntityRenderManager getRenderManager() {
         return ((LittleAnimationLevel) subLevel).renderManager;
     }
     
-    @Override
     public void syncMovement() {}
     
-    @Override
     public void startTracking(ServerPlayer player) {
         getSubLevel().entityCallback.addTrackingPlayer(player);
     }
     
-    @Override
     public void stopTracking(ServerPlayer player) {
         getSubLevel().entityCallback.removeTrackingPlayer(player);
     }

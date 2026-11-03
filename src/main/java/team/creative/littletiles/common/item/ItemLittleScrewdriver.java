@@ -46,36 +46,30 @@ public class ItemLittleScrewdriver extends Item implements ILittleTool, IItemToo
         }
     }
     
-    @Override
     public boolean onRightClick(Level level, Player player, ItemStack stack, PlacementPosition position, BlockHitResult result) {
         onClick(player, true, result.getBlockPos(), stack);
         LittleTiles.NETWORK.sendToServer(new ScrewdriverSelectionPacket(result.getBlockPos(), true));
         return true;
     }
     
-    @Override
     public boolean onClickBlock(Level level, Player player, ItemStack stack, PlacementPosition position, BlockHitResult result) {
         onClick(player, false, result.getBlockPos(), stack);
         LittleTiles.NETWORK.sendToServer(new ScrewdriverSelectionPacket(result.getBlockPos(), false));
         return true;
     }
     
-    @Override
     public GuiConfigure getConfigure(Player player, ContainerSlotView view) {
         return new GuiScrewdriver(view);
     }
     
-    @Override
     public boolean canAttackBlock(BlockState state, Level level, BlockPos pos, Player player) {
         return false;
     }
     
-    @Override
     public float getDestroySpeed(ItemStack stack, BlockState state) {
         return 0F;
     }
     
-    @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
         if (stack.getOrCreateTag().contains("pos1")) {
             int[] array = stack.getOrCreateTag().getIntArray("pos1");
@@ -92,21 +86,17 @@ public class ItemLittleScrewdriver extends Item implements ILittleTool, IItemToo
             tooltip.add(Component.literal("2: ").append(Component.translatable("gui.click.right")));
     }
     
-    @Override
     public Object[] tooltipData(ItemStack stack) {
         return new Object[] { Minecraft.getInstance().options.keyAttack.getTranslatedKeyMessage(), Minecraft.getInstance().options.keyUse
                 .getTranslatedKeyMessage(), LittleTilesClient.configure.getTranslatedKeyMessage() };
     }
     
-    @Override
     public LittleGrid getPositionGrid(Player player, ItemStack stack) {
         return LittleGrid.overallDefault();
     }
     
-    @Override
     public void rotate(Player player, ItemStack stack, Rotation rotation, boolean client) {}
     
-    @Override
     public void mirror(Player player, ItemStack stack, Axis axis, boolean client) {}
     
 }

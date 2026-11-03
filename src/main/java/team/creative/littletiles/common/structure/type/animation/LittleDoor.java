@@ -40,22 +40,18 @@ public abstract class LittleDoor extends LittleUndirectedStateStructure {
         super(type, mainBlock);
     }
     
-    @Override
     protected AnimationTimeline generateTimeline(AnimationState start, AnimationState end) {
         return new AnimationTimeline(duration);
     }
     
-    @Override
     protected ValueCurve<Vec1d> createEmptyCurve() {
         return interpolation.create1d();
     }
     
-    @Override
     public boolean canRightClick() {
         return super.canRightClick() && rightClick;
     }
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {
         super.loadExtra(nbt);
         duration = nbt.getInt("du");
@@ -67,7 +63,6 @@ public abstract class LittleDoor extends LittleUndirectedStateStructure {
         noClip = nbt.getBoolean("noClip");
     }
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {
         super.saveExtra(nbt);
         
@@ -95,13 +90,11 @@ public abstract class LittleDoor extends LittleUndirectedStateStructure {
             nbt.remove("sound");
     }
     
-    @Override
     public void performInternalOutputChange(InternalSignalOutput output) {
         if (!activateParent)
             super.performInternalOutputChange(output);
     }
     
-    @Override
     public InteractionResult use(Level level, LittleTileContext context, BlockPos pos, Player player, BlockHitResult result, InteractionHand hand) {
         if (canRightClick()) {
             if (!isClient()) {
@@ -124,7 +117,6 @@ public abstract class LittleDoor extends LittleUndirectedStateStructure {
         return super.use(level, context, pos, player, result, hand);
     }
     
-    @Override
     protected boolean shouldStayAnimatedAfterTransitionEnd() {
         return !activateParent && super.shouldStayAnimatedAfterTransitionEnd();
     }
@@ -136,7 +128,6 @@ public abstract class LittleDoor extends LittleUndirectedStateStructure {
             startTransitionIfNecessary(output.getState().number());
     }
 
-    @Override
     public boolean playSoundWhenChangingState() {
         return playPlaceSounds;
     }
@@ -155,7 +146,6 @@ public abstract class LittleDoor extends LittleUndirectedStateStructure {
             super(id, structureClass, factory, attribute);
         }
         
-        @Override
         protected LittlePlaceBoxRelative getPlaceBox(Object value, StructureDirectionalField type, LittleGroup previews) {
             if (type.key.equals("center"))
                 return null;

@@ -31,7 +31,6 @@ public class StructureIngredientRule implements IStructureIngredientRule {
         this.ingredient = ingredient;
     }
     
-    @Override
     public void add(LittleGroup group, LittleIngredients ingredients) {
         double volume = scale.calculate(group);
         if (volume > 0) {
@@ -55,7 +54,6 @@ public class StructureIngredientRule implements IStructureIngredientRule {
             this.scale = scale;
         }
         
-        @Override
         public double calculate(LittleGroup group) {
             return VOLUME.calculate(group) * scale;
         }

@@ -20,73 +20,59 @@ public class LittleGroupHolder extends LittleGroup {
         this.structure = structure;
     }
     
-    @Override
     public boolean hasStructure() {
         return true;
     }
     
-    @Override
     public String getStructureId() {
         return structure.type.id;
     }
     
-    @Override
     public String getStructureName() {
         return structure.name;
     }
     
-    @Override
     public int getSmallest() {
         return LittleGrid.MIN.count;
     }
     
-    @Override
     public LittleStructureType getStructureType() {
         return structure.type;
     }
     
-    @Override
     public boolean containsIngredients() {
         return true;
     }
     
-    @Override
     public LittleGroupHolder copy() {
         return new LittleGroupHolder(structure);
     }
     
-    @Override
     public boolean hasChildren() {
         return false;
     }
     
-    @Override
     public boolean transformable() {
         return false;
     }
     
-    @Override
     public double getVolume() {
         return 0;
     }
     
-    @Override
     public LittleVolumes getVolumes() {
         return null;
     }
     
-    @Override
     public List<LittlePlaceBox> getSpecialBoxes() {
         return Collections.EMPTY_LIST;
     }
     
-    @Override
     @Deprecated
     public void add(LittleGrid grid, LittleElement element, Iterable<LittleBox> boxes) {
         throw new UnsupportedOperationException();
     }
     
-    @Override
     @Deprecated
     public void add(LittleGrid grid, LittleElement element, LittleBox box) {
         throw new UnsupportedOperationException();

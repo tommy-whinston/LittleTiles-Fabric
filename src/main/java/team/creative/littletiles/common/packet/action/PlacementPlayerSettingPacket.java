@@ -17,18 +17,12 @@ public class PlacementPlayerSettingPacket extends CreativePacket {
     
     public PlacementPlayerSettingPacket() {}
     
-    @Override
     public void executeClient(Player player) {
         LittleTilesClient.ACTION_HANDLER.setting.receive(player, setting);
     }
     
-    @Override
     public void executeServer(ServerPlayer player) {
-        CompoundTag nbt;
-        if (player.getPersistentData().contains(Player.PERSISTED_NBT_TAG))
-            nbt = player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG);
-        else
-            player.getPersistentData().put(Player.PERSISTED_NBT_TAG, nbt = new CompoundTag());
+        CompoundTag nbt = new CompoundTag();
         nbt.put(PlacementPlayerSetting.SETTING_KEY, setting.save());
     }
     

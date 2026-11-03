@@ -41,7 +41,6 @@ public class LittleClientPlayerConnection implements LevelAwareHandler {
         }
     }
     
-    @Override
     public void unload() {
         INSTANCE = null;
     }

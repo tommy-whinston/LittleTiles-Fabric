@@ -11,13 +11,10 @@ public class LittleDayLightSensor extends LittleStructurePremade {
         super(type, mainBlock);
     }
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {}
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {}
     
-    @Override
     public void tick() {
         getInput(0).updateState(SignalState.of(getComponentLevel().isDay()));
     }

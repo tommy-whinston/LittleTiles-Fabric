@@ -41,7 +41,6 @@ public interface ILittlePlacer extends ILittleTool {
     
     public void saveTiles(ItemStack stack, LittleGroup group);
     
-    @Override
     public default void rotate(Player player, ItemStack stack, Rotation rotation, boolean client) {
         LittleGroup group = getTiles(stack);
         if (group == null || group.isEmpty())
@@ -50,7 +49,6 @@ public interface ILittlePlacer extends ILittleTool {
         saveTiles(stack, group);
     }
     
-    @Override
     public default void mirror(Player player, ItemStack stack, Axis axis, boolean client) {
         LittleGroup group = getTiles(stack);
         if (group == null || group.isEmpty())

@@ -55,12 +55,10 @@ public class GuiAnimationViewer extends GuiControl {
         this.storage = storage;
     }
     
-    @Override
     public ControlFormatting getControlFormatting() {
         return ControlFormatting.NESTED_NO_PADDING;
     }
     
-    @Override
     public void mouseMoved(Rect rect, double x, double y) {
         super.mouseMoved(rect, x, y);
         if (grabMode == ViewerDragMode.NONE)
@@ -77,7 +75,6 @@ public class GuiAnimationViewer extends GuiControl {
         grabY = y;
     }
     
-    @Override
     public boolean mouseClicked(Rect rect, double x, double y, int button) {
         if (grabMode == ViewerDragMode.NONE) {
             grabMode = ViewerDragMode.of(button);
@@ -88,13 +85,11 @@ public class GuiAnimationViewer extends GuiControl {
         return false;
     }
     
-    @Override
     public void mouseReleased(Rect rect, double x, double y, int button) {
         if (button == grabMode.ordinal() - 1)
             grabMode = ViewerDragMode.NONE;
     }
     
-    @Override
     public boolean mouseScrolled(Rect rect, double x, double y, double delta) {
         distance.set(Math.max(distance.aimed() + delta * -(Screen.hasControlDown() ? 5 : 1), 0));
         return true;
@@ -116,7 +111,6 @@ public class GuiAnimationViewer extends GuiControl {
         return posestack;
     }
     
-    @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         Options options = Minecraft.getInstance().options;
         if (options.keyUp.matches(keyCode, scanCode))
@@ -134,7 +128,6 @@ public class GuiAnimationViewer extends GuiControl {
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
     
-    @Override
     public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
         Options options = Minecraft.getInstance().options;
         if (options.keyUp.matches(keyCode, scanCode))
@@ -162,7 +155,6 @@ public class GuiAnimationViewer extends GuiControl {
         initialized = false;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     protected void renderContent(GuiGraphics graphics, GuiChildControl control, Rect rect, int mouseX, int mouseY) {
         if (!storage.isReady())
@@ -236,27 +228,20 @@ public class GuiAnimationViewer extends GuiControl {
         RenderSystem.disableDepthTest();
     }
     
-    @Override
     public void closed() {}
     
-    @Override
     public void init() {}
     
-    @Override
     public void tick() {}
     
-    @Override
     public void flowX(int width, int preferred) {}
     
-    @Override
     public void flowY(int width, int height, int preferred) {}
     
-    @Override
     protected int preferredWidth(int availableWidth) {
         return 10;
     }
     
-    @Override
     protected int preferredHeight(int width, int availableHeight) {
         return 10;
     }
@@ -283,12 +268,10 @@ public class GuiAnimationViewer extends GuiControl {
         
         SHOWCASE {
             
-            @Override
             public void init(GuiAnimationViewer viewer) {
                 viewer.distance.set(viewer.storage.longestSide() / 2D + 2);
             }
             
-            @Override
             public void dragMouse(GuiAnimationViewer viewer, double x, double y) {
                 double grabOffset = 0.01;
                 switch (viewer.grabMode) {
@@ -303,12 +286,10 @@ public class GuiAnimationViewer extends GuiControl {
                 }
             }
             
-            @Override
             public void forward(float amount, GuiAnimationViewer viewer) {
                 viewer.rotX.add(amount);
             }
             
-            @Override
             public void lateral(float amount, GuiAnimationViewer viewer) {
                 viewer.rotY.add(-amount);
             }
@@ -322,7 +303,6 @@ public class GuiAnimationViewer extends GuiControl {
                 viewer.offZ.set(viewer.offZ.aimed() + vec.z);
             }
             
-            @Override
             public void prepareRendering(PoseStack pose, Vec3d center, GuiAnimationViewer viewer) {
                 
                 pose.translate(viewer.offX.current(), viewer.offY.current(), viewer.offZ.current() - viewer.distance.current());
@@ -334,19 +314,16 @@ public class GuiAnimationViewer extends GuiControl {
                 pose.translate(-center.x, -center.y, -center.z);
             }
             
-            @Override
             public ProjectionMode next() {
                 return PLAYER;
             }
             
-            @Override
             public void up(float amount, GuiAnimationViewer viewer) {
                 viewer.offZ.add(amount * 0.05F);
             }
         },
         PLAYER {
             
-            @Override
             public void init(GuiAnimationViewer viewer) {
                 viewer.offZ.set(viewer.storage.longestSide() / 2D);
                 viewer.offY.set(-viewer.storage.overall().getSize());
@@ -354,24 +331,20 @@ public class GuiAnimationViewer extends GuiControl {
                 viewer.rotY.set(180);
             }
             
-            @Override
             public void dragMouse(GuiAnimationViewer viewer, double x, double y) {}
             
-            @Override
             public void forward(float amount, GuiAnimationViewer viewer) {
                 amount *= 0.1;
                 viewer.offX.add(amount * (Math.sin(-viewer.rotY.aimed() * Math.PI / 180)));
                 viewer.offZ.add(amount * (Math.cos(viewer.rotY.aimed() * Math.PI / 180)));
             }
             
-            @Override
             public void lateral(float amount, GuiAnimationViewer viewer) {
                 amount *= -0.1;
                 viewer.offX.add(amount * (Math.cos(-viewer.rotY.aimed() * Math.PI / 180)));
                 viewer.offZ.add(amount * (Math.sin(viewer.rotY.aimed() * Math.PI / 180)));
             }
             
-            @Override
             public void prepareRendering(PoseStack pose, Vec3d center, GuiAnimationViewer viewer) {
                 pose.mulPose(Axis.XP.rotationDegrees((float) viewer.rotX.current()));
                 pose.mulPose(Axis.YP.rotationDegrees((float) viewer.rotY.current()));
@@ -382,12 +355,10 @@ public class GuiAnimationViewer extends GuiControl {
                 
             }
             
-            @Override
             public ProjectionMode next() {
                 return SHOWCASE;
             }
             
-            @Override
             public void up(float amount, GuiAnimationViewer viewer) {
                 viewer.offY.add(amount * -0.1);
             }

@@ -11,13 +11,11 @@ public class LittleAdvancedDoor extends LittleDoor {
         super(type, mainBlock);
     }
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {
         super.loadExtra(nbt);
         differentTransition = nbt.getBoolean("diffT");
     }
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {
         super.saveExtra(nbt);
         if (differentTransition)

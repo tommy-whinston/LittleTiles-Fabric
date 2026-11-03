@@ -19,7 +19,6 @@ public abstract class LittleStructureGuiControl extends GuiParent {
         this.item = item;
     }
     
-    @Override
     public GuiParent getParent() {
         return (GuiParent) super.getParent();
     }

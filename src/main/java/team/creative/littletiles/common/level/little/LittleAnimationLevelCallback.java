@@ -26,15 +26,12 @@ public abstract class LittleAnimationLevelCallback implements LevelCallback<Enti
     
     public abstract void removeTrackingPlayer(ServerPlayer player);
     
-    @Override
     public void onSectionChange(Entity entity) {}
     
-    @Override
     public void onTickingStart(Entity p_171704_) {
         tickingEntities.add(p_171704_);
     }
     
-    @Override
     public void onTickingEnd(Entity p_171708_) {
         this.tickingEntities.remove(p_171708_);
     }

@@ -58,7 +58,6 @@ public class GuiScrewdriver extends GuiConfigure {
         flow = GuiFlow.STACK_Y;
     }
     
-    @Override
     public void create() {
         if (!isClient())
             return;
@@ -164,7 +163,6 @@ public class GuiScrewdriver extends GuiConfigure {
         return null;
     }
     
-    @Override
     public CompoundTag saveConfiguration(CompoundTag nbt) {
         if (isClient()) {
             lastSelectedFilter = filter.get();

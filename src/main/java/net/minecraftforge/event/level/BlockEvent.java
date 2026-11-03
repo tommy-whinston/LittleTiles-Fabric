@@ -46,6 +46,10 @@ public class BlockEvent extends Event {
         public Player getPlayer() {
             return player;
         }
+
+        public int getExpToDrop() {
+            return 0;
+        }
     }
 
     public static class EntityMultiPlaceEvent extends BlockEvent {

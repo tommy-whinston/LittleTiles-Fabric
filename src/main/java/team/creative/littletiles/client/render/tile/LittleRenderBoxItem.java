@@ -44,7 +44,6 @@ public class LittleRenderBoxItem extends LittleRenderBox {
         this.state = Blocks.STONE.defaultBlockState();
     }
     
-    @Override
     public List<BakedQuad> getBakedQuad(@Nullable QuadGeneratorContext holder, LevelAccessor level, BlockPos pos, BlockPos offset, BlockState state, BakedModel blockModel, ModelData modelData, Facing facing, RenderType layer, RandomSource rand, boolean overrideTint, int defaultColor) {
         if (facing != structure.facing)
             return Collections.EMPTY_LIST;
@@ -170,7 +169,6 @@ public class LittleRenderBoxItem extends LittleRenderBox {
         
     }
     
-    @Override
     public boolean intersectsWithFace(Facing facing, QuadGeneratorContext holder, BlockPos offset) {
         return true;
     }

@@ -25,7 +25,6 @@ public class LittleActionActivated extends LittleActionInteract<InteractionResul
     
     public LittleActionActivated() {}
     
-    @Override
     protected InteractionResult action(Level level, BETiles be, LittleTileContext context, ItemStack stack, Player player, BlockHitResult hit, BlockPos pos, boolean secondMode, InteractionHand hand) throws LittleActionException {
         if (context.parent.isStructure())
             return context.parent.getStructure().use(level, context, pos, player, hit, hand);
@@ -36,42 +35,34 @@ public class LittleActionActivated extends LittleActionInteract<InteractionResul
         return InteractionResult.PASS;
     }
     
-    @Override
     public boolean canBeReverted() {
         return false;
     }
     
-    @Override
     public LittleAction revert(Player player) {
         return null;
     }
     
-    @Override
     protected boolean isRightClick() {
         return true;
     }
     
-    @Override
     public LittleAction mirror(Axis axis, LittleBoxAbsolute box) {
         return null;
     }
     
-    @Override
     protected boolean requiresBreakEvent() {
         return false;
     }
     
-    @Override
     protected InteractionResult ignored() {
         return InteractionResult.PASS;
     }
     
-    @Override
     public boolean wasSuccessful(InteractionResult result) {
         return InteractionResult.PASS != result;
     }
     
-    @Override
     public InteractionResult failed() {
         return InteractionResult.FAIL;
     }

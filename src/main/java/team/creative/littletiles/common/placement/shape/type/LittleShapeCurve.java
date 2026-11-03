@@ -35,7 +35,6 @@ public class LittleShapeCurve extends LittleShape {
         super(2);
     }
     
-    @Override
     protected void addBoxes(LittleBoxes boxes, ShapeSelection selection, boolean lowResolution) {
         List<Vec3d> points = new ArrayList<>();
         double halfPixelSize = selection.getGrid().halfPixelLength;
@@ -85,17 +84,14 @@ public class LittleShapeCurve extends LittleShape {
         }
     }
     
-    @Override
     public boolean requiresNoOverlap(ShapeSelection selection) {
         return true;
     }
     
-    @Override
     public void addExtraInformation(CompoundTag nbt, List<Component> list) {
         list.add(Component.translatable("gui.interpolation").append(": ").append(Component.translatable("gui." + interpolationTypes[nbt.getInt("interpolation")])));
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public List<GuiControl> getCustomSettings(CompoundTag nbt, LittleGrid grid) {
         List<GuiControl> controls = new ArrayList<>();
@@ -105,7 +101,6 @@ public class LittleShapeCurve extends LittleShape {
         return controls;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void saveCustomSettings(GuiParent gui, CompoundTag nbt, LittleGrid grid) {
         GuiSteppedSlider slider = (GuiSteppedSlider) gui.get("thickness");
@@ -114,10 +109,8 @@ public class LittleShapeCurve extends LittleShape {
         nbt.putInt("interpolation", ((GuiStateButton) gui.get("interpolation")).getState());
     }
     
-    @Override
     public void rotate(CompoundTag nbt, Rotation rotation) {}
     
-    @Override
     public void mirror(CompoundTag nbt, Axis axis) {}
     
 }

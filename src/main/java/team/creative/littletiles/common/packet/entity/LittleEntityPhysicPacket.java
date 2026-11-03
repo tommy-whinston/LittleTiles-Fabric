@@ -15,7 +15,6 @@ public class LittleEntityPhysicPacket extends LittleEntityPacket<LittleEntity> {
         this.extraData = entity.physic.save();
     }
     
-    @Override
     public void execute(Player player, LittleEntity entity) {
         requiresClient(player);
         entity.physic.load(extraData);

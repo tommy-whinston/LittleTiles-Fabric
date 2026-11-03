@@ -45,7 +45,6 @@ public class PlacementPosition extends LittleVecAbsolute {
         removeInternalBlockOffset();
     }
     
-    @Override
     public PlacementPosition copy() {
         return new PlacementPosition(pos, gridVec.copy(), facing);
     }
@@ -66,7 +65,6 @@ public class PlacementPosition extends LittleVecAbsolute {
         
     }
     
-    @Override
     public boolean equals(Object obj) {
         if (super.equals(obj))
             if (obj instanceof PlacementPosition p)

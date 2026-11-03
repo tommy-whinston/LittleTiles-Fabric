@@ -119,23 +119,19 @@ public class LittleCollection implements Iterable<LittleTile> {
         return new NestedIterator<LittleBox>(content);
     }
     
-    @Override
     public Iterator<LittleTile> iterator() {
         return new Iterator<LittleTile>() {
             
             Iterator<LittleTile> itr = content.iterator();
             
-            @Override
             public LittleTile next() {
                 return itr.next();
             }
             
-            @Override
             public boolean hasNext() {
                 return itr.hasNext();
             }
             
-            @Override
             public void remove() {
                 itr.remove();
                 refresh();
@@ -192,7 +188,6 @@ public class LittleCollection implements Iterable<LittleTile> {
         return content.iterator().next();
     }
     
-    @Override
     public String toString() {
         return content.toString();
     }

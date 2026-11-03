@@ -36,13 +36,11 @@ public class GuiSignalNodeVirtualNumberInput extends GuiSignalNode {
         raiseEvent(new GuiControlChangedEvent(controller()));
     }
     
-    @Override
     public boolean mouseDoubleClicked(Rect rect, double x, double y, int button) {
         LittleTilesGuiRegistry.VIRTUAL_NUMBER_DIALOG.open(getIntegratedParent(), new CompoundTag()).init(number, this);
         return true;
     }
     
-    @Override
     public boolean canConnectTo(GuiSignalNode node) {
         for (GuiSignalConnection connectTo : tos)
             if (connectTo.to() == node)
@@ -50,17 +48,14 @@ public class GuiSignalNodeVirtualNumberInput extends GuiSignalNode {
         return true;
     }
     
-    @Override
     public boolean canConnectFrom(GuiSignalNode node) {
         return false;
     }
     
-    @Override
     public void disconnect(GuiSignalConnection connection) {
         tos.remove(connection);
     }
     
-    @Override
     public GuiSignalConnection getConnectionTo(GuiSignalNode node) {
         for (GuiSignalConnection connectTo : tos)
             if (connectTo.to() == node)
@@ -68,33 +63,27 @@ public class GuiSignalNodeVirtualNumberInput extends GuiSignalNode {
         return null;
     }
     
-    @Override
     public void connect(GuiSignalConnection connection) {
         tos.add(connection);
     }
     
-    @Override
     public Iterator<GuiSignalConnection> iterator() {
         return tos.iterator();
     }
     
-    @Override
     public Iterable<GuiSignalConnection> toConnections() {
         return tos;
     }
     
-    @Override
     public void remove() {
         for (GuiSignalConnection connection : new ArrayList<>(tos))
             connection.disconnect(controller());
     }
     
-    @Override
     public int indexOf(GuiSignalConnection connection) {
         return tos.indexOf(connection);
     }
     
-    @Override
     public SignalInputCondition generateCondition(List<GuiSignalNode> processed) throws GeneratePatternException {
         reset();
         return new SignalInputVirtualNumber(number);

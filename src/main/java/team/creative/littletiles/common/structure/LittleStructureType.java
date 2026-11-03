@@ -135,12 +135,10 @@ public class LittleStructureType {
         return null;
     }
     
-    @Override
     public boolean equals(Object object) {
         return object instanceof LittleStructureType && ((LittleStructureType) object).clazz == this.clazz;
     }
     
-    @Override
     public String toString() {
         return clazz.toString();
     }

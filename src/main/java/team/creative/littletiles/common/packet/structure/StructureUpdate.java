@@ -21,7 +21,6 @@ public class StructureUpdate extends StructurePacket {
         this.notifyNeighbours = notifyNeighbours;
     }
     
-    @Override
     public void execute(Player player, LittleStructure structure) {
         requiresClient(player);
         Consumer<BlockEntityInteractor> action = x -> x.get(structure.mainBlock).setStructureNBT(structureNBT);

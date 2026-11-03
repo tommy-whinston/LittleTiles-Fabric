@@ -21,28 +21,23 @@ public class PlacementModeColorize extends PlacementMode {
         super(mode, true);
     }
     
-    @Override
     public boolean shouldConvertBlock() {
         return true;
     }
     
-    @Override
     public boolean checkAll() {
         return false;
     }
     
-    @Override
     public List<BlockPos> getCoordsToCheck(Set<BlockPos> splittedTiles, BlockPos pos) {
         return null;
     }
     
-    @Override
     public LittleIngredients getBeforePlaceIngredients(LittleGroup previews) {
         LittleIngredients ingredients = super.getBeforePlaceIngredients(previews);
         return new LittleIngredients(ingredients.get(ColorIngredient.class));
     }
     
-    @Override
     public boolean placeTile(PlacementContext context, LittleStructure structure, LittleTile tile) throws LittleActionException {
         if (!context.collisionTest)
             return false;

@@ -38,136 +38,109 @@ public interface ILittleMCBlock extends LittleBlock {
     
     public Block asVanillaBlock();
     
-    @Override
     public default boolean isTranslucent() {
         return isTranslucent(asVanillaBlock());
     }
     
-    @Override
     public default boolean is(ItemStack stack) {
         return Block.byItem(stack.getItem()) == asVanillaBlock();
     }
     
-    @Override
     public default boolean is(TagKey<Block> tag) {
         return asVanillaBlock().builtInRegistryHolder().is(tag);
     }
     
-    @Override
     public default ItemStack getStack() {
         return new ItemStack(asVanillaBlock());
     }
     
-    @Override
     public default boolean canBeRenderCombined(LittleTile one, LittleTile two) {
         return one.getBlock() == two.getBlock() && one.color == two.color;
     }
     
-    @Override
     public default boolean noCollision() {
         return !((BlockBehaviourAccessor) asVanillaBlock()).getHasCollision();
     }
     
-    @Override
     public default boolean is(Block block) {
         return this.asVanillaBlock() == block;
     }
     
-    @Override
     public default boolean canBeConvertedToVanilla() {
         return true;
     }
     
-    @Override
     public default BlockState mirror(BlockState state, Axis axis, LittleVec doubledCenter) {
         return state;
     }
     
-    @Override
     public default BlockState rotate(BlockState state, Rotation rotation, LittleVec doubledCenter) {
         return state;
     }
     
-    @Override
     public default SoundType getSoundType() {
         return asVanillaBlock().getSoundType(getState());
     }
     
-    @Override
     public default float getExplosionResistance(LittleTile tile) {
         return asVanillaBlock().getExplosionResistance();
     }
     
-    @Override
     public default void exploded(IParentCollection parent, LittleTile tile, Explosion explosion) {}
     
-    @Override
     public default void randomDisplayTick(IParentCollection parent, LittleTile tile, RandomSource rand) {}
     
-    @Override
     public default int getLightValue() {
         return getState().getLightEmission();
     }
     
-    @Override
     public default BlockState getState() {
         return asVanillaBlock().defaultBlockState();
     }
     
-    @Override
     public default String blockName() {
         return asVanillaBlock().builtInRegistryHolder().key().location().toString();
     }
     
-    @Override
     public default boolean canInteract() {
         return false;
     }
     
-    @Override
     public default InteractionResult use(IParentCollection parent, LittleTile tile, LittleBox box, Player player, BlockHitResult result, InteractionHand hand) {
         return InteractionResult.PASS;
     }
     
-    @Override
     public default float getEnchantPowerBonus(IParentCollection parent, LittleTile tile) {
-        float bonus = asVanillaBlock().getEnchantPowerBonus(getState(), parent.getLevel(), parent.getPos());
+        float bonus = 0;
         if (bonus > 0)
             return (float) (bonus * tile.getPercentVolume(parent.getGrid()));
         return 0;
     }
     
-    @Override
     public default float getFriction(IParentCollection parent, LittleTile tile, Entity entity) {
-        return asVanillaBlock().getFriction(getState(), parent.getLevel(), parent.getPos(), entity);
+        return asVanillaBlock().getFriction();
     }
     
-    @Override
     public default boolean isFluid(TagKey<Fluid> fluid) {
         if (asVanillaBlock() instanceof LiquidBlock b)
-            return b.getFluid().is(fluid);
+            return b.getFluidState(b.defaultBlockState()).is(fluid);
         return false;
     }
     
-    @Override
     public default LittleRenderBox getRenderBox(LittleGrid grid, RenderType layer, LittleBox box, LittleElement element) {
         return new LittleRenderBox(grid, box, element);
     }
     
-    @Override
     public default boolean checkEntityCollision() {
         return false;
     }
     
-    @Override
     public default void entityCollided(IParentCollection parent, LittleTile tile, Entity entity) {}
     
-    @Override
     public default Vector3d getFogColor(IParentCollection parent, LittleTile tile, Entity entity, Vector3d originalColor, float partialTicks) {
         return originalColor;
     }
     
-    @Override
     public default boolean shouldUseStateForRenderType() {
         return true;
     }

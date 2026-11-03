@@ -24,7 +24,6 @@ public class LittleVanillaPacket extends LittleEntityPacket<LittleEntity> {
         this.packet = packet;
     }
     
-    @Override
     public void execute(Player player, LittleEntity entity) {
         LittlePlayerConnection.runInContext(entity.getSubLevel(), player, x -> packet.handle(x));
     }

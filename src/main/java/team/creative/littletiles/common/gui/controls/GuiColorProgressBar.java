@@ -22,12 +22,10 @@ public class GuiColorProgressBar extends GuiProgressbar {
         this.color = color;
     }
     
-    @Override
     public ControlFormatting getControlFormatting() {
         return ControlFormatting.NESTED_NO_PADDING;
     }
     
-    @Override
     public List<Component> getTooltip() {
         List<Component> tooltip = super.getTooltip();
         if (tooltip != null)
@@ -35,7 +33,6 @@ public class GuiColorProgressBar extends GuiProgressbar {
         return tooltip;
     }
     
-    @Override
     public boolean mouseClicked(Rect rect, double x, double y, int button) {
         if (button == 1) {
             playSound(SoundEvents.UI_BUTTON_CLICK);
@@ -44,7 +41,6 @@ public class GuiColorProgressBar extends GuiProgressbar {
         return false;
     }
     
-    @Override
     protected void renderProgress(PoseStack pose, GuiChildControl control, Rect rect, double percent) {
         GuiRenderHelper.colorRect(pose, 0, 0, (int) (rect.getWidth() * percent), (int) rect.getHeight(), color.toInt());
     }

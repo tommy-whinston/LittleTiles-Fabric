@@ -14,18 +14,15 @@ public class LittleBoxGrid implements IGridBased {
         this.grid = grid;
     }
     
-    @Override
     public LittleGrid getGrid() {
         return grid;
     }
     
-    @Override
     public void convertTo(LittleGrid to) {
         box.convertTo(grid, to);
         this.grid = to;
     }
     
-    @Override
     public int getSmallest() {
         return box.getSmallest(grid);
     }

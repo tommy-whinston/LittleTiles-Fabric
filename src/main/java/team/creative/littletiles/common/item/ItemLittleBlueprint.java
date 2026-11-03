@@ -43,7 +43,6 @@ public class ItemLittleBlueprint extends Item implements ILittlePlacer, IItemToo
         super(new Item.Properties());
     }
     
-    @Override
     public Component getName(ItemStack stack) {
         if (stack.getOrCreateTag().contains(CONTENT_KEY) && stack.getOrCreateTagElement(CONTENT_KEY).contains(LittleGroup.STRUCTURE_KEY) && stack.getOrCreateTagElement(CONTENT_KEY)
                 .getCompound(LittleGroup.STRUCTURE_KEY).contains("n"))
@@ -51,54 +50,44 @@ public class ItemLittleBlueprint extends Item implements ILittlePlacer, IItemToo
         return super.getName(stack);
     }
     
-    @Override
     public boolean hasTiles(ItemStack stack) {
         return stack.getOrCreateTag().contains(CONTENT_KEY) && !stack.getTagElement(CONTENT_KEY).isEmpty();
     }
     
-    @Override
     public LittleGroup getTiles(ItemStack stack) {
         return LittleGroup.load(stack.getOrCreateTagElement(CONTENT_KEY));
     }
     
-    @Override
     public LittleGroup getLow(ItemStack stack) {
         return LittleGroup.loadLow(stack.getOrCreateTagElement(CONTENT_KEY));
     }
     
-    @Override
     public boolean shouldRenderInHand(ItemStack stack) {
         return LittleGroup.shouldRenderInHand(stack.getOrCreateTagElement(CONTENT_KEY));
     }
     
-    @Override
     public PlacementPreview getPlacement(Player player, Level level, ItemStack stack, PlacementPosition position, boolean allowLowResolution) {
         return PlacementPreview.relative(level, stack, position, allowLowResolution);
     }
     
-    @Override
     public void saveTiles(ItemStack stack, LittleGroup group) {
         stack.getOrCreateTag().put(CONTENT_KEY, LittleGroup.save(group));
     }
     
-    @Override
     public GuiConfigure getConfigure(Player player, ContainerSlotView view) {
         if (!((ItemLittleBlueprint) view.get().getItem()).hasTiles(view.get()))
             return new GuiRecipeSelection(view);
         return new GuiRecipe(view);
     }
     
-    @Override
     public boolean canAttackBlock(BlockState state, Level level, BlockPos pos, Player player) {
         return false;
     }
     
-    @Override
     public float getDestroySpeed(ItemStack stack, BlockState state) {
         return 0F;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public boolean onMouseWheelClickBlock(Level world, Player player, ItemStack stack, PlacementPosition position, BlockHitResult result) {
         BlockState state = world.getBlockState(result.getBlockPos());
@@ -111,12 +100,10 @@ public class ItemLittleBlueprint extends Item implements ILittlePlacer, IItemToo
         return true;
     }
     
-    @Override
     public boolean containsIngredients(ItemStack stack) {
         return false;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public boolean onRightClick(Level level, Player player, ItemStack stack, PlacementPosition position, BlockHitResult result) {
         if (hasTiles(stack))
@@ -126,7 +113,6 @@ public class ItemLittleBlueprint extends Item implements ILittlePlacer, IItemToo
         return true;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public boolean onClickBlock(Level level, Player player, ItemStack stack, PlacementPosition position, BlockHitResult result) {
         if (hasTiles(stack))
@@ -136,29 +122,24 @@ public class ItemLittleBlueprint extends Item implements ILittlePlacer, IItemToo
         return true;
     }
     
-    @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> list, TooltipFlag flag) {
         list.add(LittleGroup.printTooltip(stack.getOrCreateTagElement(CONTENT_KEY)));
     }
     
-    @Override
     public LittleVecGrid getCachedSize(ItemStack stack) {
         return LittleGroup.getSize(stack.getOrCreateTagElement(CONTENT_KEY));
     }
     
-    @Override
     public LittleVecGrid getCachedMin(ItemStack stack) {
         return LittleGroup.getMin(stack.getOrCreateTagElement(CONTENT_KEY));
     }
     
-    @Override
     public String tooltipTranslateKey(ItemStack stack, String defaultKey) {
         if (hasTiles(stack))
             return "littletiles.tiles.tooltip";
         return "littletiles.blueprint.selection.tooltip";
     }
     
-    @Override
     public Object[] tooltipData(ItemStack stack) {
         if (hasTiles(stack))
             return new Object[] { LittleTilesClient.configure.getTranslatedKeyMessage(), LittleTilesClient.arrowKeysTooltip(), LittleTilesClient.mirror.getTranslatedKeyMessage() };

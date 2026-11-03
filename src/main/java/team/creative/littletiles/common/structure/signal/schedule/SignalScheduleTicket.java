@@ -18,7 +18,6 @@ public class SignalScheduleTicket implements Runnable {
         this.delay = delay;
     }
     
-    @Override
     public void run() {
         SignalOutputHandler handler = outputCondition.get();
         if (handler != null && handler.isStillAvailable())

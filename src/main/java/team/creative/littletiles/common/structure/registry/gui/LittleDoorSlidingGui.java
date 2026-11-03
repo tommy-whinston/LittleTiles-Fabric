@@ -47,12 +47,10 @@ public class LittleDoorSlidingGui extends LittleDoorBaseGui {
         });
     }
     
-    @Override
     protected boolean hasAxis() {
         return false;
     }
     
-    @Override
     protected void createSpecific(LittleDoor door) {
         LittleGrid grid;
         int distance;
@@ -79,7 +77,6 @@ public class LittleDoorSlidingGui extends LittleDoorBaseGui {
         
     }
     
-    @Override
     public void create(LittleStructure structure) {
         super.create(structure);
         
@@ -92,7 +89,6 @@ public class LittleDoorSlidingGui extends LittleDoorBaseGui {
         raiseEvent(new GuiControlChangedEvent(facingControl));
     }
     
-    @Override
     public LittleStructure save(LittleStructure structure) {
         LittleSlidingDoor door = (LittleSlidingDoor) super.save(structure);
         GuiStateButtonMapped<Facing> facingControl = get("facing");
@@ -103,7 +99,6 @@ public class LittleDoorSlidingGui extends LittleDoorBaseGui {
         return door;
     }
     
-    @Override
     protected void save(PhysicalState state) {
         GuiStateButtonMapped<Facing> direction = get("facing");
         GuiDistanceControl distance = get("distance");

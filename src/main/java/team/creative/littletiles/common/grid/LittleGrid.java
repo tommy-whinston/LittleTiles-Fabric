@@ -258,7 +258,6 @@ public class LittleGrid {
         return value;
     }
     
-    @Override
     public String toString() {
         return "" + count;
     }

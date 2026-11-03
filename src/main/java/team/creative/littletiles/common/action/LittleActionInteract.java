@@ -78,7 +78,6 @@ public abstract class LittleActionInteract<T> extends LittleAction<T> {
     
     protected abstract T ignored();
     
-    @Override
     public T action(Player player) throws LittleActionException {
         
         Level level = player.level();

@@ -29,7 +29,6 @@ public final class LittleBoxesNoOverlap extends LittleBoxes {
         super(pos, grid);
     }
     
-    @Override
     public void add(LittleBox box) {
         tempMap.clear();
         box.split(grid, pos, LittleVec.ZERO, tempMap, null);
@@ -54,12 +53,10 @@ public final class LittleBoxesNoOverlap extends LittleBoxes {
         tempMap.clear();
     }
     
-    @Override
     public LittleBoxesNoOverlap copy() {
         return new LittleBoxesNoOverlap(pos, grid, new HashMapList<>(blockMap));
     }
     
-    @Override
     public void convertTo(LittleGrid to) {
         for (Iterator<LittleBox> iterator = blockMap.iterator(); iterator.hasNext();) {
             LittleBox box = iterator.next();
@@ -68,7 +65,6 @@ public final class LittleBoxesNoOverlap extends LittleBoxes {
         this.grid = to;
     }
     
-    @Override
     public int getSmallest() {
         int size = LittleGrid.MIN.count;
         for (LittleBox box : blockMap)
@@ -76,22 +72,18 @@ public final class LittleBoxesNoOverlap extends LittleBoxes {
         return size;
     }
     
-    @Override
     public void clear() {
         blockMap.clear();
     }
     
-    @Override
     public boolean isEmpty() {
         return blockMap.isEmpty();
     }
     
-    @Override
     public int size() {
         return blockMap.sizeOfValues();
     }
     
-    @Override
     public LittleBox getSurroundingBox() {
         if (isEmpty())
             return null;
@@ -121,12 +113,10 @@ public final class LittleBoxesNoOverlap extends LittleBoxes {
         return new LittleBox(minX, minY, minZ, maxX, maxY, maxZ);
     }
     
-    @Override
     public HashMapList<BlockPos, LittleBox> generateBlockWise() {
         return blockMap;
     }
     
-    @Override
     public List<LittleBox> all() {
         List<LittleBox> boxes = new ArrayList<>();
         LittleVec vec = new LittleVec(0, 0, 0);
@@ -141,7 +131,6 @@ public final class LittleBoxesNoOverlap extends LittleBoxes {
         return boxes;
     }
     
-    @Override
     public void mirror(Axis axis, LittleBoxAbsolute absoluteBox) {
         sameGrid(absoluteBox, () -> {
             Iterable<LittleBox> boxes = all();
@@ -154,12 +143,10 @@ public final class LittleBoxesNoOverlap extends LittleBoxes {
         });
     }
     
-    @Override
     public void combineBoxesBlocks() {
         // Already done when adding
     }
     
-    @Override
     public int littleVolume() {
         int volume = 0;
         for (ArrayList<LittleBox> boxes : blockMap.values())

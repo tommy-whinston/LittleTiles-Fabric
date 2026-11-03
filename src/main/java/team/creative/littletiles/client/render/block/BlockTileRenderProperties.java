@@ -34,7 +34,6 @@ public class BlockTileRenderProperties implements IClientBlockExtensions {
     
     public static final BlockTileRenderProperties INSTANCE = new BlockTileRenderProperties();
     
-    @Override
     public boolean addDestroyEffects(BlockState state, Level level, BlockPos pos, ParticleEngine manager) {
         LittleTileContext context = LittleTileContext.selectFocused(level, pos, Minecraft.getInstance().player);
         if (context.isComplete()) {
@@ -57,7 +56,7 @@ public class BlockTileRenderProperties implements IClientBlockExtensions {
                         double d8 = d5 * d2 + bb.minY;
                         double d9 = d6 * d3 + bb.minZ;
                         manager.add(new TerrainParticle((ClientLevel) level, pos.getX() + d7, pos.getY() + d8, pos.getZ() + d9, d4 - 0.5D, d5 - 0.5D, d6 - 0.5D, particleState, pos)
-                                .updateSprite(particleState, pos));
+                                );
                     }
                 }
             }
@@ -65,7 +64,6 @@ public class BlockTileRenderProperties implements IClientBlockExtensions {
         return true;
     }
     
-    @Override
     public boolean addHitEffects(BlockState state, Level level, HitResult target, ParticleEngine manager) {
         BlockPos pos = ((BlockHitResult) target).getBlockPos();
         Direction direction = ((BlockHitResult) target).getDirection();
@@ -99,13 +97,12 @@ public class BlockTileRenderProperties implements IClientBlockExtensions {
                 if (direction == Direction.EAST)
                     d0 = i + aabb.maxX + 0.1F;
                 
-                manager.add((new TerrainParticle((ClientLevel) level, d0, d1, d2, 0.0D, 0.0D, 0.0D, blockstate, pos).updateSprite(blockstate, pos)).setPower(0.2F).scale(0.6F));
+                manager.add((new TerrainParticle((ClientLevel) level, d0, d1, d2, 0.0D, 0.0D, 0.0D, blockstate, pos)).setPower(0.2F).scale(0.6F));
             }
         }
         return true;
     }
     
-    @Override
     public Vector3d getFogColor(BlockState state, LevelReader level, BlockPos pos, Entity entity, Vector3d originalColor, float partialTicks) {
         BETiles be = BlockTile.loadBE(level, pos);
         if (be != null)

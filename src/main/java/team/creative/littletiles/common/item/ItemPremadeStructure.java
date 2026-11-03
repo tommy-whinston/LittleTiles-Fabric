@@ -63,22 +63,18 @@ public class ItemPremadeStructure extends Item implements ILittlePlacer, IItemTo
         super(new Item.Properties());
     }
     
-    @Override
     public String getDescriptionId(ItemStack stack) {
         return "structure." + getPremadeId(stack);
     }
     
-    @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> list, TooltipFlag flag) {
         if (LanguageUtils.can("structure.description." + getPremadeId(stack)))
             list.addAll(new TextBuilder().translate("structure.description." + getPremadeId(stack)).build());
     }
     
-    @Override
     public GuiConfigure getConfigure(Player player, ContainerSlotView view) {
         return new GuiModeSelector(view, PlacementPlayerSetting.grid(player), PlacementPlayerSetting.placementMode(player)) {
             
-            @Override
             public CompoundTag saveConfiguration(CompoundTag nbt, LittleGrid grid, PlacementMode mode) {
                 LittleTilesClient.setPlace(grid, mode);
                 return null;
@@ -86,12 +82,10 @@ public class ItemPremadeStructure extends Item implements ILittlePlacer, IItemTo
         };
     }
     
-    @Override
     public boolean hasTiles(ItemStack stack) {
         return LittlePremadeRegistry.getPreview(getPremadeId(stack)) != null;
     }
     
-    @Override
     public boolean shouldRenderInHand(ItemStack stack) {
         return hasTiles(stack);
     }
@@ -117,7 +111,6 @@ public class ItemPremadeStructure extends Item implements ILittlePlacer, IItemTo
         return null;
     }
     
-    @Override
     public LittleGroup getTiles(ItemStack stack) {
         String id = getPremadeId(stack);
         LittleGroup previews = getPreviews(id);
@@ -126,12 +119,10 @@ public class ItemPremadeStructure extends Item implements ILittlePlacer, IItemTo
         return previews;
     }
     
-    @Override
     public LittleGroup getLow(ItemStack stack) {
         return getTiles(stack);
     }
     
-    @Override
     public void rotate(Player player, ItemStack stack, Rotation rotation, boolean client) {
         String id = getPremadeId(stack);
         LittleGroup previews = getPreviews(id);
@@ -141,7 +132,6 @@ public class ItemPremadeStructure extends Item implements ILittlePlacer, IItemTo
         saveTiles(stack, previews);
     }
     
-    @Override
     public void mirror(Player player, ItemStack stack, Axis axis, boolean client) {
         String id = getPremadeId(stack);
         LittleGroup previews = getPreviews(id);
@@ -151,32 +141,26 @@ public class ItemPremadeStructure extends Item implements ILittlePlacer, IItemTo
         saveTiles(stack, previews);
     }
     
-    @Override
     public PlacementPreview getPlacement(Player player, Level level, ItemStack stack, PlacementPosition position, boolean allowLowResolution) {
         return PlacementPreview.relative(level, stack, position, allowLowResolution);
     }
     
-    @Override
     public void saveTiles(ItemStack stack, LittleGroup group) {
         cachedPreviews.put(getPremadeId(stack), group);
     }
     
-    @Override
     public boolean sendTransformationUpdate() {
         return false;
     }
     
-    @Override
     public boolean containsIngredients(ItemStack stack) {
         return true;
     }
     
-    @Override
     public boolean shouldCache() {
         return false;
     }
     
-    @Override
     public boolean canSnapToGrid(ItemStack stack) {
         LittleStructureType type = LittlePremadeRegistry.get(getPremadeId(stack));
         if (type instanceof LittlePremadeType premade)
@@ -184,7 +168,6 @@ public class ItemPremadeStructure extends Item implements ILittlePlacer, IItemTo
         return false;
     }
     
-    @Override
     public boolean snapToGridByDefault(ItemStack stack) {
         LittleStructureType type = LittlePremadeRegistry.get(getPremadeId(stack));
         if (type instanceof LittlePremadeType premade)
@@ -192,12 +175,10 @@ public class ItemPremadeStructure extends Item implements ILittlePlacer, IItemTo
         return false;
     }
     
-    @Override
     public String tooltipTranslateKey(ItemStack stack, String defaultKey) {
         return "littletiles.tiles.tooltip";
     }
     
-    @Override
     public Object[] tooltipData(ItemStack stack) {
         return new Object[] { LittleTilesClient.configure.getTranslatedKeyMessage(), LittleTilesClient.arrowKeysTooltip(), LittleTilesClient.mirror.getTranslatedKeyMessage() };
     }

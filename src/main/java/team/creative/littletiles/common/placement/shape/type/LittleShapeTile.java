@@ -22,7 +22,6 @@ public class LittleShapeTile extends LittleShapeSelectable {
         super(1);
     }
     
-    @Override
     protected void addBoxes(LittleBoxes boxes, ShapeSelection selection, boolean lowResolution) {
         for (ShapeSelectPos pos : selection) {
             if (pos.result.isComplete())
@@ -32,23 +31,18 @@ public class LittleShapeTile extends LittleShapeSelectable {
         }
     }
     
-    @Override
     public void addExtraInformation(CompoundTag nbt, List<Component> list) {}
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public List<GuiControl> getCustomSettings(CompoundTag nbt, LittleGrid grid) {
         return Collections.EMPTY_LIST;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void saveCustomSettings(GuiParent gui, CompoundTag nbt, LittleGrid grid) {}
     
-    @Override
     public void rotate(CompoundTag nbt, Rotation rotation) {}
     
-    @Override
     public void mirror(CompoundTag nbt, Axis axis) {}
     
 }

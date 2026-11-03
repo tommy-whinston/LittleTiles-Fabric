@@ -17,18 +17,14 @@ public class LittleExporter extends LittleStructurePremade {
         super(type, mainBlock);
     }
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {}
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {}
     
-    @Override
     public boolean canInteract() {
         return true;
     }
     
-    @Override
     public InteractionResult use(Level level, LittleTileContext context, BlockPos pos, Player player, BlockHitResult result, InteractionHand hand) {
         if (!level.isClientSide)
             LittleTilesGuiRegistry.EXPORTER.open(player);

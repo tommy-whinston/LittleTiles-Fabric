@@ -18,8 +18,6 @@ import team.creative.creativecore.client.render.face.RenderBoxFaceSpecial;
 import team.creative.creativecore.common.util.math.base.Facing;
 import team.creative.creativecore.common.util.type.list.IndexedCollector;
 import team.creative.creativecore.common.util.type.map.ChunkLayerMap;
-import team.creative.littletiles.client.mod.rubidium.RubidiumManager;
-import team.creative.littletiles.client.mod.rubidium.pipeline.LittleRenderPipelineRubidium;
 import team.creative.littletiles.client.render.cache.AdditionalBufferReceiver;
 import team.creative.littletiles.client.render.cache.BlockBufferCache;
 import team.creative.littletiles.client.render.cache.IBlockBufferCache;
@@ -50,8 +48,6 @@ public class BERenderManager {
     public static RenderChunkExtender getRenderChunk(Level level, BlockPos pos) {
         if (level instanceof LittleLevel little)
             return little.getRenderManager().getRenderChunk(pos);
-        if (RubidiumManager.installed())
-            return LittleRenderPipelineRubidium.getChunk(pos);
         return (RenderChunkExtender) ((ViewAreaAccessor) ((LevelRendererAccessor) Minecraft.getInstance().levelRenderer).getViewArea()).getChunkAt(pos);
     }
     

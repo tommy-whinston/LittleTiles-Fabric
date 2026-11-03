@@ -77,7 +77,6 @@ public class LittleElement {
         return color != ColorUtils.WHITE;
     }
     
-    @Override
     public int hashCode() {
         return block.hashCode() + color;
     }
@@ -95,7 +94,6 @@ public class LittleElement {
         return nbt;
     }
     
-    @Override
     public boolean equals(Object obj) {
         if (obj instanceof LittleElement element)
             return element.state == state && element.color == color;
@@ -106,7 +104,6 @@ public class LittleElement {
         return element.state == state && element.block == block && element.color == color;
     }
     
-    @Override
     public String toString() {
         return "[" + getBlockName() + "|" + color + "]";
     }

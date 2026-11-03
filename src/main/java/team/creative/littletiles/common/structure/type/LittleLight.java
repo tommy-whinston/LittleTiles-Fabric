@@ -25,36 +25,30 @@ public class LittleLight extends LittleStructure {
         super(type, mainBlock);
     }
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {
         level = nbt.getInt("level");
         allowRightClick = nbt.getBoolean("right");
     }
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {
         nbt.putInt("level", level);
         nbt.putBoolean("right", allowRightClick);
     }
     
-    @Override
     public int getLightValue(BlockPos pos) {
         return getOutput(0).getState().any() ? level : 0;
     }
     
-    @Override
     public boolean canInteract() {
         return allowRightClick;
     }
     
-    @Override
     public InteractionResult use(Level level, LittleTileContext context, BlockPos pos, Player player, BlockHitResult result, InteractionHand hand) {
         if (!level.isClientSide && allowRightClick)
             getOutput(0).toggle();
         return InteractionResult.SUCCESS;
     }
     
-    @Override
     public void performInternalOutputChange(InternalSignalOutput output) {
         if (output.component.is("enabled"))
             try {
@@ -62,7 +56,6 @@ public class LittleLight extends LittleStructure {
             } catch (CorruptedConnectionException | NotYetConnectedException e) {}
     }
     
-    @Override
     public int getAttribute() {
         if (getOutput(0).getState().any())
             return super.getAttribute() | LittleStructureAttribute.EMISSIVE;

@@ -19,12 +19,10 @@ public class BlockIngredientEntry {
         return block.getStack();
     }
     
-    @Override
     public int hashCode() {
         return block.hashCode();
     }
     
-    @Override
     public boolean equals(Object object) {
         return object instanceof BlockIngredientEntry && ((BlockIngredientEntry) object).block == this.block;
     }
@@ -63,7 +61,6 @@ public class BlockIngredientEntry {
         this.value = (int) Math.ceil(this.value * scale);
     }
     
-    @Override
     public String toString() {
         return "[" + block.blockName() + "," + value + "]";
     }

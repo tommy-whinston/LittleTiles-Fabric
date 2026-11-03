@@ -15,7 +15,6 @@ public abstract class LittleShapeSelectable extends LittleShape {
         super(pointsBeforePlacing);
     }
     
-    @Override
     public boolean requiresNoOverlap(ShapeSelection selection) {
         return true;
     }

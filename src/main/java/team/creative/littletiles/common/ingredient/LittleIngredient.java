@@ -118,7 +118,6 @@ public abstract class LittleIngredient<T extends LittleIngredient> extends Littl
     static {
         registerType(BlockIngredient.class, new IngredientOverflowHandler<BlockIngredient>() {
             
-            @Override
             public List<ItemStack> handleOverflow(BlockIngredient overflow) throws NotEnoughSpaceException {
                 List<ItemStack> stacks = new ArrayList<>();
                 for (BlockIngredientEntry entry : overflow) {
@@ -137,7 +136,6 @@ public abstract class LittleIngredient<T extends LittleIngredient> extends Littl
             }
         }, new IngredientConvertionHandler<BlockIngredient>() {
             
-            @Override
             public BlockIngredient extract(ItemStack stack) {
                 Block block = Block.byItem(stack.getItem());
                 if (block != null && !(block instanceof AirBlock) && LittleAction.isBlockValid(block.defaultBlockState())) {
@@ -148,7 +146,6 @@ public abstract class LittleIngredient<T extends LittleIngredient> extends Littl
                 return null;
             }
             
-            @Override
             public BlockIngredient extract(LittleGroup previews) {
                 BlockIngredient ingredient = new BlockIngredient();
                 if (previews.containsIngredients())
@@ -160,7 +157,6 @@ public abstract class LittleIngredient<T extends LittleIngredient> extends Littl
                 return ingredient;
             }
             
-            @Override
             public BlockIngredient extract(LittleElement tile, double volume) {
                 BlockIngredient ingredient = new BlockIngredient();
                 ingredient.add(IngredientUtils.getBlockIngredient(tile.getBlock(), volume));
@@ -170,7 +166,6 @@ public abstract class LittleIngredient<T extends LittleIngredient> extends Littl
         });
         registerType(ColorIngredient.class, new IngredientOverflowHandler<ColorIngredient>() {
             
-            @Override
             public List<ItemStack> handleOverflow(ColorIngredient overflow) throws NotEnoughSpaceException {
                 LittleIngredients ingredients = new LittleIngredients(overflow);
                 List<ItemStack> stacks = new ArrayList<>();
@@ -202,7 +197,6 @@ public abstract class LittleIngredient<T extends LittleIngredient> extends Littl
             }
         }, new IngredientConvertionHandler<ColorIngredient>() {
             
-            @Override
             public ColorIngredient extract(ItemStack stack) {
                 if (stack.getItem() instanceof DyeItem) {
                     DyeColor dyeColor = ((DyeItem) stack.getItem()).getDyeColor();
@@ -214,7 +208,6 @@ public abstract class LittleIngredient<T extends LittleIngredient> extends Littl
                 return null;
             }
             
-            @Override
             public ColorIngredient extract(LittleGroup previews) {
                 ColorIngredient ingredient = new ColorIngredient();
                 if (previews.containsIngredients())
@@ -226,7 +219,6 @@ public abstract class LittleIngredient<T extends LittleIngredient> extends Littl
                 return ingredient;
             }
             
-            @Override
             public ColorIngredient extract(LittleElement tile, double volume) {
                 ColorIngredient ingredient = new ColorIngredient();
                 ingredient.add(ColorIngredient.getColors(tile, volume));
@@ -236,7 +228,6 @@ public abstract class LittleIngredient<T extends LittleIngredient> extends Littl
         });
         registerType(StackIngredient.class, new IngredientOverflowHandler<StackIngredient>() {
             
-            @Override
             public List<ItemStack> handleOverflow(StackIngredient overflow) throws NotEnoughSpaceException {
                 List<ItemStack> stacks = new ArrayList<ItemStack>();
                 for (StackIngredientEntry entry : overflow) {
@@ -248,27 +239,22 @@ public abstract class LittleIngredient<T extends LittleIngredient> extends Littl
             }
         }, new IngredientConvertionHandler<StackIngredient>() {
             
-            @Override
             public StackIngredient extract(LittleElement tile, double volume) {
                 return null;
             }
             
-            @Override
             public StackIngredient extract(LittleGroup previews) {
                 return null;
             }
             
-            @Override
             public StackIngredient extract(ItemStack stack) {
                 return null;
             }
             
-            @Override
             public boolean requiresExtraHandler() {
                 return true;
             }
             
-            @Override
             public boolean handleExtra(StackIngredient ingredient, ItemStack stack, LittleIngredients overflow) {
                 StackIngredient stackIngredients = new StackIngredient();
                 stackIngredients.add(new StackIngredientEntry(stack, 1));
@@ -289,33 +275,27 @@ public abstract class LittleIngredient<T extends LittleIngredient> extends Littl
         
         registerType(ItemIngredient.class, new IngredientOverflowHandler<ItemIngredient>() {
             
-            @Override
             public List<ItemStack> handleOverflow(ItemIngredient overflow) throws NotEnoughSpaceException {
                 throw new NotEnoughSpaceException(overflow);
             }
         }, new IngredientConvertionHandler<ItemIngredient>() {
             
-            @Override
             public ItemIngredient extract(ItemStack stack) {
                 return null;
             }
             
-            @Override
             public ItemIngredient extract(LittleGroup group) {
                 return null;
             }
             
-            @Override
             public ItemIngredient extract(LittleElement tile, double volume) {
                 return null;
             }
             
-            @Override
             public boolean requiresExtraHandler() {
                 return true;
             }
             
-            @Override
             public boolean handleExtra(ItemIngredient ingredient, ItemStack stack, LittleIngredients overflow) {
                 for (Iterator<ItemIngredientEntry> itr = ingredient.iterator(); itr.hasNext();) {
                     ItemIngredientEntry entry = itr.next();
@@ -336,15 +316,12 @@ public abstract class LittleIngredient<T extends LittleIngredient> extends Littl
         });
     }
     
-    @Override
     public abstract T copy();
     
     public abstract TextBuilder toText();
     
-    @Override
     public abstract T add(T ingredient);
     
-    @Override
     public abstract T sub(T ingredient);
     
     public abstract void scale(int count);
@@ -353,12 +330,10 @@ public abstract class LittleIngredient<T extends LittleIngredient> extends Littl
     
     public abstract int getMinimumCount(T other, int availableCount);
     
-    @Override
     public int hashCode() {
         return getClass().hashCode();
     }
     
-    @Override
     public boolean equals(Object obj) {
         return this.getClass() == obj.getClass();
     }

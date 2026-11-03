@@ -23,20 +23,17 @@ public abstract class ParentCollection extends LittleCollectionSafe implements I
         return collisionChecks > 0;
     }
     
-    @Override
     protected void added(LittleElement tile) {
         if (tile.checkEntityCollision())
             collisionChecks++;
     }
     
-    @Override
     protected void refresh() {
         collisionChecks = 0;
         for (LittleTile tile : this)
             added(tile);
     }
     
-    @Override
     protected void removed(LittleElement tile) {
         if (tile.checkEntityCollision())
             collisionChecks--;
@@ -65,7 +62,6 @@ public abstract class ParentCollection extends LittleCollectionSafe implements I
             Iterator<LittleTile> itr = content.iterator();
             LittleTile next = null;
             
-            @Override
             public boolean hasNext() {
                 while (next == null && itr.hasNext()) {
                     LittleTile test = itr.next();
@@ -75,7 +71,6 @@ public abstract class ParentCollection extends LittleCollectionSafe implements I
                 return next != null;
             }
             
-            @Override
             public LittleTile next() {
                 LittleTile result = next;
                 next = null;
@@ -85,13 +80,10 @@ public abstract class ParentCollection extends LittleCollectionSafe implements I
         };
     }
     
-    @Override
     public abstract BETiles getBE();
     
-    @Override
     public abstract boolean isStructure();
     
-    @Override
     public boolean isStructureChildSafe(LittleStructure structure) {
         try {
             return isStructureChild(structure);
@@ -100,19 +92,14 @@ public abstract class ParentCollection extends LittleCollectionSafe implements I
         }
     }
     
-    @Override
     public abstract boolean isStructureChild(LittleStructure structure) throws CorruptedConnectionException, NotYetConnectedException;
     
-    @Override
     public abstract boolean isMain();
     
-    @Override
     public abstract LittleStructure getStructure() throws CorruptedConnectionException, NotYetConnectedException;
     
-    @Override
     public abstract int getAttribute();
     
-    @Override
     public abstract boolean isClient();
     
     public void unload() {}

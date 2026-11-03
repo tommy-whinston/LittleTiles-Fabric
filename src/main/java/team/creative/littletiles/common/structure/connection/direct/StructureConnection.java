@@ -62,7 +62,6 @@ public class StructureConnection implements IStructureConnection {
         return nbt;
     }
     
-    @Override
     public BlockPos getStructurePosition() {
         return pos;
     }
@@ -82,14 +81,12 @@ public class StructureConnection implements IStructureConnection {
             throw new NotYetConnectedException();
     }
 
-    @Override
     public LittleStructure getStructureUncached() throws CorruptedConnectionException, NotYetConnectedException {
         cachedBE = null;
         return getStructure();
     }
 
 
-    @Override
     public LittleStructure getStructure() throws CorruptedConnectionException, NotYetConnectedException {
         BETiles be = getBlockEntity();
         if (!be.hasLoaded())
@@ -111,12 +108,10 @@ public class StructureConnection implements IStructureConnection {
         return false;
     }
     
-    @Override
     public int getIndex() {
         return index;
     }
     
-    @Override
     public int getAttribute() {
         if (attribute == LittleStructureAttribute.INVALID)
             try {

@@ -22,19 +22,16 @@ public class BlockMixin implements LittleBlockProvider {
             LittleBlockRegistry.calculateCache((Block) (Object) this);
     }
     
-    @Override
     public LittleBlock getLittleBlock() {
         checkCache();
         return block;
     }
     
-    @Override
     public boolean isSpecialBlock() {
         checkCache();
         return specialBlock;
     }
     
-    @Override
     public void setCache(LittleBlock block, boolean special) {
         this.block = block;
         this.specialBlock = special;

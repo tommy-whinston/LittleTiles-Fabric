@@ -42,7 +42,6 @@ public class BlockPacket extends CreativePacket {
     public static enum BlockPacketAction {
         
         PAINT_BRUSH(true) {
-            @Override
             public void action(Level level, BETiles be, LittleTileContext context, ItemStack stack, Player player, BlockHitResult moving, BlockPos pos, CompoundTag nbt) {
                 if (context.parent.isStructure()) {
                     try {
@@ -60,7 +59,6 @@ public class BlockPacket extends CreativePacket {
         },
         CHISEL(false) {
             
-            @Override
             public void action(Level level, BETiles be, LittleTileContext context, ItemStack stack, Player player, BlockHitResult moving, BlockPos pos, CompoundTag nbt) {
                 if (LittleAction.isBlockValid(context.tile.getState()))
                     ItemLittleChisel.setElement(stack, new LittleElement(context.tile.getState(), context.tile.color));
@@ -68,14 +66,12 @@ public class BlockPacket extends CreativePacket {
         },
         GLOVE(false) {
             
-            @Override
             public void action(Level level, BETiles be, LittleTileContext context, ItemStack stack, Player player, BlockHitResult moving, BlockPos pos, CompoundTag nbt) {
                 ItemLittleGlove.getMode(stack).littleBlockAction(level, be, context, stack, pos, nbt);
             }
         },
         WRENCH(true) {
             
-            @Override
             public void action(Level level, BETiles be, LittleTileContext context, ItemStack stack, Player player, BlockHitResult moving, BlockPos pos, CompoundTag nbt) {
                 player.sendSystemMessage(Component.literal("grid:" + be.getGrid()));
                 be.combineAllTiles(true);
@@ -86,7 +82,6 @@ public class BlockPacket extends CreativePacket {
         },
         WRENCH_INFO(true) {
             
-            @Override
             public void action(Level level, BETiles be, LittleTileContext context, ItemStack stack, Player player, BlockHitResult moving, BlockPos pos, CompoundTag nbt) {
                 if (context.parent.isStructure())
                     try {
@@ -99,7 +94,6 @@ public class BlockPacket extends CreativePacket {
         },
         BLUEPRINT(false) {
             
-            @Override
             public void action(Level level, BETiles be, LittleTileContext context, ItemStack stack, Player player, BlockHitResult moving, BlockPos pos, CompoundTag nbt) {
                 if (((ILittlePlacer) stack.getItem()).hasTiles(stack))
                     return;
@@ -166,10 +160,8 @@ public class BlockPacket extends CreativePacket {
             uuid = subLevel.getHolder().getUUID();
     }
     
-    @Override
     public void executeClient(Player player) {}
     
-    @Override
     public void executeServer(ServerPlayer player) {
         LevelAccessor level = player.level();
         

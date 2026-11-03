@@ -72,22 +72,18 @@ public class MarkMode implements IMarkMode {
         this.position = loadPosition(position, preview);
     }
     
-    @Override
     public boolean allowLowResolution() {
         return allowLowResolution;
     }
     
-    @Override
     public GuiConfigure getConfigurationGui() {
         return new GuiMarkMode(this);
     }
     
-    @Override
     public PlacementPosition getPosition() {
         return position.copy();
     }
     
-    @Override
     public void render(LittleGrid positionGrid, PoseStack pose) {
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder bufferbuilder = tesselator.getBuilder();
@@ -115,14 +111,12 @@ public class MarkMode implements IMarkMode {
         RenderSystem.enableDepthTest();
     }
     
-    @Override
     public void move(LittleGrid positionGrid, Facing facing) {
         LittleVec vec = new LittleVec(facing.opposite());
         vec.scale(Screen.hasControlDown() ? positionGrid.count : 1);
         position.sub(new LittleVecGrid(vec, positionGrid));
     }
     
-    @Override
     public void done() {}
     
 }

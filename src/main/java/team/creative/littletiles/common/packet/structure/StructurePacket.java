@@ -23,7 +23,6 @@ public abstract class StructurePacket extends CreativePacket {
     
     public abstract void execute(Player player, LittleStructure structure);
     
-    @Override
     public void execute(Player player) {
         try {
             execute(player, location.find(player.level()));
@@ -32,10 +31,8 @@ public abstract class StructurePacket extends CreativePacket {
         }
     }
     
-    @Override
     public void executeClient(Player player) {}
     
-    @Override
     public void executeServer(ServerPlayer player) {}
     
 }

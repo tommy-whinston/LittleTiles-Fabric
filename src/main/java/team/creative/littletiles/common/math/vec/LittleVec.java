@@ -203,7 +203,6 @@ public class LittleVec {
         return Math.pow(vec.x - this.x, 2) + Math.pow(vec.y - this.y, 2) + Math.pow(vec.z - this.z, 2);
     }
     
-    @Override
     public boolean equals(Object object) {
         if (object instanceof LittleVec vec)
             return x == vec.x && y == vec.y && z == vec.z;
@@ -218,7 +217,6 @@ public class LittleVec {
         nbt.putIntArray(name, new int[] { x, y, z });
     }
     
-    @Override
     public String toString() {
         return "[" + x + "," + y + "," + z + "]";
     }

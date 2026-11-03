@@ -44,18 +44,15 @@ public class StructureRelative implements IGridBased {
         return box;
     }
     
-    @Override
     public LittleGrid getGrid() {
         return grid;
     }
     
-    @Override
     public void convertTo(LittleGrid grid) {
         box.convertTo(this.grid, grid);
         this.grid = grid;
     }
     
-    @Override
     public int getSmallest() {
         return box.getSmallest(grid);
     }

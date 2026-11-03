@@ -119,7 +119,6 @@ public class GuiSoundEventPanel extends GuiTimelinePanel {
         });
     }
     
-    @Override
     protected void addBefore() {
         add(new GuiLabel("soundLabel").setTitle(translatable("gui.door.sound").append(":")));
     }
@@ -194,9 +193,8 @@ public class GuiSoundEventPanel extends GuiTimelinePanel {
             super(timeline);
         }
         
-        @Override
         protected PlaySoundEvent getValueAt(int time) {
-            return new PlaySoundEvent(SoundEvents.UI_BUTTON_CLICK.get(), 1, 1);
+            return new PlaySoundEvent(SoundEvents.UI_BUTTON_CLICK.value(), 1, 1);
         }
         
     }

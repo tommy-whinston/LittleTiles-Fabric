@@ -44,12 +44,10 @@ public class ItemBlockIngredient extends Item implements ILittleIngredientInvent
         entry.save(stack.getTag());
     }
     
-    @Override
     public boolean overrideStackedOnOther(ItemStack stack, Slot slot, ClickAction action, Player player) {
         return false;
     }
     
-    @Override
     public boolean overrideOtherStackedOnMe(ItemStack me, ItemStack other, Slot slot, ClickAction action, Player player, SlotAccess otherSlot) {
         if (other.getItem() instanceof ItemBlockIngredient) {
             BlockIngredientEntry meEntry = loadIngredient(me);
@@ -74,7 +72,6 @@ public class ItemBlockIngredient extends Item implements ILittleIngredientInvent
         return false;
     }
     
-    @Override
     public Component getName(ItemStack stack) {
         BlockIngredientEntry entry = loadIngredient(stack);
         if (entry != null)
@@ -83,31 +80,26 @@ public class ItemBlockIngredient extends Item implements ILittleIngredientInvent
             return super.getName(stack);
     }
     
-    @Override
     public boolean shouldOverrideMultiplayerNbt() {
         return true;
     }
     
-    @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn) {
         BlockIngredientEntry entry = loadIngredient(stack);
         if (entry != null)
             tooltip.add(BlockIngredient.printVolume(entry.value, false));
     }
     
-    @Override
     public LittleIngredients getInventory(ItemStack stack) {
         BlockIngredientEntry entry = loadIngredient(stack);
         if (entry != null) {
             BlockIngredient ingredient = new BlockIngredient();
             ingredient.add(entry);
             return new LittleIngredients(ingredient.setLimits(1, 64)) {
-                @Override
                 protected boolean canAddNewIngredients() {
                     return false;
                 }
                 
-                @Override
                 protected boolean removeEmptyIngredients() {
                     return false;
                 }
@@ -116,7 +108,6 @@ public class ItemBlockIngredient extends Item implements ILittleIngredientInvent
         return null;
     }
     
-    @Override
     public void setInventory(ItemStack stack, LittleIngredients ingredients, LittleInventory inventory) {
         BlockIngredient blocks = ingredients.get(BlockIngredient.class);
         if (blocks != null && !blocks.isEmpty())
@@ -139,7 +130,6 @@ public class ItemBlockIngredient extends Item implements ILittleIngredientInvent
         stack.setCount(0);
     }
     
-    @Override
     public boolean shouldBeMerged() {
         return true;
     }

@@ -47,18 +47,15 @@ public class LittleStructureBuilder extends LittleStructurePremade {
         super(type, mainBlock);
     }
     
-    @Override
     public boolean canInteract() {
         return true;
     }
     
-    @Override
     public InteractionResult use(Level level, LittleTileContext context, BlockPos pos, Player player, BlockHitResult result, InteractionHand hand) {
         LittleTilesGuiRegistry.STRUCTURE_BUILDER.open(player, this);
         return InteractionResult.SUCCESS;
     }
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {
         if (nbt.contains("sizeX"))
             lastSizeX = nbt.getInt("sizeX");
@@ -84,7 +81,6 @@ public class LittleStructureBuilder extends LittleStructurePremade {
         inventory = InventoryUtils.load(nbt, 1);
     }
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {
         nbt.putInt("sizeX", lastSizeX);
         nbt.putInt("sizeY", lastSizeY);

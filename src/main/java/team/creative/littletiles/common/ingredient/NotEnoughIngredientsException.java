@@ -40,7 +40,6 @@ public class NotEnoughIngredientsException extends LittleActionException {
         return ingredients;
     }
     
-    @Override
     public List<Component> getActionMessage() {
         TextBuilder text = new TextBuilder().translate(getMessage()).newLine();
         for (LittleIngredient ingredient : ingredients)

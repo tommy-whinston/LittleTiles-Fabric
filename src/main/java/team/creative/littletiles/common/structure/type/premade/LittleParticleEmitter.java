@@ -52,7 +52,6 @@ public class LittleParticleEmitter extends LittleStructurePremade {
         super(type, mainBlock);
     }
     
-    @Override
     public void tick() {
         if (getOutput(0).getState().any())
             return;
@@ -66,12 +65,10 @@ public class LittleParticleEmitter extends LittleStructurePremade {
             ticker++;
     }
     
-    @Override
     public boolean canInteract() {
         return true;
     }
     
-    @Override
     public InteractionResult use(Level level, LittleTileContext context, BlockPos pos, Player player, BlockHitResult result, InteractionHand hand) {
         if (!level.isClientSide)
             LittleTilesGuiRegistry.PARTICLE.open(player, this);
@@ -154,12 +151,10 @@ public class LittleParticleEmitter extends LittleStructurePremade {
             settings = LittleParticlePresets.SMOKE.settings.copy();
     }
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {
         loadSettings(nbt);
     }
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {
         nbt.putInt("tickDelay", delay);
         nbt.putInt("tickCount", count);
@@ -307,13 +302,11 @@ public class LittleParticleEmitter extends LittleStructurePremade {
             this.spread = deviation;
         }
         
-        @Override
         protected void populate(Vec3d vec) {
             vec.x = speedX;
             vec.z = speedZ;
         }
         
-        @Override
         public void write(CompoundTag nbt) {
             super.write(nbt);
             nbt.putFloat("speedX", speedX);
@@ -338,14 +331,12 @@ public class LittleParticleEmitter extends LittleStructurePremade {
             this.spread = deviation;
         }
         
-        @Override
         protected void populate(Vec3d vec) {
             vec.x = Math.cos(angle) * radius;
             vec.z = Math.sin(angle) * radius;
             angle += (Math.PI * 2) / steps;
         }
         
-        @Override
         public void write(CompoundTag nbt) {
             super.write(nbt);
             nbt.putFloat("radius", radius);
@@ -363,7 +354,6 @@ public class LittleParticleEmitter extends LittleStructurePremade {
             super(id, structureClass, factory, attribute, modid);
         }
         
-        @Override
         public List<LittlePlaceBox> getSpecialBoxes(LittleGroup group) {
             List<LittlePlaceBox> result = super.getSpecialBoxes(group);
             Facing facing = (Facing) loadDirectional(group, "facing");
@@ -372,7 +362,6 @@ public class LittleParticleEmitter extends LittleStructurePremade {
             return result;
         }
         
-        @Override
         @OnlyIn(Dist.CLIENT)
         public List<RenderBox> getItemPreview(LittleGroup previews, boolean translucent) {
             if (cubes == null) {
@@ -382,7 +371,6 @@ public class LittleParticleEmitter extends LittleStructurePremade {
             return cubes;
         }
         
-        @Override
         public boolean canSnapToGrid() {
             return false;
         }

@@ -84,26 +84,22 @@ public class LittleBuildingConfig {
     public static enum HarvestLevel {
         
         DIAMOND {
-            @Override
             public boolean is(Block block) {
                 return true;
             }
         },
         IRON {
-            @Override
             public boolean is(Block block) {
                 return block.builtInRegistryHolder().is(BlockTags.NEEDS_IRON_TOOL) || !block.builtInRegistryHolder().is(BlockTags.NEEDS_DIAMOND_TOOL);
             }
         },
         STONE {
-            @Override
             public boolean is(Block block) {
                 return block.builtInRegistryHolder().is(BlockTags.NEEDS_STONE_TOOL) || (!block.builtInRegistryHolder().is(BlockTags.NEEDS_IRON_TOOL) && !block
                         .builtInRegistryHolder().is(BlockTags.NEEDS_DIAMOND_TOOL));
             }
         },
         WOOD {
-            @Override
             public boolean is(Block block) {
                 return !block.builtInRegistryHolder().is(BlockTags.NEEDS_STONE_TOOL) && !block.builtInRegistryHolder().is(BlockTags.NEEDS_IRON_TOOL) && !block
                         .builtInRegistryHolder().is(BlockTags.NEEDS_DIAMOND_TOOL);

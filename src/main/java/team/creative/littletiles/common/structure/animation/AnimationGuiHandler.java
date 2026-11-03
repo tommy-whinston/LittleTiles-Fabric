@@ -61,21 +61,18 @@ public class AnimationGuiHandler {
             holder.handler.loop(loop);
     }
     
-    @Override
     public void play() {
         playing = true;
         for (AnimationGuiHolder holder : subHolders)
             holder.handler.play();
     }
     
-    @Override
     public void pause() {
         playing = false;
         for (AnimationGuiHolder holder : subHolders)
             holder.handler.pause();
     }
     
-    @Override
     public void stop() {
         playing = false;
         set(0);
@@ -83,14 +80,12 @@ public class AnimationGuiHandler {
             holder.handler.stop();
     }
     
-    @Override
     public void set(int tick) {
         this.tick = tick;
         for (AnimationGuiHolder holder : subHolders)
             holder.handler.set(tick);
     }
     
-    @Override
     public int get() {
         return tick;
     }

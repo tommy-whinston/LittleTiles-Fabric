@@ -40,27 +40,23 @@ public class PrimedSizedTnt extends PrimedTnt {
         refreshDimensions();
     }
     
-    @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(TNTSIZE, "1.1.1.1");
     }
     
-    @Override
     protected void addAdditionalSaveData(CompoundTag tag) {
         size.save("size", tag);
         grid.set(tag);
         super.addAdditionalSaveData(tag);
     }
     
-    @Override
     protected void readAdditionalSaveData(CompoundTag tag) {
         size = new LittleVec("size", tag);
         grid = LittleGrid.get(tag);
         super.readAdditionalSaveData(tag);
     }
     
-    @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         if (TNTSIZE.equals(key)) {
             String data = this.entityData.get(TNTSIZE);
@@ -78,7 +74,6 @@ public class PrimedSizedTnt extends PrimedTnt {
         this.grid = grid;
     }
     
-    @Override
     protected void explode() {
         this.level().explode(this, this.getX(), this.getY(0.0625D), this.getZ(), (float) (4.0D * size.getPercentVolume(grid)), Level.ExplosionInteraction.TNT);
     }

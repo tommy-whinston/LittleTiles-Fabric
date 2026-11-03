@@ -22,7 +22,6 @@ public class LittleStorageGui extends LittleStructureGuiControl {
         super(type, item);
     }
     
-    @Override
     public void create(@Nullable LittleStructure structure) {
         add(new GuiLabel("space").setTitle(new TextBuilder().text("space: " + LittleStorage.getSizeOfInventory(item.group)).build()));
         boolean invisible = false;
@@ -31,7 +30,6 @@ public class LittleStorageGui extends LittleStructureGuiControl {
         add(new GuiCheckBox("invisible", invisible).setTranslate("gui.recipe.storage.invisible"));
     }
     
-    @Override
     public LittleStructure save(LittleStructure structure) {
         LittleStorage storage = (LittleStorage) structure;
         storage.invisibleStorageTiles = ((GuiCheckBox) get("invisible")).value;

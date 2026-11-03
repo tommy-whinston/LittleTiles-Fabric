@@ -131,7 +131,6 @@ public class ShapeSelection implements Iterable<ShapeSelectPos>, IGridBased, IMa
         return pos;
     }
     
-    @Override
     public LittleGrid getGrid() {
         return grid;
     }
@@ -192,33 +191,27 @@ public class ShapeSelection implements Iterable<ShapeSelectPos>, IGridBased, IMa
         }
     }
     
-    @Override
     public boolean allowLowResolution() {
         return allowLowResolution;
     }
     
-    @Override
     public PlacementPosition getPosition() {
         return positions.get(markedPosition).pos.copy();
     }
     
-    @Override
     public GuiConfigure getConfigurationGui() {
         return new GuiMarkShapeSelection(this);
     }
     
-    @Override
     public void move(LittleGrid grid, Facing facing) {
         positions.get(markedPosition).move(grid, facing);
         deleteCache();
     }
     
-    @Override
     public void done() {
         toggleMark();
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void render(LittleGrid positionGrid, PoseStack pose) {
         if (marked)
@@ -261,7 +254,6 @@ public class ShapeSelection implements Iterable<ShapeSelectPos>, IGridBased, IMa
             markedPosition = index;
     }
     
-    @Override
     public Iterator<ShapeSelectPos> iterator() {
         if (marked)
             return positions.iterator();
@@ -270,12 +262,10 @@ public class ShapeSelection implements Iterable<ShapeSelectPos>, IGridBased, IMa
             private Iterator<ShapeSelectPos> iter = positions.iterator();
             private boolean last = false;
             
-            @Override
             public boolean hasNext() {
                 return iter.hasNext() || !last;
             }
             
-            @Override
             public ShapeSelectPos next() {
                 if (iter.hasNext())
                     return iter.next();
@@ -300,14 +290,12 @@ public class ShapeSelection implements Iterable<ShapeSelectPos>, IGridBased, IMa
         return last;
     }
     
-    @Override
     public void convertTo(LittleGrid to) {
         for (ShapeSelectPos other : positions)
             other.convertTo(to);
         grid = to;
     }
     
-    @Override
     public int getSmallest() {
         int smallest = LittleGrid.MIN.count;
         for (int i = 0; i < positions.size(); i++)
@@ -377,7 +365,6 @@ public class ShapeSelection implements Iterable<ShapeSelectPos>, IGridBased, IMa
             pos.subVec(vec);
         }
         
-        @Override
         public boolean equals(Object obj) {
             if (obj instanceof ShapeSelectPos s) {
                 if (!pos.equals(s.pos))
@@ -426,17 +413,14 @@ public class ShapeSelection implements Iterable<ShapeSelectPos>, IGridBased, IMa
             return pos.getBox(grid);
         }
         
-        @Override
         public LittleGrid getGrid() {
             return pos.getGrid();
         }
         
-        @Override
         public void convertTo(LittleGrid to) {
             pos.convertTo(to);
         }
         
-        @Override
         public int getSmallest() {
             return pos.getSmallest();
         }

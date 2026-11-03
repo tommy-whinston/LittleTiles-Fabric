@@ -18,7 +18,6 @@ public class LittleModelItemTiles extends CreativeItemBoxModel {
         super(new ModelResourceLocation("minecraft", "stone", "inventory"));
     }
     
-    @Override
     public List<? extends RenderBox> getBoxes(ItemStack stack, boolean translucent) {
         ILittlePlacer tool = (ILittlePlacer) stack.getItem();
         if (tool.hasTiles(stack))
@@ -26,15 +25,12 @@ public class LittleModelItemTiles extends CreativeItemBoxModel {
         return Collections.EMPTY_LIST;
     }
     
-    @Override
     public boolean hasTranslucentLayer(ItemStack stack) {
         return stack.hasTag() ? stack.getTag().getBoolean(LittleGroup.TRANSLUCENT_KEY) : false;
     }
     
-    @Override
     public void saveCachedModel(boolean translucent, List<BakedQuad> cachedQuads, ItemStack stack, boolean threaded) {}
     
-    @Override
     public List<BakedQuad> getCachedModel(boolean translucent, ItemStack stack, boolean threaded) {
         return LittleTilesClient.ITEM_RENDER_CACHE.requestCache(stack, translucent);
     }

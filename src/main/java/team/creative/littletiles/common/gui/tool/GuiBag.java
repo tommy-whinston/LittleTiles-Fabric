@@ -86,7 +86,6 @@ public class GuiBag extends GuiConfigure {
         return inventory;
     }
     
-    @Override
     public void create() {
         RELOAD.send(EndTag.INSTANCE);
         
@@ -199,12 +198,10 @@ public class GuiBag extends GuiConfigure {
             ((BagSlot) bagInventoryGui.getSlot(i).slot).resetCache();
     }
     
-    @Override
     public boolean isExpandableX() {
         return false;
     }
     
-    @Override
     public boolean isExpandableY() {
         return false;
     }
@@ -213,7 +210,6 @@ public class GuiBag extends GuiConfigure {
         ((ItemLittleBag) tool.get().getItem()).setInventory(tool.get(), bag, null);
     }
     
-    @Override
     public void closed() {
         super.closed();
         ItemStack stack = input.getItem(0);
@@ -221,22 +217,18 @@ public class GuiBag extends GuiConfigure {
             getPlayer().drop(stack, true);
     }
     
-    @Override
     public CompoundTag saveConfiguration(CompoundTag nbt) {
         return null;
     }
     
-    @Override
     protected boolean supportsConfiguration() {
         return false;
     }
     
-    @Override
     public Iterable<IGuiInventory> inventoriesToInsert() {
         return inventories;
     }
     
-    @Override
     public Iterable<IGuiInventory> inventoriesToExract() {
         return inventoriesInv;
     }
@@ -246,6 +238,10 @@ public class GuiBag extends GuiConfigure {
         private ItemStack cache;
         private boolean full;
         
+        public int getSlotIndex() {
+            return this.index;
+        }
+        
         public BagSlot(Container container, int index) {
             super(container, index, 0, 0);
         }
@@ -254,7 +250,6 @@ public class GuiBag extends GuiConfigure {
             cache = null;
         }
         
-        @Override
         public boolean mayPlace(ItemStack stack) {
             return false;
         }
@@ -266,7 +261,6 @@ public class GuiBag extends GuiConfigure {
             return null;
         }
         
-        @Override
         public ItemStack getItem() {
             if (cache == null) {
                 BlockIngredientEntry entry = getEntry();
@@ -282,7 +276,6 @@ public class GuiBag extends GuiConfigure {
             return cache;
         }
         
-        @Override
         public ItemStack remove(int count) {
             ItemStack taken = cache;
             BlockIngredientEntry entry = getEntry();

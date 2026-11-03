@@ -188,7 +188,6 @@ public class LittleActionColorBoxes extends LittleActionBoxes {
         return gained.sub(toDrain);
     }
     
-    @Override
     public void action(Level level, Player player, BlockPos pos, BlockState state, List<LittleBox> boxes, LittleGrid grid) throws LittleActionException {
         LittleBuildingConfig config = LittleTiles.CONFIG.build.get(player);
         
@@ -236,18 +235,15 @@ public class LittleActionColorBoxes extends LittleActionBoxes {
         }
     }
     
-    @Override
     public Boolean action(Player player) throws LittleActionException {
         revertList = new Int2ObjectOpenHashMap<>();
         return super.action(player);
     }
     
-    @Override
     public boolean canBeReverted() {
         return true;
     }
     
-    @Override
     public LittleAction revert(Player player) {
         List<LittleAction> actions = new ArrayList<>();
         for (var entry : revertList.int2ObjectEntrySet()) {
@@ -260,7 +256,6 @@ public class LittleActionColorBoxes extends LittleActionBoxes {
         return new LittleActions(actions.toArray(new LittleAction[0]));
     }
     
-    @Override
     public LittleAction mirror(Axis axis, LittleBoxAbsolute box) {
         LittleActionColorBoxes action = new LittleActionColorBoxes();
         action.color = color;
@@ -279,12 +274,10 @@ public class LittleActionColorBoxes extends LittleActionBoxes {
         
         public LittleActionColorBoxesFiltered() {}
         
-        @Override
         public boolean shouldSkipTile(IParentCollection parent, LittleTile tile) {
             return !filter.is(parent, tile);
         }
         
-        @Override
         public LittleAction mirror(Axis axis, LittleBoxAbsolute box) {
             LittleActionColorBoxesFiltered action = new LittleActionColorBoxesFiltered();
             action.filter = filter;

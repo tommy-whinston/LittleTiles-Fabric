@@ -40,7 +40,6 @@ public class OverlayRenderer implements IGuiIntegratedParent, LevelAwareHandler 
         
         private TupleList<GuiChildControl, OverlayPosition> positions = new TupleList<>();
         
-        @Override
         public void create() {
             addOverlayControl(actionDisplay, OverlayPosition.ACTION_BAR);
         }
@@ -49,29 +48,24 @@ public class OverlayRenderer implements IGuiIntegratedParent, LevelAwareHandler 
             positions.add(super.addControl(control), position);
         }
         
-        @Override
         public ControlFormatting getControlFormatting() {
             return ControlFormatting.TRANSPARENT;
         }
         
-        @Override
         public boolean hasGrayBackground() {
             return false;
         }
         
-        @Override
         public void flowY(int width, int height, int preferred) {
             super.flowY(width, height, preferred);
             for (Tuple<GuiChildControl, OverlayPosition> tuple : positions)
                 tuple.value.positionControl(tuple.key, width, height);
         }
         
-        @Override
         public boolean isExpandableX() {
             return true;
         }
         
-        @Override
         public boolean isExpandableY() {
             return true;
         }
@@ -137,52 +131,40 @@ public class OverlayRenderer implements IGuiIntegratedParent, LevelAwareHandler 
         }
     }
     
-    @Override
     public boolean isContainer() {
         return false;
     }
     
-    @Override
     public boolean isClient() {
         return true;
     }
     
-    @Override
     public Player getPlayer() {
         return MC.player;
     }
     
-    @Override
     public void closeTopLayer() {}
     
-    @Override
     public void closeLayer(GuiLayer layer) {}
     
-    @Override
     public List<GuiLayer> getLayers() {
         return layers;
     }
     
-    @Override
     public GuiLayer getTopLayer() {
         return transparentLayer;
     }
     
-    @Override
     public void openLayer(GuiLayer layer) {}
     
-    @Override
     public void closeLayer(int layer) {}
     
-    @Override
     public void send(CreativePacket message) {}
     
-    @Override
     public void unload() {
         actionDisplay.clearMessages();
     }
     
-    @Override
     public Provider provider() {
         return MC.level.registryAccess();
     }
@@ -190,7 +172,6 @@ public class OverlayRenderer implements IGuiIntegratedParent, LevelAwareHandler 
     public static enum OverlayPosition {
         
         CENTER {
-            @Override
             protected void positionControl(GuiChildControl control, int width, int height) {
                 control.setX(width / 2 - control.getWidth() / 2);
                 control.setY(height / 2 - control.getHeight() / 2);
@@ -198,7 +179,6 @@ public class OverlayRenderer implements IGuiIntegratedParent, LevelAwareHandler 
         },
         ACTION_BAR {
             
-            @Override
             protected void positionControl(GuiChildControl control, int width, int height) {
                 control.setX(width / 2 - control.getWidth() / 2);
                 control.setY(height - control.getHeight() - 30);

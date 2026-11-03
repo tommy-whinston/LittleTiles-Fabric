@@ -63,14 +63,12 @@ public class TileFilters {
             block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(nbt.getString("block")));
         }
         
-        @Override
         public CompoundTag write() {
             CompoundTag tag = new CompoundTag();
             tag.putString("block", block.builtInRegistryHolder().key().location().toString());
             return tag;
         }
         
-        @Override
         public boolean is(IParentCollection parent, LittleTile tile) {
             return tile.getBlock().is(block);
         }
@@ -88,14 +86,12 @@ public class TileFilters {
             color = nbt.getInt("color");
         }
         
-        @Override
         public CompoundTag write() {
             CompoundTag tag = new CompoundTag();
             tag.putInt("color", color);
             return tag;
         }
         
-        @Override
         public boolean is(IParentCollection parent, LittleTile tile) {
             return tile.color == color;
         }
@@ -108,12 +104,10 @@ public class TileFilters {
         
         public TileNoStructureFilter(CompoundTag tag) {}
         
-        @Override
         public CompoundTag write() {
             return new CompoundTag();
         }
         
-        @Override
         public boolean is(IParentCollection parent, LittleTile tile) {
             return !parent.isStructure();
         }
@@ -132,14 +126,12 @@ public class TileFilters {
             tag = TagKey.create(Registries.BLOCK, new ResourceLocation(nbt.getString("tag")));
         }
         
-        @Override
         public CompoundTag write() {
             CompoundTag tag = new CompoundTag();
             tag.putString("tag", this.tag.location().toString());
             return tag;
         }
         
-        @Override
         public boolean is(IParentCollection parent, LittleTile tile) {
             return tile.getBlock().is(tag);
         }

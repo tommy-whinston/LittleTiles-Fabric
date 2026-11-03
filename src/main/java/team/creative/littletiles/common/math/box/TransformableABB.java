@@ -42,7 +42,6 @@ public class TransformableABB extends ABB {
         return null;
     }
     
-    @Override
     public double calculateAxisOffset(Axis axis, Axis one, Axis two, AABB other, double offset) {
         if (offset == 0)
             return offset;
@@ -142,7 +141,6 @@ public class TransformableABB extends ABB {
         return offset;
     }
     
-    @Override
     public boolean intersectsPrecise(AABB bb) {
         //Vec3d offset = new Vec3d(minX - Math.floor(minX), minY - Math.floor(minY), minZ - Math.floor(minZ));
         Vec3d offset = new Vec3d(Math.floor(minX), Math.floor(minY), Math.floor(minZ));
@@ -165,12 +163,10 @@ public class TransformableABB extends ABB {
             (Facing) x), box.requestCache());
     }
     
-    @Override
     public BlockHitResult rayTrace(Vec3 pos, Vec3 look, BlockPos blockPos) {
         return box.rayTrace(grid, blockPos, pos, look);
     }
     
-    @Override
     public TransformableABB copy() {
         return new TransformableABB(this, grid, box);
     }

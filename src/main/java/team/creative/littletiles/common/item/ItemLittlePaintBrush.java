@@ -72,17 +72,14 @@ public class ItemLittlePaintBrush extends Item implements ILittleEditor, IItemTo
         super(new Item.Properties().stacksTo(1));
     }
     
-    @Override
     public boolean canAttackBlock(BlockState state, Level level, BlockPos pos, Player player) {
         return false;
     }
     
-    @Override
     public float getDestroySpeed(ItemStack stack, BlockState state) {
         return 0F;
     }
     
-    @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
         LittleShape shape = getShape(stack);
         tooltip.add(Component.translatable("gui.shape").append(": ").append(Component.translatable(shape.getTranslatableName())));
@@ -90,7 +87,6 @@ public class ItemLittlePaintBrush extends Item implements ILittleEditor, IItemTo
         tooltip.add(Component.literal(TooltipUtils.printColor(getColor(stack))));
     }
     
-    @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if (hand == InteractionHand.OFF_HAND)
             return new InteractionResultHolder(InteractionResult.PASS, player.getItemInHand(hand));
@@ -99,7 +95,6 @@ public class ItemLittlePaintBrush extends Item implements ILittleEditor, IItemTo
         return new InteractionResultHolder(InteractionResult.SUCCESS, player.getItemInHand(hand));
     }
     
-    @Override
     public GuiConfigure getConfigure(Player player, ContainerSlotView view) {
         return new GuiPaintBrush(view);
     }
@@ -108,17 +103,14 @@ public class ItemLittlePaintBrush extends Item implements ILittleEditor, IItemTo
         return ShapeRegistry.REGISTRY.get(stack.getOrCreateTag().getString("shape"));
     }
     
-    @Override
     public void onDeselect(Level level, ItemStack stack, Player player) {
         selection = null;
     }
     
-    @Override
     public boolean hasCustomBoxes(Level level, ItemStack stack, Player player, BlockState state, PlacementPosition pos, BlockHitResult result) {
         return LittleAction.isBlockValid(state) || level.getBlockEntity(result.getBlockPos()) instanceof BETiles;
     }
     
-    @Override
     public LittleBoxes getBoxes(Level level, ItemStack stack, Player player, PlacementPosition pos, BlockHitResult result) {
         if (selection == null)
             selection = new ShapeSelection(stack, true);
@@ -126,7 +118,6 @@ public class ItemLittlePaintBrush extends Item implements ILittleEditor, IItemTo
         return selection.getBoxes(true, getPositionGrid(player, stack));
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public boolean onClickBlock(Level level, Player player, ItemStack stack, PlacementPosition position, BlockHitResult result) {
         if (LittleActionHandlerClient.isUsingSecondMode()) {
@@ -145,7 +136,6 @@ public class ItemLittlePaintBrush extends Item implements ILittleEditor, IItemTo
         return false;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public boolean onRightClick(Level level, Player player, ItemStack stack, PlacementPosition position, BlockHitResult result) {
         if (selection != null)
@@ -153,7 +143,6 @@ public class ItemLittlePaintBrush extends Item implements ILittleEditor, IItemTo
         return true;
     }
     
-    @Override
     public void rotate(Player player, ItemStack stack, Rotation rotation, boolean client) {
         if (!client)
             return;
@@ -163,7 +152,6 @@ public class ItemLittlePaintBrush extends Item implements ILittleEditor, IItemTo
             new ShapeSelection(stack, false).rotate(player, stack, rotation);
     }
     
-    @Override
     public void mirror(Player player, ItemStack stack, Axis axis, boolean client) {
         if (!client)
             return;
@@ -173,7 +161,6 @@ public class ItemLittlePaintBrush extends Item implements ILittleEditor, IItemTo
             new ShapeSelection(stack, false).mirror(player, stack, axis);
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public IMarkMode onMark(Player player, ItemStack stack, PlacementPosition position, BlockHitResult result, PlacementPreview previews) {
         if (selection != null)
@@ -181,7 +168,6 @@ public class ItemLittlePaintBrush extends Item implements ILittleEditor, IItemTo
         return selection;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public boolean onMouseWheelClickBlock(Level level, Player player, ItemStack stack, PlacementPosition position, BlockHitResult result) {
         BlockEntity blockEntity = level.getBlockEntity(result.getBlockPos());
@@ -190,7 +176,6 @@ public class ItemLittlePaintBrush extends Item implements ILittleEditor, IItemTo
         return true;
     }
     
-    @Override
     public Object[] tooltipData(ItemStack stack) {
         return new Object[] { getShape(stack).getTranslatable(), Minecraft.getInstance().options.keyPickItem.getTranslatedKeyMessage(), LittleTilesClient.mark
                 .getTranslatedKeyMessage(), LittleTilesClient.configure.getTranslatedKeyMessage() };

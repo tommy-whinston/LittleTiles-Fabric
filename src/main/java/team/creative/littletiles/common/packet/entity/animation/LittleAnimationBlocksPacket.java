@@ -28,7 +28,6 @@ public class LittleAnimationBlocksPacket extends LittleEntityPacket<LittleAnimat
     
     public LittleAnimationBlocksPacket() {}
     
-    @Override
     public void execute(Player player, LittleAnimationEntity entity) {
         entity.applyChanges(changes);
     }

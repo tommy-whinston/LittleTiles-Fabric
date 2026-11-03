@@ -43,45 +43,37 @@ public class LittleSignalOutput extends LittleSignalCableBase implements ISignal
         this.state = SignalState.create(getBandwidth());
     }
     
-    @Override
     public boolean canConnect(Facing facing) {
         return facing == this.facing;
     }
     
-    @Override
     public SignalState getState() {
         return state;
     }
     
-    @Override
     public void overwriteState(SignalState state) {
         this.state = this.state.overwrite(state);
         this.state.shrinkTo(getBandwidth());
     }
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {
         super.loadExtra(nbt);
         state = state.load(nbt.get("state"));
     }
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {
         super.saveExtra(nbt);
         nbt.put("state", state.save());
     }
     
-    @Override
     public SignalComponentType getComponentType() {
         return SignalComponentType.OUTPUT;
     }
     
-    @Override
     public void changed() {
         findNetwork().update();
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void renderFace(Facing facing, LittleGrid grid, LittleBox renderBox, int distance, Axis axis, Axis one, Axis two, boolean positive, boolean oneSidedRenderer, IndexedCollector<LittleRenderBox> cubes) {
         super.renderFace(facing, grid, renderBox.copy(), distance, axis, one, two, positive, oneSidedRenderer, cubes);
@@ -108,7 +100,6 @@ public class LittleSignalOutput extends LittleSignalCableBase implements ISignal
         cubes.add(cube);
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void render(SurroundingBox box, LittleBox overallBox, IndexedCollector<LittleRenderBox> cubes) {
         super.render(box, overallBox, cubes);
@@ -145,22 +136,18 @@ public class LittleSignalOutput extends LittleSignalCableBase implements ISignal
         cubes.add(cube);
     }
     
-    @Override
     public int getIndex(Facing facing) {
         return 0;
     }
     
-    @Override
     public Facing getFacing(int index) {
         return facing;
     }
     
-    @Override
     public int getId() {
         return getParent().childId;
     }
     
-    @Override
     public LittleStructure getStructure() {
         try {
             return getParent().getStructure();
@@ -169,7 +156,6 @@ public class LittleSignalOutput extends LittleSignalCableBase implements ISignal
         }
     }
     
-    @Override
     public String info() {
         if (getParent() != null)
             return "o" + getId() + ":" + getState().print(getBandwidth());
@@ -182,7 +168,6 @@ public class LittleSignalOutput extends LittleSignalCableBase implements ISignal
             super(id, structureClass, factory, attribute, modid, bandwidth, 1);
         }
         
-        @Override
         public List<LittlePlaceBox> getSpecialBoxes(LittleGroup group) {
             List<LittlePlaceBox> result = super.getSpecialBoxes(group);
             Facing facing = (Facing) loadDirectional(group, "facing");
@@ -191,7 +176,6 @@ public class LittleSignalOutput extends LittleSignalCableBase implements ISignal
             return result;
         }
         
-        @Override
         @OnlyIn(Dist.CLIENT)
         public List<RenderBox> getItemPreview(LittleGroup previews, boolean translucent) {
             List<RenderBox> cubes = new ArrayList<>();
@@ -202,25 +186,20 @@ public class LittleSignalOutput extends LittleSignalCableBase implements ISignal
             return cubes;
         }
         
-        @Override
         public int getBandwidth() {
             return bandwidth;
         }
         
-        @Override
         public void changed() {
             
         }
         
-        @Override
         public SignalState getState() {
             return null;
         }
         
-        @Override
         public void overwriteState(SignalState state) {}
         
-        @Override
         public SignalComponentType getComponentType() {
             return SignalComponentType.OUTPUT;
         }

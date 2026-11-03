@@ -160,7 +160,6 @@ public class LittleServerPlayerHandler implements ServerPlayerConnection, Tickab
         throw new RuntimeException("Cannot run this packet on this level " + level);
     }
     
-    @Override
     public ServerPlayer getPlayer() {
         return player;
     }
@@ -169,42 +168,34 @@ public class LittleServerPlayerHandler implements ServerPlayerConnection, Tickab
         return player.connection;
     }
     
-    @Override
     public void handlePlayerInput(ServerboundPlayerInputPacket packet) {
         getVanilla().handlePlayerInput(packet);
     }
     
-    @Override
     public void handleMoveVehicle(ServerboundMoveVehiclePacket packet) {
         getVanilla().handleMoveVehicle(packet);
     }
     
-    @Override
     public void handleAcceptTeleportPacket(ServerboundAcceptTeleportationPacket packet) {
         getVanilla().handleAcceptTeleportPacket(packet);
     }
     
-    @Override
     public void handleRecipeBookSeenRecipePacket(ServerboundRecipeBookSeenRecipePacket packet) {
         getVanilla().handleRecipeBookSeenRecipePacket(packet);
     }
     
-    @Override
     public void handleRecipeBookChangeSettingsPacket(ServerboundRecipeBookChangeSettingsPacket packet) {
         getVanilla().handleRecipeBookChangeSettingsPacket(packet);
     }
     
-    @Override
     public void handleSeenAdvancements(ServerboundSeenAdvancementsPacket packet) {
         getVanilla().handleSeenAdvancements(packet);
     }
     
-    @Override
     public void handleCustomCommandSuggestions(ServerboundCommandSuggestionPacket packet) {
         getVanilla().handleCustomCommandSuggestions(packet);
     }
     
-    @Override
     public void handleSetCommandBlock(ServerboundSetCommandBlockPacket packet) {
         ensureRunningOnSameThread(packet);
         if (!this.server.isCommandBlockEnabled())
@@ -258,7 +249,6 @@ public class LittleServerPlayerHandler implements ServerPlayerConnection, Tickab
         }
     }
     
-    @Override
     public void handleSetCommandMinecart(ServerboundSetCommandMinecartPacket packet) {
         ensureRunningOnSameThread(packet);
         if (!this.server.isCommandBlockEnabled())
@@ -280,22 +270,18 @@ public class LittleServerPlayerHandler implements ServerPlayerConnection, Tickab
         }
     }
     
-    @Override
     public void handlePickItem(ServerboundPickItemPacket packet) {
         getVanilla().handlePickItem(packet);
     }
     
-    @Override
     public void handleRenameItem(ServerboundRenameItemPacket packet) {
         getVanilla().handleRenameItem(packet);
     }
     
-    @Override
     public void handleSetBeaconPacket(ServerboundSetBeaconPacket packet) {
         getVanilla().handleSetBeaconPacket(packet);
     }
     
-    @Override
     public void handleSetStructureBlock(ServerboundSetStructureBlockPacket packet) {
         ensureRunningOnSameThread(packet);
         ServerLevel level = requiresServerLevel();
@@ -345,7 +331,6 @@ public class LittleServerPlayerHandler implements ServerPlayerConnection, Tickab
         }
     }
     
-    @Override
     public void handleSetJigsawBlock(ServerboundSetJigsawBlockPacket packet) {
         ensureRunningOnSameThread(packet);
         if (this.player.canUseGameMasterBlocks()) {
@@ -365,7 +350,6 @@ public class LittleServerPlayerHandler implements ServerPlayerConnection, Tickab
         }
     }
     
-    @Override
     public void handleJigsawGenerate(ServerboundJigsawGeneratePacket packet) {
         ensureRunningOnSameThread(packet);
         ServerLevel level = requiresServerLevel();
@@ -376,17 +360,14 @@ public class LittleServerPlayerHandler implements ServerPlayerConnection, Tickab
         }
     }
     
-    @Override
     public void handleSelectTrade(ServerboundSelectTradePacket packet) {
         getVanilla().handleSelectTrade(packet);
     }
     
-    @Override
     public void handleEditBook(ServerboundEditBookPacket packet) {
         getVanilla().handleEditBook(packet);
     }
     
-    @Override
     public void handleEntityTagQuery(ServerboundEntityTagQuery packet) {
         ensureRunningOnSameThread(packet);
         if (this.player.hasPermissions(2)) {
@@ -396,7 +377,6 @@ public class LittleServerPlayerHandler implements ServerPlayerConnection, Tickab
         }
     }
     
-    @Override
     public void handleBlockEntityTagQuery(ServerboundBlockEntityTagQuery packet) {
         ensureRunningOnSameThread(packet);
         if (this.player.hasPermissions(2)) {
@@ -406,12 +386,10 @@ public class LittleServerPlayerHandler implements ServerPlayerConnection, Tickab
         }
     }
     
-    @Override
     public void handleMovePlayer(ServerboundMovePlayerPacket packet) {
         getVanilla().handleMovePlayer(packet);
     }
     
-    @Override
     public void handlePlayerAction(ServerboundPlayerActionPacket packet) {
         ensureRunningOnSameThread(packet);
         BlockPos blockpos = packet.getPos();
@@ -441,7 +419,6 @@ public class LittleServerPlayerHandler implements ServerPlayerConnection, Tickab
         return (item instanceof BlockItem || item instanceof BucketItem) && !player.getCooldowns().isOnCooldown(item);
     }
     
-    @Override
     public void handleUseItemOn(ServerboundUseItemOnPacket packet) {
         ensureRunningOnSameThread(packet);
         ackBlockChangesUpTo(level, packet.getSequence());
@@ -453,7 +430,7 @@ public class LittleServerPlayerHandler implements ServerPlayerConnection, Tickab
             Vec3 vec3 = blockhitresult.getLocation();
             BlockPos blockpos = blockhitresult.getBlockPos();
             Vec3 vec31 = Vec3.atCenterOf(blockpos);
-            if (this.player.canReach(blockpos, 1.5)) { // Vanilla uses eye-to-center distance < 6, which implies a padding of 1.5
+            if (this.player.distanceToSqr(net.minecraft.world.phys.Vec3.atCenterOf(blockpos)) <= 36.0) { // Vanilla uses eye-to-center distance < 6, which implies a padding of 1.5
                 Vec3 vec32 = vec3.subtract(vec31);
                 if (Math.abs(vec32.x()) < 1.0000001D && Math.abs(vec32.y()) < 1.0000001D && Math.abs(vec32.z()) < 1.0000001D) {
                     Direction direction = blockhitresult.getDirection();
@@ -483,7 +460,6 @@ public class LittleServerPlayerHandler implements ServerPlayerConnection, Tickab
         }
     }
     
-    @Override
     public void handleUseItem(ServerboundUseItemPacket packet) {
         ensureRunningOnSameThread(packet);
         this.ackBlockChangesUpTo(level, packet.getSequence());
@@ -495,27 +471,22 @@ public class LittleServerPlayerHandler implements ServerPlayerConnection, Tickab
                 this.player.swing(interactionhand, true);
     }
     
-    @Override
     public void handleTeleportToEntityPacket(ServerboundTeleportToEntityPacket packet) {
         getVanilla().handleTeleportToEntityPacket(packet);
     }
     
-    @Override
     public void handleResourcePackResponse(ServerboundResourcePackPacket packet) {
         getVanilla().handleResourcePackResponse(packet);
     }
     
-    @Override
     public void handlePaddleBoat(ServerboundPaddleBoatPacket packet) {
         getVanilla().handlePaddleBoat(packet);
     }
     
-    @Override
     public void handlePong(ServerboundPongPacket packet) {
         getVanilla().handlePong(packet);
     }
     
-    @Override
     public void onDisconnect(Component component) {
         getVanilla().onDisconnect(component);
     }
@@ -526,7 +497,6 @@ public class LittleServerPlayerHandler implements ServerPlayerConnection, Tickab
         ackBlockChanges.put(level, Math.max(sequence, ackBlockChanges.getOrDefault(level, -1)));
     }
     
-    @Override
     public void send(Packet<?> packet) {
         send(level, packet);
     }
@@ -548,72 +518,58 @@ public class LittleServerPlayerHandler implements ServerPlayerConnection, Tickab
         }
     }
     
-    @Override
     public void handleSetCarriedItem(ServerboundSetCarriedItemPacket packet) {
         getVanilla().handleSetCarriedItem(packet);
     }
     
-    @Override
     public void handleChat(ServerboundChatPacket packet) {
         getVanilla().handleChat(packet);
     }
     
-    @Override
     public void handleChatCommand(ServerboundChatCommandPacket packet) {
         getVanilla().handleChatCommand(packet);
     }
     
-    @Override
     public void handleChatAck(ServerboundChatAckPacket packet) {
         getVanilla().handleChatAck(packet);
     }
     
-    @Override
     public void handleAnimate(ServerboundSwingPacket packet) {
         getVanilla().handleAnimate(packet);
     }
     
-    @Override
     public void handlePlayerCommand(ServerboundPlayerCommandPacket packet) {
         getVanilla().handlePlayerCommand(packet);
     }
     
-    @Override
     public void handleInteract(ServerboundInteractPacket packet) {
         getVanilla().handleInteract(packet);
     }
     
-    @Override
     public void handleClientCommand(ServerboundClientCommandPacket packet) {
         getVanilla().handleClientCommand(packet);
     }
     
-    @Override
     public void handleContainerClose(ServerboundContainerClosePacket packet) {
         getVanilla().handleContainerClose(packet);
     }
     
-    @Override
     public void handleContainerClick(ServerboundContainerClickPacket packet) {
         getVanilla().handleContainerClick(packet);
     }
     
-    @Override
     public void handlePlaceRecipe(ServerboundPlaceRecipePacket packet) {
         getVanilla().handlePlaceRecipe(packet);
     }
     
-    @Override
     public void handleContainerButtonClick(ServerboundContainerButtonClickPacket packet) {
         getVanilla().handleContainerButtonClick(packet);
     }
     
-    @Override
     public void handleSetCreativeModeSlot(ServerboundSetCreativeModeSlotPacket packet) {
         getVanilla().handleSetCreativeModeSlot(packet);
     }
     
-    @Override
     public void handleSignUpdate(ServerboundSignUpdatePacket packet) {
         List<String> list = Stream.of(packet.getLines()).map(ChatFormatting::stripFormatting).collect(Collectors.toList());
         ((ServerGamePacketListenerImplAccessor) getVanilla()).callFilterTextPacket(list).thenAcceptAsync((lines) -> this.updateSignText(packet, lines), this.server);
@@ -633,42 +589,34 @@ public class LittleServerPlayerHandler implements ServerPlayerConnection, Tickab
         
     }
     
-    @Override
     public void handleKeepAlive(ServerboundKeepAlivePacket packet) {
         getVanilla().handleKeepAlive(packet);
     }
     
-    @Override
     public void handlePlayerAbilities(ServerboundPlayerAbilitiesPacket packet) {
         getVanilla().handlePlayerAbilities(packet);
     }
     
-    @Override
     public void handleClientInformation(ServerboundClientInformationPacket packet) {
         getVanilla().handleClientInformation(packet);
     }
     
-    @Override
     public void handleCustomPayload(ServerboundCustomPayloadPacket packet) {
         getVanilla().handleCustomPayload(packet); // not sure if it makes sense, but for now there is nothing else to do here
     }
     
-    @Override
     public void handleChangeDifficulty(ServerboundChangeDifficultyPacket packet) {
         getVanilla().handleChangeDifficulty(packet);
     }
     
-    @Override
     public void handleLockDifficulty(ServerboundLockDifficultyPacket packet) {
         getVanilla().handleLockDifficulty(packet);
     }
     
-    @Override
     public void handleChatSessionUpdate(ServerboundChatSessionUpdatePacket packet) {
         getVanilla().handleChatSessionUpdate(packet);
     }
     
-    @Override
     public void tick() {
         if (!ackBlockChanges.isEmpty()) {
             for (Entry<Level> entry : ackBlockChanges.object2IntEntrySet())
@@ -729,7 +677,7 @@ public class LittleServerPlayerHandler implements ServerPlayerConnection, Tickab
         if (event.isCanceled() || (!this.isCreative() && event.getResult() == Event.Result.DENY))
             return;
         
-        if (!this.player.canReach(pos, 1.5))
+        if (this.player.distanceToSqr(net.minecraft.world.phys.Vec3.atCenterOf(pos)) > 36.0)
             this.debugLogging(pos, false, sequence, "too far");
         else if (pos.getY() >= buildHeight) {
             send(new ClientboundBlockUpdatePacket(pos, level.getBlockState(pos)));
@@ -848,7 +796,7 @@ public class LittleServerPlayerHandler implements ServerPlayerConnection, Tickab
             return false;
         }
         
-        if (player.getMainHandItem().onBlockStartBreak(pos, player))
+        if (false)
             return false;
         
         if (this.player.blockActionRestricted(level, pos, getGameMode()))
@@ -861,7 +809,7 @@ public class LittleServerPlayerHandler implements ServerPlayerConnection, Tickab
         
         ItemStack itemstack = this.player.getMainHandItem();
         ItemStack itemstack1 = itemstack.copy();
-        boolean flag1 = blockstate.canHarvestBlock(level, pos, this.player); // previously player.hasCorrectToolForDrops(blockstate)
+        boolean flag1 = this.player.hasCorrectToolForDrops(blockstate); // previously player.hasCorrectToolForDrops(blockstate)
         itemstack.mineBlock(level, blockstate, pos, this.player);
         if (itemstack.isEmpty() && !itemstack1.isEmpty())
             ForgeEventFactory.onPlayerDestroyItem(this.player, itemstack1, InteractionHand.MAIN_HAND);
@@ -871,14 +819,14 @@ public class LittleServerPlayerHandler implements ServerPlayerConnection, Tickab
             block.playerDestroy(level, this.player, pos, blockstate, blockentity, itemstack1);
         
         if (flag && exp > 0 && level instanceof ServerLevel s)
-            blockstate.getBlock().popExperience(s, pos, exp);
+            s.addFreshEntity(new net.minecraft.world.entity.ExperienceOrb(s, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, exp));
         
         return true;
     }
     
     private boolean removeBlock(Level level, BlockPos pos, boolean canHarvest) {
         BlockState state = level.getBlockState(pos);
-        boolean removed = state.onDestroyedByPlayer(level, pos, this.player, canHarvest, level.getFluidState(pos));
+        boolean removed = false;
         if (removed)
             state.getBlock().destroy(level, pos, state);
         return removed;
@@ -984,14 +932,13 @@ public class LittleServerPlayerHandler implements ServerPlayerConnection, Tickab
         
         UseOnContext useoncontext = new UseOnContext(level, player, hand, stack, hit);
         if (event.getUseItem() != Event.Result.DENY) {
-            InteractionResult result = stack.onItemUseFirst(useoncontext);
+            InteractionResult result = net.minecraft.world.InteractionResult.PASS;
             if (result != InteractionResult.PASS)
                 return result;
         }
         
         boolean flag = !player.getMainHandItem().isEmpty() || !player.getOffhandItem().isEmpty();
-        boolean flag1 = (player.isSecondaryUseActive() && flag) && !(player.getMainHandItem().doesSneakBypassUse(level, blockpos, player) && player.getOffhandItem()
-                .doesSneakBypassUse(level, blockpos, player));
+        boolean flag1 = (player.isSecondaryUseActive() && flag);
         ItemStack itemstack = stack.copy();
         if (event.getUseBlock() == Event.Result.ALLOW || (event.getUseBlock() != Event.Result.DENY && !flag1)) {
             InteractionResult interactionresult = blockstate.use(level, player, hand, hit);
@@ -1020,7 +967,6 @@ public class LittleServerPlayerHandler implements ServerPlayerConnection, Tickab
         return InteractionResult.PASS;
     }
     
-    @Override
     public boolean isAcceptingMessages() {
         return getVanilla().isAcceptingMessages();
     }

@@ -24,7 +24,6 @@ public abstract class LittleEntityPacket<T extends LittleEntity> extends Creativ
     
     public abstract void execute(Player player, T entity);
     
-    @Override
     public void execute(Player player) {
         LittleEntity entity = LittleTiles.ANIMATION_HANDLERS.find(player.level().isClientSide, uuid);
         if (entity == null)
@@ -37,9 +36,7 @@ public abstract class LittleEntityPacket<T extends LittleEntity> extends Creativ
         }
     }
     
-    @Override
     public void executeClient(Player player) {}
     
-    @Override
     public void executeServer(ServerPlayer player) {}
 }

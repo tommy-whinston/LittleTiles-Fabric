@@ -70,14 +70,12 @@ public class LittleIngredients extends LittleIngredientBase<LittleIngredients> i
             this.content[i] = toAssign.content[i] != null ? toAssign.content[i].copy() : null;
     }
     
-    @Override
     public LittleIngredients copy() {
         LittleIngredients ingredients = new LittleIngredients();
         ingredients.assignContent(this);
         return ingredients;
     }
     
-    @Override
     public LittleIngredients add(LittleIngredients ingredient) {
         if (ingredient == null)
             return null;
@@ -109,7 +107,6 @@ public class LittleIngredients extends LittleIngredientBase<LittleIngredients> i
         return remains;
     }
     
-    @Override
     public LittleIngredients sub(LittleIngredients ingredient) {
         if (ingredient == null)
             return null;
@@ -138,7 +135,6 @@ public class LittleIngredients extends LittleIngredientBase<LittleIngredients> i
         return remains;
     }
     
-    @Override
     public boolean isEmpty() {
         for (int i = 0; i < content.length; i++)
             if (content[i] != null && !content[i].isEmpty())
@@ -179,12 +175,10 @@ public class LittleIngredients extends LittleIngredientBase<LittleIngredients> i
         return true;
     }
     
-    @Override
     public Iterator<LittleIngredient> iterator() {
         return new Iterator<LittleIngredient>() {
             int index = -1;
             
-            @Override
             public boolean hasNext() {
                 int nextIndex = index + 1;
                 while (nextIndex < content.length) {
@@ -195,7 +189,6 @@ public class LittleIngredients extends LittleIngredientBase<LittleIngredients> i
                 return false;
             }
             
-            @Override
             public LittleIngredient next() {
                 index++;
                 while (index < content.length) {

@@ -74,7 +74,6 @@ public class LittleTilesConfig {
             this.config = config;
         }
         
-        @Override
         public String getLocalizedMessage() {
             return LanguageUtils.translate(getMessage(), config.affectedBlockLimit.value);
         }
@@ -89,7 +88,6 @@ public class LittleTilesConfig {
             this.config = config;
         }
         
-        @Override
         public String getLocalizedMessage() {
             return LanguageUtils.translate(getMessage(), config.editBlockLimit.value);
         }
@@ -105,7 +103,6 @@ public class LittleTilesConfig {
             this.config = config;
         }
         
-        @Override
         public String getLocalizedMessage() {
             return LanguageUtils.translate(getMessage(), config.placeBlockLimit.value);
         }
@@ -118,7 +115,6 @@ public class LittleTilesConfig {
             super("exception.permission.density");
         }
         
-        @Override
         public String getLocalizedMessage() {
             return LanguageUtils.translate(getMessage(), LittleTiles.CONFIG.general.maxAllowedDensity);
         }
@@ -134,7 +130,6 @@ public class LittleTilesConfig {
             this.config = config;
         }
         
-        @Override
         public String getLocalizedMessage() {
             return LanguageUtils.translate(getMessage(), config.minimumTransparency);
         }
@@ -158,7 +153,6 @@ public class LittleTilesConfig {
             this.config = config;
         }
         
-        @Override
         public String getLocalizedMessage() {
             return LanguageUtils.translate(getMessage(), config.blueprintSizeLimit);
         }
@@ -176,7 +170,6 @@ public class LittleTilesConfig {
             this.attempted = attempted;
         }
         
-        @Override
         public String getLocalizedMessage() {
             return LanguageUtils.translate(getMessage(), attempted, config.gridLimit.value);
         }
@@ -224,7 +217,6 @@ public class LittleTilesConfig {
         @CreativeConfig
         public int connectedShapeBlocksLimit = 128;
         
-        @Override
         public void configured(Side side) {
             if (side.isClient())
                 RenderingThread.initThreads(renderingThreadCount);
@@ -289,7 +281,6 @@ public class LittleTilesConfig {
         @CreativeConfig
         public int highest = 32;
         
-        @Override
         public void configured(Side side) {
             LittleGrid.configure(highest);
             if (side.isClient())

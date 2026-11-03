@@ -12,10 +12,8 @@ public class LittleStructureGuiNotFound extends LittleStructureGuiControl {
         super(gui, item);
     }
     
-    @Override
     public void create(LittleStructure structure) {}
     
-    @Override
     public LittleStructure save(LittleStructure structure) {
         structure.load(item.group.getStructureTag());
         return structure;

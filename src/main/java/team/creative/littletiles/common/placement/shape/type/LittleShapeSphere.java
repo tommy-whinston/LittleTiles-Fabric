@@ -28,7 +28,6 @@ public class LittleShapeSphere extends LittleShape {
         super(2);
     }
     
-    @Override
     protected void addBoxes(LittleBoxes boxes, ShapeSelection selection, boolean lowResolution) {
         LittleBox box = selection.getOverallBox();
         
@@ -113,7 +112,6 @@ public class LittleShapeSphere extends LittleShape {
         }
     }
     
-    @Override
     public void addExtraInformation(CompoundTag nbt, List<Component> list) {
         if (nbt.getBoolean("hollow")) {
             list.add(Component.translatable("gui.type").append(": ").append(Component.translatable("gui.hollow")));
@@ -122,7 +120,6 @@ public class LittleShapeSphere extends LittleShape {
             list.add(Component.translatable("gui.type").append(": ").append(Component.translatable("gui.solid")));
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public List<GuiControl> getCustomSettings(CompoundTag nbt, LittleGrid grid) {
         List<GuiControl> controls = new ArrayList<>();
@@ -134,7 +131,6 @@ public class LittleShapeSphere extends LittleShape {
         return controls;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void saveCustomSettings(GuiParent gui, CompoundTag nbt, LittleGrid grid) {
         GuiCheckBox box = (GuiCheckBox) gui.get("hollow");
@@ -143,9 +139,7 @@ public class LittleShapeSphere extends LittleShape {
         nbt.putInt("thickness", (int) slider.getValue());
     }
     
-    @Override
     public void rotate(CompoundTag nbt, Rotation rotation) {}
     
-    @Override
     public void mirror(CompoundTag nbt, Axis axis) {}
 }

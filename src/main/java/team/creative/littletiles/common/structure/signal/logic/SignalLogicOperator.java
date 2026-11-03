@@ -14,41 +14,33 @@ import team.creative.littletiles.common.structure.signal.input.SignalInputCondit
 public enum SignalLogicOperator {
     
     AND('\n', false, "and", "") {
-        @Override
         public SignalLogicOperator lower() {
             return null;
         }
         
-        @Override
         public boolean perform(boolean first, boolean second) {
             return first && second;
         }
         
-        @Override
         public int perform(int first, int second) {
             return first & second;
         }
         
-        @Override
         public long perform(long first, long second) {
             return first & second;
         }
         
-        @Override
         public SignalInputCondition create(SignalInputCondition[] conditions) {
             return new SignalInputConditionOperatorStackable(conditions) {
                 
-                @Override
                 public SignalLogicOperator operator() {
                     return AND;
                 }
                 
-                @Override
                 public boolean needsBrackets() {
                     return false;
                 }
                 
-                @Override
                 public double getModifier() {
                     return LittleTiles.CONFIG.signal.andDuration;
                 }
@@ -57,41 +49,33 @@ public enum SignalLogicOperator {
     },
     OR('+', false, "or") {
         
-        @Override
         public SignalLogicOperator lower() {
             return AND;
         }
         
-        @Override
         public boolean perform(boolean first, boolean second) {
             return first || second;
         }
         
-        @Override
         public int perform(int first, int second) {
             return first | second;
         }
         
-        @Override
         public long perform(long first, long second) {
             return first | second;
         }
         
-        @Override
         public SignalInputCondition create(SignalInputCondition[] conditions) {
             return new SignalInputConditionOperatorStackable(conditions) {
                 
-                @Override
                 public SignalLogicOperator operator() {
                     return OR;
                 }
                 
-                @Override
                 public boolean needsBrackets() {
                     return true;
                 }
                 
-                @Override
                 public double getModifier() {
                     return LittleTiles.CONFIG.signal.orDuration;
                 }
@@ -101,41 +85,33 @@ public enum SignalLogicOperator {
     },
     XOR('V', false, "xor") {
         
-        @Override
         public SignalLogicOperator lower() {
             return OR;
         }
         
-        @Override
         public boolean perform(boolean first, boolean second) {
             return first ^ second;
         }
         
-        @Override
         public int perform(int first, int second) {
             return first ^ second;
         }
         
-        @Override
         public long perform(long first, long second) {
             return first ^ second;
         }
         
-        @Override
         public SignalInputCondition create(SignalInputCondition[] conditions) {
             return new SignalInputConditionOperatorStackable(conditions) {
                 
-                @Override
                 public SignalLogicOperator operator() {
                     return XOR;
                 }
                 
-                @Override
                 public boolean needsBrackets() {
                     return true;
                 }
                 
-                @Override
                 public double getModifier() {
                     return LittleTiles.CONFIG.signal.xorDuration;
                 }
@@ -144,36 +120,29 @@ public enum SignalLogicOperator {
     },
     BITWISE_AND('&', true, "b-and") {
         
-        @Override
         public SignalLogicOperator lower() {
             return XOR;
         }
         
-        @Override
         public boolean perform(boolean first, boolean second) {
             return first && second;
         }
         
-        @Override
         public int perform(int first, int second) {
             return first & second;
         }
         
-        @Override
         public long perform(long first, long second) {
             return first & second;
         }
         
-        @Override
         public SignalInputCondition create(SignalInputCondition[] conditions) {
             return new SignalInputConditionOperatorStackableBitwise(conditions) {
                 
-                @Override
                 public SignalLogicOperator operator() {
                     return BITWISE_AND;
                 }
                 
-                @Override
                 public double getModifier() {
                     return LittleTiles.CONFIG.signal.bandDuration;
                 }
@@ -183,36 +152,29 @@ public enum SignalLogicOperator {
     },
     BITWISE_OR('|', true, "b-or") {
         
-        @Override
         public SignalLogicOperator lower() {
             return BITWISE_AND;
         }
         
-        @Override
         public boolean perform(boolean first, boolean second) {
             return first || second;
         }
         
-        @Override
         public int perform(int first, int second) {
             return first | second;
         }
         
-        @Override
         public long perform(long first, long second) {
             return first | second;
         }
         
-        @Override
         public SignalInputCondition create(SignalInputCondition[] conditions) {
             return new SignalInputConditionOperatorStackableBitwise(conditions) {
                 
-                @Override
                 public SignalLogicOperator operator() {
                     return BITWISE_OR;
                 }
                 
-                @Override
                 public double getModifier() {
                     return LittleTiles.CONFIG.signal.borDuration;
                 }
@@ -222,36 +184,29 @@ public enum SignalLogicOperator {
     },
     BITWISE_XOR('^', true, "b-xor") {
         
-        @Override
         public SignalLogicOperator lower() {
             return BITWISE_OR;
         }
         
-        @Override
         public boolean perform(boolean first, boolean second) {
             return first ^ second;
         }
         
-        @Override
         public int perform(int first, int second) {
             return first ^ second;
         }
         
-        @Override
         public long perform(long first, long second) {
             return first ^ second;
         }
         
-        @Override
         public SignalInputCondition create(SignalInputCondition[] conditions) {
             return new SignalInputConditionOperatorStackableBitwise(conditions) {
                 
-                @Override
                 public SignalLogicOperator operator() {
                     return BITWISE_XOR;
                 }
                 
-                @Override
                 public double getModifier() {
                     return LittleTiles.CONFIG.signal.bxorDuration;
                 }
@@ -260,36 +215,29 @@ public enum SignalLogicOperator {
         
     },
     ADD('#', true, "add") {
-        @Override
         public SignalLogicOperator lower() {
             return SignalLogicOperator.BITWISE_XOR;
         }
         
-        @Override
         public boolean perform(boolean first, boolean second) {
             return first | second;
         }
         
-        @Override
         public int perform(int first, int second) {
             return first + second;
         }
         
-        @Override
         public long perform(long first, long second) {
             return first + second;
         }
         
-        @Override
         public SignalInputCondition create(SignalInputCondition[] conditions) {
             return new SignalInputConditionOperatorStackableMath(conditions) {
                 
-                @Override
                 public SignalLogicOperator operator() {
                     return SignalLogicOperator.ADD;
                 }
                 
-                @Override
                 public double getModifier() {
                     return LittleTiles.CONFIG.signal.addDuration;
                 }
@@ -298,36 +246,29 @@ public enum SignalLogicOperator {
         }
     },
     SUB('-', true, "sub") {
-        @Override
         public SignalLogicOperator lower() {
             return SignalLogicOperator.ADD;
         }
         
-        @Override
         public boolean perform(boolean first, boolean second) {
             return first && !second;
         }
         
-        @Override
         public int perform(int first, int second) {
             return first - second;
         }
         
-        @Override
         public long perform(long first, long second) {
             return first - second;
         }
         
-        @Override
         public SignalInputCondition create(SignalInputCondition[] conditions) {
             return new SignalInputConditionOperatorStackableMath(conditions) {
                 
-                @Override
                 public SignalLogicOperator operator() {
                     return SignalLogicOperator.SUB;
                 }
                 
-                @Override
                 public double getModifier() {
                     return LittleTiles.CONFIG.signal.subDuration;
                 }
@@ -335,36 +276,29 @@ public enum SignalLogicOperator {
         }
     },
     MUL('*', true, "mul") {
-        @Override
         public SignalLogicOperator lower() {
             return SignalLogicOperator.SUB;
         }
         
-        @Override
         public boolean perform(boolean first, boolean second) {
             return first && second;
         }
         
-        @Override
         public int perform(int first, int second) {
             return first * second;
         }
         
-        @Override
         public long perform(long first, long second) {
             return first * second;
         }
         
-        @Override
         public SignalInputCondition create(SignalInputCondition[] conditions) {
             return new SignalInputConditionOperatorStackableMath(conditions) {
                 
-                @Override
                 public SignalLogicOperator operator() {
                     return SignalLogicOperator.MUL;
                 }
                 
-                @Override
                 public double getModifier() {
                     return LittleTiles.CONFIG.signal.mulDuration;
                 }
@@ -372,17 +306,14 @@ public enum SignalLogicOperator {
         }
     },
     DIV('/', true, "div") {
-        @Override
         public SignalLogicOperator lower() {
             return SignalLogicOperator.MUL;
         }
         
-        @Override
         public boolean perform(boolean first, boolean second) {
             return first && !second;
         }
         
-        @Override
         public int perform(int first, int second) {
             try {
                 return first / second;
@@ -393,7 +324,6 @@ public enum SignalLogicOperator {
             }
         }
         
-        @Override
         public long perform(long first, long second) {
             try {
                 return first / second;
@@ -404,16 +334,13 @@ public enum SignalLogicOperator {
             }
         }
         
-        @Override
         public SignalInputCondition create(SignalInputCondition[] conditions) {
             return new SignalInputConditionOperatorStackableMath(conditions) {
                 
-                @Override
                 public SignalLogicOperator operator() {
                     return SignalLogicOperator.DIV;
                 }
                 
-                @Override
                 public double getModifier() {
                     return LittleTiles.CONFIG.signal.divDuration;
                 }
@@ -503,7 +430,6 @@ public enum SignalLogicOperator {
             this.conditions = conditions;
         }
         
-        @Override
         public SignalState test(LittleStructure structure) {
             SignalState[] state = new SignalState[conditions.length];
             SignalStateSize size = SignalStateSize.SINGLE;
@@ -531,7 +457,6 @@ public enum SignalLogicOperator {
             return result;
         }
         
-        @Override
         public boolean testIndex(SignalState state) {
             boolean result = false;
             for (int i = 0; i < conditions.length; i++) {
@@ -547,7 +472,6 @@ public enum SignalLogicOperator {
         
         public abstract SignalLogicOperator operator();
         
-        @Override
         public String write() {
             if (needsBrackets()) {
                 String result = "(";
@@ -567,7 +491,6 @@ public enum SignalLogicOperator {
             return result;
         }
         
-        @Override
         protected double internalDelay() {
             double delay = conditions.length * getModifier();
             for (SignalInputCondition condition : conditions)
@@ -577,12 +500,10 @@ public enum SignalLogicOperator {
         
         public abstract double getModifier();
         
-        @Override
         public Iterator<SignalInputCondition> nested() {
             return new ArrayIterator<>(conditions);
         }
         
-        @Override
         public SignalTarget target() {
             return null;
         }
@@ -594,7 +515,6 @@ public enum SignalLogicOperator {
             super(conditions);
         }
         
-        @Override
         public SignalState test(LittleStructure structure) {
             SignalState[] state = new SignalState[conditions.length];
             SignalStateSize size = SignalStateSize.SINGLE;
@@ -622,7 +542,6 @@ public enum SignalLogicOperator {
             return result;
         }
         
-        @Override
         public boolean needsBrackets() {
             return true;
         }
@@ -635,7 +554,6 @@ public enum SignalLogicOperator {
             super(conditions);
         }
         
-        @Override
         public SignalState test(LittleStructure structure) {
             SignalState[] state = new SignalState[conditions.length];
             SignalStateSize size = SignalStateSize.SINGLE;
@@ -674,7 +592,6 @@ public enum SignalLogicOperator {
             return result;
         }
         
-        @Override
         public boolean needsBrackets() {
             return true;
         }

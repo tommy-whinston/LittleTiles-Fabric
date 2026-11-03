@@ -43,6 +43,13 @@ public class LazyOptional<T> {
             consumer.accept(resolved);
     }
 
+    public <X extends Throwable> T orElseThrow(java.util.function.Supplier<? extends X> exceptionSupplier) throws X {
+        T resolved = resolve();
+        if (resolved == null)
+            throw exceptionSupplier.get();
+        return resolved;
+    }
+
     public <U> LazyOptional<U> cast() {
         return (LazyOptional<U>) this;
     }

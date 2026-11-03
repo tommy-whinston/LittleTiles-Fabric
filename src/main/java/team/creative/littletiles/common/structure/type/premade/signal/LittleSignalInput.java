@@ -44,40 +44,33 @@ public class LittleSignalInput extends LittleSignalCableBase implements ISignalS
         this.state = SignalState.create(getBandwidth());
     }
     
-    @Override
     public boolean canConnect(Facing facing) {
         return facing == this.facing;
     }
     
-    @Override
     public void overwriteState(SignalState state) {
         this.state = this.state.overwrite(state);
         this.state.shrinkTo(getBandwidth());
     }
     
-    @Override
     public SignalState getState() {
         return state;
     }
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {
         super.loadExtra(nbt);
         state = state.load(nbt.get("state"));
     }
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {
         super.saveExtra(nbt);
         nbt.put("state", state.save());
     }
     
-    @Override
     public SignalComponentType getComponentType() {
         return SignalComponentType.INPUT;
     }
     
-    @Override
     public void changed() {
         try {
             if (getParent() != null)
@@ -85,7 +78,6 @@ public class LittleSignalInput extends LittleSignalCableBase implements ISignalS
         } catch (CorruptedConnectionException | NotYetConnectedException e) {}
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void renderFace(Facing facing, LittleGrid grid, LittleBox renderBox, int distance, Axis axis, Axis one, Axis two, boolean positive, boolean oneSidedRenderer, IndexedCollector<LittleRenderBox> cubes) {
         super.renderFace(facing, grid, renderBox.copy(), distance, axis, one, two, positive, oneSidedRenderer, cubes);
@@ -112,7 +104,6 @@ public class LittleSignalInput extends LittleSignalCableBase implements ISignalS
         cubes.add(cube);
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void render(SurroundingBox box, LittleBox overallBox, IndexedCollector<LittleRenderBox> cubes) {
         super.render(box, overallBox, cubes);
@@ -252,22 +243,18 @@ public class LittleSignalInput extends LittleSignalCableBase implements ISignalS
         cubes.add(frontLeft);
     }
     
-    @Override
     public int getIndex(Facing facing) {
         return 0;
     }
     
-    @Override
     public Facing getFacing(int index) {
         return facing;
     }
     
-    @Override
     public int getId() {
         return getParent().childId;
     }
     
-    @Override
     public LittleStructure getStructure() {
         try {
             return getParent().getStructure();
@@ -276,7 +263,6 @@ public class LittleSignalInput extends LittleSignalCableBase implements ISignalS
         }
     }
     
-    @Override
     public String info() {
         if (getParent() != null)
             return "i" + getId() + ":" + getState().print(getBandwidth());
@@ -289,7 +275,6 @@ public class LittleSignalInput extends LittleSignalCableBase implements ISignalS
             super(id, structureClass, factory, attribute, modid, bandwidth, 1);
         }
         
-        @Override
         public List<LittlePlaceBox> getSpecialBoxes(LittleGroup group) {
             List<LittlePlaceBox> result = super.getSpecialBoxes(group);
             Facing facing = (Facing) loadDirectional(group, "facing");
@@ -298,7 +283,6 @@ public class LittleSignalInput extends LittleSignalCableBase implements ISignalS
             return result;
         }
         
-        @Override
         @OnlyIn(Dist.CLIENT)
         public List<RenderBox> getItemPreview(LittleGroup previews, boolean translucent) {
             List<RenderBox> cubes = new ArrayList<>();
@@ -309,25 +293,20 @@ public class LittleSignalInput extends LittleSignalCableBase implements ISignalS
             return cubes;
         }
         
-        @Override
         public int getBandwidth() {
             return bandwidth;
         }
         
-        @Override
         public void changed() {
             
         }
         
-        @Override
         public SignalState getState() {
             return null;
         }
         
-        @Override
         public void overwriteState(SignalState state) {}
         
-        @Override
         public SignalComponentType getComponentType() {
             return SignalComponentType.INPUT;
         }

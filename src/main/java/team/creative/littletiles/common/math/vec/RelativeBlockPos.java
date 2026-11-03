@@ -45,7 +45,6 @@ public class RelativeBlockPos {
         return new BlockPos(coord.getX() + x, coord.getY() + y, coord.getZ() + z);
     }
     
-    @Override
     public String toString() {
         return "pos:[" + coord.getX() + "," + coord.getY() + "," + coord.getZ() + "]";
     }

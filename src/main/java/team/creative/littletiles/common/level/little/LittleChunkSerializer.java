@@ -108,7 +108,7 @@ public class LittleChunkSerializer {
                 .getLong("InhabitedTime"), alevelchunksection, postLoadChunk(level, nbt), null);
         
         if (nbt.contains("ForgeCaps"))
-            chunk.readCapsFromNBT(nbt.getCompound("ForgeCaps"));
+            
         
         chunk.setLightCorrect(nbt.getBoolean("isLightOn"));
         
@@ -193,7 +193,7 @@ public class LittleChunkSerializer {
         
         LevelChunk levelChunk = (LevelChunk) chunk;
         try {
-            final CompoundTag capTag = levelChunk.writeCapsToNBT();
+            final CompoundTag capTag = new CompoundTag();
             if (capTag != null)
                 nbt.put("ForgeCaps", capTag);
         } catch (Exception exception) {
@@ -208,7 +208,7 @@ public class LittleChunkSerializer {
                 heightmaps.put(entry.getKey().getSerializationKey(), new LongArrayTag(entry.getValue().getRawData()));
         nbt.put("Heightmaps", heightmaps);
         
-        MinecraftForge.EVENT_BUS.post(new ChunkDataEvent.Save(chunk, level, nbt));
+        MinecraftForge.EVENT_BUS.post(new ChunkDataEvent.Save((LevelChunk) chunk, level, nbt));
         return nbt;
     }
     

@@ -10,7 +10,6 @@ public class LittleBagConfig implements ICreativeConfig {
     public int inventoryHeight = 4;
     public int inventorySize = inventoryWidth * inventoryHeight;
     
-    @Override
     public void configured(Side side) {
         inventorySize = inventoryWidth * inventoryHeight;
     }

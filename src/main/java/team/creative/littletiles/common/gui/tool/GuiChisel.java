@@ -59,7 +59,6 @@ public class GuiChisel extends GuiConfigureTool {
         });
     }
     
-    @Override
     public void create() {
         if (!isClient())
             return;
@@ -128,7 +127,6 @@ public class GuiChisel extends GuiConfigureTool {
         get("item", GuiShowItem.class).stack = ItemMultiTiles.of(element);
     }
     
-    @Override
     public CompoundTag saveConfiguration(CompoundTag nbt) {
         GuiComboBoxMapped<LittleShape> box = get("shape");
         GuiScrollY scroll = (GuiScrollY) get("settings");

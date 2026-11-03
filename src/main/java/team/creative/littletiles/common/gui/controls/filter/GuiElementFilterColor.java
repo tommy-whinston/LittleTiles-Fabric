@@ -15,7 +15,6 @@ public class GuiElementFilterColor extends GuiElementFilter {
         add(this.color = new GuiColorPicker("name", new Color(color), true, 0));
     }
     
-    @Override
     public BiFilter<IParentCollection, LittleTile> get() {
         return TileFilters.color(color.color.toInt());
     }

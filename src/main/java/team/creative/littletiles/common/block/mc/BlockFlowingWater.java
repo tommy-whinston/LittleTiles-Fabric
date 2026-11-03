@@ -49,57 +49,46 @@ public class BlockFlowingWater extends Block implements ILittleMCBlock, IFakeRen
         this.still = still;
     }
     
-    @Override
     public Block asVanillaBlock() {
         return this;
     }
     
-    @Override
     public BlockState rotate(BlockState state, net.minecraft.world.level.block.Rotation rotation) {
         return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
     
-    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
     }
     
-    @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return this.defaultBlockState().setValue(FACING, context.getClickedFace());
     }
     
-    @Override
     public boolean noCollision() {
         return true;
     }
     
-    @Override
     public boolean isFluid(TagKey<Fluid> fluid) {
         return fluid.equals(FluidTags.WATER);
     }
     
-    @Override
     public boolean checkEntityCollision() {
         return true;
     }
     
-    @Override
     public boolean canBeConvertedToVanilla() {
         return false;
     }
     
-    @Override
     public BlockState getFakeState(BlockState state) {
         return Blocks.WATER.defaultBlockState();
     }
     
-    @Override
     public boolean canInteract() {
         return true;
     }
     
-    @Override
     public InteractionResult use(IParentCollection parent, LittleTile tile, LittleBox box, Player player, BlockHitResult result, InteractionHand hand) {
         if (player.getMainHandItem().getItem() instanceof BucketItem && LittleTiles.CONFIG.general.allowFlowingWater) {
             BlockState newState;
@@ -119,7 +108,6 @@ public class BlockFlowingWater extends Block implements ILittleMCBlock, IFakeRen
         return ILittleMCBlock.super.use(parent, tile, box, player, result, hand);
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public boolean canBeRenderCombined(LittleTile thisTile, LittleTile tile) {
         if (tile.getBlock() == this)
@@ -129,7 +117,6 @@ public class BlockFlowingWater extends Block implements ILittleMCBlock, IFakeRen
         return false;
     }
     
-    @Override
     public Vector3d getFogColor(IParentCollection parent, LittleTile tile, Entity entity, Vector3d originalColor, float partialTicks) {
         float f12 = 0.0F;
         if (entity instanceof LivingEntity living) {
@@ -141,12 +128,10 @@ public class BlockFlowingWater extends Block implements ILittleMCBlock, IFakeRen
         return new Vector3d(0.02F + f12, 0.02F + f12, 0.2F + f12);
     }
     
-    @Override
     public BlockState rotate(BlockState state, Rotation rotation, LittleVec doubledCenter) {
         return state.setValue(FACING, rotation.rotate(Facing.get(state.getValue(FACING))).toVanilla());
     }
     
-    @Override
     public BlockState mirror(BlockState state, Axis axis, LittleVec doubledCenter) {
         return state.setValue(FACING, axis.mirror(state.getValue(FACING)));
     }

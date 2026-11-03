@@ -32,40 +32,33 @@ public class BlockSignalConverter extends BaseEntityBlock {
         super(BlockBehaviour.Properties.of().sound(SoundType.METAL).strength(1.5F, 6.0F));
     }
     
-    @Override
     public BlockState rotate(BlockState state, LevelAccessor world, BlockPos pos, Rotation rotation) {
         return state.setValue(HORIZONTAL_FACING, rotation.rotate(state.getValue(HORIZONTAL_FACING)));
     }
     
-    @Override
     public BlockState rotate(BlockState state, Rotation rotation) {
         return state.setValue(HORIZONTAL_FACING, rotation.rotate(state.getValue(HORIZONTAL_FACING)));
     }
     
-    @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
         return state.setValue(HORIZONTAL_FACING, mirror.mirror(state.getValue(HORIZONTAL_FACING)));
     }
     
-    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(HORIZONTAL_FACING);
     }
     
-    @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return this.defaultBlockState().setValue(HORIZONTAL_FACING, context.getHorizontalDirection());
     }
     
-    @Override
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos origin, boolean p_60514_) {
         super.neighborChanged(state, level, pos, block, origin, p_60514_);
         changed(level, pos);
     }
     
-    @Override
     public void onNeighborChange(BlockState state, LevelReader level, BlockPos pos, BlockPos neighbor) {
-        super.onNeighborChange(state, level, pos, neighbor);
+        
         changed(level, pos);
     }
     
@@ -80,12 +73,10 @@ public class BlockSignalConverter extends BaseEntityBlock {
             result.get().setPower(getPowerOnSide(level, pos.relative(direction.getOpposite()), direction));
     }
     
-    @Override
     public boolean isSignalSource(BlockState state) {
         return true;
     }
     
-    @Override
     public int getSignal(BlockState state, BlockGetter level, BlockPos pos, Direction side) {
         if (state.getValue(HORIZONTAL_FACING) == side.getOpposite()) {
             Optional<BESignalConverter> result = level.getBlockEntity(pos, LittleTilesRegistry.BE_SIGNALCONVERTER_TYPE.get());
@@ -95,7 +86,6 @@ public class BlockSignalConverter extends BaseEntityBlock {
         return 0;
     }
     
-    @Override
     public boolean canConnectRedstone(BlockState state, BlockGetter world, BlockPos pos, Direction direction) {
         return state.getValue(HORIZONTAL_FACING) == direction;
     }
@@ -107,12 +97,10 @@ public class BlockSignalConverter extends BaseEntityBlock {
         return 0;
     }
     
-    @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new BESignalConverter(pos, state);
     }
     
-    @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }

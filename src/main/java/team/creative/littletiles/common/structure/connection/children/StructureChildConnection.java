@@ -88,19 +88,16 @@ public class StructureChildConnection implements IStructureConnection {
         return null;
     }
 
-    @Override
     public LittleStructure getStructureUncached() throws CorruptedConnectionException, NotYetConnectedException {
         cachedBE = null;
         return getStructure();
     }
 
 
-    @Override
     public BlockPos getStructurePosition() {
         return relativePos.offset(parent.getStructurePos());
     }
     
-    @Override
     public LittleStructure getStructure() throws CorruptedConnectionException, NotYetConnectedException {
         BETiles be = getBlockEntity();
         if (!be.hasLoaded())
@@ -142,12 +139,10 @@ public class StructureChildConnection implements IStructureConnection {
         cachedBE = null;
     }
     
-    @Override
     public int getIndex() {
         return structureIndex;
     }
     
-    @Override
     public int getAttribute() {
         return attribute;
     }

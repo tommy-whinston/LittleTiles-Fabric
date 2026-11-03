@@ -33,7 +33,6 @@ public class LittleAnimationChunkCache extends ChunkSource {
         return chunks.values();
     }
     
-    @Override
     @Nullable
     public LevelChunk getChunk(int x, int z, ChunkStatus status, boolean create) {
         LevelChunk chunk = chunks.get(ChunkPos.asLong(x, z));
@@ -45,30 +44,24 @@ public class LittleAnimationChunkCache extends ChunkSource {
         return chunk;
     }
     
-    @Override
     public LittleAnimationLevel getLevel() {
         return level;
     }
     
-    @Override
     public void tick(BooleanSupplier running, boolean chunks) {}
     
-    @Override
     public String gatherStats() {
         return "" + this.getLoadedChunksCount();
     }
     
-    @Override
     public int getLoadedChunksCount() {
         return this.chunks.size();
     }
     
-    @Override
     public void onLightUpdate(LightLayer layer, SectionPos pos) {
         getLevel().renderManager.setSectionDirty(pos.x(), pos.y(), pos.z());
     }
     
-    @Override
     public LevelLightEngine getLightEngine() {
         return lightEngine;
     }

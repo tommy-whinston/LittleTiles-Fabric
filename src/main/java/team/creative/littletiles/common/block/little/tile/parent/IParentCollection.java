@@ -46,7 +46,6 @@ public interface IParentCollection extends Iterable<LittleTile>, ILevelProvider 
     
     public BETiles getBE();
     
-    @Override
     public default Level getLevel() {
         BETiles te = getBE();
         if (te.hasLevel())

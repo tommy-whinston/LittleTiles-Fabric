@@ -25,7 +25,6 @@ public class LittleVanillaPackets extends LittleEntityPacket<LittleEntity> {
         this.packets = Arrays.asList(packets);
     }
     
-    @Override
     public void execute(Player player, LittleEntity entity) {
         LittlePlayerConnection.runInContext(entity.getSubLevel(), player, x -> {
             for (Packet packet : packets)

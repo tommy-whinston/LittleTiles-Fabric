@@ -41,45 +41,37 @@ public class BESignalConverter extends BlockEntity implements ISignalStructureCo
         return state.isSignalSource() && side != null;
     }
     
-    @Override
     public Level getStructureLevel() {
         return level;
     }
     
-    @Override
     public int getBandwidth() {
         return 4;
     }
     
-    @Override
     public SignalNetwork getNetwork() {
         return network;
     }
     
-    @Override
     public void setNetwork(SignalNetwork network) {
         this.network = network;
     }
     
-    @Override
     public Iterator<ISignalStructureBase> connections() {
         return new Iterator<ISignalStructureBase>() {
             
             Iterator<SignalConnection> iterator = connections.iterator();
             
-            @Override
             public boolean hasNext() {
                 return iterator.hasNext();
             }
             
-            @Override
             public ISignalStructureBase next() {
                 return iterator.next().base;
             }
         };
     }
     
-    @Override
     public boolean canConnect(Facing facing) {
         return true;
     }
@@ -91,7 +83,6 @@ public class BESignalConverter extends BlockEntity implements ISignalStructureCo
         return -1;
     }
     
-    @Override
     public boolean connect(Facing facing, ISignalStructureBase base, LittleGrid context, int distance, boolean oneSidedRenderer) {
         int index = indexOf(base);
         if (index == -1)
@@ -99,19 +90,16 @@ public class BESignalConverter extends BlockEntity implements ISignalStructureCo
         return true;
     }
     
-    @Override
     public void disconnect(Facing facing, ISignalStructureBase base) {
         int index = indexOf(base);
         if (index != -1)
             connections.remove(index);
     }
     
-    @Override
     public SignalComponentType getComponentType() {
         return SignalComponentType.IOSPECIAL;
     }
     
-    @Override
     public void updateState(SignalState state) {
         if (!state.equals(inputSignalState)) {
             inputSignalState = inputSignalState.overwrite(state);
@@ -119,7 +107,6 @@ public class BESignalConverter extends BlockEntity implements ISignalStructureCo
         }
     }
     
-    @Override
     public void changed() {
         BlockState state = level.getBlockState(worldPosition);
         Direction facing = state.getValue(BlockSignalConverter.HORIZONTAL_FACING);
@@ -133,28 +120,23 @@ public class BESignalConverter extends BlockEntity implements ISignalStructureCo
         return toReturn.number();
     }
     
-    @Override
     public SignalState getState() {
         return inputRedstoneState;
     }
     
-    @Override
     public void overwriteState(SignalState state) throws CorruptedConnectionException, NotYetConnectedException {
         inputRedstoneState = inputRedstoneState.overwrite(state);
         inputRedstoneState.shrinkTo(4);
     }
     
-    @Override
     public LittleStructure getStructure() {
         return null;
     }
     
-    @Override
     public int getId() {
         return 0;
     }
     
-    @Override
     public int getColor() {
         return -1;
     }
@@ -168,7 +150,6 @@ public class BESignalConverter extends BlockEntity implements ISignalStructureCo
         }
     }
     
-    @Override
     public void unload(Facing facing, ISignalStructureBase base) {
         int index = indexOf(base);
         if (index != -1)

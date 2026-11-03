@@ -35,7 +35,6 @@ public abstract class LittleAnimationHandler extends LevelHandler {
         MinecraftForge.EVENT_BUS.register(this);
     }
     
-    @Override
     public void unload() {
         super.unload();
         entities.clear();

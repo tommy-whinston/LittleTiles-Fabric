@@ -13,12 +13,10 @@ public class LittleEntityRenderer extends EntityRenderer<LittleEntity> {
         super(context);
     }
     
-    @Override
     public boolean shouldRender(LittleEntity animation, Frustum frustum, double camX, double camY, double camZ) {
         return isVisible(animation, frustum, camX, camY, camZ);
     }
     
-    @Override
     public ResourceLocation getTextureLocation(LittleEntity animation) {
         return InventoryMenu.BLOCK_ATLAS;
     }

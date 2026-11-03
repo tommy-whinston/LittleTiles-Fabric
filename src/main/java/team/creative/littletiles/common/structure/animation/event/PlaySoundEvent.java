@@ -31,7 +31,6 @@ public class PlaySoundEvent extends AnimationEvent<CompoundTag> {
         this.pitch = pitch;
     }
     
-    @Override
     public CompoundTag save() {
         CompoundTag nbt = new CompoundTag();
         nbt.putString("s", sound.getLocation().toString());
@@ -40,27 +39,22 @@ public class PlaySoundEvent extends AnimationEvent<CompoundTag> {
         return nbt;
     }
     
-    @Override
     public void start(AnimationContext context) {
         context.play(sound, volume, pitch);
     }
     
-    @Override
     public boolean isDone(int ticksActive, AnimationContext context) {
         return true;
     }
     
-    @Override
     public PlaySoundEvent copy() {
         return new PlaySoundEvent(sound, volume, pitch);
     }
     
-    @Override
     public int reverseTick(int start, int duration, AnimationContext context) {
         return start;
     }
     
-    @Override
     public boolean equals(Object obj) {
         if (obj instanceof PlaySoundEvent other)
             return sound.equals(other.sound) && volume == other.volume && pitch == other.pitch;

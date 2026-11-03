@@ -44,12 +44,10 @@ public class EntitySit extends Entity implements ILevelPositionProvider, INoPush
         noPhysics = true;
     }
     
-    @Override
     public boolean isPushable() {
         return false;
     }
     
-    @Override
     public void tick() {
         super.tick();
         StructureChildConnection connection = StructureChildConnection.load(this, entityData.get(CONNECTION), false);
@@ -74,12 +72,10 @@ public class EntitySit extends Entity implements ILevelPositionProvider, INoPush
         }
     }
     
-    @Override
     public double getPassengersRidingOffset() {
         return 0;
     }
     
-    @Override
     protected void defineSynchedData() {
         this.entityData.define(CONNECTION, new CompoundTag());
         this.entityData.define(CHAIRX, 0F);
@@ -87,7 +83,6 @@ public class EntitySit extends Entity implements ILevelPositionProvider, INoPush
         this.entityData.define(CHAIRZ, 0F);
     }
     
-    @Override
     protected void addAdditionalSaveData(CompoundTag nbt) {
         nbt.put("connection", entityData.get(CONNECTION));
         nbt.putFloat("chairX", entityData.get(CHAIRX));
@@ -95,7 +90,6 @@ public class EntitySit extends Entity implements ILevelPositionProvider, INoPush
         nbt.putFloat("chairZ", entityData.get(CHAIRZ));
     }
     
-    @Override
     protected void readAdditionalSaveData(CompoundTag nbt) {
         entityData.set(CONNECTION, nbt.getCompound("connection"));
         entityData.set(CHAIRX, nbt.getFloat("chairX"));
@@ -103,20 +97,16 @@ public class EntitySit extends Entity implements ILevelPositionProvider, INoPush
         entityData.set(CHAIRZ, nbt.getFloat("chairZ"));
     }
     
-    @Override
     public Level getStructureLevel() {
         return level();
     }
     
-    @Override
     public BlockPos getStructurePos() {
         return BlockPos.ZERO;
     }
     
-    @Override
     public void structureDestroyed() {}
     
-    @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return new ClientboundAddEntityPacket(this);
     }

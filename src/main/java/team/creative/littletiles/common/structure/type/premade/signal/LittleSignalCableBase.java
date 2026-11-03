@@ -62,7 +62,6 @@ public abstract class LittleSignalCableBase extends LittleStructurePremade imple
         this.faces = new LittleConnectionFace[getNumberOfConnections()];
     }
     
-    @Override
     public boolean compatible(ISignalStructureBase other) {
         if (ISignalStructureBase.super.compatible(other)) {
             if (other.getComponentType() == SignalComponentType.TRANSMITTER && this.getComponentType() == SignalComponentType.TRANSMITTER)
@@ -73,49 +72,40 @@ public abstract class LittleSignalCableBase extends LittleStructurePremade imple
         
     }
     
-    @Override
     public boolean hasStructureColor() {
         return true;
     }
     
-    @Override
     public int getStructureColor() {
         return color;
     }
     
-    @Override
     public int getDefaultColor() {
         return DEFAULT_CABLE_COLOR;
     }
     
-    @Override
     public void paint(int color) {
         this.color = color;
     }
     
-    @Override
     public int getColor() {
         return color;
     }
     
-    @Override
     public SignalNetwork getNetwork() {
         return network;
     }
     
-    @Override
     public void setNetwork(SignalNetwork network) {
         this.network = network;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void loadUpdatePacket(CompoundTag nbt) {
         super.loadUpdatePacket(nbt);
         mainBlock.getBE().render.tilesChanged();
     }
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {
         int[] result = nbt.getIntArray("faces");
         if (result != null && result.length == getNumberOfConnections() * 3) {
@@ -147,7 +137,6 @@ public abstract class LittleSignalCableBase extends LittleStructurePremade imple
             color = DEFAULT_CABLE_COLOR;
     }
     
-    @Override
     protected void saveInternalExtra(CompoundTag nbt, boolean preview) {
         super.saveInternalExtra(nbt, preview);
         if (!preview && faces != null) {
@@ -169,14 +158,12 @@ public abstract class LittleSignalCableBase extends LittleStructurePremade imple
             nbt.putInt("color", color);
     }
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {}
     
     public abstract Facing getFacing(int index);
     
     public abstract int getIndex(Facing facing);
     
-    @Override
     public int getBandwidth() {
         return ((LittleStructureTypeNetwork) type).bandwidth;
     }
@@ -185,7 +172,6 @@ public abstract class LittleSignalCableBase extends LittleStructurePremade imple
         return ((LittleStructureTypeNetwork) type).numberOfConnections;
     }
     
-    @Override
     public boolean connect(Facing facing, ISignalStructureBase base, LittleGrid grid, int distance, boolean oneSidedRenderer) {
         int index = getIndex(facing);
         if (faces[index] != null) {
@@ -198,7 +184,6 @@ public abstract class LittleSignalCableBase extends LittleStructurePremade imple
         return true;
     }
     
-    @Override
     public void disconnect(Facing facing, ISignalStructureBase base) {
         int index = getIndex(facing);
         if (faces[index] != null) {
@@ -207,7 +192,6 @@ public abstract class LittleSignalCableBase extends LittleStructurePremade imple
         }
     }
     
-    @Override
     public void neighbourChanged() {
         try {
             checkConnections();
@@ -239,7 +223,6 @@ public abstract class LittleSignalCableBase extends LittleStructurePremade imple
         
     }
     
-    @Override
     public Iterator<ISignalStructureBase> connections() {
         try {
             checkConnections();
@@ -256,12 +239,10 @@ public abstract class LittleSignalCableBase extends LittleStructurePremade imple
                     return index;
                 }
                 
-                @Override
                 public boolean hasNext() {
                     return index < faces.length && faces[index] != null;
                 }
                 
-                @Override
                 public ISignalStructureBase next() {
                     ISignalStructureBase next = faces[index].getConnection();
                     this.index = searchForNextIndex(index + 1);
@@ -272,12 +253,10 @@ public abstract class LittleSignalCableBase extends LittleStructurePremade imple
         
         return new Iterator<ISignalStructureBase>() {
             
-            @Override
             public boolean hasNext() {
                 return false;
             }
             
-            @Override
             public ISignalStructureBase next() {
                 return null;
             }
@@ -408,7 +387,6 @@ public abstract class LittleSignalCableBase extends LittleStructurePremade imple
         }
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void getRenderingBoxes(BlockPos pos, RenderType layer, IndexedCollector<LittleRenderBox> cubes) {
         if (ColorUtils.isInvisible(color))
@@ -487,7 +465,6 @@ public abstract class LittleSignalCableBase extends LittleStructurePremade imple
         }
     }
     
-    @Override
     public void structureDestroyed() {
         if (network != null)
             if (network.remove(this)) {
@@ -502,7 +479,6 @@ public abstract class LittleSignalCableBase extends LittleStructurePremade imple
             }
     }
     
-    @Override
     public void unload() {
         super.unload();
         for (int i = 0; i < faces.length; i++)
@@ -512,7 +488,6 @@ public abstract class LittleSignalCableBase extends LittleStructurePremade imple
             network.unload(this);
     }
     
-    @Override
     public void unload(Facing facing, ISignalStructureBase base) {
         int index = getIndex(facing);
         if (faces[index] != null)
@@ -627,7 +602,6 @@ public abstract class LittleSignalCableBase extends LittleStructurePremade imple
             return DEFAULT_CABLE_COLOR;
         }
         
-        @Override
         @OnlyIn(Dist.CLIENT)
         public List<RenderBox> getPositingCubes(Level level, BlockPos pos, ItemStack stack) {
             
@@ -700,17 +674,14 @@ public abstract class LittleSignalCableBase extends LittleStructurePremade imple
             return null;
         }
         
-        @Override
         public Level getStructureLevel() {
             return null;
         }
         
-        @Override
         public LittleStructure getStructure() {
             return null;
         }
         
-        @Override
         public boolean canSnapToGrid() {
             return false;
         }

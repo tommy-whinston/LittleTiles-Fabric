@@ -55,33 +55,27 @@ public class GuiRecipeAnimationHandler implements GuiAnimationHandler {
         }
     }
     
-    @Override
     public void loop(boolean loop) {
         this.loop = loop;
     }
     
-    @Override
     public void play() {
         playing = true;
     }
     
-    @Override
     public void pause() {
         playing = false;
     }
     
-    @Override
     public void stop() {
         playing = false;
         set(0);
     }
     
-    @Override
     public void set(int tick) {
         this.tick = tick;
     }
     
-    @Override
     public int get() {
         return tick;
     }
@@ -204,7 +198,6 @@ public class GuiRecipeAnimationHandler implements GuiAnimationHandler {
             this.state = state;
         }
         
-        @Override
         public void set(GuiTreeItemStructure item, int tick) {
             item.physicalState.set(state);
         }
@@ -220,7 +213,6 @@ public class GuiRecipeAnimationHandler implements GuiAnimationHandler {
             prepareChildEvents(item, timeline);
         }
         
-        @Override
         public void set(GuiTreeItemStructure item, int tick) {
             timeline.setStateAtTick(tick, item.physicalState, item);
         }

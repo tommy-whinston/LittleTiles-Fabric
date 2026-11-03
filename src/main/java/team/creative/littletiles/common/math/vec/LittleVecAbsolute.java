@@ -55,17 +55,14 @@ public class LittleVecAbsolute implements IGridBased {
         return pos;
     }
     
-    @Override
     public int getSmallest() {
         return gridVec.getSmallest();
     }
     
-    @Override
     public LittleGrid getGrid() {
         return gridVec.getGrid();
     }
     
-    @Override
     public void convertTo(LittleGrid to) {
         this.gridVec.convertTo(to);
     }
@@ -87,7 +84,6 @@ public class LittleVecAbsolute implements IGridBased {
         return newVec;
     }
     
-    @Override
     public void convertToSmallest() {
         removeInternalBlockOffset();
         IGridBased.super.convertToSmallest();
@@ -193,7 +189,6 @@ public class LittleVecAbsolute implements IGridBased {
         nbt.putIntArray(name, new int[] { pos.getX(), pos.getY(), pos.getZ(), gridVec.grid.count, gridVec.vec.x, gridVec.vec.y, gridVec.vec.z });
     }
     
-    @Override
     public int hashCode() {
         return pos.hashCode();
     }
@@ -215,7 +210,6 @@ public class LittleVecAbsolute implements IGridBased {
         gridVec.overwriteGrid(grid);
     }
     
-    @Override
     public boolean equals(Object paramObject) {
         if (paramObject instanceof LittleVecAbsolute pos) {
             LittleGrid newContext = LittleGrid.max(getGrid(), pos.getGrid());
@@ -235,7 +229,6 @@ public class LittleVecAbsolute implements IGridBased {
         return super.equals(paramObject);
     }
     
-    @Override
     public String toString() {
         return "[" + pos.getX() + "," + pos.getY() + "," + pos.getZ() + ",grid:" + gridVec.grid.count + "," + gridVec.vec.x + "," + gridVec.vec.y + "," + gridVec.vec.z + "]";
     }

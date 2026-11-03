@@ -18,17 +18,14 @@ public class PlacementModeFill extends PlacementMode {
         super(mode, false);
     }
     
-    @Override
     public boolean checkAll() {
         return false;
     }
     
-    @Override
     public List<BlockPos> getCoordsToCheck(Set<BlockPos> splittedTiles, BlockPos pos) {
         return null;
     }
     
-    @Override
     public boolean placeTile(PlacementContext context, LittleStructure structure, LittleTile tile) throws LittleActionException {
         if (!context.collisionTest) {
             context.placeTile(tile);

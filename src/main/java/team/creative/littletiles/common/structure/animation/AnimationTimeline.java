@@ -290,7 +290,6 @@ public class AnimationTimeline {
             active = false;
         }
         
-        @Override
         public int compareTo(AnimationEventEntry o) {
             return Integer.compare(start, o.start);
         }

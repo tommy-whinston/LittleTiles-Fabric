@@ -36,18 +36,15 @@ public class LittleVecGrid implements IGridBased {
         this.grid = grid;
     }
     
-    @Override
     public LittleGrid getGrid() {
         return grid;
     }
     
-    @Override
     public void convertTo(LittleGrid to) {
         vec.convertTo(grid, to);
         this.grid = to;
     }
     
-    @Override
     public int getSmallest() {
         return vec.getSmallest(grid);
     }
@@ -112,7 +109,6 @@ public class LittleVecGrid implements IGridBased {
         nbt.putIntArray(name, new int[] { vec.x, vec.y, vec.z, grid.count });
     }
     
-    @Override
     public int hashCode() {
         return vec.hashCode();
     }
@@ -122,7 +118,6 @@ public class LittleVecGrid implements IGridBased {
         this.grid = grid;
     }
     
-    @Override
     public boolean equals(Object paramObject) {
         if (paramObject instanceof LittleVecGrid) {
             LittleVecGrid otherVec = (LittleVecGrid) paramObject;
@@ -147,7 +142,6 @@ public class LittleVecGrid implements IGridBased {
         return super.equals(paramObject);
     }
     
-    @Override
     public String toString() {
         return "[" + vec.x + "," + vec.y + "," + vec.z + ",grid:" + grid.count + "]";
     }

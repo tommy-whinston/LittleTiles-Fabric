@@ -45,10 +45,8 @@ public class LittleClientChunkCache extends ClientChunkCache {
         return chunks.values();
     }
     
-    @Override
     public void drop(int x, int z) {}
     
-    @Override
     @Nullable
     public LevelChunk getChunk(int x, int z, ChunkStatus status, boolean create) {
         LevelChunk chunk = chunks.get(ChunkPos.asLong(x, z));
@@ -57,7 +55,6 @@ public class LittleClientChunkCache extends ClientChunkCache {
         return chunk;
     }
     
-    @Override
     public LevelChunk replaceWithPacketData(int x, int z, FriendlyByteBuf buffer, CompoundTag tag, Consumer<ClientboundLevelChunkPacketData.BlockEntityTagOutput> consumer) {
         LevelChunk chunk = getChunk(x, z, ChunkStatus.FULL, true);
         chunk.replaceWithPacketData(buffer, tag, consumer);
@@ -66,31 +63,24 @@ public class LittleClientChunkCache extends ClientChunkCache {
         return chunk;
     }
     
-    @Override
     public LittleClientLevel getLevel() {
         return (LittleClientLevel) super.getLevel();
     }
     
-    @Override
     public void tick(BooleanSupplier running, boolean chunks) {}
     
-    @Override
     public void updateViewCenter(int x, int z) {}
     
-    @Override
     public void updateViewRadius(int distance) {}
     
-    @Override
     public String gatherStats() {
         return "" + this.getLoadedChunksCount();
     }
     
-    @Override
     public int getLoadedChunksCount() {
         return this.chunks.size();
     }
     
-    @Override
     public void onLightUpdate(LightLayer layer, SectionPos pos) {
         getLevel().renderManager.setSectionDirty(pos.x(), pos.y(), pos.z());
     }

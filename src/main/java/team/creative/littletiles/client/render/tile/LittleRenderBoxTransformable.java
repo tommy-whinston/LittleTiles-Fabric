@@ -40,19 +40,16 @@ public class LittleRenderBoxTransformable extends LittleRenderBox {
         this.inverseScale = grid.count;
     }
     
-    @Override
     public void add(float x, float y, float z) {
         super.add(x, y, z);
         cache.add(x * inverseScale, y * inverseScale, z * inverseScale);
     }
     
-    @Override
     public void sub(float x, float y, float z) {
         super.sub(x, y, z);
         cache.sub(x * inverseScale, y * inverseScale, z * inverseScale);
     }
     
-    @Override
     public void scale(float scale) {
         super.scale(scale);
         cache.scale(scale);
@@ -64,7 +61,6 @@ public class LittleRenderBoxTransformable extends LittleRenderBox {
         return null;
     }
     
-    @Override
     public boolean shouldRenderFace(Facing facing) {
         VectorFanFaceCache cache = getFaceCache(facing);
         if (cache == null)
@@ -74,7 +70,6 @@ public class LittleRenderBoxTransformable extends LittleRenderBox {
         return cache.hasTiltedStripsRendering();
     }
     
-    @Override
     protected Object getRenderQuads(Facing facing) {
         if (getFace(facing).hasCachedFans())
             return getFace(facing).getCachedFans();
@@ -99,47 +94,38 @@ public class LittleRenderBoxTransformable extends LittleRenderBox {
         return null;
     }
     
-    @Override
     public float getPreviewOffX() {
         return 0;
     }
     
-    @Override
     public float getPreviewOffY() {
         return 0;
     }
     
-    @Override
     public float getPreviewOffZ() {
         return 0;
     }
     
-    @Override
     public float getPreviewScaleX() {
         return scale;
     }
     
-    @Override
     public float getPreviewScaleY() {
         return scale;
     }
     
-    @Override
     public float getPreviewScaleZ() {
         return scale;
     }
     
-    @Override
     protected boolean scaleAndOffsetQuads(Facing facing) {
         return true;
     }
     
-    @Override
     protected boolean onlyScaleOnceNoOffset(Facing facing) {
         return true;
     }
     
-    @Override
     protected float getOverallScale(Facing facing) {
         RenderBoxFace type = getFace(facing);
         if (type.hasCachedFans())

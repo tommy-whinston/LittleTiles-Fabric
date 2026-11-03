@@ -51,25 +51,20 @@ public class LittleBed extends LittleStructure {
     @StructureDirectional
     public Facing direction;
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {}
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {}
     
-    @Override
     protected Object failedLoadingRelative(CompoundTag nbt, StructureDirectionalField field) {
         if (field.key.equals("facing"))
             return Facing.get(nbt.getInt("direction"));
         return super.failedLoadingRelative(nbt, field);
     }
     
-    @Override
     public boolean isBed(LivingEntity player) {
         return true;
     }
     
-    @Override
     public Direction getBedDirection() {
         return direction.toVanilla();
     }
@@ -151,19 +146,16 @@ public class LittleBed extends LittleStructure {
         return Player.BedSleepingProblem.OTHER_PROBLEM;
     }
     
-    @Override
     public void tileDestroyed() throws CorruptedConnectionException, NotYetConnectedException {
         super.tileDestroyed();
         if (sleepingPlayer != null)
             ((ILittleBedPlayerExtension) sleepingPlayer).setBed(null);
     }
     
-    @Override
     public boolean canInteract() {
         return true;
     }
     
-    @Override
     protected void transferOverFormChange(LittleStructure newStructure) {
         super.transferOverFormChange(newStructure);
         LittleBed bed = (LittleBed) newStructure;
@@ -173,7 +165,6 @@ public class LittleBed extends LittleStructure {
         }
     }
     
-    @Override
     public InteractionResult use(Level level, LittleTileContext context, BlockPos pos, Player player, BlockHitResult result, InteractionHand hand) {
         try {
             checkConnections();

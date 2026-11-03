@@ -64,7 +64,6 @@ public class GuiDialogSignal extends GuiLayer {
         }
     }
     
-    @Override
     public void create() {
         if (inputs == null)
             return;

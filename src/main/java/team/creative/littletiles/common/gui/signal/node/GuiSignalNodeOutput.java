@@ -19,28 +19,23 @@ public class GuiSignalNodeOutput extends GuiSignalNodeComponent {
         setTitle(Component.translatable("gui.signal.out").append(": " + component.name()));
     }
     
-    @Override
     public boolean canConnectTo(GuiSignalNode node) {
         return false;
     }
     
-    @Override
     public boolean canConnectFrom(GuiSignalNode node) {
         return from == null;
     }
     
-    @Override
     public Iterator<GuiSignalConnection> iterator() {
         return new Iterator<GuiSignalConnection>() {
             
             public boolean has = from != null;
             
-            @Override
             public boolean hasNext() {
                 return has;
             }
             
-            @Override
             public GuiSignalConnection next() {
                 has = false;
                 return from;
@@ -48,16 +43,13 @@ public class GuiSignalNodeOutput extends GuiSignalNodeComponent {
         };
     }
     
-    @Override
     public Iterable<GuiSignalConnection> toConnections() {
         return new IterableIterator<GuiSignalConnection>() {
             
-            @Override
             public boolean hasNext() {
                 return false;
             }
             
-            @Override
             public GuiSignalConnection next() {
                 return null;
             }
@@ -65,33 +57,27 @@ public class GuiSignalNodeOutput extends GuiSignalNodeComponent {
         };
     }
     
-    @Override
     public GuiSignalConnection getConnectionTo(GuiSignalNode node) {
         return null;
     }
     
-    @Override
     public void disconnect(GuiSignalConnection connection) {
         from = null;
     }
     
-    @Override
     public void connect(GuiSignalConnection connection) {
         from = connection;
     }
     
-    @Override
     public void remove() {
         if (from != null)
             from.disconnect(controller());
     }
     
-    @Override
     public int indexOf(GuiSignalConnection connection) {
         return 0;
     }
     
-    @Override
     public SignalInputCondition generateCondition(List<GuiSignalNode> processed) throws GeneratePatternException {
         reset();
         if (from == null)
@@ -99,7 +85,6 @@ public class GuiSignalNodeOutput extends GuiSignalNodeComponent {
         return from.from().generateCondition(processed);
     }
     
-    @Override
     public boolean removable() {
         return false;
     }

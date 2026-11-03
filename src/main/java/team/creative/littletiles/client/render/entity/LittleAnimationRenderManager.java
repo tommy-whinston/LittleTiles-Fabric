@@ -41,7 +41,6 @@ import team.creative.creativecore.common.util.type.map.ChunkLayerMap;
 import team.creative.littletiles.LittleTiles;
 import team.creative.littletiles.client.LittleTilesClient;
 import team.creative.littletiles.client.level.little.FakeClientLevel;
-import team.creative.littletiles.client.mod.rubidium.RubidiumManager;
 import team.creative.littletiles.client.render.cache.buffer.BufferCache;
 import team.creative.littletiles.client.render.cache.buffer.BufferCollection;
 import team.creative.littletiles.client.render.cache.buffer.ChunkBufferUploader;
@@ -56,8 +55,6 @@ import team.creative.littletiles.common.entity.animation.LittleAnimationLevel;
 public class LittleAnimationRenderManager extends LittleEntityRenderManager<LittleAnimationEntity> implements RenderChunkExtender {
     
     public static LittleEntityRenderManager of(LittleAnimationEntity entity) {
-        if (RubidiumManager.installed() && !(entity.level() instanceof FakeClientLevel))
-            return RubidiumManager.createRenderManager(entity);
         return new LittleAnimationRenderManager(entity);
     }
     
@@ -74,42 +71,34 @@ public class LittleAnimationRenderManager extends LittleEntityRenderManager<Litt
         super(entity);
     }
     
-    @Override
     public RenderChunkExtender getRenderChunk(BlockPos pos) {
         return this;
     }
     
-    @Override
     public ChunkLayerMap<BufferCollection> getLastUploaded() {
         return lastUploaded;
     }
     
-    @Override
     public void setLastUploaded(ChunkLayerMap<BufferCollection> uploaded) {
         this.lastUploaded = uploaded;
     }
     
-    @Override
     public int getQueued() {
         return queued;
     }
     
-    @Override
     public void setQueued(int queued) {
         this.queued = queued;
     }
     
-    @Override
     public LittleAnimationLevel getLevel() {
         return (LittleAnimationLevel) super.getLevel();
     }
     
-    @Override
     public void begin(BufferBuilder builder) {
         builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.BLOCK);
     }
     
-    @Override
     public VertexBuffer getVertexBuffer(RenderType layer) {
         VertexBuffer buffer = this.buffers.get(layer);
         if (buffer == null)
@@ -117,12 +106,10 @@ public class LittleAnimationRenderManager extends LittleEntityRenderManager<Litt
         return buffer;
     }
     
-    @Override
     public void markReadyForUpdate(boolean playerChanged) {
         needsUpdate = true;
     }
     
-    @Override
     public void compileChunks(Camera camera) {
         if (needsUpdate) {
             needsUpdate = false;
@@ -153,44 +140,36 @@ public class LittleAnimationRenderManager extends LittleEntityRenderManager<Litt
         }
     }
     
-    @Override
     protected void renderAllBlockEntities(PoseStack pose, Frustum frustum, Vec3 cam, float frameTime, MultiBufferSource bufferSource) {
         if (renderableBlockEntities != null)
             for (BlockEntity blockEntity : renderableBlockEntities)
                 renderBlockEntity(blockEntity, pose, frustum, cam, frameTime, bufferSource);
     }
     
-    @Override
     public void prepareModelOffset(MutableBlockPos modelOffset, BlockPos pos) {
         modelOffset.set(pos.getX(), pos.getY(), pos.getZ());
     }
     
-    @Override
     public BlockPos standardOffset() {
         return BlockPos.ZERO;
     }
     
-    @Override
     public SortState getTransparencyState() {
         return transparencyState;
     }
     
-    @Override
     public boolean isEmpty(RenderType layer) {
         return !hasBlocks.contains(layer);
     }
     
-    @Override
     public void setHasBlock(RenderType layer) {
         hasBlocks.add(layer);
     }
     
-    @Override
     public void setQuadSorting(BufferBuilder builder, double x, double y, double z) {
         builder.setQuadSorting(VertexSorting.byDistance((float) x, (float) y, (float) z));
     }
     
-    @Override
     public void resortTransparency(RenderType layer, double x, double y, double z) {
         if (transparencyState != null && hasBlocks.contains(RenderType.translucent())) {
             BufferBuilder bufferbuilder = LittleTilesClient.ANIMATION_HANDLER.fixedBuffers.builder(RenderType.translucent());
@@ -208,7 +187,6 @@ public class LittleAnimationRenderManager extends LittleEntityRenderManager<Litt
         }
     }
     
-    @Override
     public void renderChunkLayer(RenderType layer, PoseStack pose, double x, double y, double z, Matrix4f projectionMatrix, Uniform offset) {
         if (hasBlocks.contains(layer)) {
             VertexBuffer vertexbuffer = buffers.get(layer);
@@ -227,39 +205,32 @@ public class LittleAnimationRenderManager extends LittleEntityRenderManager<Litt
             offset.set(0F, 0F, 0F);
     }
     
-    @Override
     protected void setBlockDirty(BlockPos pos, boolean playerChanged) {
         needsUpdate = true;
     }
     
-    @Override
     public void setBlocksDirty(int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
         needsUpdate = true;
         
     }
     
-    @Override
     public void setBlockDirty(BlockPos pos, BlockState actualState, BlockState setState) {
         needsUpdate = true;
     }
     
-    @Override
     protected void setSectionDirty(int x, int y, int z, boolean playerChanged) {
         needsUpdate = true;
     }
     
-    @Override
     public void unload() {
         super.unload();
         this.buffers.forEach(VertexBuffer::close);
     }
     
-    @Override
     public LittleRenderPipelineType getPipeline() {
         return LittleRenderPipelineType.FORGE;
     }
     
-    @Override
     public void allChanged() {
         super.allChanged();
         needsUpdate = true;
@@ -347,7 +318,6 @@ public class LittleAnimationRenderManager extends LittleEntityRenderManager<Litt
             return cache;
         }
         
-        @Override
         public BufferCache upload(RenderType layer, BufferCache cache) {
             if (cache.upload((ChunkBufferUploader) builder(layer))) {
                 getOrCreateBuffers(layer).queueForUpload(cache);

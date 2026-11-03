@@ -355,7 +355,6 @@ public class Placement {
             }
         }
         
-        @Override
         public LittleGrid getGrid() {
             return grid;
         }
@@ -370,7 +369,6 @@ public class Placement {
                 attribute |= structure.getAttribute();
         }
         
-        @Override
         public void convertTo(LittleGrid to) {
             for (int i = 0; i < tiles.length; i++)
                 if (tiles[i] != null)
@@ -380,7 +378,6 @@ public class Placement {
             this.grid = to;
         }
         
-        @Override
         public int getSmallest() {
             int size = LittleGrid.MIN.count;
             

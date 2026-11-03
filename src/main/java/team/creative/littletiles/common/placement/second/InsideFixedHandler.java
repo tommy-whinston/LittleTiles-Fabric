@@ -23,7 +23,6 @@ public class InsideFixedHandler extends SecondModeHandler {
         }
     }
     
-    @Override
     public LittleBox getBox(Level level, BlockPos pos, LittleGrid grid, LittleBox suggested) {
         updateBox(Axis.X, grid, suggested);
         updateBox(Axis.Y, grid, suggested);

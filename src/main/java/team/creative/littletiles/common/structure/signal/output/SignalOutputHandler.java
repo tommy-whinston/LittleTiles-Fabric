@@ -53,7 +53,6 @@ public abstract class SignalOutputHandler {
         return component.getStructure().isStillAvailable();
     }
     
-    @Override
     public String toString() {
         return component.toString();
     }

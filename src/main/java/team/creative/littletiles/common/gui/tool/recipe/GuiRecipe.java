@@ -108,14 +108,12 @@ public class GuiRecipe extends GuiConfigure {
         });
     }
     
-    @Override
     public void becameTopLayer() {
         super.becameTopLayer();
         if (isClient())
             get("animation", GuiAnimationPanel.class).refresh();
     }
     
-    @Override
     public CompoundTag saveConfiguration(CompoundTag nbt) {
         return null;
     }
@@ -145,17 +143,14 @@ public class GuiRecipe extends GuiConfigure {
         }
     }
     
-    @Override
     public void closeThisLayer() {
         closeWithDialog();
     }
     
-    @Override
     public void closeTopLayer() {
         closeWithDialog();
     }
     
-    @Override
     public void closed() {
         if (isClient())
             storage.unload();
@@ -185,7 +180,6 @@ public class GuiRecipe extends GuiConfigure {
         }
     }
     
-    @Override
     public void create() {
         if (!isClient())
             return;
@@ -201,7 +195,6 @@ public class GuiRecipe extends GuiConfigure {
         
         tree = new GuiTree("overview", false) {
             
-            @Override
             public void updateTree() {
                 actionOnAllItems(x -> x.updateTitle());
                 super.updateTree();
@@ -291,7 +284,6 @@ public class GuiRecipe extends GuiConfigure {
         tree.selectFirst();
     }
     
-    @Override
     public void tick() {
         if (!isClient())
             return;
@@ -302,7 +294,6 @@ public class GuiRecipe extends GuiConfigure {
             storage.tick();
     }
     
-    @Override
     public void render(GuiGraphics graphics, GuiChildControl control, Rect controlRect, Rect realRect, double scale, int mouseX, int mouseY) {
         storage.renderTick();
         super.render(graphics, control, controlRect, realRect, scale, mouseX, mouseY);

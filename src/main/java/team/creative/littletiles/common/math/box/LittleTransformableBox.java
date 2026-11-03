@@ -132,7 +132,6 @@ public class LittleTransformableBox extends LittleBox {
         this.data = data;
     }
     
-    @Override
     public ABB getABB(LittleGrid grid) {
         return new TransformableABB(grid.toVanillaGrid(minX), grid.toVanillaGrid(minY), grid.toVanillaGrid(minZ), grid.toVanillaGrid(maxX), grid.toVanillaGrid(maxY), grid
                 .toVanillaGrid(maxZ), grid, this);
@@ -214,7 +213,6 @@ public class LittleTransformableBox extends LittleBox {
         return corners;
     }
     
-    @Override
     public void changed() {
         super.changed();
         cache = null;
@@ -415,7 +413,6 @@ public class LittleTransformableBox extends LittleBox {
         return cache;
     }
     
-    @Override
     public int[] getArray() {
         int[] array = new int[6 + data.length];
         array[0] = minX;
@@ -429,7 +426,6 @@ public class LittleTransformableBox extends LittleBox {
         return array;
     }
     
-    @Override
     public int[] getArrayExtended(IParentCollection parent, LittleTile tile, LittleServerFace face) {
         hasOrCreateFaceState(parent, tile, face);
         int[] array = new int[7 + data.length];
@@ -453,12 +449,10 @@ public class LittleTransformableBox extends LittleBox {
         return size;
     }
     
-    @Override
     public int getSmallest(LittleGrid grid) {
         return Math.max(getSmallestOfPoints(grid), super.getSmallest(grid));
     }
     
-    @Override
     protected void scale(int ratio) {
         super.scale(ratio);
         Iterator<TransformablePoint> points = points();
@@ -473,7 +467,6 @@ public class LittleTransformableBox extends LittleBox {
         }
     }
     
-    @Override
     protected void divide(int ratio) {
         super.divide(ratio);
         Iterator<TransformablePoint> points = points();
@@ -488,17 +481,14 @@ public class LittleTransformableBox extends LittleBox {
         }
     }
     
-    @Override
     public boolean isSolid() {
         return false;
     }
     
-    @Override
     public boolean doesFillEntireBlock(LittleGrid grid) {
         return false;
     }
     
-    @Override
     public LittleBox combineBoxes(LittleBox box) {
         if (box instanceof LittleTransformableBox) {
             Facing facing = box.sharedBoxFaceWithoutBounds(this);
@@ -617,12 +607,10 @@ public class LittleTransformableBox extends LittleBox {
         return null;
     }
     
-    @Override
     public boolean isFaceSolid(Facing facing) {
         return requestCache().get(facing).isCompletelyFilled();
     }
     
-    @Override
     protected boolean intersectsWith(LittleBox box) {
         if (super.intersectsWith(box)) {
             if (box instanceof LittleTransformableBox t)
@@ -650,7 +638,6 @@ public class LittleTransformableBox extends LittleBox {
         return false;
     }
     
-    @Override
     public void rotate(Rotation rotation, LittleVec doubledCenter) {
         CornerCache cache = new CornerCache(false);
         Iterator<TransformableVec> corners = corners();
@@ -683,7 +670,6 @@ public class LittleTransformableBox extends LittleBox {
         }
     }
     
-    @Override
     public void mirror(Axis axis, LittleVec doubledCenter) {
         CornerCache cache = new CornerCache(false);
         Iterator<TransformableVec> corners = corners();
@@ -787,7 +773,6 @@ public class LittleTransformableBox extends LittleBox {
         }
     }
     
-    @Override
     public LittleBox extractBox(int x, int y, int z, @Nullable LittleBoxReturnedVolume volume) {
         LittleTransformableBox box = this.copy();
         CornerCache cache = box.new CornerCache(false);
@@ -813,7 +798,6 @@ public class LittleTransformableBox extends LittleBox {
         return null;
     }
     
-    @Override
     public LittleBox extractBox(LittleGrid grid, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, @Nullable LittleBoxReturnedVolume volume) {
         LittleTransformableBox box = this.copy();
         CornerCache cache = box.new CornerCache(false);
@@ -844,12 +828,10 @@ public class LittleTransformableBox extends LittleBox {
         return null;
     }
     
-    @Override
     public LittleTransformableBox copy() {
         return new LittleTransformableBox(this, data.clone());
     }
     
-    @Override
     public LittleBox grow(Facing facing) {
         LittleBox box = super.grow(facing);
         if (box != null)
@@ -857,7 +839,6 @@ public class LittleTransformableBox extends LittleBox {
         return null;
     }
     
-    @Override
     public LittleBox shrink(Facing facing, boolean toLimit) {
         LittleBox box = super.shrink(facing, toLimit);
         if (box != null)
@@ -913,7 +894,6 @@ public class LittleTransformableBox extends LittleBox {
                 vec = null;
             }
             
-            @Override
             public boolean hasNext() {
                 return vec != null;
             }
@@ -921,7 +901,6 @@ public class LittleTransformableBox extends LittleBox {
             /** not safe for caching
              * 
              * @return same object with updated values */
-            @Override
             public TransformableVec next() {
                 if (holder == null)
                     throw new NoSuchElementException();
@@ -967,7 +946,6 @@ public class LittleTransformableBox extends LittleBox {
                 activeBits++;
             }
             
-            @Override
             public boolean hasNext() {
                 return index < flipStartIndex;
             }
@@ -975,7 +953,6 @@ public class LittleTransformableBox extends LittleBox {
             /** not safe for caching
              * 
              * @return same object with updated values */
-            @Override
             public TransformablePoint next() {
                 if (point == null)
                     throw new NoSuchElementException();
@@ -989,13 +966,11 @@ public class LittleTransformableBox extends LittleBox {
         };
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public LittleRenderBox getRenderingBox(LittleGrid grid) {
         return new LittleRenderBoxTransformable(grid, this);
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public LittleRenderBox getRenderingBox(LittleGrid grid, LittleVec vec) {
         LittleTransformableBox box = copy();
@@ -1003,19 +978,16 @@ public class LittleTransformableBox extends LittleBox {
         return new LittleRenderBoxTransformable(grid, box);
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public LittleRenderBox getRenderingBox(LittleGrid grid, BlockState state) {
         return new LittleRenderBoxTransformable(grid, this, state);
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public LittleRenderBox getRenderingBox(LittleGrid grid, LittleElement element) {
         return new LittleRenderBoxTransformable(grid, this, element);
     }
     
-    @Override
     public BlockHitResult rayTrace(LittleGrid grid, BlockPos pos, Vec3 vecA, Vec3 vecB) {
         VectorFanCache cache = requestCache();
         
@@ -1053,14 +1025,12 @@ public class LittleTransformableBox extends LittleBox {
         return new BlockHitResult(collision.toVanilla().add(pos.getX(), pos.getY(), pos.getZ()), collided.toVanilla(), pos, true);
     }
     
-    @Override
     protected void fillAdvanced(ILittleFace face) {
         List<VectorFan> axis = requestCache().get(face.facing().opposite()).axisStrips;
         if (axis != null && !axis.isEmpty())
             face.cut(axis);
     }
     
-    @Override
     @Nullable
     public LittleFace generateFace(LittleGrid grid, Facing facing) {
         VectorFanFaceCache faceCache = requestCache().get(facing);
@@ -1074,7 +1044,6 @@ public class LittleTransformableBox extends LittleBox {
             facing.axis) : getMin(facing.axis));
     }
     
-    @Override
     @Nullable
     public boolean set(LittleServerFace face, LittleGrid grid, Facing facing) {
         if (requestCache().get(facing).axisStrips.isEmpty())
@@ -1149,7 +1118,6 @@ public class LittleTransformableBox extends LittleBox {
             return this;
         }
         
-        @Override
         public String toString() {
             return "[" + x + "," + y + "," + z + "]";
         }
@@ -1191,7 +1159,6 @@ public class LittleTransformableBox extends LittleBox {
             setData(index, value);
         }
         
-        @Override
         public String toString() {
             return corner + "," + axis + "," + getRelative();
         }
@@ -1307,7 +1274,6 @@ public class LittleTransformableBox extends LittleBox {
         
     }
     
-    @Override
     public void add(int x, int y, int z) {
         minX += x;
         minY += y;
@@ -1322,7 +1288,6 @@ public class LittleTransformableBox extends LittleBox {
         }
     }
     
-    @Override
     public void sub(int x, int y, int z) {
         minX -= x;
         minY -= y;
@@ -1759,12 +1724,10 @@ public class LittleTransformableBox extends LittleBox {
                 int additionalCount = (tiltedStrip1 != null ? 1 : 0) + (tiltedStrip2 != null ? 1 : 0);
                 int index = 0;
                 
-                @Override
                 public boolean hasNext() {
                     return index < additionalCount;
                 }
                 
-                @Override
                 public VectorFan next() {
                     VectorFan result;
                     int secondIndex = index;
@@ -1783,19 +1746,16 @@ public class LittleTransformableBox extends LittleBox {
             
         }
         
-        @Override
         public Iterator<VectorFan> iterator() {
             return new Iterator<VectorFan>() {
                 
                 int additionalCount = (tiltedStrip1 != null ? 1 : 0) + (tiltedStrip2 != null ? 1 : 0);
                 int index = 0;
                 
-                @Override
                 public boolean hasNext() {
                     return index < axisStrips.size() + additionalCount;
                 }
                 
-                @Override
                 public VectorFan next() {
                     VectorFan result;
                     if (index < axisStrips.size())

@@ -120,14 +120,12 @@ public abstract class LittleStructure implements ISignalSchedulable, ILevelPosit
     
     // ================Basics================
     
-    @Override
     public Level getStructureLevel() {
         if (mainBlock == null || mainBlock.isRemoved())
             return null;
         return mainBlock.getLevel();
     }
     
-    @Override
     public Level getComponentLevel() {
         return getStructureLevel();
     }
@@ -140,7 +138,6 @@ public abstract class LittleStructure implements ISignalSchedulable, ILevelPosit
         return mainBlock != null && mainBlock.isClient();
     }
     
-    @Override
     public BlockPos getStructurePos() {
         return mainBlock.getPos();
     }
@@ -253,12 +250,10 @@ public abstract class LittleStructure implements ISignalSchedulable, ILevelPosit
             boolean first = true;
             Iterator<StructureBlockConnector> iterator = blocks.iterator();
             
-            @Override
             public boolean hasNext() {
                 return first || iterator.hasNext();
             }
             
-            @Override
             public BlockPos next() {
                 if (first) {
                     first = false;
@@ -276,12 +271,10 @@ public abstract class LittleStructure implements ISignalSchedulable, ILevelPosit
             boolean first = true;
             Iterator<StructureBlockConnector> iterator = blocks.iterator();
             
-            @Override
             public boolean hasNext() {
                 return first || iterator.hasNext();
             }
             
-            @Override
             public BETiles next() {
                 if (first) {
                     first = false;
@@ -304,12 +297,10 @@ public abstract class LittleStructure implements ISignalSchedulable, ILevelPosit
             boolean first = true;
             Iterator<StructureBlockConnector> iterator = blocks.iterator();
             
-            @Override
             public boolean hasNext() {
                 return first || iterator.hasNext();
             }
             
-            @Override
             public IStructureParentCollection next() {
                 if (first) {
                     first = false;
@@ -332,7 +323,6 @@ public abstract class LittleStructure implements ISignalSchedulable, ILevelPosit
             Iterator<LittleTile> inBlock = null;
             Pair<IStructureParentCollection, LittleTile> pair = null;
             
-            @Override
             public boolean hasNext() {
                 while (inBlock == null || !inBlock.hasNext()) {
                     if (!iterator.hasNext())
@@ -344,7 +334,6 @@ public abstract class LittleStructure implements ISignalSchedulable, ILevelPosit
                 return true;
             }
             
-            @Override
             public Pair<IStructureParentCollection, LittleTile> next() {
                 pair.setValue(inBlock.next());
                 return pair;
@@ -565,7 +554,6 @@ public abstract class LittleStructure implements ISignalSchedulable, ILevelPosit
     }
     
     /** Is called before the structure is removed */
-    @Override
     public void structureDestroyed() {
         unload();
     }
@@ -688,7 +676,6 @@ public abstract class LittleStructure implements ISignalSchedulable, ILevelPosit
             Iterator<StructureChildConnection> iterator = children.all().iterator();
             ISignalStructureComponent next;
             
-            @Override
             public boolean hasNext() {
                 if (next == null) {
                     while (iterator.hasNext()) {
@@ -705,7 +692,6 @@ public abstract class LittleStructure implements ISignalSchedulable, ILevelPosit
                 return next != null;
             }
             
-            @Override
             public ISignalStructureComponent next() {
                 ISignalStructureComponent result = next;
                 next = null;
@@ -720,7 +706,6 @@ public abstract class LittleStructure implements ISignalSchedulable, ILevelPosit
             Iterator<StructureChildConnection> iterator = children.all().iterator();
             ISignalStructureComponent next;
             
-            @Override
             public boolean hasNext() {
                 if (next == null) {
                     while (iterator.hasNext()) {
@@ -737,7 +722,6 @@ public abstract class LittleStructure implements ISignalSchedulable, ILevelPosit
                 return next != null;
             }
             
-            @Override
             public ISignalStructureComponent next() {
                 ISignalStructureComponent result = next;
                 next = null;
@@ -746,7 +730,6 @@ public abstract class LittleStructure implements ISignalSchedulable, ILevelPosit
         };
     }
     
-    @Override
     public void notifyChange() {
         if (hasParent())
             try {
@@ -774,7 +757,6 @@ public abstract class LittleStructure implements ISignalSchedulable, ILevelPosit
             } catch (CorruptedConnectionException | NotYetConnectedException e) {}
     }
     
-    @Override
     public boolean isStillAvailable() {
         return !mainBlock.isRemoved();
     }
@@ -783,17 +765,14 @@ public abstract class LittleStructure implements ISignalSchedulable, ILevelPosit
         getStructureLevel().blockEntityChanged(mainBlock.getPos());
     }
     
-    @Override
     public boolean hasChanged() {
         return signalChanged;
     }
     
-    @Override
     public void markChanged() {
         signalChanged = true;
     }
     
-    @Override
     public void markUnchanged() {
         signalChanged = false;
     }

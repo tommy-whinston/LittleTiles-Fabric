@@ -52,12 +52,15 @@ public class LittleServerChunkCache extends ServerChunkCache implements Iterable
     private final HashMap<Long, LittleChunkHolder> chunks = new HashMap<>();
     private final MainThreadExecutor mainThreadProcessor;
     
+    private net.minecraft.server.level.ServerLevel level() {
+        return ((ServerChunkCacheAccessor) this).getLevel();
+    }
+    
     public LittleServerChunkCache(LittleServerLevel level, LevelStorageAccess storageAccess, DataFixer dataFixer, StructureTemplateManager structureTemplate, Executor exe, ChunkGenerator generator, int viewDistance, int simulationDistance, boolean sync, ChunkProgressListener progress, ChunkStatusUpdateListener status, Supplier<DimensionDataStorage> supplier) {
         super(level, storageAccess, dataFixer, structureTemplate, exe, generator, viewDistance, simulationDistance, sync, progress, status, supplier);
         mainThreadProcessor = new MainThreadExecutor(level);
     }
     
-    @Override
     public int getTickingGenerated() {
         return this.chunkMap.getTickingGenerated();
     }
@@ -69,7 +72,6 @@ public class LittleServerChunkCache extends ServerChunkCache implements Iterable
         return Either.left(holder.chunk);
     }
     
-    @Override
     @Nullable
     public ChunkAccess getChunk(int x, int z, ChunkStatus status, boolean create) {
         if (Thread.currentThread() != ((ServerChunkCacheAccessor) this).getMainThread())
@@ -80,7 +82,6 @@ public class LittleServerChunkCache extends ServerChunkCache implements Iterable
         return holder == null ? null : holder.chunk;
     }
     
-    @Override
     @Nullable
     public LevelChunk getChunkNow(int x, int z) {
         if (Thread.currentThread() != ((ServerChunkCacheAccessor) this).getMainThread())
@@ -88,7 +89,6 @@ public class LittleServerChunkCache extends ServerChunkCache implements Iterable
         return getChunk(x, z, true);
     }
     
-    @Override
     public CompletableFuture<Either<ChunkAccess, ChunkHolder.ChunkLoadingFailure>> getChunkFuture(int x, int z, ChunkStatus status, boolean create) {
         CompletableFuture<Either<ChunkAccess, ChunkHolder.ChunkLoadingFailure>> completablefuture;
         if (Thread.currentThread() == ((ServerChunkCacheAccessor) this).getMainThread()) {
@@ -99,59 +99,52 @@ public class LittleServerChunkCache extends ServerChunkCache implements Iterable
         return completablefuture;
     }
     
-    @Override
     public boolean hasChunk(int x, int z) {
         return chunks.containsKey(ChunkPos.asLong(x, z));
     }
     
-    @Override
     public LightChunk getChunkForLighting(int x, int z) {
         return getChunk(x, z, ChunkStatus.EMPTY, false);
     }
     
-    @Override
     public boolean pollTask() {
         return mainThreadProcessor.pollTask();
     }
     
-    @Override
     public boolean isPositionTicking(long pos) {
-        if (!level.shouldTickBlocksAt(pos))
+        if (!level().shouldTickBlocksAt(pos))
             return false;
         return chunks.containsKey(pos);
     }
     
-    @Override
     public void save(boolean all) {}
     
-    @Override
     public void close() throws IOException {}
     
-    @Override
     public void tick(BooleanSupplier running, boolean chunks) {
-        this.level.getProfiler().push("purge");
+        level().getProfiler().push("purge");
         ((LittleDistanceManager) this.chunkMap.getDistanceManager()).purgeStaleTickets();
         this.runDistanceManagerUpdates2();
-        this.level.getProfiler().popPush("chunks");
+        level().getProfiler().popPush("chunks");
         if (chunks)
             this.tickChunks();
-        this.level.getProfiler().pop();
+        level().getProfiler().pop();
     }
     
     private void tickChunks() {
-        if (this.level.isDebug()) {
+        if (level().isDebug()) {
             ((LittleChunkMap) chunkMap).tick();
             return;
         }
         
-        ProfilerFiller profilerfiller = this.level.getProfiler();
+        ProfilerFiller profilerfiller = level().getProfiler();
         profilerfiller.push("pollingChunks");
-        int k = this.level.getGameRules().getInt(GameRules.RULE_RANDOMTICKING);
+        int k = level().getGameRules().getInt(GameRules.RULE_RANDOMTICKING);
         
         profilerfiller.popPush("tick");
         for (Entry<Long, LittleChunkHolder> entry : chunks.entrySet())
-            if (this.level.shouldTickBlocksAt(entry.getKey()))
-                this.level.tickChunk(entry.getValue().chunk, k);
+            if (level().shouldTickBlocksAt(entry.getKey()))
+                level().tickChunk(entry.getValue().chunk, k);
             
         for (LittleChunkHolder holder : chunks.values())
             holder.broadcastChanges();
@@ -159,34 +152,28 @@ public class LittleServerChunkCache extends ServerChunkCache implements Iterable
         ((LittleChunkMap) chunkMap).tick();
     }
     
-    @Override
     public int getPendingTasksCount() {
         return this.mainThreadProcessor.getPendingTasksCount();
     }
     
-    @Override
     public ChunkGenerator getGenerator() {
         return null;
     }
     
-    @Override
     public RandomState randomState() {
         return null;
     }
     
-    @Override
     public int getLoadedChunksCount() {
         return chunks.size();
     }
     
-    @Override
     public void blockChanged(BlockPos pos) {
         LittleChunkHolder chunkholder = chunks.get(ChunkPos.asLong(pos));
         if (chunkholder != null)
             chunkholder.blockChanged(pos);
     }
     
-    @Override
     public void onLightUpdate(LightLayer layer, SectionPos pos) {
         this.mainThreadProcessor.execute(() -> {
             LittleChunkHolder chunkholder = chunks.get(ChunkPos.asLong(pos.x(), pos.z()));
@@ -195,83 +182,66 @@ public class LittleServerChunkCache extends ServerChunkCache implements Iterable
         });
     }
     
-    @Override
     public <T> void addRegionTicket(TicketType<T> type, ChunkPos pos, int level, T key) {
         chunkMap.getDistanceManager().addRegionTicket(type, pos, level, key);
     }
     
-    @Override
     public <T> void addRegionTicket(TicketType<T> type, ChunkPos pos, int level, T key, boolean forceTicks) {
-        chunkMap.getDistanceManager().addRegionTicket(type, pos, level, key, forceTicks);
+        chunkMap.getDistanceManager().addRegionTicket(type, pos, level, key);
     }
     
-    @Override
     public <T> void removeRegionTicket(TicketType<T> type, ChunkPos pos, int level, T key) {
         chunkMap.getDistanceManager().removeRegionTicket(type, pos, level, key);
     }
     
-    @Override
     public <T> void removeRegionTicket(TicketType<T> type, ChunkPos pos, int level, T key, boolean forceTicks) {
-        chunkMap.getDistanceManager().removeRegionTicket(type, pos, level, key, forceTicks);
+        chunkMap.getDistanceManager().removeRegionTicket(type, pos, level, key);
     }
     
-    @Override
     public void updateChunkForced(ChunkPos pos, boolean added) {
         ((LittleDistanceManager) chunkMap.getDistanceManager()).updateChunkForced(pos, added);
     }
     
-    @Override
     public void move(ServerPlayer player) {
         ((LittleChunkMap) chunkMap).move(player);
     }
     
-    @Override
     public void removeEntity(Entity entity) {
         ((LittleChunkMap) chunkMap).removeEntity(entity);
     }
     
-    @Override
     public void addEntity(Entity entity) {
         ((LittleChunkMap) chunkMap).addEntity(entity);
     }
     
-    @Override
     public void broadcastAndSend(Entity entity, Packet<?> packet) {
         ((LittleChunkMap) chunkMap).broadcastAndSend(entity, packet);
     }
     
-    @Override
     public void broadcast(Entity entity, Packet<?> packet) {
         ((LittleChunkMap) chunkMap).broadcast(entity, packet);
     }
     
-    @Override
     public void setViewDistance(int distance) {}
     
-    @Override
     public void setSimulationDistance(int distance) {}
     
-    @Override
     public void setSpawnSettings(boolean spawnEnemies, boolean spawnFriendlies) {}
     
-    @Override
     public String getChunkDebugData(ChunkPos pos) {
         return "";
     }
     
-    @Override
     public ChunkScanAccess chunkScanner() {
         return chunkMap.chunkScanner();
     }
     
-    @Override
     @Nullable
     @VisibleForDebug
     public NaturalSpawner.SpawnState getLastSpawnState() {
         return null;
     }
     
-    @Override
     public void removeTicketsOnClosing() {
         this.chunkMap.getDistanceManager().removeTicketsOnClosing();
     }
@@ -284,7 +254,6 @@ public class LittleServerChunkCache extends ServerChunkCache implements Iterable
         return this;
     }
     
-    @Override
     public Iterator<LevelChunk> iterator() {
         return new FunctionIterator<>(chunks.values().iterator(), x -> x.chunk);
     }
@@ -294,7 +263,6 @@ public class LittleServerChunkCache extends ServerChunkCache implements Iterable
         return false;
     }
     
-    @Override
     public ChunkGeneratorStructureState getGeneratorState() {
         return null;
     }
@@ -305,33 +273,27 @@ public class LittleServerChunkCache extends ServerChunkCache implements Iterable
             super("Chunk source main thread executor for " + level.dimension().location());
         }
         
-        @Override
         protected Runnable wrapRunnable(Runnable p_8506_) {
             return p_8506_;
         }
         
-        @Override
         protected boolean shouldRun(Runnable p_8504_) {
             return true;
         }
         
-        @Override
         protected boolean scheduleExecutables() {
             return true;
         }
         
-        @Override
         protected Thread getRunningThread() {
             return ((ServerChunkCacheAccessor) LittleServerChunkCache.this).getMainThread();
         }
         
-        @Override
         protected void doRunTask(Runnable run) {
-            LittleServerChunkCache.this.level.getProfiler().incrementCounter("runTask");
+            LittleServerChunkCache.this.level().getProfiler().incrementCounter("runTask");
             super.doRunTask(run);
         }
         
-        @Override
         public boolean pollTask() {
             if (LittleServerChunkCache.this.runDistanceManagerUpdates2())
                 return true;

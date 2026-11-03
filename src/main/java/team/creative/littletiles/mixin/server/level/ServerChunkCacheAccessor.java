@@ -10,5 +10,8 @@ public interface ServerChunkCacheAccessor {
     
     @Accessor
     public Thread getMainThread();
+
+    @Accessor("level")
+    public net.minecraft.server.level.ServerLevel getLevel();
     
 }

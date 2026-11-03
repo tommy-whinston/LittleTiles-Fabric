@@ -34,7 +34,6 @@ public class GuiDialogSignalMode extends GuiLayer {
         super.init();
     }
     
-    @Override
     public void create() {
         if (event == null)
             return;

@@ -73,7 +73,6 @@ public class ItemRenderCache implements LevelAwareHandler {
         }
     }
     
-    @Override
     public void unload() {
         caches.clear();
         THREAD.items.clear();
@@ -100,12 +99,10 @@ public class ItemRenderCache implements LevelAwareHandler {
             return this;
         }
         
-        @Override
         public int hashCode() {
             return nbt.hashCode();
         }
         
-        @Override
         public boolean equals(Object obj) {
             if (obj instanceof RenderedStack stack)
                 return stack.item == item && stack.nbt.equals(nbt);
@@ -121,7 +118,6 @@ public class ItemRenderCache implements LevelAwareHandler {
             start();
         }
         
-        @Override
         public void run() {
             while (true) {
                 if (Minecraft.getInstance().level != null && !items.isEmpty()) {

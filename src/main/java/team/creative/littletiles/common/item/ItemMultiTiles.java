@@ -64,44 +64,36 @@ public class ItemMultiTiles extends Item implements ILittlePlacer, IItemTooltip 
         return "";
     }
     
-    @Override
     public Component getName(ItemStack stack) {
         if (stack.getOrCreateTag().contains(LittleGroup.STRUCTURE_KEY) && stack.getOrCreateTagElement(LittleGroup.STRUCTURE_KEY).contains("n"))
             return Component.literal(stack.getOrCreateTagElement(LittleGroup.STRUCTURE_KEY).getString("n"));
         return super.getName(stack);
     }
     
-    @Override
     public boolean hasTiles(ItemStack stack) {
         return true;
     }
     
-    @Override
     public LittleGroup getTiles(ItemStack stack) {
         return LittleGroup.load(stack.getOrCreateTag());
     }
     
-    @Override
     public LittleGroup getLow(ItemStack stack) {
         return LittleGroup.loadLow(stack.getOrCreateTag());
     }
     
-    @Override
     public boolean shouldRenderInHand(ItemStack stack) {
         return LittleGroup.shouldRenderInHand(stack.getOrCreateTag());
     }
     
-    @Override
     public PlacementPreview getPlacement(Player player, Level level, ItemStack stack, PlacementPosition position, boolean allowLowResolution) {
         return PlacementPreview.relative(level, stack, position, allowLowResolution);
     }
     
-    @Override
     public void saveTiles(ItemStack stack, LittleGroup group) {
         stack.setTag(LittleGroup.save(group));
     }
     
-    @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
         String id = "none";
         if (stack.getOrCreateTag().contains(LittleGroup.STRUCTURE_KEY))
@@ -110,11 +102,9 @@ public class ItemMultiTiles extends Item implements ILittlePlacer, IItemTooltip 
         tooltip.add(LittleGroup.printTooltip(stack.getOrCreateTag()));
     }
     
-    @Override
     public GuiConfigure getConfigure(Player player, ContainerSlotView view) {
         return new GuiModeSelector(view, PlacementPlayerSetting.grid(player), PlacementPlayerSetting.placementMode(player)) {
             
-            @Override
             public CompoundTag saveConfiguration(CompoundTag nbt, LittleGrid grid, PlacementMode mode) {
                 LittleTilesClient.setPlace(grid, mode);
                 return null;
@@ -123,27 +113,22 @@ public class ItemMultiTiles extends Item implements ILittlePlacer, IItemTooltip 
         };
     }
     
-    @Override
     public boolean containsIngredients(ItemStack stack) {
         return true;
     }
     
-    @Override
     public LittleVecGrid getCachedSize(ItemStack stack) {
         return LittleGroup.getSize(stack.getOrCreateTag());
     }
     
-    @Override
     public LittleVecGrid getCachedMin(ItemStack stack) {
         return LittleGroup.getMin(stack.getOrCreateTag());
     }
     
-    @Override
     public String tooltipTranslateKey(ItemStack stack, String defaultKey) {
         return "littletiles.tiles.tooltip";
     }
     
-    @Override
     public Object[] tooltipData(ItemStack stack) {
         return new Object[] { LittleTilesClient.configure.getTranslatedKeyMessage(), LittleTilesClient.arrowKeysTooltip(), LittleTilesClient.mirror.getTranslatedKeyMessage() };
     }

@@ -63,7 +63,6 @@ public class BlocksUpdate extends CreativePacket {
     
     public BlocksUpdate() {}
     
-    @Override
     public void executeClient(Player player) {
         LevelAccessor level = player.level();
         
@@ -89,6 +88,5 @@ public class BlocksUpdate extends CreativePacket {
         }
     }
     
-    @Override
     public void executeServer(ServerPlayer player) {}
 }

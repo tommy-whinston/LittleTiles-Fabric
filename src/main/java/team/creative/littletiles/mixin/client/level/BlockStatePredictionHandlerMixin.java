@@ -17,7 +17,6 @@ public class BlockStatePredictionHandlerMixin implements BlockStatePredictionHan
     
     public ClientLevelExtender level;
     
-    @Override
     public void setLevel(ClientLevelExtender level) {
         this.level = level;
     }

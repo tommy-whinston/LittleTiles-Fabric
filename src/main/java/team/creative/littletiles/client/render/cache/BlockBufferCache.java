@@ -44,7 +44,6 @@ public class BlockBufferCache implements IBlockBufferCache, AdditionalBufferRece
         return queued;
     }
     
-    @Override
     public BufferCache get(RenderType layer) {
         BufferCache original = getOriginal(layer);
         if (additional != null)
@@ -53,7 +52,6 @@ public class BlockBufferCache implements IBlockBufferCache, AdditionalBufferRece
         
     }
     
-    @Override
     public BufferCache extract(RenderType layer, int index) {
         BufferCache holder = getOriginal(layer);
         if (holder == null)
@@ -68,12 +66,10 @@ public class BlockBufferCache implements IBlockBufferCache, AdditionalBufferRece
         return extracted;
     }
     
-    @Override
     public boolean has(RenderType layer) {
         return queue.containsKey(layer) || getUploaded(layer) != null || (additional != null && additional.containsKey(layer));
     }
     
-    @Override
     public void setUploaded(RenderType layer, BufferCache uploadable) {
         queue.remove(layer);
         if (uploadable == null)
@@ -119,12 +115,10 @@ public class BlockBufferCache implements IBlockBufferCache, AdditionalBufferRece
         additional = null;
     }
     
-    @Override
     public synchronized void additional(RenderType layer, BufferCache holder) {
         additional.put(layer, newAdditional ? combine(additional.get(layer), holder) : holder);
     }
     
-    @Override
     public synchronized void additional(LayeredBufferCache cache) {
         for (RenderType layer : RenderType.chunkBufferLayers())
             additional.put(layer, newAdditional ? combine(additional.get(layer), cache.get(layer)) : cache.get(layer));

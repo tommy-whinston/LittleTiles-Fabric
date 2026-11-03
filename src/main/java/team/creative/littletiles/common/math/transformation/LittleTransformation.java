@@ -119,7 +119,6 @@ public class LittleTransformation {
                 .getVec().x, offset.getVec().y, offset.getVec().z, offset.getGrid().count };
     }
     
-    @Override
     public String toString() {
         return "center:" + center.getX() + "," + center.getY() + "," + center.getZ() + ";rotation:" + rotX + "," + rotY + "," + rotZ + ";offset:" + offset.getVec().x + "," + offset
                 .getVec().y + "," + offset.getVec().z + ";context:" + offset.getGrid();

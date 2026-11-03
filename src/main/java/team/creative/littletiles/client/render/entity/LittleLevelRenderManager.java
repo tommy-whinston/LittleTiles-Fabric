@@ -68,7 +68,6 @@ public class LittleLevelRenderManager extends LittleEntityRenderManager<LittleLe
         super(entity);
     }
     
-    @Override
     public RenderChunkExtender getRenderChunk(BlockPos pos) {
         return getOrCreateChunk(pos);
     }
@@ -125,7 +124,6 @@ public class LittleLevelRenderManager extends LittleEntityRenderManager<LittleLe
             queuedCompiled.add(chunk);
     }
     
-    @Override
     public void setupRender(Camera camera, @Nullable Frustum frustum, boolean capturedFrustum, boolean spectator) {
         super.setupRender(camera, frustum, capturedFrustum, spectator);
         
@@ -173,7 +171,6 @@ public class LittleLevelRenderManager extends LittleEntityRenderManager<LittleLe
             }
     }
     
-    @Override
     public void compileChunks(Camera camera) {
         mc.getProfiler().push("compile_animation_chunks");
         List<LittleRenderChunk> schedule = Lists.newArrayList();
@@ -207,7 +204,6 @@ public class LittleLevelRenderManager extends LittleEntityRenderManager<LittleLe
         mc.getProfiler().pop();
     }
     
-    @Override
     protected void renderAllBlockEntities(PoseStack pose, Frustum frustum, Vec3 cam, float frameTime, MultiBufferSource bufferSource) {
         for (LittleRenderChunk chunk : this) {
             List<BlockEntity> list = chunk.getCompiledChunk().getRenderableBlockEntities();
@@ -219,7 +215,6 @@ public class LittleLevelRenderManager extends LittleEntityRenderManager<LittleLe
         }
     }
     
-    @Override
     public void resortTransparency(RenderType layer, double x, double y, double z) {
         int i = 0;
         for (LittleRenderChunk chunk : visibleChunks()) {
@@ -230,7 +225,6 @@ public class LittleLevelRenderManager extends LittleEntityRenderManager<LittleLe
         }
     }
     
-    @Override
     public void renderChunkLayer(RenderType layer, PoseStack pose, double x, double y, double z, Matrix4f projectionMatrix, Uniform offset) {
         for (Iterator<LittleRenderChunk> iterator = layer == RenderType.translucent() ? visibleChunksInverse() : visibleChunks().iterator(); iterator.hasNext();) {
             LittleRenderChunk chunk = iterator.next();
@@ -254,7 +248,6 @@ public class LittleLevelRenderManager extends LittleEntityRenderManager<LittleLe
         return LittleTilesClient.ANIMATION_HANDLER.fixedBuffers;
     }
     
-    @Override
     protected void setSectionDirty(int x, int y, int z, boolean playerChanged) {
         LittleRenderChunk chunk = chunks.get(SectionPos.asLong(x, y, z));
         if (chunk == null)
@@ -277,7 +270,6 @@ public class LittleLevelRenderManager extends LittleEntityRenderManager<LittleLe
         }
     }
     
-    @Override
     public synchronized void unload() {
         for (LittleRenderChunk chunk : this)
             chunk.releaseBuffers();
@@ -285,7 +277,6 @@ public class LittleLevelRenderManager extends LittleEntityRenderManager<LittleLe
         super.unload();
     }
     
-    @Override
     public Iterator<LittleRenderChunk> iterator() {
         return chunks.values().iterator();
     }
@@ -298,7 +289,6 @@ public class LittleLevelRenderManager extends LittleEntityRenderManager<LittleLe
         return sortedChunks.inverseIterator();
     }
     
-    @Override
     public void allChanged() {
         super.allChanged();
         needsFullRenderChunkUpdate = true;

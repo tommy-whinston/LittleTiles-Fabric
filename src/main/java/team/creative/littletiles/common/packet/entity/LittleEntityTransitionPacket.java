@@ -35,7 +35,6 @@ public class LittleEntityTransitionPacket extends CreativePacket {
         this(entity.getUUID(), level);
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void executeClient(Player player) {
         LittleEntity entity = LittleTiles.ANIMATION_HANDLERS.find(true, targetLevel);
@@ -50,7 +49,6 @@ public class LittleEntityTransitionPacket extends CreativePacket {
             LittleTilesClient.ANIMATION_HANDLER.queueEntityForTransition(target, level);
     }
     
-    @Override
     public void executeServer(ServerPlayer player) {
         requiresClient(player);
     }

@@ -14,40 +14,31 @@ public class LittleAnimationLevelClientCallback extends LittleAnimationLevelCall
         super(level);
     }
     
-    @Override
     public void onCreated(Entity entity) {}
     
-    @Override
     public void onDestroyed(Entity entity) {}
     
-    @Override
     public void onTickingStart(Entity entity) {
         tickingEntities.add(entity);
     }
     
-    @Override
     public void onTickingEnd(Entity entity) {
         tickingEntities.remove(entity);
     }
     
-    @Override
     public void onTrackingStart(Entity entity) {}
     
-    @Override
     public void onTrackingEnd(Entity entity) {
         entity.unRide();
         
-        entity.onRemovedFromWorld();
+        
         MinecraftForge.EVENT_BUS.post(new EntityLeaveLevelEvent(entity, level));
     }
     
-    @Override
     public void addTrackingPlayer(ServerPlayer player) {}
     
-    @Override
     public void removeTrackingPlayer(ServerPlayer player) {}
     
-    @Override
     public void tickEntity(Entity entity) {
         if (!entity.isRemoved() && !entity.isPassenger())
             level.guardEntityTick(this::tickNonPassenger, entity);
@@ -56,7 +47,7 @@ public class LittleAnimationLevelClientCallback extends LittleAnimationLevelCall
     public void tickNonPassenger(Entity entity) {
         entity.setOldPosAndRot();
         ++entity.tickCount;
-        if (entity.canUpdate())
+        if (!entity.isRemoved())
             entity.tick();
         for (Entity passenger : entity.getPassengers())
             this.tickPassenger(entity, passenger);

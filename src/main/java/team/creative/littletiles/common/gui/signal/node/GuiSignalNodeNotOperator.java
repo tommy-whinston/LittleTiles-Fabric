@@ -21,7 +21,6 @@ public class GuiSignalNodeNotOperator extends GuiSignalNode {
         this.bitwise = bitwise;
     }
     
-    @Override
     public boolean canConnectTo(GuiSignalNode node) {
         for (GuiSignalConnection connectTo : to)
             if (connectTo.to() == node)
@@ -29,12 +28,10 @@ public class GuiSignalNodeNotOperator extends GuiSignalNode {
         return true;
     }
     
-    @Override
     public boolean canConnectFrom(GuiSignalNode node) {
         return from == null;
     }
     
-    @Override
     public GuiSignalConnection getConnectionTo(GuiSignalNode node) {
         for (GuiSignalConnection connectTo : to)
             if (connectTo.to() == node)
@@ -42,7 +39,6 @@ public class GuiSignalNodeNotOperator extends GuiSignalNode {
         return null;
     }
     
-    @Override
     public void disconnect(GuiSignalConnection connection) {
         if (connection.to() == this)
             from = null;
@@ -50,14 +46,12 @@ public class GuiSignalNodeNotOperator extends GuiSignalNode {
             to.remove(connection);
     }
     
-    @Override
     public Iterator<GuiSignalConnection> iterator() {
         return new Iterator<GuiSignalConnection>() {
             
             public int index = 0;
             public Iterator<GuiSignalConnection> iterator = to.iterator();
             
-            @Override
             public boolean hasNext() {
                 if (index == 0)
                     return from != null || iterator.hasNext();
@@ -66,7 +60,6 @@ public class GuiSignalNodeNotOperator extends GuiSignalNode {
                 return false;
             }
             
-            @Override
             public GuiSignalConnection next() {
                 if (index == 0) {
                     index++;
@@ -84,12 +77,10 @@ public class GuiSignalNodeNotOperator extends GuiSignalNode {
         };
     }
     
-    @Override
     public Iterable<GuiSignalConnection> toConnections() {
         return to;
     }
     
-    @Override
     public void connect(GuiSignalConnection connection) {
         if (connection.to() == this)
             from = connection;
@@ -97,7 +88,6 @@ public class GuiSignalNodeNotOperator extends GuiSignalNode {
             to.add(connection);
     }
     
-    @Override
     public void remove() {
         if (from != null)
             from.disconnect(controller());
@@ -105,14 +95,12 @@ public class GuiSignalNodeNotOperator extends GuiSignalNode {
             connection.disconnect(controller());
     }
     
-    @Override
     public int indexOf(GuiSignalConnection connection) {
         if (connection.to() == this)
             return 0;
         return to.indexOf(connection);
     }
     
-    @Override
     public SignalInputCondition generateCondition(List<GuiSignalNode> processed) throws GeneratePatternException {
         reset();
         if (from == null)

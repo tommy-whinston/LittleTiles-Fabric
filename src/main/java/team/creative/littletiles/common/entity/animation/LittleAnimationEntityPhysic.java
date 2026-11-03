@@ -16,7 +16,6 @@ public class LittleAnimationEntityPhysic extends LittleEntityPhysic<LittleAnimat
         super(parent);
     }
     
-    @Override
     public void setSubLevel(LittleSubLevel level) {
         level.registerBlockChangeListener((pos, state) -> blocksChanged = true);
     }
@@ -25,7 +24,6 @@ public class LittleAnimationEntityPhysic extends LittleEntityPhysic<LittleAnimat
         return Math.floor(minX) < pos.getX() && maxX > pos.getX() && Math.floor(minY) < pos.getY() && maxY > pos.getY() && Math.floor(minZ) < pos.getZ() && maxZ > pos.getZ();
     }
     
-    @Override
     public void tick() {
         if (blocksChanged) {
             minX = Double.MAX_VALUE;
@@ -55,10 +53,8 @@ public class LittleAnimationEntityPhysic extends LittleEntityPhysic<LittleAnimat
         }
     }
     
-    @Override
     public void loadExtra(CompoundTag nbt) {}
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {}
     
 }

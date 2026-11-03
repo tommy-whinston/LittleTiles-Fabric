@@ -41,7 +41,6 @@ public class GuiParticle extends GuiLayer {
     static {
         REGISTRY.registerDefault("random", ParticleSpreadRandom.class, new ParticleSpreadGuiHandler() {
             
-            @Override
             public ParticleSpread save(GuiParent parent) {
                 ParticleSpreadRandom spread = new ParticleSpreadRandom();
                 spread.speedX = (float) parent.get("speedx", GuiCounterDecimal.class).getValue();
@@ -51,7 +50,6 @@ public class GuiParticle extends GuiLayer {
                 return spread;
             }
             
-            @Override
             public void load(GuiParent parent, ParticleSpread spread) {
                 GuiTable table = new GuiTable();
                 parent.add(table);
@@ -81,7 +79,6 @@ public class GuiParticle extends GuiLayer {
         });
         REGISTRY.register("circular", ParticleSpreadCircular.class, new ParticleSpreadGuiHandler() {
             
-            @Override
             public ParticleSpread save(GuiParent parent) {
                 ParticleSpreadCircular spread = new ParticleSpreadCircular();
                 spread.speedY = (float) parent.get("speedy", GuiCounterDecimal.class).getValue();
@@ -91,7 +88,6 @@ public class GuiParticle extends GuiLayer {
                 return spread;
             }
             
-            @Override
             public void load(GuiParent parent, ParticleSpread spread) {
                 GuiTable table = new GuiTable();
                 parent.add(table);
@@ -162,7 +158,6 @@ public class GuiParticle extends GuiLayer {
         });
     }
     
-    @Override
     public void create() {
         GuiParent presets = new GuiParent();
         add(presets);

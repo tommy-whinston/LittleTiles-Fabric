@@ -30,7 +30,6 @@ public class BlockIngredient extends LittleIngredient<BlockIngredient> implement
         return this;
     }
     
-    @Override
     public BlockIngredient add(BlockIngredient ingredient) {
         BlockIngredient remaings = null;
         for (BlockIngredientEntry entry : ingredient.content) {
@@ -44,7 +43,6 @@ public class BlockIngredient extends LittleIngredient<BlockIngredient> implement
         return remaings;
     }
     
-    @Override
     public BlockIngredient sub(BlockIngredient ingredient) {
         BlockIngredient remaings = null;
         for (BlockIngredientEntry entry : ingredient.content) {
@@ -107,12 +105,10 @@ public class BlockIngredient extends LittleIngredient<BlockIngredient> implement
         return ingredient;
     }
     
-    @Override
     public boolean isEmpty() {
         return content.isEmpty();
     }
     
-    @Override
     public BlockIngredient copy() {
         BlockIngredient copy = new BlockIngredient();
         copy.maxEntries = maxEntries;
@@ -121,7 +117,6 @@ public class BlockIngredient extends LittleIngredient<BlockIngredient> implement
         return copy;
     }
     
-    @Override
     public TextBuilder toText() {
         TextBuilder text = new TextBuilder();
         for (BlockIngredientEntry entry : content) {
@@ -132,13 +127,11 @@ public class BlockIngredient extends LittleIngredient<BlockIngredient> implement
         return text;
     }
     
-    @Override
     public void scale(int count) {
         for (BlockIngredientEntry entry : content)
             entry.scale(count);
     }
     
-    @Override
     public void scaleAdvanced(double scale) {
         for (BlockIngredientEntry entry : content)
             entry.scaleAdvanced(scale);
@@ -155,7 +148,6 @@ public class BlockIngredient extends LittleIngredient<BlockIngredient> implement
         return maxVolume > 0;
     }
     
-    @Override
     public int getMinimumCount(BlockIngredient other, int availableCount) {
         int count = -1;
         LinkedHashMapDouble<BlockIngredientEntry> thisEntries = getCombinedEntries();
@@ -169,7 +161,6 @@ public class BlockIngredient extends LittleIngredient<BlockIngredient> implement
         return Math.min(count, availableCount);
     }
     
-    @Override
     public Iterator<BlockIngredientEntry> iterator() {
         return content.iterator();
     }
@@ -178,7 +169,6 @@ public class BlockIngredient extends LittleIngredient<BlockIngredient> implement
         return content;
     }
     
-    @Override
     public void print(TextBuilder text) {
         if (content.size() <= 4)
             for (BlockIngredientEntry entry : content) {
@@ -190,7 +180,6 @@ public class BlockIngredient extends LittleIngredient<BlockIngredient> implement
                 text.stack(entry.getBlockStack()).text(" ").add(printVolume(entry.value, false)).text(" ");
     }
     
-    @Override
     public String toString() {
         return content.toString();
     }

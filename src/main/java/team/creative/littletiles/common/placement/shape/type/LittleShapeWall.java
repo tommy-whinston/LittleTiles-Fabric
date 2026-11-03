@@ -31,7 +31,6 @@ public class LittleShapeWall extends LittleShape {
         super(2);
     }
     
-    @Override
     protected void addBoxes(LittleBoxes boxes, ShapeSelection selection, boolean lowResolution) {
         int direction = selection.getNBT().getInt("direction");
         PlacementPosition originalMin = selection.getFirst().pos.copy();
@@ -100,7 +99,6 @@ public class LittleShapeWall extends LittleShape {
         return;
     }
     
-    @Override
     public void addExtraInformation(CompoundTag nbt, List<Component> list) {
         list.add(Component.translatable("gui.thickness").append(": " + nbt.getInt("thickness")).append(Component.translatable("gui.pixel.length")));
         
@@ -120,7 +118,6 @@ public class LittleShapeWall extends LittleShape {
         list.add(Component.translatable("gui.facing").append(": ").append(Component.translatable("gui.axis." + text)));
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public List<GuiControl> getCustomSettings(CompoundTag nbt, LittleGrid grid) {
         List<GuiControl> controls = new ArrayList<>();
@@ -130,7 +127,6 @@ public class LittleShapeWall extends LittleShape {
         return controls;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void saveCustomSettings(GuiParent gui, CompoundTag nbt, LittleGrid grid) {
         
@@ -142,7 +138,6 @@ public class LittleShapeWall extends LittleShape {
         
     }
     
-    @Override
     public void rotate(CompoundTag nbt, Rotation rotation) {
         int direction = nbt.getInt("direction");
         if (rotation.axis != Axis.Y)
@@ -157,6 +152,5 @@ public class LittleShapeWall extends LittleShape {
         nbt.putInt("direction", direction);
     }
     
-    @Override
     public void mirror(CompoundTag nbt, Axis axis) {}
 }

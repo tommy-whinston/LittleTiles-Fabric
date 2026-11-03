@@ -46,7 +46,6 @@ public class LittleParticle extends TextureSheetParticle {
         this.setSize(0.2F * settings.startSize, 0.2F * settings.startSize);
     }
     
-    @Override
     public void tick() {
         settings.texture.tick(this);
         float lifePercentage = getAge() / (float) getMaxAge();
@@ -71,7 +70,6 @@ public class LittleParticle extends TextureSheetParticle {
             this.setSprite(set.get(this.lifetime - this.age, this.lifetime));
     }
     
-    @Override
     public ParticleRenderType getRenderType() {
         return settings.texture.type.toVanilla();
     }

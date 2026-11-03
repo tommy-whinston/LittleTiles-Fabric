@@ -46,7 +46,6 @@ public class StructureParentCollection extends ParentCollection implements IStru
         this.parent = parent;
     }
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {
         if (nbt.contains("structure"))
             cache = setStructureNBT(nbt.getCompound("structure"));
@@ -61,7 +60,6 @@ public class StructureParentCollection extends ParentCollection implements IStru
         structureIndex = nbt.getInt("index");
     }
     
-    @Override
     protected void saveExtra(CompoundTag nbt, LittleServerFace face) {
         if (isMain()) {
             CompoundTag structureNBT = new CompoundTag();
@@ -73,35 +71,29 @@ public class StructureParentCollection extends ParentCollection implements IStru
         nbt.putInt("index", structureIndex);
     }
     
-    @Override
     public boolean isStructure() {
         return true;
     }
     
-    @Override
     public boolean isStructureChild(LittleStructure structure) throws CorruptedConnectionException, NotYetConnectedException {
         return getStructure().isChildOf(structure);
     }
     
-    @Override
     public BETiles getBE() {
         return parent.be;
     }
     
-    @Override
     public int getAttribute() {
         if (isMain())
             return attribute;
         return attribute & LittleStructureAttribute.NON_ACTIVE_MASK;
     }
     
-    @Override
     public void setAttribute(int attribute) {
         this.attribute = attribute;
         getBE().updateTiles(false, false);
     }
     
-    @Override
     public BlockPos getStructurePosition() {
         return relativePos.offset(getPos());
     }
@@ -117,14 +109,12 @@ public class StructureParentCollection extends ParentCollection implements IStru
         return (LittleStructure) cache;
     }
 
-    @Override
     public LittleStructure getStructureUncached() throws CorruptedConnectionException, NotYetConnectedException {
         if (!isMain()) // Make sure not to remove the structure
             cache = null;
         return getStructure();
     }
 
-    @Override
     public LittleStructure getStructure() throws CorruptedConnectionException, NotYetConnectedException {
         if (isMain())
             return (LittleStructure) cache;
@@ -162,22 +152,18 @@ public class StructureParentCollection extends ParentCollection implements IStru
             throw new NotYetConnectedException();
     }
     
-    @Override
     public boolean isMain() {
         return relativePos == null;
     }
     
-    @Override
     public boolean isClient() {
         return parent.isClient();
     }
     
-    @Override
     public int getIndex() {
         return structureIndex;
     }
     
-    @Override
     public boolean isRemoved() {
         return parent == null;
     }
@@ -192,14 +178,12 @@ public class StructureParentCollection extends ParentCollection implements IStru
         parent.removeStructure(structureIndex);
     }
     
-    @Override
     public void unload() {
         super.unload();
         if (isMain())
             ((LittleStructure) cache).unload();
     }
     
-    @Override
     public int totalSize() {
         return size();
     }

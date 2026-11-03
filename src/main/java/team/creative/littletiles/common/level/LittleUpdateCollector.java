@@ -19,7 +19,6 @@ public class LittleUpdateCollector extends NeighborUpdateCollector {
         super();
     }
     
-    @Override
     protected void processPosition(Level level, BlockPos pos, HashSet<BlockPos> notifiedBlocks) {
         BETiles be = BlockTile.loadBE(level, pos);
         if (be != null)

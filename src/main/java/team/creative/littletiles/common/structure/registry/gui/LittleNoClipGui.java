@@ -16,7 +16,6 @@ public class LittleNoClipGui extends LittleStructureGuiControl {
         super(gui, item);
     }
     
-    @Override
     public void create(@Nullable LittleStructure structure) {
         boolean slowness = true;
         if (structure instanceof LittleNoClipStructure)
@@ -24,7 +23,6 @@ public class LittleNoClipGui extends LittleStructureGuiControl {
         add(new GuiCheckBox("web", slowness).setTranslate("gui.noclip.slowness"));
     }
     
-    @Override
     public LittleStructure save(LittleStructure structure) {
         ((LittleNoClipStructure) structure).web = get("web", GuiCheckBox.class).value;
         return structure;

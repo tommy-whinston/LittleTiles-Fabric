@@ -65,7 +65,6 @@ public class GuiDialogSignalEvents extends GuiLayer {
         event.update();
     }
     
-    @Override
     public void create() {
         if (item == null)
             return;
@@ -151,7 +150,6 @@ public class GuiDialogSignalEvents extends GuiLayer {
             update();
         }
         
-        @Override
         public void update() {
             if (panel == null)
                 return;
@@ -175,32 +173,26 @@ public class GuiDialogSignalEvents extends GuiLayer {
             return new GuiSignalEvent(component, condition, modeConfig.copy());
         }
         
-        @Override
         public GuiSignalComponent getOutput() {
             return component;
         }
         
-        @Override
         public SignalInputCondition getCondition() {
             return condition;
         }
         
-        @Override
         public void setCondition(SignalInputCondition condition) {
             this.condition = condition;
         }
         
-        @Override
         public boolean hasModeConfiguration() {
             return true;
         }
         
-        @Override
         public GuiSignalModeConfiguration getModeConfiguration() {
             return modeConfig;
         }
         
-        @Override
         public void setModeConfiguration(GuiSignalModeConfiguration config) {
             this.modeConfig = config;
         }

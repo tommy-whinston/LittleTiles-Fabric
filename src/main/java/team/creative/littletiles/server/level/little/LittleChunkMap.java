@@ -76,51 +76,44 @@ public class LittleChunkMap extends ChunkMap {
     public LittleChunkHolder addChunkLevel(LittleChunkHolder holder) {
         holder.chunk.setLoaded(true);
         holder.chunk.registerAllBlockEntitiesAfterLevelLoad();
-        holder.chunk.registerTickContainerInLevel(this.chunkCache.level);
+        holder.chunk.registerTickContainerInLevel(((team.creative.littletiles.mixin.server.level.ServerChunkCacheAccessor) this.chunkCache).getLevel());
         return holder;
     }
     
     public LittleChunkHolder createHolder(ChunkPos pos) {
-        return addChunkLevel(new LittleChunkHolder(chunkCache.level, pos, this.lightEngine));
+        return addChunkLevel(new LittleChunkHolder(((team.creative.littletiles.mixin.server.level.ServerChunkCacheAccessor) chunkCache).getLevel(), pos, this.lightEngine));
     }
     
     public LittleChunkHolder createHolder(ChunkPos pos, CompoundTag nbt) {
-        return addChunkLevel(new LittleChunkHolder(LittleChunkSerializer.read((LittleLevel) chunkCache.level, nbt), this.lightEngine));
+        return addChunkLevel(new LittleChunkHolder(LittleChunkSerializer.read((LittleLevel) ((team.creative.littletiles.mixin.server.level.ServerChunkCacheAccessor) chunkCache).getLevel(), nbt), this.lightEngine));
     }
     
     public ClientboundLevelChunkWithLightPacket createPacket(LevelChunk chunk) {
         return new ClientboundLevelChunkWithLightPacket(chunk, this.lightEngine, (BitSet) null, (BitSet) null);
     }
     
-    @Override
     protected ChunkHolder getUpdatingChunkIfPresent(long pos) {
         throw new UnsupportedOperationException();
     }
     
-    @Override
     protected ChunkHolder getVisibleChunkIfPresent(long pos) {
         throw new UnsupportedOperationException();
     }
     
-    @Override
     protected IntSupplier getChunkQueueLevel(long pos) {
         return () -> ChunkTaskPriorityQueue.PRIORITY_LEVEL_COUNT - 1;
     }
     
-    @Override
     public ThreadedLevelLightEngine getLightEngine() {
         return lightEngine;
     }
     
-    @Override
     public void debugReloadGenerator() {}
     
-    @Override
     public String getChunkDebugData(ChunkPos pos) {
         return "";
     }
     
-    @Override
     public ReportedException debugFuturesAndCreateReportedException(IllegalStateException exception, String message) {
         CrashReport crashreport = CrashReport.forThrowable(exception, "Chunk loading");
         CrashReportCategory crashreportcategory = crashreport.addCategory("Chunk loading");
@@ -128,113 +121,89 @@ public class LittleChunkMap extends ChunkMap {
         return new ReportedException(crashreport);
     }
     
-    @Override
     public void close() throws IOException {}
     
-    @Override
     public boolean hasWork() {
         return false;
     }
     
-    @Override
     /** the holder class has no use in this scenario, so all methods related to it are empty */
     public CompletableFuture<Either<LevelChunk, ChunkHolder.ChunkLoadingFailure>> prepareEntityTickingChunk(ChunkHolder holder) {
         return null;
     }
     
-    @Override
     /** the holder class has no use in this scenario, so all methods related to it are empty */
     public CompletableFuture<Either<ChunkAccess, ChunkHolder.ChunkLoadingFailure>> schedule(ChunkHolder holder, ChunkStatus status) {
         return null;
     }
     
-    @Override
     /** the holder class has no use in this scenario, so all methods related to it are empty */
     public CompletableFuture<Either<LevelChunk, ChunkHolder.ChunkLoadingFailure>> prepareTickingChunk(ChunkHolder holder) {
         return null;
     }
     
-    @Override
     /** the holder class has no use in this scenario, so all methods related to it are empty */
     public CompletableFuture<Either<LevelChunk, ChunkHolder.ChunkLoadingFailure>> prepareAccessibleChunk(ChunkHolder p_143110_) {
         return null;
     }
     
-    @Override
     public int getTickingGenerated() {
         return 0;
     }
     
-    @Override
     public int size() {
         return chunkCache.getLoadedChunksCount();
     }
     
-    @Override
     public DistanceManager getDistanceManager() {
         return this.distanceManager;
     }
     
-    @Override
     public List<ServerPlayer> getPlayersCloseForSpawning(ChunkPos pos) {
         return Collections.EMPTY_LIST;
     }
     
-    @Override
     public void move(ServerPlayer player) {}
     
-    @Override
     public List<ServerPlayer> getPlayers(ChunkPos pos, boolean all) {
         return Collections.EMPTY_LIST;
     }
     
-    @Override
     public String getStorageName() {
         return "";
     }
     
-    @Override
     public boolean isOldChunkAround(ChunkPos pos, int range) {
         return false;
     }
     
-    @Override
     public CompoundTag upgradeChunkTag(ResourceKey<Level> levelKey, Supplier<DimensionDataStorage> storageSupplier, CompoundTag tag, Optional<ResourceKey<Codec<? extends ChunkGenerator>>> codec) {
         return tag;
     }
     
-    @Override
     public CompletableFuture<Optional<CompoundTag>> read(ChunkPos pos) {
         return null;
     }
     
-    @Override
     public void write(ChunkPos pos, CompoundTag tag) {}
     
-    @Override
     public void flushWorker() {}
     
-    @Override
     public ChunkScanAccess chunkScanner() {
         return fakeAccess;
     }
     
-    @Override
     public void tick() {}
     
-    @Override
     public void removeEntity(Entity entity) {}
     
-    @Override
     public void addEntity(Entity entity) {}
     
-    @Override
     protected void broadcastAndSend(Entity entity, Packet<?> packet) {
         LittleLevel level = (LittleLevel) chunkCache.getLevel();
         LittleTiles.NETWORK.sendToClientTrackingAndSelf(new LittleVanillaPacket(level, packet), level.getHolder());
     }
     
-    @Override
     public void broadcast(Entity entity, Packet<?> packet) {
         LittleLevel level = (LittleLevel) chunkCache.getLevel();
         LittleTiles.NETWORK.sendToClientTracking(new LittleVanillaPacket(level, packet), level.getHolder());

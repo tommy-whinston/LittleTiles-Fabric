@@ -19,7 +19,6 @@ public class VanillaBlockPacket extends CreativePacket {
         
         CHISEL {
             
-            @Override
             public void action(Level level, Player player, BlockPos pos, BlockState state) {
                 if (LittleAction.isBlockValid(state))
                     ItemLittleChisel.setElement(player.getMainHandItem(), new LittleElement(state, ColorUtils.WHITE));
@@ -28,7 +27,6 @@ public class VanillaBlockPacket extends CreativePacket {
         },
         GLOVE {
             
-            @Override
             public void action(Level level, Player player, BlockPos pos, BlockState state) {
                 if (LittleAction.isBlockValid(state)) {
                     ItemStack stack = player.getMainHandItem();
@@ -54,10 +52,8 @@ public class VanillaBlockPacket extends CreativePacket {
         
     }
     
-    @Override
     public void executeClient(Player player) {}
     
-    @Override
     public void executeServer(ServerPlayer player) {
         action.action(player.level(), player, pos, player.level().getBlockState(pos));
         player.inventoryMenu.broadcastChanges();

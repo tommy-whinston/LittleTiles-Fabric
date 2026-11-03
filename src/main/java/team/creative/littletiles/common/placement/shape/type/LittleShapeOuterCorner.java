@@ -30,7 +30,6 @@ public class LittleShapeOuterCorner extends LittleShape {
         super(2);
     }
     
-    @Override
     protected void addBoxes(LittleBoxes boxes, ShapeSelection selection, boolean lowResolution) {
         LittleTransformableBox box = new LittleTransformableBox(selection.getOverallBox(), new int[1]);
         CornerCache cache = box.new CornerCache(false);
@@ -89,12 +88,10 @@ public class LittleShapeOuterCorner extends LittleShape {
         nbt.putIntArray("vec", new int[] { vec.getX(), vec.getY(), vec.getZ() });
     }
     
-    @Override
     public void addExtraInformation(CompoundTag nbt, List<Component> list) {
         list.add(Component.translatable("gui.box.transformable.second").append(": ").append(Component.translatable("gui." + nbt.getBoolean("second"))));
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public List<GuiControl> getCustomSettings(CompoundTag nbt, LittleGrid grid) {
         List<GuiControl> controls = new ArrayList<>();
@@ -102,20 +99,17 @@ public class LittleShapeOuterCorner extends LittleShape {
         return controls;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void saveCustomSettings(GuiParent gui, CompoundTag nbt, LittleGrid grid) {
         GuiCheckBox box = (GuiCheckBox) gui.get("second-type");
         nbt.putBoolean("second", box.value);
     }
     
-    @Override
     public void rotate(CompoundTag nbt, Rotation rotation) {
         setVec(nbt, rotation.transform(getVec(nbt)));
         setFacing(nbt, rotation.rotate(getFacing(nbt)));
     }
     
-    @Override
     public void mirror(CompoundTag nbt, Axis axis) {
         setVec(nbt, axis.mirror(getVec(nbt)));
         setFacing(nbt, axis.mirror(getFacing(nbt)));

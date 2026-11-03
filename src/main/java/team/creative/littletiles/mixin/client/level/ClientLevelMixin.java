@@ -51,27 +51,22 @@ public class ClientLevelMixin implements ClientLevelExtender {
         return new ClientChunkCache(level, distance);
     }
     
-    @Override
     public TransientEntitySectionManager getEntityStorage() {
         return entityStorage;
     }
     
-    @Override
     public BlockStatePredictionHandler blockStatePredictionHandler() {
         return blockStatePredictionHandler;
     }
     
-    @Override
     public void handleBlockChangedAckExtender(int sequence) {
         as().handleBlockChangedAck(sequence);
     }
     
-    @Override
     public void setServerVerifiedBlockStateExtender(BlockPos pos, BlockState state, int sequence) {
         as().setServerVerifiedBlockState(pos, state, sequence);
     }
     
-    @Override
     public void syncBlockStateExtender(BlockPos pos, BlockState state, Vec3 vec) {
         as().syncBlockState(pos, state, vec);
     }

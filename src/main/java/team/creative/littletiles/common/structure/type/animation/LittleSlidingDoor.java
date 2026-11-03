@@ -17,14 +17,12 @@ public class LittleSlidingDoor extends LittleDoor {
         super(type, mainBlock);
     }
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {
         super.loadExtra(nbt);
         distance = nbt.getInt("dis");
         grid = LittleGrid.get(nbt.getInt("disG"));
     }
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {
         super.saveExtra(nbt);
         nbt.putInt("dis", distance);

@@ -3,7 +3,6 @@ package team.creative.littletiles.common.structure.attribute;
 public class LittleAttributeBuilder {
     
     public static final LittleAttributeBuilder NONE = new LittleAttributeBuilder() {
-        @Override
         public int build() {
             return 0;
         }

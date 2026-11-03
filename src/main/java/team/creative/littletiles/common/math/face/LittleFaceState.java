@@ -4,17 +4,14 @@ public enum LittleFaceState {
     
     UNLOADED {
         
-        @Override
         public boolean coveredFully() {
             return false;
         }
         
-        @Override
         public boolean partially() {
             return false;
         }
         
-        @Override
         public boolean outside() {
             return false;
         }
@@ -22,17 +19,14 @@ public enum LittleFaceState {
     },
     INSIDE_UNCOVERED {
         
-        @Override
         public boolean outside() {
             return false;
         }
         
-        @Override
         public boolean coveredFully() {
             return false;
         }
         
-        @Override
         public boolean partially() {
             return false;
         }
@@ -40,17 +34,14 @@ public enum LittleFaceState {
     },
     INSIDE_PARTIALLY_COVERED {
         
-        @Override
         public boolean outside() {
             return false;
         }
         
-        @Override
         public boolean coveredFully() {
             return false;
         }
         
-        @Override
         public boolean partially() {
             return true;
         }
@@ -58,17 +49,14 @@ public enum LittleFaceState {
     },
     INSIDE_COVERED {
         
-        @Override
         public boolean outside() {
             return false;
         }
         
-        @Override
         public boolean coveredFully() {
             return true;
         }
         
-        @Override
         public boolean partially() {
             return false;
         }
@@ -76,17 +64,14 @@ public enum LittleFaceState {
     },
     OUTSIDE_UNCOVERED {
         
-        @Override
         public boolean outside() {
             return true;
         }
         
-        @Override
         public boolean coveredFully() {
             return false;
         }
         
-        @Override
         public boolean partially() {
             return false;
         }
@@ -94,17 +79,14 @@ public enum LittleFaceState {
     },
     OUTSIDE_PARTIALLY_COVERED {
         
-        @Override
         public boolean outside() {
             return true;
         }
         
-        @Override
         public boolean coveredFully() {
             return false;
         }
         
-        @Override
         public boolean partially() {
             return true;
         }
@@ -112,17 +94,14 @@ public enum LittleFaceState {
     },
     OUTISDE_COVERED {
         
-        @Override
         public boolean outside() {
             return true;
         }
         
-        @Override
         public boolean coveredFully() {
             return true;
         }
         
-        @Override
         public boolean partially() {
             return false;
         }

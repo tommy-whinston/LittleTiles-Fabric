@@ -23,7 +23,6 @@ public class OutputUpdate extends CreativePacket {
         this.state = state;
     }
     
-    @Override
     public void executeClient(Player player) {
         try {
             LittleStructure structure = location.find(player.level());
@@ -33,7 +32,6 @@ public class OutputUpdate extends CreativePacket {
         } catch (LittleActionException e) {}
     }
     
-    @Override
     public void executeServer(ServerPlayer player) {}
     
 }

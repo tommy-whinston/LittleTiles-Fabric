@@ -17,7 +17,6 @@ public class StructureStartAnimationPacket extends StructurePacket {
         this.timeline = timeline;
     }
     
-    @Override
     public void execute(Player player, LittleStructure structure) {
         requiresClient(player);
         

@@ -20,10 +20,8 @@ public class LittleInteractionPacket extends CreativePacket {
     
     public LittleInteractionPacket() {}
     
-    @Override
     public void executeClient(Player player) {}
     
-    @Override
     public void executeServer(ServerPlayer player) {
         if (start)
             LittleTilesServer.INTERACTION.start(player, index, rightclick);

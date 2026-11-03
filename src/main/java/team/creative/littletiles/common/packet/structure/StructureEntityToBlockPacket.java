@@ -15,7 +15,6 @@ public class StructureEntityToBlockPacket extends LittleEntityPacket<LittleAnima
         super(entity);
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void execute(Player player, LittleAnimationEntity entity) {
         requiresClient(player);

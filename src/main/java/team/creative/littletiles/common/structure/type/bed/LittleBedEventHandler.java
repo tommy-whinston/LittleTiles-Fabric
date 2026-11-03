@@ -17,11 +17,10 @@ public class LittleBedEventHandler {
     
     @SubscribeEvent
     public void isSleepingLocationAllowed(SleepingLocationCheckEvent event) {
-        if (event.getEntity() instanceof Player player) {
-            LittleBed bed = ((ILittleBedPlayerExtension) player).getBed();
-            if (bed != null && bed.getSleepingPlayer() == player)
-                event.setResult(Result.ALLOW);
-        }
+        Player player = event.getEntity();
+        LittleBed bed = ((ILittleBedPlayerExtension) player).getBed();
+        if (bed != null && bed.getSleepingPlayer() == player)
+            event.setResult(Result.ALLOW);
     }
     
     @SubscribeEvent

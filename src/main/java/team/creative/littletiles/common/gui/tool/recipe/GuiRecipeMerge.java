@@ -42,7 +42,6 @@ public class GuiRecipeMerge extends GuiLayer {
         return false;
     }
     
-    @Override
     public void create() {
         if (structure == null)
             return;

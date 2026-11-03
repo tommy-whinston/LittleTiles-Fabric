@@ -55,7 +55,6 @@ public abstract class LittleActionBoxes extends LittleAction<Boolean> {
     
     public abstract void action(Level level, Player player, BlockPos pos, BlockState state, List<LittleBox> boxes, LittleGrid grid) throws LittleActionException;
     
-    @Override
     public Boolean action(Player player) throws LittleActionException {
         if (boxes.isEmpty())
             return true;
@@ -131,12 +130,10 @@ public abstract class LittleActionBoxes extends LittleAction<Boolean> {
         return action;
     }
     
-    @Override
     public boolean wasSuccessful(Boolean result) {
         return result;
     }
     
-    @Override
     public Boolean failed() {
         return false;
     }

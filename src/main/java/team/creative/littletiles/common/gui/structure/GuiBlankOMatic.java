@@ -100,20 +100,17 @@ public class GuiBlankOMatic extends GuiLayer {
         });
     }
     
-    @Override
     public void init() {
         super.init();
         if (!isClient())
             VOLUME.send(IntTag.valueOf(whitener.whiteColor));
     }
     
-    @Override
     public void closed() {
         super.closed();
         PlayerUtils.addOrDrop(getPlayer(), whiteInput);
     }
     
-    @Override
     public void create() {
         flow = GuiFlow.STACK_Y;
         GuiParent machine = new GuiParent();
@@ -126,7 +123,6 @@ public class GuiBlankOMatic extends GuiLayer {
         
         leftUpper.add(new GuiInventoryGrid("inv", whitener.inventory, 1, 1, (c, i) -> new Slot(c, i, 0, 0) {
             
-            @Override
             public boolean mayPlace(ItemStack stack) {
                 return !BlankOMaticRecipeRegistry.getRecipe(stack).isEmpty();
             }
@@ -140,7 +136,6 @@ public class GuiBlankOMatic extends GuiLayer {
         
         leftLower.add(new GuiInventoryGrid("input", whiteInput, 1, 1, (c, i) -> new Slot(c, i, 0, 0) {
             
-            @Override
             public boolean mayPlace(ItemStack stack) {
                 return BlankOMaticRecipeRegistry.getVolume(stack) > 0;
             }
@@ -209,7 +204,6 @@ public class GuiBlankOMatic extends GuiLayer {
             super(name, GuiFlow.FIT_X);
         }
         
-        @Override
         public ControlFormatting getControlFormatting() {
             return ControlFormatting.TRANSPARENT;
         }
@@ -269,7 +263,6 @@ public class GuiBlankOMatic extends GuiLayer {
             this.index = index;
         }
         
-        @Override
         @Environment(EnvType.CLIENT)
         @OnlyIn(Dist.CLIENT)
         public StyleDisplay getBorder(GuiStyle style, StyleDisplay display) {
@@ -281,7 +274,6 @@ public class GuiBlankOMatic extends GuiLayer {
             return super.getBorder(style, display);
         }
         
-        @Override
         public boolean mouseClicked(Rect rect, double x, double y, int button) {
             selector.select(index);
             playSound(SoundEvents.UI_BUTTON_CLICK);

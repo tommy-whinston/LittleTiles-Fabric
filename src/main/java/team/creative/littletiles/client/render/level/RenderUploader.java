@@ -135,7 +135,6 @@ public class RenderUploader {
             targetChunk = chunk;
         }
         
-        @Override
         public BufferCache get(RenderType layer) {
             return holders.get(layer);
         }

@@ -58,7 +58,6 @@ public class LittleStorage extends LittleStructure {
         lastSlotStackSize = (int) ((slots % 1) * stackSizeLimit);
     }
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {
         inventorySize = nbt.getInt("inventorySize");
         stackSizeLimit = nbt.getInt("stackSizeLimit");
@@ -74,7 +73,6 @@ public class LittleStorage extends LittleStructure {
         invisibleStorageTiles = nbt.getBoolean("invisibleStorage");
     }
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {
         if (inventory != null) {
             nbt.putInt("inventorySize", inventorySize);
@@ -86,7 +84,6 @@ public class LittleStorage extends LittleStructure {
         nbt.putBoolean("invisibleStorage", invisibleStorageTiles);
     }
     
-    @Override
     public void structureDestroyed() {
         super.structureDestroyed();
         if (!isClient()) {
@@ -113,12 +110,10 @@ public class LittleStorage extends LittleStructure {
         return false;
     }
     
-    @Override
     public boolean canInteract() {
         return true;
     }
     
-    @Override
     public InteractionResult use(Level level, LittleTileContext context, BlockPos pos, Player player, BlockHitResult result, InteractionHand hand) {
         if (!level.isClientSide && !hasPlayerOpened(player))
             LittleTilesGuiRegistry.STORAGE.open(player, this);
@@ -161,7 +156,6 @@ public class LittleStorage extends LittleStructure {
         onInventoryChanged();
     }
     
-    @Override
     public void afterPlaced() {
         super.afterPlaced();
         double volume = 0;
@@ -185,7 +179,6 @@ public class LittleStorage extends LittleStructure {
             super(id, structureClass, factory, attribute);
         }
         
-        @Override
         public void addIngredients(LittleGroup previews, LittleIngredients ingredients) {
             super.addIngredients(previews, ingredients);
             

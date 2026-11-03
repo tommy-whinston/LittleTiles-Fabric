@@ -14,7 +14,6 @@ public class LittleActions extends LittleAction<Boolean> {
     
     public LittleActions() {}
     
-    @Override
     public boolean canBeReverted() {
         for (int i = 0; i < actions.length; i++) {
             if (!actions[i].canBeReverted())
@@ -23,7 +22,6 @@ public class LittleActions extends LittleAction<Boolean> {
         return true;
     }
     
-    @Override
     public LittleAction revert(Player player) throws LittleActionException {
         LittleAction[] newActions = new LittleAction[actions.length];
         for (int i = 0; i < newActions.length; i++) {
@@ -33,7 +31,6 @@ public class LittleActions extends LittleAction<Boolean> {
         return new LittleActions(newActions);
     }
     
-    @Override
     public Boolean action(Player player) throws LittleActionException {
         if (actions.length == 0)
             return true;
@@ -45,7 +42,6 @@ public class LittleActions extends LittleAction<Boolean> {
         return success;
     }
     
-    @Override
     public LittleAction mirror(Axis axis, LittleBoxAbsolute box) {
         LittleAction[] newActions = new LittleAction[actions.length];
         for (int i = 0; i < actions.length; i++)
@@ -53,12 +49,10 @@ public class LittleActions extends LittleAction<Boolean> {
         return new LittleActions(newActions);
     }
     
-    @Override
     public boolean wasSuccessful(Boolean result) {
         return result;
     }
     
-    @Override
     public Boolean failed() {
         return false;
     }

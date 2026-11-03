@@ -104,7 +104,6 @@ public class GuiWorkbench extends GuiLayer {
         super("workbench");
     }
     
-    @Override
     public void create() {
         flow = GuiFlow.STACK_Y;
         align = Align.CENTER;
@@ -113,7 +112,6 @@ public class GuiWorkbench extends GuiLayer {
         add(new GuiPlayerInventoryGrid(getPlayer()).setUnexpandableX());
     }
     
-    @Override
     public void closed() {
         super.closed();
         PlayerUtils.addOrDrop(getPlayer(), crafting);
@@ -137,25 +135,20 @@ public class GuiWorkbench extends GuiLayer {
             return addControl(slot);
         }
         
-        @Override
         public GuiSlot getSlot(int index) {
             return slots.get(index);
         }
         
-        @Override
         public int inventorySize() {
             return slots.size();
         }
         
-        @Override
         public String name() {
             return name;
         }
         
-        @Override
         public void setChanged() {}
         
-        @Override
         public void setChanged(int slotIndex) {}
         
     }

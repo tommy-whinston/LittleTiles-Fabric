@@ -40,7 +40,6 @@ public class LittleRenderPipelineForge extends LittleRenderPipeline {
     private final BufferBuilder builder = new BufferBuilder(131072);
     private final MutableBlockPos modelOffset = new MutableBlockPos();
     
-    @Override
     public void buildCache(PoseStack pose, ChunkLayerMap<BufferCache> buffers, RenderingBlockContext data, VertexFormat format, SingletonList<BakedQuad> bakedQuadWrapper) {
         Level renderLevel = data.be.getLevel();
         while (renderLevel instanceof LittleSubLevel sub && !sub.shouldUseLightingForRenderig())
@@ -49,7 +48,7 @@ public class LittleRenderPipelineForge extends LittleRenderPipeline {
         BlockPos pos = data.be.getBlockPos();
         
         ForgeModelBlockRendererAccessor renderer = (ForgeModelBlockRendererAccessor) MC.getBlockRenderer().getModelRenderer();
-        boolean smooth = Minecraft.useAmbientOcclusion() && data.state.getLightEmission(data.be.getLevel(), pos) == 0;
+        boolean smooth = Minecraft.useAmbientOcclusion() && data.state.getLightEmission() == 0;
         QuadLighter lighter = smooth ? renderer.getSmoothLighter().get() : renderer.getFlatLighter().get();
         
         lighter.setup(renderLevel, pos, data.state);
@@ -110,10 +109,8 @@ public class LittleRenderPipelineForge extends LittleRenderPipeline {
         lighter.reset();
     }
     
-    @Override
     public void reload() {}
     
-    @Override
     public void release() {}
     
 }

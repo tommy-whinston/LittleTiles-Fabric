@@ -25,7 +25,6 @@ public class GuiDialogSignalVirtualNumberInput extends GuiLayer {
         super.init();
     }
     
-    @Override
     public void create() {
         if (input == null)
             return;

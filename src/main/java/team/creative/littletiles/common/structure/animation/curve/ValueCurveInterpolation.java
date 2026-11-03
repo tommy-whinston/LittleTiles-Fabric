@@ -36,7 +36,6 @@ public abstract class ValueCurveInterpolation<T extends VecNd> extends ValueCurv
         }
     }
     
-    @Override
     public Iterator<Pair<Integer, T>> iterator() {
         return points.iterator();
     }
@@ -58,7 +57,6 @@ public abstract class ValueCurveInterpolation<T extends VecNd> extends ValueCurv
         points.add(key, vec);
     }
     
-    @Override
     public void start(T start, T end, int duration) { // used to add start and end state
         if (!points.containsKey(0))
             points.add(0, new Pair<>(0, start));
@@ -66,13 +64,11 @@ public abstract class ValueCurveInterpolation<T extends VecNd> extends ValueCurv
             points.add(new Pair<>(duration, end));
     }
     
-    @Override
     public void end() { // start and end state will be removed again
         points.remove(0);
         points.remove(points.size() - 1);
     }
     
-    @Override
     public T value(int tick) {
         int higher = points.size();
         for (int i = 0; i < points.size(); i++) {
@@ -100,7 +96,6 @@ public abstract class ValueCurveInterpolation<T extends VecNd> extends ValueCurv
     
     public abstract double valueAt(double mu, double before, int pointIndex, double after, int pointIndexNext, int dim);
     
-    @Override
     public void saveExtra(CompoundTag nbt) {
         if (points.isEmpty())
             return;
@@ -127,7 +122,6 @@ public abstract class ValueCurveInterpolation<T extends VecNd> extends ValueCurv
         nbt.putLongArray("data", data);
     }
     
-    @Override
     public void rotate(Rotation rotation) {
         for (T vec : points.values()) {
             if (!(vec instanceof Vec3d))
@@ -136,7 +130,6 @@ public abstract class ValueCurveInterpolation<T extends VecNd> extends ValueCurv
         }
     }
     
-    @Override
     public void mirror(Axis axis) {
         if (points.getFirst().value instanceof Vec3d)
             for (T vec : points.values())
@@ -170,7 +163,6 @@ public abstract class ValueCurveInterpolation<T extends VecNd> extends ValueCurv
         return points.size();
     }
     
-    @Override
     public void reverse(int duration) {
         PairList<Integer, T> newPoints = new PairList<>();
         for (int i = points.size() - 1; i >= 0; i--)
@@ -178,7 +170,6 @@ public abstract class ValueCurveInterpolation<T extends VecNd> extends ValueCurv
         this.points = newPoints;
     }
     
-    @Override
     public boolean isEmpty() {
         return points.isEmpty();
     }
@@ -191,12 +182,10 @@ public abstract class ValueCurveInterpolation<T extends VecNd> extends ValueCurv
         
         public LinearCurve() {}
         
-        @Override
         public double valueAt(double mu, double before, int pointIndex, double after, int pointIndexNext, int dim) {
             return (after - before) * mu + before;
         }
         
-        @Override
         public LinearCurve<T> copy() {
             LinearCurve<T> copy = new LinearCurve<T>();
             for (Pair<Integer, T> pair : points)
@@ -214,13 +203,11 @@ public abstract class ValueCurveInterpolation<T extends VecNd> extends ValueCurv
         
         public CosineCurve() {}
         
-        @Override
         public double valueAt(double mu, double before, int pointIndex, double after, int pointIndexNext, int dim) {
             double mu2 = (1 - Math.cos(mu * Math.PI)) / 2;
             return (before * (1 - mu2) + after * mu2);
         }
         
-        @Override
         public CosineCurve<T> copy() {
             CosineCurve<T> copy = new CosineCurve<T>();
             for (Pair<Integer, T> pair : points)
@@ -255,7 +242,6 @@ public abstract class ValueCurveInterpolation<T extends VecNd> extends ValueCurv
         
         public CubicCurve() {}
         
-        @Override
         public double valueAt(double mu, double before, int pointIndex, double after, int pointIndexNext, int dim) {
             double v0 = get(pointIndex - 1, dim);
             double v1 = get(pointIndex, dim);
@@ -273,7 +259,6 @@ public abstract class ValueCurveInterpolation<T extends VecNd> extends ValueCurv
             return (a0 * mu * mu2 + a1 * mu2 + a2 * mu + a3);
         }
         
-        @Override
         public CubicCurve<T> copy() {
             CubicCurve<T> copy = new CubicCurve<T>();
             for (Pair<Integer, T> pair : points)
@@ -293,7 +278,6 @@ public abstract class ValueCurveInterpolation<T extends VecNd> extends ValueCurv
         
         public HermiteCurve() {}
         
-        @Override
         public double valueAt(double mu, double before, int pointIndex, double after, int pointIndexNext, int dim) {
             double m0, m1, mu2, mu3;
             double a0, a1, a2, a3;
@@ -317,7 +301,6 @@ public abstract class ValueCurveInterpolation<T extends VecNd> extends ValueCurv
             return (a0 * v1 + a1 * m0 + a2 * m1 + a3 * v2);
         }
         
-        @Override
         public HermiteCurve<T> copy() {
             HermiteCurve<T> copy = new HermiteCurve<T>();
             for (Pair<Integer, T> pair : points)

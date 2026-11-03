@@ -10,19 +10,16 @@ public class LittleBagInventory extends LittleIngredients {
         content[LittleIngredient.indexOf(ColorIngredient.class)] = new ColorIngredient().setLimit(LittleTiles.CONFIG.general.bag.colorStorage);
     }
     
-    @Override
     public LittleBagInventory copy() {
         LittleBagInventory bag = new LittleBagInventory();
         bag.assignContent(this);
         return bag;
     }
     
-    @Override
     protected boolean removeEmptyIngredients() {
         return false;
     }
     
-    @Override
     protected boolean canAddNewIngredients() {
         return false;
     }

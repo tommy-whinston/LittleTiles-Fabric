@@ -13,19 +13,16 @@ public class StackIngredientEntry {
         this.count = count;
     }
     
-    @Override
     public int hashCode() {
         return stack.getItem().hashCode();
     }
     
-    @Override
     public boolean equals(Object obj) {
         if (obj instanceof StackIngredientEntry)
             return InventoryUtils.isItemStackEqual(stack, ((StackIngredientEntry) obj).stack);
         return false;
     }
     
-    @Override
     public String toString() {
         return stack.toString();
     }

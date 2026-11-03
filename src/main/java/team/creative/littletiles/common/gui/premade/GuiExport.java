@@ -30,7 +30,6 @@ public class GuiExport extends GuiLayer {
         this.align = Align.STRETCH;
     }
     
-    @Override
     public void create() {
         add(new GuiInventoryGrid("export", exportSlot).addListener(x -> {
             ItemStack stack = exportSlot.getItem(0);
@@ -56,7 +55,6 @@ public class GuiExport extends GuiLayer {
         
     }
     
-    @Override
     public void closed() {
         super.closed();
         PlayerUtils.addOrDrop(getPlayer(), exportSlot);

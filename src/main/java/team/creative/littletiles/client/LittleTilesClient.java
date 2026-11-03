@@ -46,6 +46,8 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import team.creative.creativecore.client.CreativeCoreClient;
 import team.creative.creativecore.client.render.box.RenderBox;
+import team.creative.littletiles.client.compat.ClientRegistryCompat;
+import team.creative.littletiles.client.compat.EntityRendererHelper;
 import team.creative.creativecore.client.render.model.CreativeBlockModel;
 import team.creative.creativecore.client.render.model.CreativeItemBoxModel;
 import team.creative.creativecore.common.util.mc.ColorUtils;
@@ -56,7 +58,6 @@ import team.creative.littletiles.client.action.interact.LittleInteractionHandler
 import team.creative.littletiles.client.level.LevelHandlersClient;
 import team.creative.littletiles.client.level.LittleAnimationHandlerClient;
 import team.creative.littletiles.client.level.LittleVanillaInteractionHandlerClient;
-import team.creative.littletiles.client.mod.rubidium.RubidiumManager;
 import team.creative.littletiles.client.player.LittleClientPlayerConnection;
 import team.creative.littletiles.client.render.block.BETilesRenderer;
 import team.creative.littletiles.client.render.block.LittleBlockClientRegistry;
@@ -94,12 +95,10 @@ public class LittleTilesClient {
     
     public static final IKeyConflictContext LITTLE_KEY_CONTEXT = new IKeyConflictContext() {
         
-        @Override
         public boolean isActive() {
             return true;
         }
         
-        @Override
         public boolean conflicts(IKeyConflictContext other) {
             return this == other;
         }
@@ -188,7 +187,7 @@ public class LittleTilesClient {
     }
     
     private static void setup(final FMLClientSetupEvent event) {
-        mc.getItemColors().register((stack, layer) -> {
+        new net.minecraft.client.color.item.ItemColors().register((stack, layer) -> {
             if (layer == 0)
                 return ColorUtils.WHITE;
             return ItemLittlePaintBrush.getColor(stack);
@@ -212,7 +211,6 @@ public class LittleTilesClient {
         ReloadableResourceManager reloadableResourceManager = (ReloadableResourceManager) mc.getResourceManager();
         reloadableResourceManager.registerReloadListener(new ResourceManagerReloadListener() {
             
-            @Override
             public void onResourceManagerReload(ResourceManager manager) {
                 RenderingThread.CURRENT_RENDERING_INDEX++;
                 LittleBlockClientRegistry.clearCache();
@@ -222,10 +220,10 @@ public class LittleTilesClient {
         
         CreativeCoreClient.registerClientConfig(LittleTiles.MODID);
         
-        EntityRenderers.register(LittleTilesRegistry.SIZED_TNT_TYPE.get(), RenderSizedTNTPrimed::new);
-        EntityRenderers.register(LittleTilesRegistry.ENTITY_LEVEL.get(), LittleEntityRenderer::new);
-        EntityRenderers.register(LittleTilesRegistry.ENTITY_ANIMATION.get(), LittleEntityRenderer::new);
-        EntityRenderers.register(LittleTilesRegistry.SIT_TYPE.get(), LittleSitRenderer::new);
+        EntityRendererHelper.register(LittleTilesRegistry.SIZED_TNT_TYPE.get(), RenderSizedTNTPrimed::new);
+        EntityRendererHelper.register(LittleTilesRegistry.ENTITY_LEVEL.get(), LittleEntityRenderer::new);
+        EntityRendererHelper.register(LittleTilesRegistry.ENTITY_ANIMATION.get(), LittleEntityRenderer::new);
+        EntityRendererHelper.register(LittleTilesRegistry.SIT_TYPE.get(), LittleSitRenderer::new);
         
         blockEntityRenderer = new BETilesRenderer();
         BlockEntityRenderers.register(LittleTilesRegistry.BE_TILES_TYPE_RENDERED.get(), x -> blockEntityRenderer);
@@ -237,7 +235,6 @@ public class LittleTilesClient {
         ItemProperties.register(LittleTilesRegistry.MAGENTA_COLOR.get(), filled, function);
         ItemProperties.register(LittleTilesRegistry.YELLOW_COLOR.get(), filled, function);
         
-        RubidiumManager.init();
     }
     
     public static void modelLoader(RegisterAdditional event) {
@@ -247,22 +244,19 @@ public class LittleTilesClient {
     }
     
     public static void modelEvent(RegisterGeometryLoaders event) {
-        CreativeCoreClient.registerBlockModel(new ResourceLocation(LittleTiles.MODID, "empty"), new CreativeBlockModel() {
+        ClientRegistryCompat.registerBlockModel(new ResourceLocation(LittleTiles.MODID, "empty"), new CreativeBlockModel() {
             
-            @Override
             public List<? extends RenderBox> getBoxes(BlockState state, ModelData data, RandomSource source) {
                 return Collections.EMPTY_LIST;
             }
             
-            @Override
             public @NotNull ModelData getModelData(@NotNull BlockAndTintGetter level, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull ModelData modelData) {
                 return modelData;
             }
         });
         
-        CreativeCoreClient.registerItemModel(new ResourceLocation(LittleTiles.MODID, "tiles"), new LittleModelItemTilesBig());
-        CreativeCoreClient.registerItemModel(new ResourceLocation(LittleTiles.MODID, "premade"), new LittleModelItemTilesBig() {
-            @Override
+        ClientRegistryCompat.registerItemModel(new ResourceLocation(LittleTiles.MODID, "tiles"), new LittleModelItemTilesBig());
+        ClientRegistryCompat.registerItemModel(new ResourceLocation(LittleTiles.MODID, "premade"), new LittleModelItemTilesBig() {
             public List<? extends RenderBox> getBoxes(ItemStack stack, boolean translucent) {
                 if (!stack.getOrCreateTag().contains(LittleGroup.STRUCTURE_KEY))
                     return Collections.EMPTY_LIST;
@@ -282,15 +276,13 @@ public class LittleTilesClient {
                 return cubes;
             }
         });
-        CreativeCoreClient.registerItemModel(new ResourceLocation(LittleTiles.MODID, "glove"),
+        ClientRegistryCompat.registerItemModel(new ResourceLocation(LittleTiles.MODID, "glove"),
             new LittleModelItemPreview(new ModelResourceLocation(LittleTiles.MODID, "glove_background", "inventory"), null) {
                 
-                @Override
                 public boolean shouldRenderFake(ItemStack stack) {
                     return true;
                 }
                 
-                @Override
                 protected ItemStack getFakeStack(ItemStack current) {
                     GloveMode mode = ItemLittleGlove.getMode(current);
                     if (mode.hasPreviewElement(current))
@@ -305,19 +297,18 @@ public class LittleTilesClient {
                     
                 }
             });
-        CreativeCoreClient.registerItemModel(new ResourceLocation(LittleTiles.MODID, "chisel"),
+        ClientRegistryCompat.registerItemModel(new ResourceLocation(LittleTiles.MODID, "chisel"),
             new LittleModelItemPreview(new ModelResourceLocation(LittleTiles.MODID, "chisel_background", "inventory"), stack -> ItemLittleChisel.getElement(stack)));
-        CreativeCoreClient.registerItemModel(new ResourceLocation(LittleTiles.MODID, "blueprint"),
+        ClientRegistryCompat.registerItemModel(new ResourceLocation(LittleTiles.MODID, "blueprint"),
             new LittleModelItemBackground(new ModelResourceLocation(LittleTiles.MODID, "blueprint_background", "inventory"), x -> {
                 ItemStack stack = new ItemStack(LittleTilesRegistry.ITEM_TILES.get());
                 stack.setTag(x.getOrCreateTag().getCompound(ItemLittleBlueprint.CONTENT_KEY));
                 return stack;
             }));
         
-        CreativeCoreClient.registerItemModel(new ResourceLocation(LittleTiles.MODID, "blockingredient"),
+        ClientRegistryCompat.registerItemModel(new ResourceLocation(LittleTiles.MODID, "blockingredient"),
             new CreativeItemBoxModel(new ModelResourceLocation("minecraft", "stone", "inventory")) {
                 
-                @Override
                 public List<? extends RenderBox> getBoxes(ItemStack stack, boolean translucent) {
                     List<RenderBox> cubes = new ArrayList<>();
                     BlockIngredientEntry ingredient = ItemBlockIngredient.loadIngredient(stack);
@@ -356,8 +347,8 @@ public class LittleTilesClient {
     }
     
     public static void initItemColors(RegisterColorHandlersEvent.Item event) {
-        CreativeCoreClient.registerItemColor(event.getItemColors(), LittleTilesRegistry.PREMADE.get());
-        CreativeCoreClient.registerItemColor(event.getItemColors(), LittleTilesRegistry.ITEM_TILES.get());
+        ClientRegistryCompat.registerItemColor(event.getItemColors(), LittleTilesRegistry.PREMADE.get());
+        ClientRegistryCompat.registerItemColor(event.getItemColors(), LittleTilesRegistry.ITEM_TILES.get());
         event.register((stack, tint) -> {
             if (stack.getItem() instanceof BlockItem block)
                 return event.getBlockColors().getColor(block.getBlock().defaultBlockState(), (BlockAndTintGetter) null, (BlockPos) null, tint);
@@ -385,11 +376,11 @@ public class LittleTilesClient {
         private boolean ignoreModifier = false;
         
         public LittleKeyMapping(String description, IKeyConflictContext keyConflictContext, int keyCode, String category) {
-            super(description, keyConflictContext, KeyModifier.NONE, InputConstants.Type.KEYSYM, keyCode, category);
+            super(description, InputConstants.Type.KEYSYM, keyCode, category);
         }
         
         public LittleKeyMapping(String description, IKeyConflictContext keyConflictContext, KeyModifier keyModifier, int keyCode, String category) {
-            super(description, keyConflictContext, keyModifier, InputConstants.Type.KEYSYM, keyCode, category);
+            super(description, InputConstants.Type.KEYSYM, keyCode, category);
         }
         
         public LittleKeyMapping ignoreModifier() {
@@ -397,14 +388,12 @@ public class LittleTilesClient {
             return this;
         }
         
-        @Override
         public boolean isActiveAndMatches(Key keyCode) {
             if (ignoreModifier)
-                return keyCode != InputConstants.UNKNOWN && keyCode.equals(getKey());
-            return super.isActiveAndMatches(keyCode);
+                return keyCode != InputConstants.UNKNOWN && keyCode.equals(getDefaultKey());
+            return keyCode.equals(getDefaultKey());
         }
         
-        @Override
         public boolean same(KeyMapping other) {
             if (other instanceof LittleKeyMapping && super.same(other))
                 return true;

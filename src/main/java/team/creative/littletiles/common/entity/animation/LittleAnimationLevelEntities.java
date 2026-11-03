@@ -62,17 +62,14 @@ public class LittleAnimationLevelEntities implements LevelEntityGetter<Entity> {
         }
     }
     
-    @Override
     public Entity get(int id) {
         return byId.get(id);
     }
     
-    @Override
     public Entity get(UUID uuid) {
         return byUuid.get(uuid);
     }
     
-    @Override
     public Iterable<Entity> getAll() {
         return byId.values();
     }
@@ -93,7 +90,6 @@ public class LittleAnimationLevelEntities implements LevelEntityGetter<Entity> {
         this.callbacks.onTrackingEnd(entity);
     }
     
-    @Override
     public <U extends Entity> void get(EntityTypeTest<Entity, U> test, AbortableIterationConsumer<U> consumer) {
         for (Entity entity : this.byId.values()) {
             U u = test.tryCast(entity);
@@ -102,14 +98,12 @@ public class LittleAnimationLevelEntities implements LevelEntityGetter<Entity> {
         }
     }
     
-    @Override
     public void get(AABB bb, Consumer<Entity> consumer) {
         for (Entity entity : byId.values())
             if (entity.getBoundingBox().intersects(bb))
                 consumer.accept(entity);
     }
     
-    @Override
     public <U extends Entity> void get(EntityTypeTest<Entity, U> test, AABB bb, AbortableIterationConsumer<U> consumer) {
         for (Entity entity : this.byId.values()) {
             U u = test.tryCast(entity);
@@ -132,10 +126,8 @@ public class LittleAnimationLevelEntities implements LevelEntityGetter<Entity> {
             this.entity = entity;
         }
         
-        @Override
         public void onMove() {}
         
-        @Override
         public void onRemove(Entity.RemovalReason remove) {
             stopTicking(entity);
             stopTracking(entity);

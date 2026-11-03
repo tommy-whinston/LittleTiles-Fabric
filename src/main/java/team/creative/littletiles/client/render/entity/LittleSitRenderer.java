@@ -12,7 +12,6 @@ public class LittleSitRenderer extends EntityRenderer<EntitySit> {
         super(context);
     }
     
-    @Override
     public ResourceLocation getTextureLocation(EntitySit animation) {
         return InventoryMenu.BLOCK_ATLAS;
     }

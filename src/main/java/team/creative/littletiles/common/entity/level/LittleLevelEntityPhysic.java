@@ -26,24 +26,20 @@ public class LittleLevelEntityPhysic extends LittleEntityPhysic<LittleLevelEntit
         super(parent);
     }
     
-    @Override
     public void setSubLevel(LittleSubLevel level) {
         updateSystem = new BlockUpdateLevelSystem(level);
         level.registerBlockChangeListener(updateSystem::blockChanged);
         updateSystem.registerLevelBoundListener(this);
     }
     
-    @Override
     public void loadExtra(CompoundTag nbt) {
         updateSystem.load(nbt.getCompound("bounds"));
     }
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {
         nbt.put("bounds", updateSystem.save());
     }
     
-    @Override
     public void tick() {
         updateSystem.tick(parent);
     }
@@ -52,7 +48,6 @@ public class LittleLevelEntityPhysic extends LittleEntityPhysic<LittleLevelEntit
         return updateSystem;
     }
     
-    @Override
     public void rescan(LittleLevel level, BlockUpdateLevelSystem system, Facing facing, Iterable<BlockPos> possible, int boundary) {
         double value = facing.positive ? Double.NEGATIVE_INFINITY : Double.POSITIVE_INFINITY;
         for (BlockPos pos : possible) {
@@ -68,7 +63,6 @@ public class LittleLevelEntityPhysic extends LittleEntityPhysic<LittleLevelEntit
         set(facing, value);
     }
     
-    @Override
     public void afterChangesApplied(BlockUpdateLevelSystem system) {
         setBB(new ABB(minX, minY, minZ, maxX, maxY, maxZ));
     }

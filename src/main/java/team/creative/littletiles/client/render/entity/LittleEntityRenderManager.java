@@ -160,7 +160,7 @@ public abstract class LittleEntityRenderManager<T extends LittleEntity> {
     protected abstract void renderAllBlockEntities(PoseStack pose, Frustum frustum, Vec3 cam, float frameTime, MultiBufferSource bufferSource);
     
     protected void renderBlockEntity(BlockEntity blockentity, PoseStack pose, Frustum frustum, Vec3 cam, float frameTime, MultiBufferSource bufferSource) {
-        if (!frustum.isVisible(blockentity.getRenderBoundingBox()))
+        if (!frustum.isVisible(new net.minecraft.world.phys.AABB(blockentity.getBlockPos())))
             return;
         BlockPos blockpos4 = blockentity.getBlockPos();
         pose.pushPose();
@@ -190,11 +190,11 @@ public abstract class LittleEntityRenderManager<T extends LittleEntity> {
                     PoseStack.Pose last = pose.last();
                     VertexConsumer consumer = new SheetedDecalTextureGenerator(mc.renderBuffers().crumblingBufferSource().getBuffer(ModelBakery.DESTROY_TYPES.get(k1)), last
                             .pose(), last.normal(), 1.0F);
-                    ModelDataManager manager = level.getModelDataManager();
+                    ModelDataManager manager = team.creative.littletiles.client.compat.ModelDataHelper.get(level.getParent());
                     ModelData modelData = null;
                     if (manager != null)
                         modelData = manager.getAt(blockpos2);
-                    mc.getBlockRenderer().renderBreakingTexture(level.getBlockState(blockpos2), blockpos2, level, pose, consumer, modelData == null ? ModelData.EMPTY : modelData);
+                    mc.getBlockRenderer().renderBreakingTexture(level.getBlockState(blockpos2), blockpos2, level.getParent(), pose, consumer);
                     pose.popPose();
                 }
             }

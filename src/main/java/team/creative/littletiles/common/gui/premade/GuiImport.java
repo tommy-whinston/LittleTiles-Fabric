@@ -84,13 +84,11 @@ public class GuiImport extends GuiLayer {
         align = Align.STRETCH;
     }
     
-    @Override
     public void closed() {
         super.closed();
         PlayerUtils.addOrDrop(getPlayer(), importSlot);
     }
     
-    @Override
     public void create() {
         add(textfield = new GuiTextfield("import_textfield"));
         textfield.setMaxStringLength(Integer.MAX_VALUE);

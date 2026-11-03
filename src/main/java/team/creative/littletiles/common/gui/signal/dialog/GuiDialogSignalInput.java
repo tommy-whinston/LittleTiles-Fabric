@@ -44,7 +44,6 @@ public class GuiDialogSignalInput extends GuiLayer {
         super.init();
     }
     
-    @Override
     public void create() {
         if (input == null)
             return;
@@ -56,22 +55,18 @@ public class GuiDialogSignalInput extends GuiLayer {
         List<GuiSignalInputOperator> modes = new ArrayList<>();
         modes.add(new GuiSignalInputOperator("none") {
             
-            @Override
             public void load(GuiSignalNodeInput input, GuiParent panel) {}
             
-            @Override
             public void save(GuiSignalNodeInput input, GuiParent panel) {}
             
         });
         modes.add(new GuiSignalInputOperator("operation") {
             
-            @Override
             public void load(GuiSignalNodeInput input, GuiParent panel) {
                 panel.add(new GuiStateButtonMapped<SignalLogicOperator>("operation", input.logic == null ? SignalLogicOperator.AND : input.logic, new TextMapBuilder<SignalLogicOperator>()
                         .addComponent(Arrays.asList(SignalLogicOperator.AND, SignalLogicOperator.OR, SignalLogicOperator.XOR), x -> Component.literal(x.display))));
             }
             
-            @Override
             public void save(GuiSignalNodeInput input, GuiParent panel) {
                 input.logic = ((GuiStateButtonMapped<SignalLogicOperator>) panel.get("operation")).getSelected();
             }
@@ -79,7 +74,6 @@ public class GuiDialogSignalInput extends GuiLayer {
         });
         modes.add(new GuiSignalInputOperator("pattern") {
             
-            @Override
             public void load(GuiSignalNodeInput input, GuiParent panel) {
                 for (int i = 0; i < bandwidth; i++) {
                     GuiParent line = new GuiParent(GuiFlow.STACK_X);
@@ -93,7 +87,6 @@ public class GuiDialogSignalInput extends GuiLayer {
                 }
             }
             
-            @Override
             public void save(GuiSignalNodeInput input, GuiParent panel) {
                 int[] indexes = new int[bandwidth];
                 for (int i = 0; i < bandwidth; i++) {
@@ -106,7 +99,6 @@ public class GuiDialogSignalInput extends GuiLayer {
         });
         modes.add(new GuiSignalInputOperator("equation") {
             
-            @Override
             public void load(GuiSignalNodeInput input, GuiParent panel) {
                 GuiParent line = new GuiParent(GuiFlow.STACK_X);
                 panel.add(line.setExpandableX());
@@ -115,7 +107,6 @@ public class GuiDialogSignalInput extends GuiLayer {
                 
             }
             
-            @Override
             public void save(GuiSignalNodeInput input, GuiParent panel) {
                 GuiTextfield textfield = (GuiTextfield) get("equation");
                 try {

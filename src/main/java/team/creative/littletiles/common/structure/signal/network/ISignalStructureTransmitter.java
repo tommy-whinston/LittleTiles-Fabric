@@ -5,7 +5,6 @@ import team.creative.littletiles.common.structure.signal.component.SignalCompone
 
 public interface ISignalStructureTransmitter extends ISignalStructureBase {
     
-    @Override
     public default SignalComponentType getComponentType() {
         return SignalComponentType.TRANSMITTER;
     }

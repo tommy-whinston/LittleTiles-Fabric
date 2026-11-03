@@ -41,12 +41,10 @@ public class LittleDoorAxisGui extends LittleDoorBaseGui {
         });
     }
     
-    @Override
     protected boolean hasAxis() {
         return true;
     }
     
-    @Override
     protected void createSpecific(LittleDoor door) {
         GuiIsoAnimationViewer viewer = get("viewer");
         LittleAxisDoorRotation rotation;
@@ -101,7 +99,6 @@ public class LittleDoorAxisGui extends LittleDoorBaseGui {
         raiseEvent(new GuiAnimationAxisChangedEvent(viewer));
     }
     
-    @Override
     protected void save(PhysicalState state) {
         GuiTabsMapped<Function<GuiParent, LittleAxisDoorRotation>> tabs = get("tabs");
         
@@ -111,7 +108,6 @@ public class LittleDoorAxisGui extends LittleDoorBaseGui {
         tabs.getSelected().apply(tabs.getTab(tabs.index())).apply(state);
     }
     
-    @Override
     public LittleStructure save(LittleStructure structure) {
         LittleAxisDoor door = (LittleAxisDoor) super.save(structure);
         

@@ -12,7 +12,6 @@ public interface LittleSubLevel extends ISubLevel, LittleLevel {
     
     public LevelEntityGetter<Entity> getEntityGetter();
     
-    @Override
     public default FeatureFlagSet enabledFeatures() {
         return getParent().enabledFeatures();
     }

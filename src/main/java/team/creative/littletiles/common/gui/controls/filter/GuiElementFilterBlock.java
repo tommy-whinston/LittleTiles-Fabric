@@ -23,7 +23,6 @@ public class GuiElementFilterBlock extends GuiElementFilter {
         selector.setExpandableX();
     }
     
-    @Override
     public BiFilter<IParentCollection, LittleTile> get() {
         Block filterBlock = Block.byItem(selector.getSelected().getItem());
         if (filterBlock != null && !(filterBlock instanceof AirBlock) && LittleAction.isBlockValid(filterBlock.defaultBlockState()))

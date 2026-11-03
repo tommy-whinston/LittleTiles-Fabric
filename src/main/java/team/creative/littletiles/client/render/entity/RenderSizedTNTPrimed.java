@@ -16,7 +16,6 @@ public class RenderSizedTNTPrimed extends TntRenderer {
         super(context);
     }
     
-    @Override
     public void render(PrimedTnt entity, float p_116178_, float p_116179_, PoseStack pose, MultiBufferSource buffer, int p_116182_) {
         pose.pushPose();
         LittleVec size = ((PrimedSizedTnt) entity).size;

@@ -23,12 +23,10 @@ public class LittleVolumes implements IGridBased {
         this.grid = LittleGrid.MIN;
     }
     
-    @Override
     public LittleGrid getGrid() {
         return grid;
     }
     
-    @Override
     public void convertTo(LittleGrid grid) {
         int ratio = grid.count / this.grid.count;
         volumes.scale(ratio);
@@ -81,7 +79,6 @@ public class LittleVolumes implements IGridBased {
         volumes.put(tile, exist);
     }
     
-    @Override
     public int getSmallest() {
         int smallest = LittleGrid.MIN.count;
         for (Integer value : volumes.values()) {
@@ -94,12 +91,10 @@ public class LittleVolumes implements IGridBased {
         return smallest;
     }
     
-    @Override
     public int hashCode() {
         return volumes.size();
     }
     
-    @Override
     public boolean equals(Object obj) {
         if (obj instanceof LittleVolumes) {
             LittleGrid beforeThis = grid;

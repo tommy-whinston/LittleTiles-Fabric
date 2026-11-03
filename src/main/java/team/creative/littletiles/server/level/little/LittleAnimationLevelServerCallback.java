@@ -35,22 +35,18 @@ public class LittleAnimationLevelServerCallback extends LittleAnimationLevelCall
         super(level);
     }
     
-    @Override
     public void onCreated(Entity entity) {}
     
-    @Override
     public void onDestroyed(Entity entity) {
         level.getScoreboard().entityRemoved(entity);
     }
     
-    @Override
     public void tick() {
         super.tick();
         for (ServerEntity entity : entities.values())
             entity.sendChanges();
     }
     
-    @Override
     public void onTrackingStart(Entity entity) {
         EntityType<?> entitytype = entity.getType();
         if (entitytype.clientTrackingRange() * 16 != 0) {
@@ -66,7 +62,6 @@ public class LittleAnimationLevelServerCallback extends LittleAnimationLevelCall
         
     }
     
-    @Override
     public void onTrackingEnd(Entity entity) {
         ServerEntity server = entities.remove(entity.getId());
         for (ServerPlayer player : seenBy)
@@ -74,18 +69,16 @@ public class LittleAnimationLevelServerCallback extends LittleAnimationLevelCall
         
         entity.updateDynamicGameEventListener(DynamicGameEventListener::remove);
         
-        entity.onRemovedFromWorld();
+        
         MinecraftForge.EVENT_BUS.post(new EntityLeaveLevelEvent(entity, level));
     }
     
-    @Override
     public void addTrackingPlayer(ServerPlayer player) {
         if (seenBy.add(player))
             for (ServerEntity entity : entities.values())
                 entity.addPairing(player);
     }
     
-    @Override
     public void removeTrackingPlayer(ServerPlayer player) {
         if (seenBy.remove(player))
             for (ServerEntity entity : entities.values())
@@ -105,7 +98,6 @@ public class LittleAnimationLevelServerCallback extends LittleAnimationLevelCall
         return true;
     }
     
-    @Override
     public void tickEntity(Entity entity) {
         if (entity.isRemoved())
             return;
@@ -142,7 +134,7 @@ public class LittleAnimationLevelServerCallback extends LittleAnimationLevelCall
             if (entity instanceof Player || tickingEntities.contains(entity)) {
                 entity.setOldPosAndRot();
                 ++entity.tickCount;
-                if (entity.canUpdate())
+                if (!entity.isRemoved())
                     entity.rideTick();
                 
                 for (Entity passenger : entity.getPassengers()) {

@@ -28,17 +28,14 @@ public class LittleDirectedStateStructure extends LittleStateStructure<Animation
         super(type, mainBlock);
     }
     
-    @Override
     protected AnimationStateDirected getEmptyState() {
         return EMPTY;
     }
     
-    @Override
     protected AnimationTimeline generateTimeline(AnimationStateDirected start, AnimationStateDirected end) {
         return null;
     }
     
-    @Override
     protected ValueCurve<Vec1d> createEmptyCurve() {
         return null;
     }
@@ -58,7 +55,6 @@ public class LittleDirectedStateStructure extends LittleStateStructure<Animation
         startTransition(transition.start, transition.end, transition.timeline);
     }
     
-    @Override
     protected boolean shouldStayAnimatedAfterTransitionEnd() {
         getOutput(0).updateState(SignalState.of(currentIndex()));
         currentTransition = -1;
@@ -78,7 +74,6 @@ public class LittleDirectedStateStructure extends LittleStateStructure<Animation
         return null;
     }
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {
         super.loadExtra(nbt);
         
@@ -87,18 +82,15 @@ public class LittleDirectedStateStructure extends LittleStateStructure<Animation
             throw new RuntimeException("Invalid state structure! Transition " + currentTransition + " not found. Only got " + transitions.size() + " transitions");
     }
     
-    @Override
     public boolean canRightClick() {
         return super.canRightClick() && current().hasRightClickTransition();
     }
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {
         super.saveExtra(nbt);
         nbt.putInt("cT", currentTransition);
     }
     
-    @Override
     protected void processSignalChangesInternal() {
         if (!isChanging()) {
             int transition = current().signalChanged(this);

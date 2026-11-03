@@ -168,7 +168,6 @@ public class LittleActionDestroyBoxes extends LittleActionBoxes {
         return ingredients;
     }
     
-    @Override
     public void action(Level world, Player player, BlockPos pos, BlockState state, List<LittleBox> boxes, LittleGrid grid) throws LittleActionException {
         fireBlockBreakEvent(world, pos, player);
         
@@ -196,18 +195,15 @@ public class LittleActionDestroyBoxes extends LittleActionBoxes {
         }
     }
     
-    @Override
     public Boolean action(Player player) throws LittleActionException {
         destroyedStructures = new ArrayList<>();
         return super.action(player);
     }
     
-    @Override
     public boolean canBeReverted() {
         return true;
     }
     
-    @Override
     public LittleAction revert(Player player) {
         boolean additionalPreviews = destroyed != null && !destroyed.isEmpty();
         LittleAction[] actions = new LittleAction[(additionalPreviews ? 1 : 0) + destroyedStructures.size()];
@@ -231,7 +227,6 @@ public class LittleActionDestroyBoxes extends LittleActionBoxes {
         
         public LittleActionDestroyBoxesFiltered() {}
         
-        @Override
         public boolean shouldSkipTile(IParentCollection parent, LittleTile tile) {
             return !filter.is(parent, tile);
         }
@@ -340,7 +335,6 @@ public class LittleActionDestroyBoxes extends LittleActionBoxes {
         return removed;
     }
     
-    @Override
     public void actionDone(Level level, Player player) {
         for (StructurePreview structure : destroyedStructures) {
             try {
@@ -356,7 +350,6 @@ public class LittleActionDestroyBoxes extends LittleActionBoxes {
         }
     }
     
-    @Override
     public LittleAction mirror(Axis axis, LittleBoxAbsolute box) {
         return assignMirror(new LittleActionDestroyBoxes(), axis, box);
     }

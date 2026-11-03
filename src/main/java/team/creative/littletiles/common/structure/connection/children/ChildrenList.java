@@ -74,7 +74,6 @@ public abstract class ChildrenList<T> {
             private Iterator<T> itr = children.iterator();
             private boolean firstItr = true;
             
-            @Override
             public boolean hasNext() {
                 if (!itr.hasNext() && firstItr) {
                     itr = extensions.values().iterator();
@@ -83,7 +82,6 @@ public abstract class ChildrenList<T> {
                 return itr.hasNext();
             }
             
-            @Override
             public T next() {
                 return itr.next();
             }
@@ -133,139 +131,112 @@ public abstract class ChildrenList<T> {
             super(list);
         }
         
-        @Override
         public void clear() {
             throw new UnsupportedOperationException();
         }
         
-        @Override
         public boolean retainAll(Collection<?> c) {
             throw new UnsupportedOperationException();
         }
         
-        @Override
         public Spliterator<E> spliterator() {
             throw new UnsupportedOperationException();
         }
         
-        @Override
         public boolean add(E e) {
             throw new UnsupportedOperationException();
         }
         
-        @Override
         public void add(int index, E element) {
             throw new UnsupportedOperationException();
         }
         
-        @Override
         public E remove(int index) {
             throw new UnsupportedOperationException();
         }
         
-        @Override
         public boolean remove(Object o) {
             throw new UnsupportedOperationException();
         }
         
-        @Override
         public boolean removeIf(Predicate<? super E> filter) {
             throw new UnsupportedOperationException();
         }
         
-        @Override
         protected void removeRange(int fromIndex, int toIndex) {
             throw new UnsupportedOperationException();
         }
         
-        @Override
         public boolean removeAll(Collection<?> c) {
             throw new UnsupportedOperationException();
         }
         
-        @Override
         public boolean addAll(Collection<? extends E> c) {
             throw new UnsupportedOperationException();
         }
         
-        @Override
         public boolean addAll(int index, Collection<? extends E> c) {
             throw new UnsupportedOperationException();
         }
         
-        @Override
         public void replaceAll(UnaryOperator<E> operator) {
             throw new UnsupportedOperationException();
         }
         
-        @Override
         public void sort(Comparator<? super E> c) {
             throw new UnsupportedOperationException();
         }
         
-        @Override
         public ListIterator<E> listIterator() {
             return listIterator(0);
         }
         
-        @Override
         public ListIterator<E> listIterator(final int index) {
             return new ListIterator<E>() {
                 private final ListIterator<? extends E> i = UnmodifiableList.super.listIterator(index);
                 
-                @Override
                 public boolean hasNext() {
                     return i.hasNext();
                 }
                 
-                @Override
                 public E next() {
                     return i.next();
                 }
                 
-                @Override
                 public boolean hasPrevious() {
                     return i.hasPrevious();
                 }
                 
-                @Override
                 public E previous() {
                     return i.previous();
                 }
                 
-                @Override
                 public int nextIndex() {
                     return i.nextIndex();
                 }
                 
-                @Override
                 public int previousIndex() {
                     return i.previousIndex();
                 }
                 
-                @Override
                 public void remove() {
                     throw new UnsupportedOperationException();
                 }
                 
-                @Override
                 public void set(E e) {
                     throw new UnsupportedOperationException();
                 }
                 
-                @Override
                 public void add(E e) {
                     throw new UnsupportedOperationException();
                 }
                 
-                @Override
                 public void forEachRemaining(Consumer<? super E> action) {
                     i.forEachRemaining(action);
                 }
             };
         }
         
-        @Override
         public List<E> subList(int fromIndex, int toIndex) {
             return new UnmodifiableList<>(super.subList(fromIndex, toIndex));
         }

@@ -26,14 +26,12 @@ public class StructureChildToSubLevelConnection extends StructureChildConnection
         this.entityUUID = UUID.fromString(nbt.getString("entity"));
     }
     
-    @Override
     public CompoundTag save(CompoundTag nbt) {
         nbt = super.save(nbt);
         nbt.putString("entity", entityUUID.toString());
         return nbt;
     }
     
-    @Override
     protected Level getLevel() throws CorruptedConnectionException, NotYetConnectedException {
         LittleEntity animation = LittleTiles.ANIMATION_HANDLERS.get(super.getLevel()).find(entityUUID);
         if (animation != null)
@@ -41,12 +39,10 @@ public class StructureChildToSubLevelConnection extends StructureChildConnection
         throw new MissingAnimationException(entityUUID);
     }
     
-    @Override
     public LittleEntity getAnimation() {
         return null;
     }
     
-    @Override
     public boolean isLinkToAnotherWorld() {
         return true;
     }

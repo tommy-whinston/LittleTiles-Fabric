@@ -36,7 +36,6 @@ public class LittleChair extends LittleStructure {
         super(type, mainBlock);
     }
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {
         if (nbt.contains("sit"))
             sitUUID = UUID.fromString(nbt.getString("sit"));
@@ -44,7 +43,6 @@ public class LittleChair extends LittleStructure {
             sitUUID = null;
     }
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {
         if (sitUUID != null)
             nbt.putString("sit", sitUUID.toString());
@@ -60,7 +58,6 @@ public class LittleChair extends LittleStructure {
             sitUUID = null;
     }
     
-    @Override
     public void removeStructure(LittleUpdateCollector neighbor) throws CorruptedConnectionException, NotYetConnectedException {
         if (!isClient()) {
             EntitySit sit = getSitEntity();
@@ -97,7 +94,6 @@ public class LittleChair extends LittleStructure {
         return null;
     }
     
-    @Override
     public void afterPlaced() {
         super.afterPlaced();
         if (!isClient()) {
@@ -109,12 +105,10 @@ public class LittleChair extends LittleStructure {
         }
     }
     
-    @Override
     public boolean canInteract() {
         return true;
     }
     
-    @Override
     public InteractionResult use(Level level, LittleTileContext context, BlockPos pos, Player player, BlockHitResult result, InteractionHand hand) {
         if (!level.isClientSide) {
             if (this.player != null)

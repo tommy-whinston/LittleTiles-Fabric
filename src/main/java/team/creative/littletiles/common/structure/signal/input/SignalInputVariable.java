@@ -84,7 +84,6 @@ public class SignalInputVariable extends SignalInputCondition {
         this.target = target;
     }
     
-    @Override
     public SignalState test(LittleStructure structure, boolean forceBitwise) {
         SignalState state = target.getState(structure);
         if (forceBitwise)
@@ -93,29 +92,24 @@ public class SignalInputVariable extends SignalInputCondition {
         
     }
     
-    @Override
     public boolean testIndex(SignalState state) {
         if (target.isIndexVariable())
             return state.is(target.child);
         return false;
     }
     
-    @Override
     public String write() {
         return target.write();
     }
     
-    @Override
     protected double internalDelay() {
         return LittleTiles.CONFIG.signal.variableDuration;
     }
     
-    @Override
     public SignalTarget target() {
         return target;
     }
     
-    @Override
     public Iterator<SignalInputCondition> nested() {
         return Collections.emptyIterator();
     }
@@ -126,7 +120,6 @@ public class SignalInputVariable extends SignalInputCondition {
             super(target);
         }
         
-        @Override
         public SignalState test(LittleStructure structure, boolean forceBitwise) {
             return target.getState(structure);
         }
@@ -142,7 +135,6 @@ public class SignalInputVariable extends SignalInputCondition {
             this.operator = operator;
         }
         
-        @Override
         public SignalState test(LittleStructure structure, boolean forceBitwise) {
             SignalState state = target.getState(structure);
             boolean result = false;
@@ -155,7 +147,6 @@ public class SignalInputVariable extends SignalInputCondition {
             return SignalState.of(result);
         }
         
-        @Override
         public String write() {
             return super.write() + "{" + (operator == SignalLogicOperator.AND ? "&" : operator.operator) + "}";
         }
@@ -170,12 +161,10 @@ public class SignalInputVariable extends SignalInputCondition {
             this.indexes = indexes;
         }
         
-        @Override
         public SignalState test(LittleStructure structure, boolean forceBitwise) {
             return SignalState.of(target.getState(structure).is(indexes));
         }
         
-        @Override
         public String write() {
             String result = super.write() + "{";
             for (int i = 0; i < indexes.length; i++) {
@@ -196,22 +185,18 @@ public class SignalInputVariable extends SignalInputCondition {
             this.condition = condition;
         }
         
-        @Override
         public SignalState test(LittleStructure structure, boolean forceBitwise) {
             return SignalState.of(condition.testIndex(target.getState(structure)));
         }
         
-        @Override
         public String write() {
             return super.write() + "{" + condition.write() + "}";
         }
         
-        @Override
         protected double internalDelay() {
             return super.calculateDelay() + condition.calculateDelay();
         }
         
-        @Override
         public Iterator<SignalInputCondition> nested() {
             return new SingleIterator<>(condition);
         }

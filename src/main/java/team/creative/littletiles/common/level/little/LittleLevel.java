@@ -20,17 +20,14 @@ public interface LittleLevel extends IOrientatedLevel {
     
     public void registerBlockChangeListener(LevelBlockChangeListener listener);
     
-    @Override
     public Entity getHolder();
     
-    @Override
     public void setHolder(Entity entity);
     
     public UUID key();
     
-    public void unload(LevelChunk chunk);
+    public void unloadChunk(LevelChunk chunk);
     
-    @Override
     public void unload();
     
     public Iterable<Entity> entities();

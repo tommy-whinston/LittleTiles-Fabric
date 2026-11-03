@@ -51,12 +51,10 @@ public class StackIngredient extends LittleIngredient<StackIngredient> implement
         return this;
     }
     
-    @Override
     public Iterator<StackIngredientEntry> iterator() {
         return content.iterator();
     }
     
-    @Override
     public StackIngredient copy() {
         StackIngredient copy = new StackIngredient();
         copy.stackLimit = stackLimit;
@@ -65,7 +63,6 @@ public class StackIngredient extends LittleIngredient<StackIngredient> implement
         return copy;
     }
     
-    @Override
     public TextBuilder toText() {
         TextBuilder text = new TextBuilder();
         for (StackIngredientEntry entry : content)
@@ -98,7 +95,6 @@ public class StackIngredient extends LittleIngredient<StackIngredient> implement
         return ingredient;
     }
     
-    @Override
     public StackIngredient add(StackIngredient ingredient) {
         StackIngredient remaings = null;
         for (StackIngredientEntry entry : ingredient.content) {
@@ -136,7 +132,6 @@ public class StackIngredient extends LittleIngredient<StackIngredient> implement
         return ingredient;
     }
     
-    @Override
     public StackIngredient sub(StackIngredient ingredient) {
         StackIngredient remaings = null;
         for (StackIngredientEntry entry : ingredient.content) {
@@ -150,18 +145,15 @@ public class StackIngredient extends LittleIngredient<StackIngredient> implement
         return remaings;
     }
     
-    @Override
     public boolean isEmpty() {
         return content.isEmpty();
     }
     
-    @Override
     public void scale(int count) {
         for (StackIngredientEntry entry : content)
             entry.scale(count);
     }
     
-    @Override
     public void scaleAdvanced(double scale) {
         for (StackIngredientEntry entry : content)
             entry.scaleAdvanced(scale);
@@ -178,7 +170,6 @@ public class StackIngredient extends LittleIngredient<StackIngredient> implement
         return stackLimit > 0;
     }
     
-    @Override
     public int getMinimumCount(StackIngredient other, int availableCount) {
         int count = -1;
         LinkedHashMapInteger<StackIngredientEntry> thisEntries = getCombinedEntries();
@@ -196,7 +187,6 @@ public class StackIngredient extends LittleIngredient<StackIngredient> implement
         return content;
     }
     
-    @Override
     public void print(TextBuilder text) {
         if (content.size() <= 4)
             for (StackIngredientEntry entry : content)
@@ -206,7 +196,6 @@ public class StackIngredient extends LittleIngredient<StackIngredient> implement
                 text.stack(entry.stack).text(" " + entry.count + " ");
     }
     
-    @Override
     public String toString() {
         return content.toString();
     }

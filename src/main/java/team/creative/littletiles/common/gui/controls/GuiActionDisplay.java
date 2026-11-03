@@ -32,26 +32,21 @@ public class GuiActionDisplay extends GuiControl {
         setMessageCount(6);
     }
     
-    @Override
     public ControlFormatting getControlFormatting() {
         return ControlFormatting.TRANSPARENT;
     }
     
-    @Override
     public void flowX(int width, int preferred) {
         for (int i = 0; i < messages.size(); i++)
             messages.get(i).setDimension(width, Integer.MAX_VALUE);
     }
     
-    @Override
     public void flowY(int width, int height, int preferred) {}
     
-    @Override
     protected int minWidth(int availableWidth) {
         return 10;
     }
     
-    @Override
     public int preferredWidth(int availableWidth) {
         int max = 0;
         for (int i = 0; i < messages.size(); i++)
@@ -59,12 +54,10 @@ public class GuiActionDisplay extends GuiControl {
         return max;
     }
     
-    @Override
     protected int minHeight(int width, int availableHeight) {
         return Minecraft.getInstance().font.lineHeight;
     }
     
-    @Override
     public int preferredHeight(int width, int availableHeight) {
         int height = 0;
         for (int i = 0; i < messages.size(); i++)
@@ -109,7 +102,6 @@ public class GuiActionDisplay extends GuiControl {
         reflow();
     }
     
-    @Override
     @OnlyIn(value = Dist.CLIENT)
     protected void renderContent(GuiGraphics graphics, GuiChildControl control, Rect rect, int mouseX, int mouseY) {
         int i = 0;
@@ -132,13 +124,10 @@ public class GuiActionDisplay extends GuiControl {
         pose.popPose();
     }
     
-    @Override
     public void closed() {}
     
-    @Override
     public void init() {}
     
-    @Override
     public void tick() {}
     
     private static class ActionMessage extends CompiledText {

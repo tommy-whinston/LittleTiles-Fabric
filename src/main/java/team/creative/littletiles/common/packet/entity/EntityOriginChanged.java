@@ -26,7 +26,6 @@ public class EntityOriginChanged extends LittleEntityPacket {
         rotZ = origin.rotZ();
     }
     
-    @Override
     public void execute(Player player, LittleEntity entity) {
         entity.physic.set(offX, offY, offZ, rotX, rotY, rotZ);
     }

@@ -98,10 +98,8 @@ public abstract class LittleAction<T> extends CreativePacket {
     
     public abstract T failed();
     
-    @Override
     public final void executeClient(Player player) {}
     
-    @Override
     public final void executeServer(ServerPlayer player) {
         try {
             action(player);

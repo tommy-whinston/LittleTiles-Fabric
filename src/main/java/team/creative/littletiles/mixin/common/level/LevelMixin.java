@@ -23,7 +23,6 @@ import team.creative.creativecore.common.util.math.box.BoxesVoxelShape;
 @Mixin(Level.class)
 public abstract class LevelMixin implements LevelAccessor, AutoCloseable, net.minecraftforge.common.extensions.IForgeLevel {
     
-    @Override
     public boolean noCollision(@Nullable Entity entity, AABB bb) {
         for (VoxelShape voxelshape : this.getBlockCollisions(entity, bb))
             if (voxelshape instanceof BoxesVoxelShape box) {
@@ -47,7 +46,6 @@ public abstract class LevelMixin implements LevelAccessor, AutoCloseable, net.mi
         return worldborder.isInsideCloseToBorder(p_186441_, p_186442_) ? worldborder.getCollisionShape() : null;
     }
     
-    @Override
     public Optional<Vec3> findFreePosition(@Nullable Entity entity, VoxelShape shape, Vec3 vec, double x, double y, double z) {
         if (shape.isEmpty())
             return Optional.empty();

@@ -31,12 +31,10 @@ public class ItemLittleBag extends Item implements ILittleIngredientInventory, I
         super(new Item.Properties().stacksTo(1));
     }
     
-    @Override
     public GuiLayer create(CompoundTag nbt, Player player) {
         return new GuiBag(ContainerSlotView.mainHand(player));
     }
     
-    @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if (hand != InteractionHand.MAIN_HAND)
             return InteractionResultHolder.fail(player.getItemInHand(hand));
@@ -45,13 +43,11 @@ public class ItemLittleBag extends Item implements ILittleIngredientInventory, I
         return InteractionResultHolder.success(player.getItemInHand(hand));
     }
     
-    @Override
     public LittleIngredients getInventory(ItemStack stack) {
         CompoundTag nbt = stack.getOrCreateTag();
         
         LittleIngredients ingredients = new LittleIngredients() {
             
-            @Override
             protected boolean canAddNewIngredients() {
                 return false;
             }
@@ -75,7 +71,6 @@ public class ItemLittleBag extends Item implements ILittleIngredientInventory, I
         return ingredients;
     }
     
-    @Override
     public void setInventory(ItemStack stack, LittleIngredients ingredients, LittleInventory inventory) {
         CompoundTag nbt = stack.getOrCreateTag();
         

@@ -20,8 +20,8 @@ public class LittleBlockClientRegistry {
         ChunkRenderTypeSet layers = CACHED_LAYERS.get(block);
         if (layers == null) {
             if (block.shouldUseStateForRenderType())
-                Minecraft.getInstance().executeBlocking(() -> CACHED_LAYERS.put(block, Minecraft.getInstance().getBlockRenderer().getBlockModel(block.getState()).getRenderTypes(
-                    block.getState(), ILittleMCBlock.RANDOM, ModelData.EMPTY)));
+                Minecraft.getInstance().executeBlocking(() -> CACHED_LAYERS.put(block, ChunkRenderTypeSet.of(net.minecraft.client.renderer.ItemBlockRenderTypes.getRenderType(block
+                        .getState(), false))));
             else
                 Minecraft.getInstance().executeBlocking(() -> CACHED_LAYERS.put(block, SOLID));
             layers = CACHED_LAYERS.get(block);

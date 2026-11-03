@@ -14,7 +14,6 @@ import team.creative.littletiles.common.math.box.LittleBox;
 public class LittleTileContext {
     
     public static final LittleTileContext FAILED = new LittleTileContext(null, null, null) {
-        @Override
         public boolean isComplete() {
             return false;
         }

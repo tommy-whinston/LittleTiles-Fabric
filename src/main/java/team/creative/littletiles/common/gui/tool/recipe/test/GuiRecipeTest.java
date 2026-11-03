@@ -29,13 +29,11 @@ public class GuiRecipeTest extends GuiLayer {
         init();
     }
     
-    @Override
     public void becameTopLayer() {
         if (recipe != null)
             init(recipe);
     }
     
-    @Override
     public void create() {
         if (results == null)
             return;

@@ -29,7 +29,6 @@ public class LittleLevelInitPacket extends LittleEntityPacket<LittleLevelEntity>
         this.extraData = entity.saveExtraClientData();
     }
     
-    @Override
     public void execute(Player player, LittleLevelEntity entity) {
         requiresClient(player);
         

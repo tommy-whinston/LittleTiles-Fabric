@@ -113,7 +113,6 @@ public abstract class LittleStateStructure<T extends AnimationState> extends Lit
         }
     }
     
-    @Override
     public boolean queuedTick() {
         if (mainBlock.isRemoved())
             return false;
@@ -172,7 +171,6 @@ public abstract class LittleStateStructure<T extends AnimationState> extends Lit
             updateStructure();
     }
     
-    @Override
     public StructureAbsolute createAnimationCenter(BlockPos pos, LittleGrid grid) {
         return new StructureAbsolute(new LittleVecAbsolute(pos, grid), center);
     }
@@ -206,7 +204,6 @@ public abstract class LittleStateStructure<T extends AnimationState> extends Lit
         queueForNextTick();
     }
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {
         currentState = nbt.getInt("cS");
         //if (currentState < 0 || currentState >= states.size())
@@ -232,7 +229,6 @@ public abstract class LittleStateStructure<T extends AnimationState> extends Lit
             queueForNextTick();
     }
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {
         nbt.putInt("cS", currentState);
         nbt.putInt("aS", aimedState);
@@ -273,17 +269,14 @@ public abstract class LittleStateStructure<T extends AnimationState> extends Lit
         return states.size() - 1;
     }
     
-    @Override
     public boolean isClient() {
         return super.isClient();
     }
     
-    @Override
     public boolean isGui() {
         return false;
     }
     
-    @Override
     public AnimationContext getChild(int id) {
         try {
             LittleStructure structure = children.getChild(id).getStructure();
@@ -293,7 +286,6 @@ public abstract class LittleStateStructure<T extends AnimationState> extends Lit
         return null;
     }
     
-    @Override
     public LittleStructure getChildStructure(int id) {
         try {
             return children.getChild(id).getStructure();
@@ -301,7 +293,6 @@ public abstract class LittleStateStructure<T extends AnimationState> extends Lit
         return null;
     }
     
-    @Override
     public void play(SoundEvent event, float volume, float pitch) {
         if (isClient())
             playClient(event, volume, pitch);
@@ -316,7 +307,6 @@ public abstract class LittleStateStructure<T extends AnimationState> extends Lit
             getStructureLevel().playLocalSound(getStructurePos(), event, SoundSource.BLOCKS, volume, pitch, false);
     }
     
-    @Override
     public void finishedPlacement(Placement placement) {
         super.finishedPlacement(placement);
         if (!isClient() && !states.get(currentState).isAligned())

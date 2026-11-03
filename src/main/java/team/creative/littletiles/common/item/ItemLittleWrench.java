@@ -17,7 +17,6 @@ public class ItemLittleWrench extends Item {
         super(new Item.Properties().stacksTo(1));
     }
     
-    @Override
     public InteractionResult useOn(UseOnContext context) {
         BlockEntity blockEntity = context.getLevel().getBlockEntity(context.getClickedPos());
         if (blockEntity instanceof BETiles) {

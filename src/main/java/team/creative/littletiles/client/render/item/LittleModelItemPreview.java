@@ -19,12 +19,10 @@ public class LittleModelItemPreview extends LittleModelItemBackground {
         super(location, x -> ItemMultiTiles.of(function.apply(x)));
     }
     
-    @Override
     public boolean shouldRenderFake(ItemStack stack) {
         return true;
     }
     
-    @Override
     public void prepareRenderer(ItemDisplayContext context, PoseStack pose) {
         pose.translate(0.1, 0.1, 0.2);
         pose.scale(0.7F, 0.7F, 0.7F);

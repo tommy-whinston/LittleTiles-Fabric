@@ -15,12 +15,10 @@ public class GuiMarkShapeSelection extends GuiConfigure {
         this.mode = mode;
     }
     
-    @Override
     public void create() {
         add(new GuiCheckBox("resolution", mode.allowLowResolution).setTranslate("markmode.gui.allowlowresolution"));
     }
     
-    @Override
     public CompoundTag saveConfiguration(CompoundTag nbt) {
         GuiCheckBox box = (GuiCheckBox) get("resolution");
         mode.allowLowResolution = box.value;

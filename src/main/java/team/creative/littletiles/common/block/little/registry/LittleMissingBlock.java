@@ -37,133 +37,106 @@ public class LittleMissingBlock implements LittleBlock {
         this.blockName = name;
     }
     
-    @Override
     public String blockName() {
         return blockName;
     }
     
-    @Override
     public ItemStack getStack() {
         return ItemStack.EMPTY;
     }
     
-    @Override
     public boolean isTranslucent() {
         return false;
     }
     
-    @Override
     public boolean is(Block block) {
         return false;
     }
     
-    @Override
     public boolean is(TagKey<Block> tag) {
         return false;
     }
     
-    @Override
     public BlockState getState() {
         return Blocks.AIR.defaultBlockState();
     }
     
-    @Override
     public boolean canBeConvertedToVanilla() {
         return false;
     }
     
-    @Override
     public BlockState mirror(BlockState state, Axis axis, LittleVec doubledCenter) {
         return state;
     }
     
-    @Override
     public BlockState rotate(BlockState state, Rotation rotation, LittleVec doubledCenter) {
         return state;
     }
     
-    @Override
     public SoundType getSoundType() {
         return SoundType.STONE;
     }
     
-    @Override
     public float getExplosionResistance(LittleTile tile) {
         return 0;
     }
     
-    @Override
     public void exploded(IParentCollection parent, LittleTile tile, Explosion explosion) {}
     
-    @Override
     public void randomDisplayTick(IParentCollection parent, LittleTile tile, RandomSource rand) {
         
     }
     
-    @Override
     public boolean canInteract() {
         return false;
     }
     
-    @Override
     public InteractionResult use(IParentCollection parent, LittleTile tile, LittleBox box, Player player, BlockHitResult result, InteractionHand hand) {
         return InteractionResult.PASS;
     }
     
-    @Override
     public int getLightValue() {
         return 0;
     }
     
-    @Override
     public float getEnchantPowerBonus(IParentCollection parent, LittleTile tile) {
         return 0;
     }
     
-    @Override
     public float getFriction(IParentCollection parent, LittleTile tile, Entity entity) {
         return 0;
     }
     
-    @Override
     public boolean isFluid(TagKey<Fluid> fluid) {
         return false;
     }
     
-    @Override
     public Vector3d getFogColor(IParentCollection parent, LittleTile tile, Entity entity, Vector3d originalColor, float partialTicks) {
         return IClientBlockExtensions.of(tile.getState()).getFogColor(getState(), parent.getLevel(), parent.getPos(), entity, originalColor, partialTicks);
     }
     
-    @Override
     public LittleRenderBox getRenderBox(LittleGrid grid, RenderType layer, LittleBox box, LittleElement element) {
         return new LittleRenderBox(grid, box, element);
     }
     
-    @Override
     public boolean canBeRenderCombined(LittleTile one, LittleTile two) {
         return two.getBlock() instanceof LittleMissingBlock;
     }
     
-    @Override
     public boolean checkEntityCollision() {
         return false;
     }
     
-    @Override
     public void entityCollided(IParentCollection parent, LittleTile tile, Entity entity) {}
     
-    @Override
     public boolean is(ItemStack stack) {
         return false;
     }
     
-    @Override
     public boolean noCollision() {
         return false;
     }
     
-    @Override
     public boolean shouldUseStateForRenderType() {
         return false;
     }

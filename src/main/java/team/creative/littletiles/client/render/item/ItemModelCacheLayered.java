@@ -12,7 +12,6 @@ public class ItemModelCacheLayered extends ItemModelCache {
         super();
     }
     
-    @Override
     public void setQuads(boolean translucent, List<BakedQuad> baked) {
         if (translucent)
             translucentCache = baked;
@@ -20,7 +19,6 @@ public class ItemModelCacheLayered extends ItemModelCache {
             super.setQuads(translucent, baked);
     }
     
-    @Override
     public List<BakedQuad> getQuads(boolean translucent) {
         if (translucent)
             return translucentCache;

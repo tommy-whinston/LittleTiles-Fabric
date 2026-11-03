@@ -62,7 +62,6 @@ import team.creative.creativecore.common.util.math.utils.BooleanUtils;
 import team.creative.creativecore.common.util.type.itr.FilterIterator;
 import team.creative.littletiles.LittleTiles;
 import team.creative.littletiles.api.client.entity.LevelTransitionListener;
-import team.creative.littletiles.client.mod.rubidium.RubidiumManager;
 import team.creative.littletiles.client.render.level.LittleRenderChunk;
 import team.creative.littletiles.client.render.level.RenderUploader;
 import team.creative.littletiles.common.block.mc.BlockTile;
@@ -273,7 +272,6 @@ public class LittleAnimationHandlerClient extends LittleAnimationHandler impleme
                 animation.getRenderManager().allChanged();
     }
     
-    @Override
     public synchronized Iterator<LittleEntity> iterator() {
         return new FilterIterator<>(entities, x -> x.hasLoaded() && BooleanUtils.isTrue(x.getRenderManager().isInSight));
     }
@@ -302,7 +300,6 @@ public class LittleAnimationHandlerClient extends LittleAnimationHandler impleme
         RenderUploader.longTick(longTickIndex);
     }
     
-    @Override
     public void tick(LevelTickEvent event) {
         super.tick(event);
         
@@ -351,9 +348,6 @@ public class LittleAnimationHandlerClient extends LittleAnimationHandler impleme
     
     @SubscribeEvent
     public void renderChunkLayer(RenderLevelStageEvent event) {
-        if (RubidiumManager.installed())
-            return;
-        
         RenderType layer = null;
         
         if (event.getStage() == Stage.AFTER_SOLID_BLOCKS)
@@ -415,7 +409,7 @@ public class LittleAnimationHandlerClient extends LittleAnimationHandler impleme
         RenderSystem.setupShaderLights(shaderinstance);
         shaderinstance.apply();
         Uniform offset = RenderSystem.getShader().CHUNK_OFFSET;
-        float partialTicks = mc.getPartialTick();
+        float partialTicks = 0.0F;
         for (LittleEntity animation : this) {
             pose.pushPose();
             animation.getOrigin().setupRendering(pose, cam.x, cam.y, cam.z, partialTicks);
@@ -437,14 +431,12 @@ public class LittleAnimationHandlerClient extends LittleAnimationHandler impleme
                     animation.getRenderManager().isInSight = null;
     }
     
-    @Override
     public void unload() {
         super.unload();
         transitions.clear();
         RenderUploader.unload();
     }
     
-    @Override
     protected void tickEntity(LittleEntity entity) {
         if (!entity.hasLoaded())
             return;

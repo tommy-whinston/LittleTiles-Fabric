@@ -36,7 +36,7 @@ public class ForgeHooksMixin {
                 for (int z2 = mZ; z2 < bb.maxZ; z2++) {
                     tmp.set(x2, y2, z2);
                     state = level.getBlockState(tmp);
-                    if (state.getBlock() instanceof BlockTile && state.getBlock().isLadder(state, level, tmp, entity)) {
+                    if (state.getBlock() instanceof BlockTile && state.is(net.minecraft.tags.BlockTags.CLIMBABLE)) {
                         info.setReturnValue(Optional.of(tmp.immutable()));
                         return;
                     }

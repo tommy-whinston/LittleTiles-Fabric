@@ -55,7 +55,6 @@ import team.creative.littletiles.common.item.ItemLittleWrench;
 import team.creative.littletiles.common.item.ItemMultiTiles;
 import team.creative.littletiles.common.item.ItemMultiTiles.ExampleStructures;
 import team.creative.littletiles.common.item.ItemPremadeStructure;
-import team.creative.littletiles.common.recipe.PremadeShapedRecipeSerializer;
 import team.creative.littletiles.common.structure.registry.premade.LittlePremadeRegistry;
 import team.creative.littletiles.common.structure.type.premade.LittleStructurePremade.LittlePremadeType;
 
@@ -183,14 +182,12 @@ public class LittleTilesRegistry {
     
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, LittleTiles.MODID);
     
-    public static final RegistryObject<RecipeSerializer<? extends CraftingRecipe>> PREMADE_RECIPES = RECIPE_SERIALIZERS.register("crafting_shaped_premade",
-        PremadeShapedRecipeSerializer::new);
     
     // CREATIVE_TAB
     
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, LittleTiles.MODID);
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(net.minecraft.core.registries.BuiltInRegistries.CREATIVE_MODE_TAB, LittleTiles.MODID);
     
-    public static final RegistryObject<CreativeModeTab> TAB = CREATIVE_TABS.register("items", () -> CreativeModeTab.builder().icon(() -> new ItemStack(LittleTilesRegistry.HAMMER
+    public static final RegistryObject<CreativeModeTab> TAB = CREATIVE_TABS.register("items", () -> CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0).icon(() -> new ItemStack(LittleTilesRegistry.HAMMER
             .get())).title(Component.translatable("creative_tab.littletiles")).displayItems((features, output) -> {
                 for (ExampleStructures example : ExampleStructures.values())
                     if (example.stack != null)

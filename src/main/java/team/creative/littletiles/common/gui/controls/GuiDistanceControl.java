@@ -22,7 +22,6 @@ public class GuiDistanceControl extends GuiParent {
         setDistance(context, distance);
     }
     
-    @Override
     public void raiseEvent(GuiEvent event) {
         if (event instanceof GuiControlChangedEvent)
             super.raiseEvent(new GuiControlChangedEvent(this));

@@ -47,7 +47,6 @@ public class MinecraftMixin {
                 var inputEvent = ForgeHooksClient.onClickInput(0, mc.options.keyAttack, InteractionHand.MAIN_HAND);
                 if (inputEvent.isCanceled()) {
                     if (inputEvent.shouldSwingHand()) {
-                        mc.particleEngine.addBlockHitEffects(blockpos, blockhitresult);
                         mc.player.swing(InteractionHand.MAIN_HAND);
                     }
                     info.cancel();
@@ -55,7 +54,6 @@ public class MinecraftMixin {
                 }
                 Direction direction = blockhitresult.getDirection();
                 if (LittleTilesClient.INTERACTION_HANDLER.continueDestroyBlock(result.level.asLevel(), blockpos, direction) && inputEvent.shouldSwingHand()) {
-                    mc.particleEngine.addBlockHitEffects(blockpos, blockhitresult);
                     mc.player.swing(InteractionHand.MAIN_HAND);
                 }
             }

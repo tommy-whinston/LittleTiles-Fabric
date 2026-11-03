@@ -95,47 +95,39 @@ public class SignalExternalOutputHandler implements ISignalComponent {
         return nbt;
     }
     
-    @Override
     public int getBandwidth() throws CorruptedConnectionException, NotYetConnectedException {
         return getOutput().getBandwidth();
     }
     
-    @Override
     public void changed() throws CorruptedConnectionException, NotYetConnectedException {
         getOutput().changed();
         structure.schedule();
         
     }
     
-    @Override
     public SignalState getState() throws CorruptedConnectionException, NotYetConnectedException {
         return getOutput().getState();
     }
     
-    @Override
     @Deprecated
     public void overwriteState(SignalState state) throws CorruptedConnectionException, NotYetConnectedException {
         getOutput().overwriteState(state);
     }
     
-    @Override
     public SignalComponentType getComponentType() {
         return SignalComponentType.OUTPUT;
     }
     
-    @Override
     public LittleStructure getStructure() {
         return structure;
     }
     
-    @Override
     public Level getStructureLevel() {
         if (structure == null)
             return null;
         return structure.getStructureLevel();
     }
     
-    @Override
     public String toString() {
         return "o" + index;
     }

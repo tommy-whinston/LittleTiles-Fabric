@@ -97,7 +97,6 @@ public class BETiles extends BlockEntityCreative implements IGridBased, ILittleB
         }
     }
     
-    @Override
     public void setLevel(Level level) {
         super.setLevel(level);
         if (tiles == null)
@@ -115,12 +114,10 @@ public class BETiles extends BlockEntityCreative implements IGridBased, ILittleB
         this.render = new BERenderManager(this);
     }
     
-    @Override
     public LittleGrid getGrid() {
         return grid;
     }
     
-    @Override
     public void convertTo(LittleGrid to) {
         boolean rendering = false;
         if (level != null && level.isClientSide)
@@ -138,7 +135,6 @@ public class BETiles extends BlockEntityCreative implements IGridBased, ILittleB
         }
     }
     
-    @Override
     public int getSmallest() {
         int size = LittleGrid.MIN.count;
         for (Pair<IParentCollection, LittleTile> pair : tiles.allTiles())
@@ -443,7 +439,6 @@ public class BETiles extends BlockEntityCreative implements IGridBased, ILittleB
         return isSpaceFor(box, (Predicate<LittleTile>) null);
     }
     
-    @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
         
@@ -475,7 +470,6 @@ public class BETiles extends BlockEntityCreative implements IGridBased, ILittleB
         return new int[] { box.minX, box.minY, box.minZ };
     }
     
-    @Override
     public void saveAdditional(CompoundTag nbt) {
         super.saveAdditional(nbt);
         grid.set(nbt);
@@ -489,7 +483,6 @@ public class BETiles extends BlockEntityCreative implements IGridBased, ILittleB
         sideCache.write(nbt);
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void handleUpdate(CompoundTag nbt, boolean chunkUpdate) {
         RenderUploader.notifyReceiveClientUpdate(this);
@@ -620,7 +613,6 @@ public class BETiles extends BlockEntityCreative implements IGridBased, ILittleB
         return changed;
     }
     
-    @Override
     @Nullable
     public BlockState getState(AABB box, boolean realistic) {
         if (tiles == null)
@@ -662,7 +654,6 @@ public class BETiles extends BlockEntityCreative implements IGridBased, ILittleB
         return tiles.isCompletelyEmpty() && !render.hasAdditionalBuffers();
     }
     
-    @Override
     public void setRemoved() {
         super.setRemoved();
         if (!preventUnload && tiles != null)
@@ -673,7 +664,6 @@ public class BETiles extends BlockEntityCreative implements IGridBased, ILittleB
         return unloaded;
     }
     
-    @Override
     public void onChunkUnloaded() {
         unloaded = true;
         super.onChunkUnloaded();
@@ -694,7 +684,6 @@ public class BETiles extends BlockEntityCreative implements IGridBased, ILittleB
         updateTiles();
     }
     
-    @Override
     public String toString() {
         return getBlockPos().toString();
     }
@@ -752,7 +741,6 @@ public class BETiles extends BlockEntityCreative implements IGridBased, ILittleB
                 ParentCollection current = tiles;
                 Iterator<StructureParentCollection> children = structures().iterator();
                 
-                @Override
                 public boolean hasNext() {
                     if (current != null)
                         return true;
@@ -762,7 +750,6 @@ public class BETiles extends BlockEntityCreative implements IGridBased, ILittleB
                     return true;
                 }
                 
-                @Override
                 public ParentCollection next() {
                     ParentCollection result = current;
                     current = null;
@@ -803,81 +790,66 @@ public class BETiles extends BlockEntityCreative implements IGridBased, ILittleB
     
     public static enum SideState {
         EMPTY {
-            @Override
             public boolean doesBlockCollision() {
                 return false;
             }
             
-            @Override
             public boolean doesBlockLight() {
                 return false;
             }
             
-            @Override
             public boolean isFilled() {
                 return false;
             }
         },
         SEETHROUGH {
-            @Override
             public boolean doesBlockCollision() {
                 return true;
             }
             
-            @Override
             public boolean doesBlockLight() {
                 return false;
             }
             
-            @Override
             public boolean isFilled() {
                 return true;
             }
         },
         NOCLIP {
-            @Override
             public boolean doesBlockCollision() {
                 return false;
             }
             
-            @Override
             public boolean doesBlockLight() {
                 return true;
             }
             
-            @Override
             public boolean isFilled() {
                 return true;
             }
         },
         SEETHROUGH_NOCLIP {
-            @Override
             public boolean doesBlockCollision() {
                 return false;
             }
             
-            @Override
             public boolean doesBlockLight() {
                 return false;
             }
             
-            @Override
             public boolean isFilled() {
                 return true;
             }
         },
         SOLID {
-            @Override
             public boolean doesBlockCollision() {
                 return true;
             }
             
-            @Override
             public boolean doesBlockLight() {
                 return true;
             }
             
-            @Override
             public boolean isFilled() {
                 return true;
             }

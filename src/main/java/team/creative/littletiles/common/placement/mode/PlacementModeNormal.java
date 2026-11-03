@@ -18,21 +18,18 @@ public class PlacementModeNormal extends PlacementMode {
         super(mode, placeInside);
     }
     
-    @Override
     public PlacementMode place() {
         if (Screen.hasControlDown())
             return PlacementMode.FILL;
         return super.place();
     }
     
-    @Override
     public List<BlockPos> getCoordsToCheck(Set<BlockPos> splittedTiles, BlockPos pos) {
         List<BlockPos> coords = new ArrayList<>();
         coords.add(pos);
         return coords;
     }
     
-    @Override
     public boolean placeTile(PlacementContext context, LittleStructure structure, LittleTile tile) throws LittleActionException {
         if (!context.collisionTest) {
             context.placeTile(tile);

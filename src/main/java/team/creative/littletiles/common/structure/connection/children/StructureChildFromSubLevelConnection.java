@@ -20,25 +20,21 @@ public class StructureChildFromSubLevelConnection extends StructureChildConnecti
         super(parent, true, nbt);
     }
     
-    @Override
     public CompoundTag save(CompoundTag nbt) {
         nbt = super.save(nbt);
         nbt.putBoolean("subWorld", true);
         return nbt;
     }
     
-    @Override
     protected Level getLevel() throws CorruptedConnectionException, NotYetConnectedException {
         return ((ISubLevel) parent.getStructureLevel()).getParent();
     }
     
-    @Override
     public LittleEntity getAnimation() {
         IOrientatedLevel fakeWorld = (IOrientatedLevel) parent.getStructureLevel();
         return (LittleEntity) fakeWorld.getHolder();
     }
     
-    @Override
     public boolean isLinkToAnotherWorld() {
         return true;
     }

@@ -332,17 +332,14 @@ public class LittleGroup implements Bunch<LittleTile>, IGridBased {
                 child.rotate(rotation, doubledCenter);
     }
     
-    @Override
     public LittleGrid getGrid() {
         return grid;
     }
     
-    @Override
     public void convertToSmallest() {
         convertTo(LittleGrid.get(getSmallest()));
     }
     
-    @Override
     public int getSmallest() {
         int size = LittleGrid.MIN.count;
         for (LittleTile tile : this)
@@ -359,7 +356,6 @@ public class LittleGroup implements Bunch<LittleTile>, IGridBased {
         return size;
     }
     
-    @Override
     public void convertTo(LittleGrid to) {
         if (grid != to)
             for (LittleTile tile : this)
@@ -390,7 +386,6 @@ public class LittleGroup implements Bunch<LittleTile>, IGridBased {
         return group;
     }
     
-    @Override
     public Iterator<LittleTile> iterator() {
         return content.iterator();
     }
@@ -402,7 +397,6 @@ public class LittleGroup implements Bunch<LittleTile>, IGridBased {
                 public Iterator<LittleTile> subIterator = LittleGroup.this.iterator();
                 public Iterator<LittleGroup> children = LittleGroup.this.children.all().iterator();
                 
-                @Override
                 public boolean hasNext() {
                     while (!subIterator.hasNext()) {
                         if (!children.hasNext())
@@ -413,12 +407,10 @@ public class LittleGroup implements Bunch<LittleTile>, IGridBased {
                     return true;
                 }
                 
-                @Override
                 public LittleTile next() {
                     return subIterator.next();
                 }
                 
-                @Override
                 public void remove() {
                     subIterator.remove();
                 }
@@ -432,7 +424,6 @@ public class LittleGroup implements Bunch<LittleTile>, IGridBased {
             public Iterator<LittleBox> subIterator = null;
             public Iterator<LittleTile> children = allTiles().iterator();
             
-            @Override
             public boolean hasNext() {
                 while (subIterator == null || !subIterator.hasNext()) {
                     if (!children.hasNext())
@@ -443,12 +434,10 @@ public class LittleGroup implements Bunch<LittleTile>, IGridBased {
                 return true;
             }
             
-            @Override
             public LittleBox next() {
                 return subIterator.next();
             }
             
-            @Override
             public void remove() {
                 subIterator.remove();
             }
@@ -520,7 +509,6 @@ public class LittleGroup implements Bunch<LittleTile>, IGridBased {
         return content.isEmpty();
     }
     
-    @Override
     public int size() {
         return content.size();
     }

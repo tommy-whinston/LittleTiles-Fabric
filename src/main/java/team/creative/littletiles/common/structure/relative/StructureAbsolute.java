@@ -93,7 +93,6 @@ public class StructureAbsolute extends StructureRelative {
         nbt.putIntArray(name + "_box", box.getArray());
     }
     
-    @Override
     public LittleVec getDoubledCenterVec() {
         return new LittleVec((box.maxX * 2 - box.minX * 2) / 2, (box.maxY * 2 - box.minY * 2) / 2, (box.maxZ * 2 - box.minZ * 2) / 2);
     }

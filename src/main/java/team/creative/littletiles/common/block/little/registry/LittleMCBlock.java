@@ -40,136 +40,109 @@ public class LittleMCBlock implements LittleBlock {
         this.translucent = ILittleMCBlock.isTranslucent(block);
     }
     
-    @Override
     public boolean is(ItemStack stack) {
         return Block.byItem(stack.getItem()) == block;
     }
     
-    @Override
     public ItemStack getStack() {
         return new ItemStack(block);
     }
     
-    @Override
     public boolean canBeRenderCombined(LittleTile one, LittleTile two) {
         return one.getBlock() == two.getBlock() && one.color == two.color;
     }
     
-    @Override
     public boolean noCollision() {
         return !((BlockBehaviourAccessor) block).getHasCollision();
     }
     
-    @Override
     public boolean is(Block block) {
         return this.block == block;
     }
     
-    @Override
     public boolean is(TagKey<Block> tag) {
         return block.builtInRegistryHolder().is(tag);
     }
     
-    @Override
     public boolean isTranslucent() {
         return translucent;
     }
     
-    @Override
     public boolean canBeConvertedToVanilla() {
         return true;
     }
     
-    @Override
     public BlockState mirror(BlockState state, Axis axis, LittleVec doubledCenter) {
         return state;
     }
     
-    @Override
     public BlockState rotate(BlockState state, Rotation rotation, LittleVec doubledCenter) {
         return state;
     }
     
-    @Override
     public SoundType getSoundType() {
         return block.getSoundType(getState());
     }
     
-    @Override
     public float getExplosionResistance(LittleTile tile) {
         return block.getExplosionResistance();
     }
     
-    @Override
     public void exploded(IParentCollection parent, LittleTile tile, Explosion explosion) {}
     
-    @Override
     public void randomDisplayTick(IParentCollection parent, LittleTile tile, RandomSource rand) {}
     
-    @Override
     public int getLightValue() {
         return getState().getLightEmission();
     }
     
-    @Override
     public BlockState getState() {
         return block.defaultBlockState();
     }
     
-    @Override
     public String blockName() {
         return block.builtInRegistryHolder().key().location().toString();
     }
     
-    @Override
     public boolean canInteract() {
         return false;
     }
     
-    @Override
     public InteractionResult use(IParentCollection parent, LittleTile tile, LittleBox box, Player player, BlockHitResult result, InteractionHand hand) {
         return InteractionResult.PASS;
     }
     
-    @Override
     public float getEnchantPowerBonus(IParentCollection parent, LittleTile tile) {
-        float bonus = block.getEnchantPowerBonus(getState(), parent.getLevel(), parent.getPos());
+        float bonus = 0;
         if (bonus > 0)
             return (float) (bonus * tile.getPercentVolume(parent.getGrid()));
         return 0;
     }
     
-    @Override
     public float getFriction(IParentCollection parent, LittleTile tile, Entity entity) {
-        return block.getFriction(getState(), parent.getLevel(), parent.getPos(), entity);
+        return block.getFriction();
     }
     
-    @Override
     public boolean isFluid(TagKey<Fluid> fluid) {
         if (block instanceof LiquidBlock b)
-            return b.getFluid().is(fluid);
+            return b.getFluidState(b.defaultBlockState()).is(fluid);
         return false;
     }
     
-    @Override
     public LittleRenderBox getRenderBox(LittleGrid grid, RenderType layer, LittleBox box, LittleElement element) {
         return new LittleRenderBox(grid, box, element);
     }
     
-    @Override
     public boolean checkEntityCollision() {
         return false;
     }
     
-    @Override
     public void entityCollided(IParentCollection parent, LittleTile tile, Entity entity) {}
     
-    @Override
     public Vector3d getFogColor(IParentCollection parent, LittleTile tile, Entity entity, Vector3d originalColor, float partialTicks) {
         return tile.getFogColor(parent, entity, originalColor, partialTicks);
     }
     
-    @Override
     public boolean shouldUseStateForRenderType() {
         return true;
     }

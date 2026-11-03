@@ -37,7 +37,6 @@ public class LittleBedGui extends LittleStructureGuiControl {
         });
     }
     
-    @Override
     public void create(@Nullable LittleStructure structure) {
         GuiParent right = new GuiParent();
         add(right);
@@ -64,7 +63,6 @@ public class LittleBedGui extends LittleStructureGuiControl {
         raiseEvent(new GuiAnimationViewChangedEvent(get("viewer")));
     }
     
-    @Override
     public LittleStructure save(LittleStructure bed) {
         ((LittleBed) bed).direction = ((GuiStateButtonMapped<Facing>) get("direction")).getSelected();
         return bed;

@@ -31,7 +31,6 @@ public class LittleTickers extends LevelHandlers<LittleTicker> {
         MinecraftForge.EVENT_BUS.addListener(this::serverTick);
     }
     
-    @Override
     protected Function<Level, LittleTicker> createFactory() {
         return level -> {
             LittleTicker ticker = new LittleTicker(level);
@@ -41,7 +40,6 @@ public class LittleTickers extends LevelHandlers<LittleTicker> {
         };
     }
     
-    @Override
     protected void unloadHandler(LittleTicker handler) {
         super.unloadHandler(handler);
         if (handler == client)

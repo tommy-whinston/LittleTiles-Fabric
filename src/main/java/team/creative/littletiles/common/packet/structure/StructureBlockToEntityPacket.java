@@ -68,7 +68,6 @@ public class StructureBlockToEntityPacket extends StructurePacket {
         }
     }
     
-    @Override
     public void execute(Player player, LittleStructure structure) {
         try {
             requiresClient(player);

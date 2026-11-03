@@ -148,7 +148,6 @@ public class PreviewRenderer implements LevelAwareHandler {
         return LittleTiles.CONFIG.building.invertStickToGrid != LittleActionHandlerClient.isUsingSecondMode() && marked == null;
     }
     
-    @Override
     public void unload() {
         removeMarked();
         removeCache();
@@ -224,7 +223,7 @@ public class PreviewRenderer implements LevelAwareHandler {
                         RenderSystem.setShaderColor(1, 1, 1, 1);
                         
                         RenderSystem.setShaderTexture(0, WHITE_TEXTURE);
-                        mc.textureManager.bindForSetup(WHITE_TEXTURE);
+                        mc.getTextureManager().bindForSetup(WHITE_TEXTURE);
                         
                         RenderSystem.setShader(GameRenderer::getPositionColorShader);
                         
@@ -453,9 +452,8 @@ public class PreviewRenderer implements LevelAwareHandler {
             }
         }
         
-        if (!event.isCanceled() && level.getBlockState(event.getTarget().getBlockPos()).getBlock() instanceof BlockTile && level.getWorldBorder().isWithinBounds(event.getTarget()
-                .getBlockPos())) {
-            renderHitOutline(pose, level, event.getMultiBufferSource().getBuffer(RenderType.lines()), player, vec.x, vec.y, vec.z, event.getTarget().getBlockPos());
+        if (!event.isCanceled() && level.getBlockState(((net.minecraft.world.phys.BlockHitResult) event.getTarget()).getBlockPos()).getBlock() instanceof BlockTile && level.getWorldBorder().isWithinBounds(((net.minecraft.world.phys.BlockHitResult) event.getTarget()).getBlockPos())) {
+            renderHitOutline(pose, level, event.getMultiBufferSource().getBuffer(RenderType.lines()), player, vec.x, vec.y, vec.z, ((net.minecraft.world.phys.BlockHitResult) event.getTarget()).getBlockPos());
             event.setCanceled(true);
         }
         

@@ -28,7 +28,6 @@ public class GuiGlove extends GuiConfigure {
         loadMode(mode);
     }
     
-    @Override
     public CompoundTag saveConfiguration(CompoundTag nbt) {
         ItemLittleGlove.setMode(nbt, mode);
         mode.saveGui(this, nbt);
@@ -50,7 +49,6 @@ public class GuiGlove extends GuiConfigure {
         }
     }
     
-    @Override
     public void create() {
         if (!isClient())
             return;

@@ -69,22 +69,18 @@ public non-sealed class LittleServerFace implements ILittleFace {
         this.filled = new boolean[maxOne - minOne][maxTwo - minTwo];
     }
     
-    @Override
     public LittleGrid getGrid() {
         return grid;
     }
     
-    @Override
     public LittleBox box() {
         return box;
     }
     
-    @Override
     public int getSmallest() {
         return box.getSmallest(grid);
     }
     
-    @Override
     public void convertTo(LittleGrid to) {
         int ratio = to.count / this.grid.count;
         this.minOne *= ratio;
@@ -129,60 +125,48 @@ public non-sealed class LittleServerFace implements ILittleFace {
         origin = facing.positive ? 0 : grid.count;
     }
     
-    @Override
     public boolean supportsCutting() {
         return false;
     }
     
-    @Override
     public void setPartiallyFilled() {
         partiallyFilled = true;
     }
     
-    @Override
     public void cut(List<VectorFan> fans) {}
     
-    @Override
     public Facing facing() {
         return facing;
     }
     
-    @Override
     public Axis one() {
         return one;
     }
     
-    @Override
     public Axis two() {
         return two;
     }
     
-    @Override
     public int origin() {
         return origin;
     }
     
-    @Override
     public int minOne() {
         return minOne;
     }
     
-    @Override
     public int minTwo() {
         return minTwo;
     }
     
-    @Override
     public int maxOne() {
         return maxOne;
     }
     
-    @Override
     public int maxTwo() {
         return maxTwo;
     }
     
-    @Override
     public void set(int one, int two, boolean value) {
         filled[one][two] = value;
     }

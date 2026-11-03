@@ -47,15 +47,12 @@ public abstract class LittleBoxes implements IGridBased {
         return box;
     }
     
-    @Override
     public LittleGrid getGrid() {
         return grid;
     }
     
-    @Override
     public abstract void convertTo(LittleGrid to);
     
-    @Override
     public abstract int getSmallest();
     
     public abstract void clear();

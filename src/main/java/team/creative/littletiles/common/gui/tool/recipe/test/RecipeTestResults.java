@@ -18,7 +18,6 @@ public class RecipeTestResults implements Iterable<RecipeTestError> {
         return errors.isEmpty();
     }
     
-    @Override
     public Iterator<RecipeTestError> iterator() {
         return errors.iterator();
     }

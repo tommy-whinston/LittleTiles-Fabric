@@ -44,7 +44,6 @@ public class PixelMode extends ElementGloveMode {
         nbt.putIntArray("box", box.getArray());
     }
     
-    @Override
     public void loadGui(GuiGlove gui) {
         Player player = gui.getPlayer();
         ItemStack stack = gui.tool.get();
@@ -126,27 +125,23 @@ public class PixelMode extends ElementGloveMode {
         gui.get("item", GuiShowItem.class).stack = ItemMultiTiles.of(getElement(gui), getGrid(gui), getBox(gui));
     }
     
-    @Override
     public void saveGui(GuiGlove gui, CompoundTag nbt) {
         setElement(nbt, getElement(gui));
         setBox(nbt, getBox(gui));
         getGrid(gui).set(nbt);
     }
     
-    @Override
     public void addExtraInformation(CompoundTag nbt, List<Component> tooltip) {
         super.addExtraInformation(nbt, tooltip);
         tooltip.add(Component.literal(TooltipUtils.printColor(getElement(nbt).color)));
     }
     
-    @Override
     public LittleGroup getTiles(ItemStack stack) {
         LittleGroup group = new LittleGroup();
         group.addTile(LittleGrid.get(stack.getTag()), new LittleTile(getElement(stack), getBox(stack)));
         return group;
     }
     
-    @Override
     public void setTiles(LittleGroup previews, ItemStack stack) {}
     
 }

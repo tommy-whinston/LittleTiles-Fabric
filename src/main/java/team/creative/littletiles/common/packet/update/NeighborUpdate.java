@@ -29,7 +29,6 @@ public class NeighborUpdate extends CreativePacket {
     
     public NeighborUpdate() {}
     
-    @Override
     public void executeClient(Player player) {
         Level level = player.level();
         
@@ -50,7 +49,6 @@ public class NeighborUpdate extends CreativePacket {
         
     }
     
-    @Override
     public void executeServer(ServerPlayer player) {}
     
 }

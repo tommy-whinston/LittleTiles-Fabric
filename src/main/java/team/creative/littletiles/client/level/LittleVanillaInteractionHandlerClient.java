@@ -80,7 +80,7 @@ public class LittleVanillaInteractionHandlerClient extends LevelHandler {
     
     public boolean destroyBlock(Level level, BlockPos pos) {
         Player player = getPlayer();
-        if (player.getMainHandItem().onBlockStartBreak(pos, player))
+        if (false)
             return false;
         
         if (player.blockActionRestricted(level, pos, getGameMode()))
@@ -97,7 +97,7 @@ public class LittleVanillaInteractionHandlerClient extends LevelHandler {
             return false;
         
         FluidState fluidstate = level.getFluidState(pos);
-        boolean flag = blockstate.onDestroyedByPlayer(level, pos, player, false, fluidstate);
+        boolean flag = false;
         if (flag)
             block.destroy(level, pos, blockstate);
         
@@ -212,7 +212,7 @@ public class LittleVanillaInteractionHandlerClient extends LevelHandler {
             
             this.destroyProgress += blockstate.getDestroyProgress(player, level, pos);
             if (this.destroyTicks % 4.0F == 0.0F) {
-                SoundType soundtype = blockstate.getSoundType(level, pos, player);
+                SoundType soundtype = blockstate.getSoundType();
                 mc.getSoundManager().play(new SimpleSoundInstance(soundtype
                         .getHitSound(), SoundSource.BLOCKS, (soundtype.getVolume() + 1.0F) / 8.0F, soundtype.getPitch() * 0.5F, SoundInstance.createUnseededRandom(), pos));
             }
@@ -250,7 +250,7 @@ public class LittleVanillaInteractionHandlerClient extends LevelHandler {
     }
     
     public float getPickRange() {
-        return (float) getPlayer().getBlockReach();
+        return (float) 4.5F;
     }
     
     private boolean sameDestroyTarget(Level level, BlockPos pos) {
@@ -259,7 +259,7 @@ public class LittleVanillaInteractionHandlerClient extends LevelHandler {
         ItemStack itemstack = getPlayer().getMainHandItem();
         boolean flag = this.destroyingItem.isEmpty() && itemstack.isEmpty();
         if (!this.destroyingItem.isEmpty() && !itemstack.isEmpty())
-            flag = !this.destroyingItem.shouldCauseBlockBreakReset(itemstack);
+            flag = !false;
         
         return pos.equals(this.destroyBlockPos) && flag;
     }
@@ -288,13 +288,12 @@ public class LittleVanillaInteractionHandlerClient extends LevelHandler {
         
         UseOnContext useoncontext = new UseOnContext(level, player, hand, itemstack, hit);
         if (event.getUseItem() != Event.Result.DENY) {
-            InteractionResult result = itemstack.onItemUseFirst(useoncontext);
+            InteractionResult result = net.minecraft.world.InteractionResult.PASS;
             if (result != InteractionResult.PASS)
                 return result;
         }
         
-        boolean flag = !player.getMainHandItem().doesSneakBypassUse(player.level(), blockpos, player) || !player.getOffhandItem()
-                .doesSneakBypassUse(player.level(), blockpos, player);
+        boolean flag = true;
         boolean flag1 = player.isSecondaryUseActive() && flag;
         BlockState blockstate = level.getBlockState(blockpos);
         if (!getVanillaConnection().isFeatureEnabled(blockstate.getBlock().requiredFeatures()))

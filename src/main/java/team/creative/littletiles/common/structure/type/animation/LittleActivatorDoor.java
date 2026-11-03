@@ -11,13 +11,11 @@ public class LittleActivatorDoor extends LittleDoor {
         super(type, mainBlock);
     }
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {
         super.saveExtra(nbt);
         nbt.putIntArray("act", toActivate);
     }
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {
         super.loadExtra(nbt);
         toActivate = nbt.getIntArray("act");

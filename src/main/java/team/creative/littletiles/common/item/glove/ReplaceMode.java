@@ -33,7 +33,6 @@ import team.creative.littletiles.common.placement.mode.PlacementMode;
 
 public class ReplaceMode extends ElementGloveMode {
     
-    @Override
     public void loadGui(GuiGlove gui) {
         Player player = gui.getPlayer();
         ItemStack stack = gui.tool.get();
@@ -57,12 +56,10 @@ public class ReplaceMode extends ElementGloveMode {
             return getElement(gui.tool.get());
     }
     
-    @Override
     public void saveGui(GuiGlove gui, CompoundTag nbt) {
         setElement(nbt, getElement(gui));
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public boolean rightClickBlock(Level level, Player player, ItemStack stack, BlockHitResult result) {
         if (PlacementHelper.canBlockBeUsed(level, result.getBlockPos())) {
@@ -82,17 +79,14 @@ public class ReplaceMode extends ElementGloveMode {
         return false;
     }
     
-    @Override
     public boolean hasTiles(ItemStack stack) {
         return false;
     }
     
-    @Override
     public LittleGroup getTiles(ItemStack stack) {
         return null;
     }
     
-    @Override
     public void setTiles(LittleGroup previews, ItemStack stack) {}
     
 }

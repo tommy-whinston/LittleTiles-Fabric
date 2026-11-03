@@ -12,10 +12,8 @@ public class LittleStructureGuiDefault extends LittleStructureGuiControl {
         super(type, item);
     }
     
-    @Override
     public void create(LittleStructure structure) {}
     
-    @Override
     public LittleStructure save(LittleStructure structure) {
         return structure;
     }

@@ -20,7 +20,6 @@ public class BedUpdate extends StructurePacket {
         this.wakeUp = wakeUp;
     }
     
-    @Override
     public void execute(Player player, LittleStructure structure) {
         requiresClient(player);
         

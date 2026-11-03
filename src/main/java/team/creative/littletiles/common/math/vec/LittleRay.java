@@ -56,7 +56,6 @@ public class LittleRay {
         return direction.x * scale == other.direction.x * scaleOther && direction.y * scale == other.direction.y * scaleOther && direction.z * scale == other.direction.z * scaleOther;
     }
     
-    @Override
     public String toString() {
         return "o:" + origin + ",d:" + direction;
     }

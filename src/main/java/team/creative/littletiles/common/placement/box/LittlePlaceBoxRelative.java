@@ -24,7 +24,6 @@ public class LittlePlaceBoxRelative extends LittlePlaceBox {
         this.relativeType = relativeType;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public LittleRenderBox getRenderBox(LittleGrid grid, LittleVec vec) {
         LittleRenderBox cube = super.getRenderBox(grid, vec);
@@ -32,7 +31,6 @@ public class LittlePlaceBoxRelative extends LittlePlaceBox {
         return cube;
     }
     
-    @Override
     public void place(Placement placement, LittleGrid grid, BlockPos pos, LittleStructure structure) throws LittleActionException {
         relative.setBox(BlockPos.ZERO, box.copy(), grid);
         relative.add(pos.subtract(structure.getStructurePos()));

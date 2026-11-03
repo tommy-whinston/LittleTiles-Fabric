@@ -39,12 +39,10 @@ public class LittleActionPlace extends LittleAction<Boolean> {
         this.preview = preview;
     }
     
-    @Override
     public boolean canBeReverted() {
         return true;
     }
     
-    @Override
     public LittleAction revert(Player player) throws LittleActionException {
         if (result == null)
             return null;
@@ -58,17 +56,14 @@ public class LittleActionPlace extends LittleAction<Boolean> {
         return new LittleActionDestroyBoxes(preview.levelUUID, result.placedBoxes.copy());
     }
     
-    @Override
     public boolean wasSuccessful(Boolean result) {
         return result;
     }
     
-    @Override
     public Boolean failed() {
         return false;
     }
     
-    @Override
     public Boolean action(Player player) throws LittleActionException {
         Level level = player.level();
         
@@ -177,7 +172,6 @@ public class LittleActionPlace extends LittleAction<Boolean> {
         take(player, inventory, ingredients);
     }
     
-    @Override
     public LittleActionPlace mirror(Axis axis, LittleBoxAbsolute box) {
         PlacementPreview preview = this.preview.copy();
         preview.mirror(axis, box);

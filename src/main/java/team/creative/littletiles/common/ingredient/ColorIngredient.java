@@ -58,7 +58,6 @@ public class ColorIngredient extends LittleIngredient<ColorIngredient> {
         return new int[] { black, cyan, magenta, yellow };
     }
     
-    @Override
     public TextBuilder toText() {
         TextBuilder text = new TextBuilder();
         if (black > 0)
@@ -94,12 +93,10 @@ public class ColorIngredient extends LittleIngredient<ColorIngredient> {
         return TooltipUtils.print(yellow) + " " + ChatFormatting.YELLOW + LanguageUtils.translate("color.unit.yellow") + ChatFormatting.WHITE + " " + getUnit(yellow);
     }
     
-    @Override
     public String toString() {
         return "[back=" + black + ",cyan=" + cyan + ",magenta=" + magenta + ",yellow=" + yellow + "]";
     }
     
-    @Override
     public ColorIngredient add(ColorIngredient ingredient) {
         if (ingredient == null || ingredient.isEmpty())
             return null;
@@ -137,7 +134,6 @@ public class ColorIngredient extends LittleIngredient<ColorIngredient> {
         return remaining;
     }
     
-    @Override
     public ColorIngredient sub(ColorIngredient ingredient) {
         if (ingredient == null || ingredient.isEmpty())
             return null;
@@ -174,7 +170,6 @@ public class ColorIngredient extends LittleIngredient<ColorIngredient> {
         return remaining;
     }
     
-    @Override
     public ColorIngredient copy() {
         ColorIngredient copy = new ColorIngredient(black, cyan, magenta, yellow);
         copy.limitBlack = limitBlack;
@@ -184,12 +179,10 @@ public class ColorIngredient extends LittleIngredient<ColorIngredient> {
         return copy;
     }
     
-    @Override
     public boolean isEmpty() {
         return black == 0 && cyan == 0 && magenta == 0 && yellow == 0;
     }
     
-    @Override
     public void scale(int count) {
         this.black *= count;
         this.cyan *= count;
@@ -197,7 +190,6 @@ public class ColorIngredient extends LittleIngredient<ColorIngredient> {
         this.yellow *= count;
     }
     
-    @Override
     public void scaleAdvanced(double scale) {
         this.black = (int) Math.ceil(this.black * scale);
         this.cyan = (int) Math.ceil(this.cyan * scale);;
@@ -205,7 +197,6 @@ public class ColorIngredient extends LittleIngredient<ColorIngredient> {
         this.yellow = (int) Math.ceil(this.yellow * scale);;
     }
     
-    @Override
     public int getMinimumCount(ColorIngredient other, int availableCount) {
         int count = -1;
         if (this.black > 0 && other.black > 0)
@@ -233,7 +224,6 @@ public class ColorIngredient extends LittleIngredient<ColorIngredient> {
         this.yellow = (int) Math.floor(this.yellow * scale);
     }
     
-    @Override
     public void print(TextBuilder text) {
         String message = "";
         if (black > 0)

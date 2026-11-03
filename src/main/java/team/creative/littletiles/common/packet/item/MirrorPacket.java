@@ -19,19 +19,16 @@ public class MirrorPacket extends CreativePacket {
         this.axis = axis;
     }
     
-    @Override
     public void executeClient(Player player) {
         execute(player);
     }
     
-    @Override
     public void execute(Player player) {
         ItemStack stack = player.getMainHandItem();
         if (stack.getItem() instanceof ILittleTool)
             ((ILittleTool) stack.getItem()).mirror(player, stack, axis, player.level().isClientSide);
     }
     
-    @Override
     public void executeServer(ServerPlayer player) {
         execute(player);
     }

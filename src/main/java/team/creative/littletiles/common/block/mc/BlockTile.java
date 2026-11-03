@@ -177,45 +177,37 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         this.rendered = rendered;
     }
     
-    @Override
     public boolean canBeReplaced(BlockState p_60535_, Fluid p_60536_) {
         return p_60535_.canBeReplaced() || !p_60535_.isSolid();
     }
     
-    @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return defaultBlockState().setValue(WATERLOGGED, Boolean.valueOf(context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER));
     }
     
-    @Override
     public BlockState updateShape(BlockState state, Direction direction, BlockState oldState, LevelAccessor level, BlockPos pos, BlockPos neighbor) {
         if (state.getValue(WATERLOGGED))
             level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         return state;
     }
     
-    @Override
     public FluidState getFluidState(BlockState state) {
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
     
-    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> definition) {
         definition.add(WATERLOGGED);
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void initializeClient(Consumer<IClientBlockExtensions> consumer) {
         consumer.accept(BlockTileRenderProperties.INSTANCE);
     }
     
-    @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
     
-    @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         BETiles be = loadBE(level, pos);
         List<ABB> boxes = new ArrayList<>();
@@ -237,7 +229,6 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         return BoxesVoxelShape.create(boxes);
     }
     
-    @Override
     @Deprecated
     public float getShadeBrightness(BlockState state, BlockGetter level, BlockPos pos) {
         BETiles be = loadBE(level, pos);
@@ -246,12 +237,10 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         return 0.2F;
     }
     
-    @Override
     public boolean useShapeForLightOcclusion(BlockState state) {
         return true;
     }
     
-    @Override
     public boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
         if (!state.getFluidState().isEmpty())
             return false;
@@ -261,12 +250,10 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         return true;
     }
     
-    @Override
     public boolean skipRendering(BlockState state, BlockState state2, Direction direction) {
         return false;
     }
     
-    @Override
     public boolean isCollisionShapeFullBlock(BlockState state, BlockGetter level, BlockPos pos) {
         BETiles be = loadBE(level, pos);
         if (be != null)
@@ -274,13 +261,11 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         return false;
     }
     
-    @Override
     public VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         //Shape for things that block the view of the camera, should exclude water for example
         return this.getCollisionShape(state, level, pos, context);
     }
     
-    @Override
     public VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
         // its cached state wise ... which is a big problem, maybe try to keep the cache empty????
         // DISABLED at the moment due to noOcclusion in the constructor
@@ -299,7 +284,6 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         return BoxesVoxelShape.create(boxes);
     }
     
-    @Override
     @Deprecated
     public VoxelShape getBlockSupportShape(BlockState state, BlockGetter level, BlockPos pos) {
         return getCollisionShape(state, level, pos, CollisionContext.empty());
@@ -320,7 +304,6 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         return Shapes.empty();
     }
     
-    @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         BETiles be = loadBE(level, pos);
         List<ABB> boxes = new ArrayList<>();
@@ -331,20 +314,16 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         return BoxesVoxelShape.create(boxes);
     }
     
-    @Override
     public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
         return super.isPathfindable(state, level, pos, type);
     }
     
-    @Override
     public @org.jetbrains.annotations.Nullable BlockPathTypes getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, @org.jetbrains.annotations.Nullable Mob mob) {
         return BlockPathTypes.BLOCKED;
     }
     
-    @Override
     public void setBedOccupied(BlockState state, Level world, BlockPos pos, LivingEntity sleeper, boolean occupied) {}
     
-    @Override
     public boolean isBed(BlockState state, BlockGetter level, BlockPos pos, @Nullable Entity entity) {
         return getBed(level, pos, entity) != null;
     }
@@ -360,12 +339,10 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         return null;
     }
     
-    @Override
     public Direction getBedDirection(BlockState state, LevelReader world, BlockPos pos) {
         return Direction.SOUTH;
     }
     
-    @Override
     public Optional<Vec3> getRespawnPosition(BlockState state, EntityType<?> type, LevelReader level, BlockPos pos, float orientation, @Nullable LivingEntity entity) {
         LittleStructure bed = getBed(level, pos, entity);
         if (bed != null && level instanceof Level && level.dimensionType().bedWorks())
@@ -374,7 +351,6 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         return Optional.empty();
     }
     
-    @Override
     public boolean isLadder(BlockState state, LevelReader level, BlockPos pos, LivingEntity entity) {
         BETiles be = loadBE(level, pos);
         if (be != null && entity != null && entity.getBoundingBox() != null) {
@@ -388,7 +364,6 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         return false;
     }
     
-    @Override
     public float getDestroyProgress(BlockState state, Player player, BlockGetter level, BlockPos pos) {
         if (!player.level().isClientSide)
             return super.getDestroyProgress(state, player, level, pos);
@@ -404,21 +379,18 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
                 return 0.0F;
             } else {
                 int i = ForgeHooks.isCorrectToolForDrops(state, player) ? 30 : 100;
-                return player.getDigSpeed(state, pos) / hardness / i;
+                return player.getMainHandItem().getDestroySpeed(state) / hardness / i;
             }
         } else
             return super.getDestroyProgress(state, player, level, pos);
     }
     
-    @Override
     public void destroy(LevelAccessor level, BlockPos pos, BlockState state) {}
     
-    @Override
     protected void spawnDestroyParticles(Level p_152422_, Player p_152423_, BlockPos p_152424_, BlockState p_152425_) {
         p_152422_.levelEvent(p_152423_, 2001, p_152424_, getId(p_152425_));
     }
     
-    @Override
     public void playerWillDestroy(Level p_49852_, BlockPos p_49853_, BlockState p_49854_, Player p_49855_) {
         this.spawnDestroyParticles(p_49852_, p_49855_, p_49853_, p_49854_);
         if (p_49854_.is(BlockTags.GUARDED_BY_PIGLINS)) {
@@ -428,7 +400,6 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         p_49852_.gameEvent(p_49855_, GameEvent.BLOCK_DESTROY, p_49853_);
     }
     
-    @Override
     public boolean canSustainPlant(BlockState state, BlockGetter level, BlockPos pos, Direction facing, IPlantable plantable) {
         BETiles be = loadBE(level, pos);
         if (be != null && be.sideCache.get(Facing.get(facing)).doesBlockCollision()) {
@@ -438,7 +409,7 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
                     BlockState toCheck = pair.value.getState();
                     if (toCheck.hasProperty(BlockStateProperties.WATERLOGGED) && state.getValue(BlockStateProperties.WATERLOGGED).booleanValue())
                         toCheck = toCheck.setValue(BlockStateProperties.WATERLOGGED, true);
-                    if (toCheck.canSustainPlant(level, pos, facing, plantable))
+                    if (false)
                         return true;
                 }
             
@@ -446,7 +417,6 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         return false;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource rand) {
         if (LittleTiles.CONFIG.rendering.enableRandomDisplayTick) {
@@ -457,7 +427,6 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         }
     }
     
-    @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
         if (hand == InteractionHand.OFF_HAND)
             return InteractionResult.PASS;
@@ -477,7 +446,6 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         return InteractionResult.PASS;
     }
     
-    @Override
     public float getFriction(BlockState state, LevelReader level, BlockPos pos, @Nullable Entity entity) {
         float slipperiness = 1;
         boolean found = false;
@@ -493,10 +461,9 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         }
         if (found)
             return slipperiness;
-        return super.getFriction(state, level, pos, entity);
+        return super.getFriction();
     }
     
-    @Override
     public MapColor getMapColor(BlockState state, BlockGetter level, BlockPos pos, MapColor defaultColor) {
         BETiles be = loadBE(level, pos);
         if (be != null) {
@@ -513,12 +480,11 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
             if (tile != null)
                 return tile.getState().getMapColor(level, pos);
         }
-        return super.getMapColor(state, level, pos, defaultColor);
+        return state.getMapColor(level, pos);
     }
     
     private boolean lightLoopPreventer = true;
     
-    @Override
     public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
         int light = 0;
         if (!lightLoopPreventer)
@@ -544,12 +510,10 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         return light;
     }
     
-    @Override
     public boolean isValidSpawn(BlockState state, BlockGetter world, BlockPos pos, Type type, EntityType<?> entityType) {
         return false;
     }
     
-    @Override
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
         if (level.isClientSide)
             return removedByPlayerClient(state, level, pos, player, willHarvest, fluid);
@@ -564,7 +528,6 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         return false;
     }
     
-    @Override
     public boolean canBeReplaced(BlockState state, BlockPlaceContext context) {
         BETiles be = loadBE(context.getLevel(), context.getClickedPos());
         if (be != null)
@@ -572,7 +535,6 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         return true;
     }
     
-    @Override
     public BlockState getStateAtViewpoint(BlockState state, BlockGetter level, BlockPos pos, Vec3 viewpoint) {
         BETiles be = loadBE(level, pos);
         if (be != null) {
@@ -587,12 +549,10 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         return state;
     }
     
-    @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         return Collections.emptyList();
     }
     
-    @Override
     public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
         if (level instanceof LevelReader l && !l.isClientSide())
             return ItemStack.EMPTY;
@@ -616,7 +576,6 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         return ItemStack.EMPTY;
     }
     
-    @Override
     public boolean addLandingEffects(BlockState state1, ServerLevel level, BlockPos pos, BlockState state2, LivingEntity entity, int numberOfParticles) {
         BETiles te = loadBE(level, pos);
         if (te != null) {
@@ -635,13 +594,12 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
             }
             
             if (heighestTile != null)
-                level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, heighestTile.getState()).setPos(pos), entity.getX(), entity.getY(), entity.getZ(),
+                level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, heighestTile.getState()), entity.getX(), entity.getY(), entity.getZ(),
                     numberOfParticles, 0.0D, 0.0D, 0.0D, (double) 0.15F);
         }
         return true;
     }
     
-    @Override
     public boolean addRunningEffects(BlockState state, Level level, BlockPos pos, Entity entity) {
         BETiles te = loadBE(level, pos);
         if (te != null) {
@@ -662,7 +620,7 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
             Random random = new Random();
             if (heighestTile != null) {
                 Vec3 vec3 = entity.getDeltaMovement();
-                level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, heighestTile.getState()).setPos(pos), entity.getX() + (random.nextDouble() - 0.5D) * entity
+                level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, heighestTile.getState()), entity.getX() + (random.nextDouble() - 0.5D) * entity
                         .getDimensions(entity.getPose()).width, entity.getY() + 0.1D, entity.getZ() + (random.nextDouble() - 0.5D) * entity.getDimensions(entity.getPose()).width,
                     vec3.x * -4.0D, 1.5D, vec3.z * -4.0D);
             }
@@ -679,7 +637,6 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         return null;
     }
     
-    @Override
     public SoundType getSoundType(BlockState state, LevelReader level, BlockPos pos, Entity entity) {
         if (entity == null)
             return SILENT;
@@ -716,7 +673,6 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         return sound;
     }
     
-    @Override
     public float getEnchantPowerBonus(BlockState state, LevelReader level, BlockPos pos) {
         float bonus = 0F;
         BETiles be = loadBE(level, pos);
@@ -726,7 +682,6 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         return bonus;
     }
     
-    @Override
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos origin, boolean p_60514_) {
         BETiles te = loadBE(level, pos);
         if (te != null) {
@@ -736,14 +691,12 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         }
     }
     
-    @Override
     public void onNeighborChange(BlockState state, LevelReader level, BlockPos pos, BlockPos neighbor) {
         BETiles te = loadBE(level, pos);
         if (te != null)
             te.onNeighbourChanged(Facing.direction(pos, neighbor));
     }
     
-    @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         BETiles te = loadBE(level, pos);
         if (te != null && te.shouldCheckForCollision()) {
@@ -759,26 +712,22 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         }
     }
     
-    @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         if (rendered)
             return new BETilesRendered(pos, state);
         return new BETiles(pos, state);
     }
     
-    @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         if (ticking)
             return BETiles::tick;
         return null;
     }
     
-    @Override
     public boolean dropFromExplosion(Explosion p_49826_) {
         return false;
     }
     
-    @Override
     public float getExplosionResistance(BlockState state, BlockGetter level, BlockPos pos, Explosion explosion) {
         BETiles be = loadBE(level, pos);
         float calculatedResistance = 0;
@@ -831,7 +780,6 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         return be.sideCache.calculateState(facing, box).doesBlockCollision();
     }
     
-    @Override
     public void onBlockExploded(BlockState state, Level level, BlockPos pos, Explosion explosion) {
         BETiles be = loadBE(level, pos);
         if (be != null) {
@@ -849,10 +797,9 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
                     }
             });
         }
-        super.onBlockExploded(state, level, pos, explosion);
+        
     }
     
-    @Override
     public double bound(LittleLevel level, BlockPos pos, Facing facing) {
         BETiles te = loadBE(level, pos);
         if (te != null) {
@@ -869,12 +816,10 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         return (facing.positive ? 0 : 1) + pos.get(facing.axis.toVanilla()); // most inward value possible
     }
     
-    @Override
     public boolean supportsExternalFaceHiding(BlockState state) {
         return true;
     }
     
-    @Override
     public boolean hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState, Direction dir) {
         BETiles be = loadBE(level, pos);
         if (be != null && be.sideCache.get(Facing.get(dir)).doesBlockLight())
@@ -882,7 +827,6 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         return false;
     }
     
-    @Override
     public BlockState getAppearance(BlockState state, BlockAndTintGetter level, BlockPos pos, Direction side, @org.jetbrains.annotations.Nullable BlockState queryState,
             @org.jetbrains.annotations.Nullable BlockPos queryPos) {
         if (queryState == null || queryPos == null || Facing.direction(queryPos, pos).toVanilla() == side)

@@ -39,7 +39,6 @@ public class LittleInteractionHandlerClient implements LevelAwareHandler {
             finish();
     }
     
-    @Override
     public void unload() {
         interaction = null;
     }

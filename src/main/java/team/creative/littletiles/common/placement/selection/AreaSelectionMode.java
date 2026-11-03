@@ -30,14 +30,12 @@ import team.creative.littletiles.common.entity.LittleEntity;
 import team.creative.littletiles.common.math.box.LittleBox;
 import team.creative.littletiles.common.math.vec.LittleVec;
 import team.creative.littletiles.common.math.vec.LittleVecGrid;
-import team.creative.littletiles.common.mod.chiselsandbits.ChiselsAndBitsManager;
 import team.creative.littletiles.common.structure.LittleStructure;
 import team.creative.littletiles.common.structure.exception.CorruptedConnectionException;
 import team.creative.littletiles.common.structure.exception.NotYetConnectedException;
 
 public class AreaSelectionMode extends SelectionMode {
     
-    @Override
     public SelectionResult generateResult(Level level, CompoundTag nbt) {
         BlockPos pos = null;
         if (nbt.contains("pos1")) {
@@ -64,27 +62,23 @@ public class AreaSelectionMode extends SelectionMode {
         return result;
     }
     
-    @Override
     public void leftClick(Player player, CompoundTag nbt, BlockPos pos) {
         nbt.putIntArray("pos1", new int[] { pos.getX(), pos.getY(), pos.getZ() });
         if (!player.level().isClientSide)
             player.sendSystemMessage(Component.translatable("selection.mode.area.pos.first", pos.getX(), pos.getY(), pos.getZ()));
     }
     
-    @Override
     public void rightClick(Player player, CompoundTag nbt, BlockPos pos) {
         nbt.putIntArray("pos2", new int[] { pos.getX(), pos.getY(), pos.getZ() });
         if (!player.level().isClientSide)
             player.sendSystemMessage(Component.translatable("selection.mode.area.pos.second", pos.getX(), pos.getY(), pos.getZ()));
     }
     
-    @Override
     public void clear(ItemStack stack) {
         stack.getTag().remove("pos1");
         stack.getTag().remove("pos2");
     }
     
-    @Override
     public LittleGroup getGroup(Level level, Player player, CompoundTag nbt, boolean includeVanilla, boolean includeCB, boolean includeLT, boolean rememberStructure) throws LittleActionException {
         BlockPos pos = null;
         if (nbt.contains("pos1")) {
@@ -194,7 +188,7 @@ public class AreaSelectionMode extends SelectionMode {
                             }
                             
                             if (includeCB) {
-                                LittleGroup specialPreviews = ChiselsAndBitsManager.getGroup(blockEntity);
+                                LittleGroup specialPreviews = null;
                                 if (specialPreviews != null) {
                                     specialPreviews.move(new LittleVecGrid(new LittleVec(previews.getGrid().toGrid(posX - minX), previews.getGrid().toGrid(posY - minY), previews
                                             .getGrid().toGrid(posZ - minZ)), previews.getGrid()));

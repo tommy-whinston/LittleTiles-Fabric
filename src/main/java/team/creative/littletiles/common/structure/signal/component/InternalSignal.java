@@ -22,7 +22,6 @@ public abstract class InternalSignal<T extends InternalComponent> implements ISi
     
     public abstract void load(CompoundTag nbt);
     
-    @Override
     public SignalState getState() {
         return state;
     }
@@ -31,7 +30,6 @@ public abstract class InternalSignal<T extends InternalComponent> implements ISi
         this.state = state;
     }
     
-    @Override
     public void overwriteState(SignalState state) throws CorruptedConnectionException, NotYetConnectedException {
         this.state = this.state.overwrite(state);
         this.state.shrinkTo(getBandwidth());
@@ -39,24 +37,20 @@ public abstract class InternalSignal<T extends InternalComponent> implements ISi
     
     public abstract CompoundTag save(boolean preview, CompoundTag nbt);
     
-    @Override
     public int getBandwidth() {
         return component.bandwidth;
     }
     
-    @Override
     public LittleStructure getStructure() {
         return parent;
     }
     
-    @Override
     public Level getStructureLevel() {
         if (parent.mainBlock != null)
             return parent.getStructureLevel();
         return null;
     }
     
-    @Override
     public String toString() {
         return component.identifier;
     }

@@ -26,7 +26,6 @@ public class AnimationStateDirected extends AnimationState {
         super(name);
     }
     
-    @Override
     public CompoundTag save() {
         CompoundTag nbt = super.save();
         if (hasRightClickTransition())

@@ -41,7 +41,6 @@ public class LittleBlocks {
     public static void init() {
         LittleBlockRegistry.register(BlockFilters.block(Blocks.BARRIER), x -> new LittleMCBlock(x) {
             
-            @Override
             @OnlyIn(Dist.CLIENT)
             public void randomDisplayTick(IParentCollection parent, LittleTile tile, RandomSource rand) {
                 Minecraft mc = Minecraft.getInstance();
@@ -54,12 +53,10 @@ public class LittleBlocks {
         
         LittleBlockRegistry.register(BlockFilters.instance(TntBlock.class), x -> new LittleMCBlock(x) {
             
-            @Override
             public boolean canInteract() {
                 return true;
             }
             
-            @Override
             public InteractionResult use(IParentCollection parent, LittleTile tile, LittleBox box, Player player, BlockHitResult result, InteractionHand hand) {
                 ItemStack heldItem = player.getMainHandItem();
                 if (heldItem.is(Items.FLINT_AND_STEEL) || heldItem.is(Items.FIRE_CHARGE)) {
@@ -77,10 +74,9 @@ public class LittleBlocks {
                 return InteractionResult.PASS;
             }
             
-            @Override
             public void exploded(IParentCollection parent, LittleTile tile, Explosion explosion) {
                 for (LittleBox box : tile)
-                    explodeBox(parent, box, explosion.getExploder(), true);
+                    explodeBox(parent, box, null, true);
             }
             
             public void explodeBox(IParentCollection parent, LittleBox box, Entity entity, boolean randomFuse) {
@@ -103,12 +99,10 @@ public class LittleBlocks {
         
         LittleBlockRegistry.register(BlockFilters.block(Blocks.CRAFTING_TABLE), x -> new LittleMCBlock(x) {
             
-            @Override
             public boolean canInteract() {
                 return true;
             }
             
-            @Override
             public InteractionResult use(IParentCollection parent, LittleTile tile, LittleBox box, Player player, BlockHitResult result, InteractionHand hand) {
                 if (parent.isClient())
                     return InteractionResult.SUCCESS;
@@ -121,14 +115,12 @@ public class LittleBlocks {
         });
         
         LittleBlockRegistry.register(BlockFilters.property(BlockStateProperties.AXIS), x -> new LittleMCBlock(x) {
-            @Override
             public BlockState rotate(BlockState state, Rotation rotation, LittleVec doubledCenter) {
                 return state.setValue(BlockStateProperties.AXIS, rotation.rotate(Axis.get(state.getValue(BlockStateProperties.AXIS))).toVanilla());
             }
         });
         
         LittleBlockRegistry.register(BlockFilters.property(BlockStateProperties.FACING), x -> new LittleMCBlock(x) {
-            @Override
             public BlockState rotate(BlockState state, Rotation rotation, LittleVec doubledCenter) {
                 return state.setValue(BlockStateProperties.FACING, rotation.rotate(Facing.get(state.getValue(BlockStateProperties.FACING))).toVanilla());
             }
@@ -136,7 +128,6 @@ public class LittleBlocks {
         
         LittleBlockRegistry.register(BlockFilters.instance(LeavesBlock.class), x -> new LittleMCBlock(x) {
             
-            @Override
             public boolean cullOverEdge() {
                 return false;
             }

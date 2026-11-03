@@ -50,18 +50,15 @@ public class BufferHolder implements BufferCache {
         this.groupCount = indexes != null ? indexes.length / 2 : 0;
     }
     
-    @Override
     public void eraseBuffer() {
         if (uploadIndex >= 0)
             buffer = null;
     }
     
-    @Override
     public void markAsAdditional() {
         uploadIndex = -2;
     }
     
-    @Override
     public boolean upload(ChunkBufferUploader uploader) {
         if (!isAvailable())
             return false;
@@ -96,7 +93,6 @@ public class BufferHolder implements BufferCache {
         return indexes;
     }
     
-    @Override
     public int groupCount() {
         return groupCount;
     }
@@ -115,14 +111,12 @@ public class BufferHolder implements BufferCache {
         return length;
     }
     
-    @Override
     public int lengthToUpload() {
         if (isAvailable())
             return length;
         return 0;
     }
     
-    @Override
     public int lengthToUpload(int facing) {
         if (isAvailable() && facing == ModelQuadFacing.UNASSIGNED.ordinal())
             return length;
@@ -133,23 +127,19 @@ public class BufferHolder implements BufferCache {
         return vertexCount;
     }
     
-    @Override
     public boolean isInvalid() {
         return invalid;
     }
     
-    @Override
     public void invalidate() {
         invalid = true;
         eraseBuffer();
     }
     
-    @Override
     public boolean isAvailable() {
         return buffer != null && length > 0;
     }
     
-    @Override
     public boolean download(ChunkBufferDownloader downloader) {
         return download(downloader.downloaded());
     }
@@ -168,7 +158,6 @@ public class BufferHolder implements BufferCache {
         return false;
     }
     
-    @Override
     public BufferCache combine(BufferCache cache) {
         if (!(cache instanceof BufferHolder))
             return cache.combine(this);
@@ -211,7 +200,6 @@ public class BufferHolder implements BufferCache {
         return new BufferHolder(byteBuffer, length, vertexCount, null);
     }
     
-    @Override
     public BufferHolder extract(int index) {
         int[] indexes = indexes(); // format of one entry: [index of structure, start index of vertex data]
         if (indexes == null)
@@ -258,7 +246,6 @@ public class BufferHolder implements BufferCache {
         return new BufferHolder(newBuffer, length, vertexCount, null);
     }
     
-    @Override
     public void applyOffset(Vec3 vec) {
         // Move render data by offset, easy but a bit hacky method to do it
         ByteBuffer buffer = byteBuffer();

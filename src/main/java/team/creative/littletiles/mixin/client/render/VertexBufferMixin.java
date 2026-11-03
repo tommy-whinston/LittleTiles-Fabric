@@ -47,57 +47,46 @@ public abstract class VertexBufferMixin implements VertexBufferExtender {
         length = drawState.vertexBufferSize();
     }
     
-    @Override
     public int getLastUploadedLength() {
         return length;
     }
     
-    @Override
     public int getVertexBufferId() {
         return vertexBufferId;
     }
     
-    @Override
     public void setFormat(VertexFormat format) {
         this.format = format;
     }
     
-    @Override
     public int getIndexCount() {
         return indexCount;
     }
     
-    @Override
     public void setIndexCount(int count) {
         this.indexCount = count;
     }
     
-    @Override
     public void setIndexType(IndexType indexType) {
         this.indexType = indexType;
     }
     
-    @Override
     public void setLastUploadedLength(int length) {
         this.length = length;
     }
     
-    @Override
     public Mode getMode() {
         return mode;
     }
     
-    @Override
     public void setMode(Mode mode) {
         this.mode = mode;
     }
     
-    @Override
     public void setSequentialIndices(AutoStorageIndexBuffer indexBuffer) {
         this.sequentialIndices = indexBuffer;
     }
     
-    @Override
     public RenderSystem.AutoStorageIndexBuffer getSequentialIndices() {
         return sequentialIndices;
     }

@@ -19,7 +19,6 @@ public class LittleActionException extends Exception {
         return null;
     }
     
-    @Override
     public String getLocalizedMessage() {
         return GuiControl.translate(getMessage());
     }
@@ -38,7 +37,6 @@ public class LittleActionException extends Exception {
             super(msg);
         }
         
-        @Override
         public boolean isHidden() {
             return true;
         }

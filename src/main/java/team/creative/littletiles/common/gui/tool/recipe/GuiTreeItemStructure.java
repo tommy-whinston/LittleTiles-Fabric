@@ -172,7 +172,6 @@ public class GuiTreeItemStructure extends GuiTreeItem implements AnimationContex
         structure.setExternalOutputs(map);
     }
     
-    @Override
     protected void select() {
         super.select();
         updateTitle();
@@ -195,7 +194,6 @@ public class GuiTreeItemStructure extends GuiTreeItem implements AnimationContex
         recipe.config.clear();
         GuiScrollY scroll = new GuiScrollY("config") {
             
-            @Override
             public ControlFormatting getControlFormatting() {
                 return ControlFormatting.TRANSPARENT;
             }
@@ -243,7 +241,6 @@ public class GuiTreeItemStructure extends GuiTreeItem implements AnimationContex
         updateTitle();
     }
     
-    @Override
     protected void deselect() {
         super.deselect();
         updateTitle();
@@ -328,7 +325,6 @@ public class GuiTreeItemStructure extends GuiTreeItem implements AnimationContex
         });
     }
     
-    @Override
     public void removed() {
         super.removed();
         if (!moving)
@@ -397,25 +393,21 @@ public class GuiTreeItemStructure extends GuiTreeItem implements AnimationContex
         return center != null;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void play(SoundEvent event, float volume, float pitch) {
         GuiControl.playSound(event, volume, pitch);
     }
     
-    @Override
     public boolean isGui() {
         return true;
     }
     
-    @Override
     public AnimationContext getChild(int id) {
         if (id < 0 || itemsCount() <= id)
             return null;
         return (AnimationContext) getItem(id);
     }
     
-    @Override
     public LittleStructure getChildStructure(int id) {
         if (id < 0 || itemsCount() <= id)
             return null;

@@ -28,7 +28,6 @@ public class LittleGuiUtils {
     
     public static class LittleBlockSelector extends GuiStackSelector.GuiBlockSelector {
         
-        @Override
         public boolean allow(ItemStack stack) {
             if (super.allow(stack))
                 return LittleAction.isBlockValid(Block.byItem(stack.getItem()).defaultBlockState());
@@ -51,7 +50,7 @@ public class LittleGuiUtils {
                     if (ingredientsInventory != null && ingredientsInventory.contains(BlockIngredient.class))
                         ingredients.add(ingredientsInventory.get(BlockIngredient.class));
                 } else {
-                    LazyOptional<IItemHandler> optional = stack.getCapability(ForgeCapabilities.ITEM_HANDLER);
+                    LazyOptional<IItemHandler> optional = LazyOptional.empty();
                     if (optional.isPresent())
                         collect(optional.orElseThrow(RuntimeException::new), ingredients);
                 }
@@ -60,7 +59,6 @@ public class LittleGuiUtils {
             
         }
         
-        @Override
         public HashMapList<String, ItemStack> collect(Player player) {
             HashMapList<String, ItemStack> stacks = super.collect(player);
             
@@ -74,7 +72,7 @@ public class LittleGuiUtils {
                     if (inventory != null && inventory.contains(BlockIngredient.class))
                         ingredients.add(inventory.get(BlockIngredient.class));
                 } else {
-                    LazyOptional<IItemHandler> optional = stack.getCapability(ForgeCapabilities.ITEM_HANDLER);
+                    LazyOptional<IItemHandler> optional = LazyOptional.empty();
                     if (optional.isPresent())
                         collect(optional.orElseThrow(RuntimeException::new), ingredients);
                 }

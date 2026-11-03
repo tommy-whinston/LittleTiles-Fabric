@@ -57,7 +57,6 @@ public class BlueprintGloveMode extends GloveMode {
         nbt.putInt("oz", pos.getZ());
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public boolean wheelClickBlock(Level level, Player player, ItemStack stack, BlockHitResult result) {
         BlockState state = level.getBlockState(result.getBlockPos());
@@ -74,7 +73,6 @@ public class BlueprintGloveMode extends GloveMode {
         return false;
     }
     
-    @Override
     public void littleBlockAction(Level level, BETiles be, LittleTileContext context, ItemStack stack, BlockPos pos, CompoundTag nbt) {
         LittleGroup previews = new LittleGroup();
         if (nbt.getBoolean("secondMode")) {
@@ -85,36 +83,29 @@ public class BlueprintGloveMode extends GloveMode {
         setTiles(previews, stack);
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public boolean hasPreviewElement(ItemStack stack) {
         return false;
     }
     
-    @Override
     public LittleElement getPreviewElement(ItemStack stack) {
         throw new UnsupportedOperationException();
     }
     
-    @Override
     public void loadGui(GuiGlove gui) {}
     
-    @Override
     public void saveGui(GuiGlove gui, CompoundTag nbt) {
         nbt.put(CONTENT, LittleGroup.save(getTiles(gui.tool.get())));
     }
     
-    @Override
     public LittleGroup getTiles(ItemStack stack) {
         return getPreviews(stack);
     }
     
-    @Override
     public void setTiles(LittleGroup previews, ItemStack stack) {
         stack.getOrCreateTag().put(CONTENT, LittleGroup.save(previews));
     }
     
-    @Override
     public void vanillaBlockAction(Level level, ItemStack stack, BlockPos pos, BlockState state) {
         if (LittleAction.isBlockValid(state)) {
             LittleGroup group = new LittleGroup();
@@ -123,12 +114,10 @@ public class BlueprintGloveMode extends GloveMode {
         }
     }
     
-    @Override
     public String tooltipTranslateKey(ItemStack stack, String defaultKey) {
         return "littletiles.tiles.tooltip";
     }
     
-    @Override
     public Object[] tooltipData(ItemStack stack) {
         return new Object[] { LittleTilesClient.configure.getTranslatedKeyMessage(), LittleTilesClient.arrowKeysTooltip(), LittleTilesClient.mirror.getTranslatedKeyMessage() };
     }

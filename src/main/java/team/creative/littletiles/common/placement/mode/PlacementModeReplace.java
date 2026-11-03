@@ -19,22 +19,18 @@ public class PlacementModeReplace extends PlacementMode {
         super(mode, true);
     }
     
-    @Override
     public boolean shouldConvertBlock() {
         return true;
     }
     
-    @Override
     public boolean checkAll() {
         return false;
     }
     
-    @Override
     public List<BlockPos> getCoordsToCheck(Set<BlockPos> splittedTiles, BlockPos pos) {
         return null;
     }
     
-    @Override
     public boolean placeTile(PlacementContext context, LittleStructure structure, LittleTile tile) throws LittleActionException {
         if (!context.collisionTest)
             return false;

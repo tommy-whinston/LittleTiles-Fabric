@@ -52,13 +52,10 @@ public class LittleSignalDisplay extends LittleStructurePremade {
         super(type, mainBlock);
     }
     
-    @Override
     protected void loadExtra(CompoundTag nbt) {}
     
-    @Override
     protected void saveExtra(CompoundTag nbt) {}
     
-    @Override
     public void receiveInternalOutputChange(InternalSignalOutput output) {
         if (output.component.is("pixels") && isClient())
             updateTexture();
@@ -93,7 +90,6 @@ public class LittleSignalDisplay extends LittleStructurePremade {
         GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGB, 4, 4, 0, GL11.GL_RGB, GL11.GL_UNSIGNED_BYTE, buffer);
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void renderTick(PoseStack pose, MultiBufferSource buffer, BlockPos pos, float partialTickTime) {
         super.renderTick(pose, buffer, pos, partialTickTime);
@@ -135,19 +131,16 @@ public class LittleSignalDisplay extends LittleStructurePremade {
         RenderSystem.disableBlend();
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public double getMaxRenderDistance() {
         return renderDistance;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public AABB getRenderBoundingBox() {
         return frame.getBox().getBB(frame.getGrid());
     }
     
-    @Override
     public void unload() {
         super.unload();
         if (isClient() && textureId != -1)

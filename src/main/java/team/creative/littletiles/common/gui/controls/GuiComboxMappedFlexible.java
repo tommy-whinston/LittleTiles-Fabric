@@ -18,7 +18,6 @@ public class GuiComboxMappedFlexible<K> extends GuiComboBoxMapped<K> {
         this.function = function;
     }
     
-    @Override
     protected void updateDisplay() {
         if (forced != null) {
             text = CompiledText.createAnySize();
@@ -36,7 +35,6 @@ public class GuiComboxMappedFlexible<K> extends GuiComboBoxMapped<K> {
         }
     }
     
-    @Override
     public boolean select(int index) {
         if (index >= 0 && index < lines.length) {
             forced = null;
@@ -45,7 +43,6 @@ public class GuiComboxMappedFlexible<K> extends GuiComboBoxMapped<K> {
         return false;
     }
     
-    @Override
     public K getSelected() {
         if (forced != null)
             return forced;

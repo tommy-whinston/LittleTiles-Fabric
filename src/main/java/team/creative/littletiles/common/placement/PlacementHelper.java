@@ -21,7 +21,6 @@ import team.creative.littletiles.common.math.box.LittleBox;
 import team.creative.littletiles.common.math.vec.LittleVec;
 import team.creative.littletiles.common.math.vec.LittleVecAbsolute;
 import team.creative.littletiles.common.math.vec.LittleVecGrid;
-import team.creative.littletiles.common.mod.chiselsandbits.ChiselsAndBitsManager;
 import team.creative.littletiles.common.placement.mode.PlacementMode;
 
 /** This class does all calculate on where to place a block. Used for rendering
@@ -137,7 +136,7 @@ public class PlacementHelper {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof BETiles)
             return true;
-        return ChiselsAndBitsManager.isChiselsAndBitsStructure(blockEntity);
+        return false;
     }
     
     public static boolean canBePlacedInside(Level level, BlockPos pos, Vec3 hitVec, Facing side) {

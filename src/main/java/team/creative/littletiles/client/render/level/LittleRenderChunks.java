@@ -128,7 +128,6 @@ public class LittleRenderChunks implements Iterable<LittleRenderChunk> {
         return size;
     }
     
-    @Override
     public Iterator<LittleRenderChunk> iterator() {
         return new NestedIterator<>(rings);
     }

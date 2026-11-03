@@ -27,7 +27,6 @@ public class LittleAxisDoor extends LittleDoor {
     public static void load() {
         StructureDirectionalType.register(LittleAxisDoorRotation.class, new StructureDirectionalTypeSimple<LittleAxisDoorRotation>() {
             
-            @Override
             public LittleAxisDoorRotation read(Tag nbt) {
                 if (nbt instanceof CompoundTag tag) {
                     Axis axis = Axis.values()[tag.getInt("a")];
@@ -38,7 +37,6 @@ public class LittleAxisDoor extends LittleDoor {
                 return null;
             }
             
-            @Override
             public Tag write(LittleAxisDoorRotation value) {
                 CompoundTag nbt = new CompoundTag();
                 nbt.putInt("a", value.axis.ordinal());
@@ -49,24 +47,20 @@ public class LittleAxisDoor extends LittleDoor {
                 return nbt;
             }
             
-            @Override
             public LittleAxisDoorRotation move(LittleAxisDoorRotation value, LittleVecGrid vec) {
                 return value;
             }
             
-            @Override
             public LittleAxisDoorRotation mirror(LittleAxisDoorRotation value, LittleGrid grid, Axis axis, LittleVec doubledCenter) {
                 value.mirror(axis);
                 return value;
             }
             
-            @Override
             public LittleAxisDoorRotation rotate(LittleAxisDoorRotation value, LittleGrid grid, Rotation rotation, LittleVec doubledCenter) {
                 value.rotate(rotation);
                 return value;
             }
             
-            @Override
             public LittleAxisDoorRotation getDefault() {
                 return new LittleAxisDoorRotationDirection(Axis.Y, true);
             }
@@ -109,18 +103,15 @@ public class LittleAxisDoor extends LittleDoor {
             this.clockwise = clockwise;
         }
         
-        @Override
         public void mirror(Axis axis) {
             if (this.axis == axis)
                 clockwise = !clockwise;
         }
         
-        @Override
         protected void rotateInternal(Rotation rotation) {
             clockwise = Rotation.getRotation(axis, clockwise).rotate(rotation).clockwise;
         }
         
-        @Override
         public void apply(PhysicalState state) {
             state.rot(axis, clockwise ? 90 : -90);
         }
@@ -136,18 +127,15 @@ public class LittleAxisDoor extends LittleDoor {
             this.degree = degree;
         }
         
-        @Override
         public void mirror(Axis axis) {
             if (this.axis == axis)
                 degree = -degree;
         }
         
-        @Override
         protected void rotateInternal(Rotation rotation) {
             degree = Rotation.getRotation(axis, degree > 0 ? true : false).rotate(rotation).clockwise ? Math.abs(degree) : -Math.abs(degree);
         }
         
-        @Override
         public void apply(PhysicalState state) {
             state.rot(axis, degree);
         }
@@ -159,7 +147,6 @@ public class LittleAxisDoor extends LittleDoor {
             super(id, structureClass, factory, attribute);
         }
         
-        @Override
         protected LittlePlaceBoxRelative getPlaceBox(Object value, StructureDirectionalField type, LittleGroup previews) {
             if (type.key.equals("center")) {
                 LittleBox box = previews.getSurroundingBox();

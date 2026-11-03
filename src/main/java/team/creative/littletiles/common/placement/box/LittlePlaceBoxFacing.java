@@ -26,7 +26,6 @@ public class LittlePlaceBoxFacing extends LittlePlaceBox {
         this.color = color;
     }
     
-    @Override
     @OnlyIn(Dist.CLIENT)
     public LittleRenderBox getRenderBox(LittleGrid grid, LittleVec offset) {
         LittleBox box = this.box.copy();
@@ -44,7 +43,6 @@ public class LittlePlaceBoxFacing extends LittlePlaceBox {
         return cube;
     }
     
-    @Override
     public void place(Placement placement, LittleGrid grid, BlockPos pos, LittleStructure structure) throws LittleActionException {}
     
 }

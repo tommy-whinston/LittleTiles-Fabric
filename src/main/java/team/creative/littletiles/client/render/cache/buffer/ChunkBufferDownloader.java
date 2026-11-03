@@ -14,17 +14,14 @@ public interface ChunkBufferDownloader {
         
         public ByteBuffer buffer;
         
-        @Override
         public ByteBuffer downloaded() {
             return buffer;
         }
         
-        @Override
         public boolean hasFacingSupport() {
             return false;
         }
         
-        @Override
         public ByteBuffer downloaded(int facing) {
             throw new UnsupportedOperationException();
         }

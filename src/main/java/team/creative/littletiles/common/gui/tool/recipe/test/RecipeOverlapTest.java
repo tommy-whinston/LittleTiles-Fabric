@@ -54,7 +54,6 @@ public class RecipeOverlapTest extends RecipeTestModule {
     private HashMap<BlockPos, RecipeOverlapTestBlock> blocks;
     private HashMap<GuiTreeItemStructure, LittleBoxesNoOverlap> overlapped;
     
-    @Override
     public void startTest(GuiRecipe recipe, RecipeTestResults results) {
         blocks = new HashMap<>();
     }
@@ -76,7 +75,6 @@ public class RecipeOverlapTest extends RecipeTestModule {
         boxes.addBox(grid, pos, box.copy());
     }
     
-    @Override
     public void test(GuiTreeItemStructure item, RecipeTestResults results) {
         overlapped = null;
         
@@ -105,7 +103,6 @@ public class RecipeOverlapTest extends RecipeTestModule {
         overlapped = null;
     }
     
-    @Override
     public void endTest(GuiRecipe recipe, RecipeTestResults results) {
         blocks = null;
     }
@@ -136,12 +133,10 @@ public class RecipeOverlapTest extends RecipeTestModule {
             boxes.add(box);
         }
         
-        @Override
         public LittleGrid getGrid() {
             return grid;
         }
         
-        @Override
         public void convertTo(LittleGrid to) {
             for (List<LittleBox> boxes : structureBoxes.values())
                 for (LittleBox box : boxes)
@@ -149,7 +144,6 @@ public class RecipeOverlapTest extends RecipeTestModule {
             this.grid = to;
         }
         
-        @Override
         public int getSmallest() {
             int smallest = 0;
             for (List<LittleBox> boxes : structureBoxes.values())
@@ -170,12 +164,10 @@ public class RecipeOverlapTest extends RecipeTestModule {
             this.boxes = boxes;
         }
         
-        @Override
         public Component header() {
             return GuiControl.translatable("gui.recipe.test.overlap.self.title", structure.getTitle());
         }
         
-        @Override
         public Component description() {
             int volume = boxes.littleVolume();
             if (volume >= boxes.grid.count3d)
@@ -183,12 +175,10 @@ public class RecipeOverlapTest extends RecipeTestModule {
             return GuiControl.translatable("gui.recipe.test.overlap.desc.small", TooltipUtils.print(volume), boxes.grid);
         }
         
-        @Override
         public Component tooltip(GuiTreeItemStructure structure) {
             return header();
         }
         
-        @Override
         public Iterator<GuiTreeItemStructure> iterator() {
             return new SingleIterator<>(structure);
         }
@@ -209,7 +199,6 @@ public class RecipeOverlapTest extends RecipeTestModule {
                 collection.add(element, remaining);
         }
         
-        @Override
         public void create(GuiRecipe recipe, GuiParent parent, Runnable refresh) {
             parent.add(new GuiButton("fix", x -> {
                 LittleGroup group = structure.group;
@@ -256,12 +245,10 @@ public class RecipeOverlapTest extends RecipeTestModule {
             this.boxes = boxes;
         }
         
-        @Override
         public Component header() {
             return GuiControl.translatable("gui.recipe.test.overlap.title", structure.getTitle(), structure2.getTitle());
         }
         
-        @Override
         public Component description() {
             int volume = boxes.littleVolume();
             if (volume >= boxes.grid.count3d)
@@ -269,17 +256,14 @@ public class RecipeOverlapTest extends RecipeTestModule {
             return GuiControl.translatable("gui.recipe.test.overlap.desc.small", TooltipUtils.print(volume), boxes.grid);
         }
         
-        @Override
         public Iterator<GuiTreeItemStructure> iterator() {
             return new ArrayIterator<>(structure, structure2);
         }
         
-        @Override
         public Component tooltip(GuiTreeItemStructure structure) {
             return GuiControl.translatable("gui.recipe.test.overlap.tooltip", structure == this.structure ? structure2.getTitle() : this.structure.getTitle());
         }
         
-        @Override
         public void create(GuiRecipe recipe, GuiParent parent, Runnable refresh) {
             parent.add(new GuiLabel("remove").setTranslate("gui.recipe.test.overlap.remove"));;
             parent.add(new GuiButton("remove", x -> {
