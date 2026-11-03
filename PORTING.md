@@ -10,16 +10,31 @@ This repository is a Fabric 1.20.1 port of the upstream LittleTiles `1.20` branc
 
 ## Current state
 
-This is the base skeleton only. It compiles against Fabric 1.20.1, starts on a dedicated
-server, declares CreativeCore and contains the entrypoints for the actual port. None of the
-LittleTiles content has been ported yet.
+The Fabric project compiles against 1.20.1, starts on a dedicated server, declares CreativeCore
+and contains the entrypoints for the actual port. The upstream LittleTiles source is not
+imported yet.
+
+The project uses **Mojang official mappings** because the upstream `1.20` branch is written
+against them. This avoids remapping the whole 77k-line source by hand and lets the port be
+compared with upstream directly.
+
+A temporary Forge compatibility layer is in place under:
+
+- `src/main/java/net/minecraftforge/` — event bus bridge, `DeferredRegister`,
+  `RegistryObject`, `ForgeRegistries`, FML shims, the event classes LittleTiles uses, and
+  basic capability interfaces.
+- `src/main/java/team/creative/creativecore/common/be/BlockEntityCreative.java` — Fabric
+  replacement for the Forge-only CreativeCore base block entity.
+
+It is compile-only for now. As the port progresses, the compatibility classes will be replaced
+with native Fabric API calls and mixins.
 
 ## Known dependency gap
 
 The published CreativeCore Fabric jar does not contain a few Forge-only classes that
-LittleTiles uses:
+LittleTiles uses. `BlockEntityCreative` has already been added to this project. The remaining
+client-side classes are:
 
-- `team.creative.creativecore.common.be.BlockEntityCreative`
 - `team.creative.creativecore.client.render.model.CreativeBlockModel`
 - `team.creative.creativecore.client.render.model.CreativeBakedBoxModel`
 - `team.creative.creativecore.client.render.model.CreativeItemModel`
@@ -29,8 +44,7 @@ LittleTiles uses:
 
 Internally those classes also need `CreativeBakedModel`, `CreativeUnbakedModel` and
 `CreativeModelLoader`. Together this is roughly 600 lines of code. Port them into this project
-first (or upstream them into CreativeCore's Fabric source set) before porting LittleTiles'
-client code.
+before porting LittleTiles' client code.
 
 ## Suggested port order
 

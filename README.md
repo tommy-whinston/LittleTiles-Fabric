@@ -6,6 +6,21 @@
 
 Unofficial Fabric 1.20.1 port of [LittleTiles](https://github.com/CreativeMD/LittleTiles).
 
+## Status
+
+The project is being ported in stages. The current stage is the **port foundation**:
+
+- Fabric 1.20.1 toolchain and entrypoints.
+- CreativeCore Fabric dependency.
+- **Mojang official mappings** (the upstream LittleTiles 1.20 source uses them, so the port can
+  be compared with the original line by line).
+- A small Forge compatibility layer under `src/main/java/net/minecraftforge` plus a Fabric
+  replacement for CreativeCore's `BlockEntityCreative`. It is compile-only for now and is not
+  used by the running mod yet.
+
+The upstream 656-file / ~77k-line source is **not imported yet**. The next stage is to copy the
+`1.20` source in and fix it module by module. See [PORTING.md](PORTING.md).
+
 > This is an early **base skeleton**, not a playable port yet. It sets up the Fabric 1.20.1
 > toolchain, the required CreativeCore dependency, the entrypoints and the project structure
 > for the actual port.

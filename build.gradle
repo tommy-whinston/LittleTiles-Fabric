@@ -13,6 +13,10 @@ base {
 repositories {
     mavenCentral()
     maven {
+        name = 'Forge'
+        url = 'https://maven.minecraftforge.net/'
+    }
+    maven {
         name = 'Modrinth'
         url = 'https://api.modrinth.com/maven'
         content {
@@ -23,13 +27,18 @@ repositories {
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    // The upstream LittleTiles 1.20 source is written against Mojang official mappings.
+    mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     // CreativeCore 2.12.41, Fabric build for Minecraft 1.20.1.
     // Modrinth version ID: 3q9j0cNZ. It is a required dependency and is not bundled.
     modImplementation "maven.modrinth:creativecore:3q9j0cNZ"
+
+    // Temporary Forge API compatibility layer used while porting the upstream source.
+    compileOnly 'net.minecraftforge:eventbus:6.0.5'
+    compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
 }
 
 loom {
@@ -50,6 +59,7 @@ processResources {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
     options.release = 17
+    options.compilerArgs += ['-Xmaxerrs', '10000']
 }
 
 java {
