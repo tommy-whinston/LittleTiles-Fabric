@@ -201,7 +201,7 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
     }
     
     public RenderShape getRenderShape(BlockState state) {
-        return RenderShape.MODEL;
+        return RenderShape.INVISIBLE;
     }
     
     public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {

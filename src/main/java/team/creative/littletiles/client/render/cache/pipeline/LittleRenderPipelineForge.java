@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.lighting.QuadLighter;
-import team.creative.creativecore.client.render.model.CreativeQuadLighter;
 import team.creative.creativecore.common.util.math.base.Facing;
 import team.creative.creativecore.common.util.type.list.IndexedCollector;
 import team.creative.creativecore.common.util.type.list.SingletonList;
@@ -47,10 +46,7 @@ public class LittleRenderPipelineForge extends LittleRenderPipeline {
         
         BlockPos pos = data.be.getBlockPos();
         
-        ForgeModelBlockRendererAccessor renderer = (ForgeModelBlockRendererAccessor) MC.getBlockRenderer().getModelRenderer();
-        boolean smooth = Minecraft.useAmbientOcclusion() && data.state.getLightEmission() == 0;
-        QuadLighter lighter = smooth ? renderer.getSmoothLighter().get() : renderer.getFlatLighter().get();
-        
+        QuadLighter lighter = new QuadLighter();
         lighter.setup(renderLevel, pos, data.state);
         
         int overlay = OverlayTexture.NO_OVERLAY;
@@ -74,9 +70,6 @@ public class LittleRenderPipelineForge extends LittleRenderPipeline {
             });iterator.hasNext();) {
                 LittleRenderBox cube = iterator.next();
                 BlockState state = cube.state;
-                
-                ((CreativeQuadLighter) lighter).setState(state);
-                ((CreativeQuadLighter) lighter).setCustomTint(cube.color);
                 
                 for (int h = 0; h < Facing.VALUES.length; h++) {
                     Facing facing = Facing.VALUES[h];
@@ -105,7 +98,6 @@ public class LittleRenderPipelineForge extends LittleRenderPipeline {
             buffers.put(entry.key, new BufferHolder(builder.end(), indexes.toIntArray()));
         }
         
-        ((CreativeQuadLighter) lighter).setCustomTint(-1);
         lighter.reset();
     }
     

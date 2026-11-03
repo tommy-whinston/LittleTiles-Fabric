@@ -75,8 +75,8 @@ public abstract class RebuildTaskMixin implements RebuildTaskExtender {
             method = "handleBlockEntity(Lnet/minecraft/client/renderer/chunk/ChunkRenderDispatcher$RenderChunk$RebuildTask$CompileResults;Lnet/minecraft/world/level/block/entity/BlockEntity;)V",
             require = 1)
     private void handleBlockEntity(@Coerce Object object, BlockEntity block, CallbackInfo info) {
-        if (block instanceof BETiles tiles)
-            LittleRenderPipelineType.compile((RenderChunkExtender) field_20839, tiles, this);
+        // Tile blocks are rendered by BETilesRenderer on Fabric for now. The chunk
+        // pipeline still needs its missing CreativeCore model loader implementation.
     }
     
     @Inject(method = "doTask(Lnet/minecraft/client/renderer/ChunkBufferBuilderPack;)Ljava/util/concurrent/CompletableFuture;", at = @At("RETURN"), cancellable = true, require = 1)
