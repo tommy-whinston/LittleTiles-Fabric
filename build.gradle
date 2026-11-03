@@ -39,6 +39,9 @@ dependencies {
     // Temporary Forge API compatibility layer used while porting the upstream source.
     compileOnly 'net.minecraftforge:eventbus:6.0.5'
     compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+
+    // Sodium 0.5.11 for 1.20.1; the upstream renderer has optional Sodium integration.
+    modCompileOnly "maven.modrinth:sodium:ygf8cVZg"
 }
 
 loom {
@@ -68,6 +71,16 @@ java {
         languageVersion = JavaLanguageVersion.of(21)
     }
 }
+
+sourceSets {
+    api {
+        java.srcDir 'src/api/java'
+        compileClasspath += sourceSets.main.compileClasspath
+    }
+}
+
+sourceSets.main.compileClasspath += sourceSets.api.output
+sourceSets.main.runtimeClasspath += sourceSets.api.output
 
 jar {
     from('LICENSE') {
