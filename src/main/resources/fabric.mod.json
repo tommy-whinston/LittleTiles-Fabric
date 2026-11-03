@@ -3,7 +3,7 @@
   "id": "littletiles",
   "version": "${version}",
   "name": "LittleTiles-Fabric",
-  "description": "Unofficial Fabric 1.20.1 port of LittleTiles. Original mod by CreativeMD and contributors. This port is AI-assisted and is not affiliated with or endorsed by the original author.",
+  "description": "Unofficial Fabric 1.20.1 port of LittleTiles by CreativeMD. AI-assisted. / Неофициальный Fabric-порт LittleTiles для 1.20.1. Оригинал — CreativeMD. Сделан с помощью ИИ.",
   "authors": [
     "CreativeMD",
     "N247S"

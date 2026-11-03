@@ -1,5 +1,7 @@
 # Porting notes
 
+[English](PORTING.md) | [Русский](PORTING.ru.md)
+
 This repository is a Fabric 1.20.1 port of the upstream LittleTiles `1.20` branch.
 
 - Upstream: <https://github.com/CreativeMD/LittleTiles/tree/1.20>

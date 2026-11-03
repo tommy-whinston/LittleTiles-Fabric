@@ -2,6 +2,8 @@
 **Этот проект / This project:** unofficial **Fabric 1.20.1** port, **made with AI assistance / сделан с помощью ИИ**. Not affiliated with or endorsed by the original author.
 **Лицензия / License:** LGPL-3.0-only, same as the original. See [LICENSE](LICENSE).
 
+[English](README.md) | [Русский](README.ru.md)
+
 # LittleTiles-Fabric
 
 Unofficial Fabric 1.20.1 port of [LittleTiles](https://github.com/CreativeMD/LittleTiles).
