@@ -76,7 +76,7 @@ initialize on both sides.
 - [~] Place and use fixed structures, chairs, beds, storage, lights, item holders.
 - [~] Doors and animated structures: state transitions, moving structures, sound.
 - [x] Structure persistence, children connections and chunk reload.
-- [~] Render animated structures through the correct render stages.
+- [x] Render animated structures through the correct render stages.\n- [x] Port chunk-buffer upload used by animation render chunks.
 
 **Done when:** every built-in structure can be placed, used, saved and loaded.
 

@@ -17,7 +17,7 @@ base; this branch contains the imported upstream source and the Fabric port.
 - **Tiles:** tile blocks can be placed on the client and server; they render through
   `BETilesRenderer` with cropped UVs and correct full-block lighting.
 - **Preview:** the placement preview is visible and renders the real structure blocks.
-- **Items:** `multi_tiles` and `premade` use a 3D item renderer for inventory icons.\n- **Ticking/interaction:** server/client level ticks, entity tracking events, structure activation\n  and pick-block are wired through Fabric events/mixins.\n- **Breaking:** breaking a tile block as a non-creative player now drops its tiles/structure item.\n- **Localization:** a modern `ru_ru.json` is generated from the legacy `ru_RU.lang`.
+- **Items:** `multi_tiles` and `premade` use a 3D item renderer for inventory icons.\n- **Ticking/interaction:** server/client level ticks, entity tracking events, structure activation\n  and pick-block are wired through Fabric events/mixins.\n- **Breaking:** breaking a tile block as a non-creative player now drops its tiles/structure item.\n- **Animation plumbing:** chunk-buffer upload was ported to `BufferBuilder`, and animation\n  ticks/tracking/render stages are wired. Full visual verification is still pending.\n- **Localization:** a modern `ru_ru.json` is generated from the legacy `ru_RU.lang`.
 
 Known runtime issues and temporary shortcuts:
 
@@ -52,7 +52,7 @@ remaining rendering and structure work.
 - **Тайлы:** блоки тайлов ставятся на клиенте и сервере и рендерятся через `BETilesRenderer`
   с обрезанными UV и корректным освещением полных блоков.
 - **Превью:** превью установки видно, оно показывает реальные блоки структуры.
-- **Предметы:** у `multi_tiles` и `premade` есть 3D-иконки структур в инвентаре.\n- **Тики/взаимодействие:** тики уровней, события трекинга сущностей, активация структур и\n  pick-block подключены через Fabric-события и миксины.\n- **Ломание:** при ломании блока тайлов не-креативным игроком выпадают тайлы/предмет структуры.\n- **Локализация:** современный `ru_ru.json` сгенерирован из старого `ru_RU.lang`.
+- **Предметы:** у `multi_tiles` и `premade` есть 3D-иконки структур в инвентаре.\n- **Тики/взаимодействие:** тики уровней, события трекинга сущностей, активация структур и\n  pick-block подключены через Fabric-события и миксины.\n- **Ломание:** при ломании блока тайлов не-креативным игроком выпадают тайлы/предмет структуры.\n- **Анимации:** загрузка chunk-буферов портирована в `BufferBuilder`, тики/трекинг/стадии\n  рендера подключены. Полная визуальная проверка ещё впереди.\n- **Локализация:** современный `ru_ru.json` сгенерирован из старого `ru_RU.lang`.
 
 Известные проблемы и временные упрощения:
 
