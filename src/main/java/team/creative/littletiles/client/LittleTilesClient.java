@@ -121,6 +121,11 @@ public class LittleTilesClient implements ClientModInitializer {
             if (ACTION_HANDLER != null)
                 ACTION_HANDLER.setting.refreshGrid(client.player);
         });
+        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
+            bus.post(new net.minecraftforge.client.event.ClientPlayerNetworkEvent.LoggingOut(client.player, handler.getConnection()));
+            if (client.level != null)
+                bus.post(new LevelEvent.Unload(client.level));
+        });
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             bus.post(new TickEvent.ClientTickEvent(TickEvent.Phase.END));
             if (client.level != null)

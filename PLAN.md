@@ -88,7 +88,7 @@ initialize on both sides.
 
 **Done when:** every tool has its basic documented behavior in single-player.
 
-### Stage 9 - Networking, save/load, old worlds - `[ ]` planned
+### Stage 9 - Networking, save/load, old worlds - `[~]` in progress
 
 - Tile block updates, action packets, structure packets, level initialization.
 - Chunk data, block entity sync, reconnect persistence.
@@ -227,7 +227,7 @@ initialize on both sides.
 **Готово, когда:** каждый инструмент выполняет своё базовое документированное поведение
 в одиночной игре.
 
-### Этап 9 - Сеть, сохранение и старые миры - `[ ]` запланировано
+### Этап 9 - Сеть, сохранение и старые миры - `[~]` в работе
 
 - Обновления блоков тайлов, пакеты действий, пакеты структур, инициализация уровня.
 - Данные чанков, синхронизация block entity, сохранение после переподключения.
