@@ -545,6 +545,29 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
         return state;
     }
     
+    public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @javax.annotation.Nullable BlockEntity blockEntity, ItemStack tool) {
+        if (player.isCreative() || !(blockEntity instanceof BETiles tiles))
+            return;
+        
+        LittleGroup group = new LittleGroup();
+        for (IParentCollection parent : tiles.groups()) {
+            if (parent.isStructure()) {
+                try {
+                    ItemStack drop = parent.getStructure().getStructureDrop();
+                    if (!drop.isEmpty())
+                        popResource(level, pos, drop);
+                } catch (CorruptedConnectionException | NotYetConnectedException e) {
+                    // Structure was not fully connected; skip its drop.
+                }
+            } else {
+                for (LittleTile tile : parent)
+                    group.add(parent.getGrid(), tile, tile);
+            }
+        }
+        if (!group.isEmpty())
+            popResource(level, pos, team.creative.littletiles.common.item.ItemMultiTiles.of(group));
+    }
+    
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         return Collections.emptyList();
     }

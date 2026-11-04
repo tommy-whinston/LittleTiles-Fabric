@@ -96,7 +96,7 @@ initialize on both sides.
 
 **Done when:** two clients see the same tiles; a reconnect preserves tiles and structures.
 
-### Stage 10 - Model, language and integration parity - `[ ]` planned
+### Stage 10 - Model, language and integration parity - `[~]` in progress
 
 - Models and textures for every block/item (no magenta or missing models).
 - English/Russian language coverage where the upstream project has it.
@@ -236,7 +236,7 @@ initialize on both sides.
 **Готово, когда:** два клиента видят одинаковые тайлы, а переподключение сохраняет
 тайлы и структуры.
 
-### Этап 10 - Модели, язык и интеграции - `[ ]` запланировано
+### Этап 10 - Модели, язык и интеграции - `[~]` в работе
 
 - Модели и текстуры для всех блоков и предметов (без magenta и missing model).
 - Английский/русский язык там, где он есть в upstream.
