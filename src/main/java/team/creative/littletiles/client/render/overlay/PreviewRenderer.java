@@ -183,7 +183,7 @@ public class PreviewRenderer implements LevelAwareHandler {
             Level level = mc.level;
             Player player = mc.player;
             ItemStack stack = mc.player.getMainHandItem();
-            PoseStack pose = new PoseStack();
+            PoseStack pose = event.getPoseStack();
             
             if (!previewTickLogged) {
                 previewTickLogged = true;
@@ -271,6 +271,8 @@ public class PreviewRenderer implements LevelAwareHandler {
                             }
                             bufferSource.endBatch();
                             
+                            RenderSystem.setShader(GameRenderer::getPositionColorShader);
+                            RenderSystem.setShaderTexture(0, WHITE_TEXTURE);
                             BufferBuilder builder = Tesselator.getInstance().getBuilder();
                             double alpha = (float) (Math.sin(System.nanoTime() / 200000000D) * 0.2 + 0.5);
                             int colorAlpha = (int) (alpha * iTile.getPreviewAlphaFactor() * 255);
@@ -329,6 +331,7 @@ public class PreviewRenderer implements LevelAwareHandler {
     
     public void processMarkKey(Player player, ILittleTool iTile, ItemStack stack, PlacementPreview preview) {
         while (LittleTilesClient.mark.consumeClick()) {
+            LittleTiles.LOGGER.info("LT key mark marked={}", marked != null);
             if (marked == null) {
                 marked = iTile.onMark(player, stack, getPosition(player, player.level(), stack, (BlockHitResult) mc.hitResult), (BlockHitResult) mc.hitResult, preview);
                 if (Screen.hasControlDown())
@@ -355,11 +358,14 @@ public class PreviewRenderer implements LevelAwareHandler {
     }
     
     public void processKeys(ItemStack stack, LittleGrid grid) {
-        while (LittleTilesClient.mirror.consumeClick())
+        while (LittleTilesClient.mirror.consumeClick()) {
+            LittleTiles.LOGGER.info("LT key mirror");
             processMirrorKey(mc.player, stack);
+        }
         
         // Rotate Block
         while (LittleTilesClient.up.consumeClick()) {
+            LittleTiles.LOGGER.info("LT key up marked={}", marked != null);
             if (marked != null)
                 marked.move(grid, LittleActionHandlerClient.isUsingSecondMode() ? Facing.UP : Facing.EAST);
             else
@@ -367,6 +373,7 @@ public class PreviewRenderer implements LevelAwareHandler {
         }
         
         while (LittleTilesClient.down.consumeClick()) {
+            LittleTiles.LOGGER.info("LT key down marked={}", marked != null);
             if (marked != null)
                 marked.move(grid, LittleActionHandlerClient.isUsingSecondMode() ? Facing.DOWN : Facing.WEST);
             else
@@ -374,6 +381,7 @@ public class PreviewRenderer implements LevelAwareHandler {
         }
         
         while (LittleTilesClient.right.consumeClick()) {
+            LittleTiles.LOGGER.info("LT key right marked={}", marked != null);
             if (marked != null)
                 marked.move(grid, Facing.SOUTH);
             else
@@ -381,6 +389,7 @@ public class PreviewRenderer implements LevelAwareHandler {
         }
         
         while (LittleTilesClient.left.consumeClick()) {
+            LittleTiles.LOGGER.info("LT key left marked={}", marked != null);
             if (marked != null)
                 marked.move(grid, Facing.NORTH);
             else
@@ -407,6 +416,8 @@ public class PreviewRenderer implements LevelAwareHandler {
     @SubscribeEvent
     public void drawHighlight(RenderHighlightEvent.Block event) {
         Player player = mc.player;
+        if (player == null)
+            return;
         Level level = player.level();
         ItemStack stack = player.getMainHandItem();
         
@@ -503,8 +514,9 @@ public class PreviewRenderer implements LevelAwareHandler {
             }
         }
         
-        if (!event.isCanceled() && level.getBlockState(((net.minecraft.world.phys.BlockHitResult) event.getTarget()).getBlockPos()).getBlock() instanceof BlockTile && level.getWorldBorder().isWithinBounds(((net.minecraft.world.phys.BlockHitResult) event.getTarget()).getBlockPos())) {
-            renderHitOutline(pose, level, event.getMultiBufferSource().getBuffer(RenderType.lines()), player, vec.x, vec.y, vec.z, ((net.minecraft.world.phys.BlockHitResult) event.getTarget()).getBlockPos());
+        if (!event.isCanceled() && event.getTarget() instanceof BlockHitResult hit && level.getBlockState(hit.getBlockPos()).getBlock() instanceof BlockTile && level.getWorldBorder()
+                .isWithinBounds(hit.getBlockPos())) {
+            renderHitOutline(pose, level, event.getMultiBufferSource().getBuffer(RenderType.lines()), player, vec.x, vec.y, vec.z, hit.getBlockPos());
             event.setCanceled(true);
         }
         

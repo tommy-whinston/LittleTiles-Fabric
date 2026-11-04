@@ -286,8 +286,9 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
     }
     
     @OnlyIn(Dist.CLIENT)
+    @net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
     public VoxelShape getSelectionShape(BlockGetter level, BlockPos pos) {
-        LittleTileContext tileContext = LittleTileContext.selectFocused(level, pos, (Player) null);
+        LittleTileContext tileContext = LittleTileContext.selectFocused(level, pos, net.minecraft.client.Minecraft.getInstance().player);
         if (tileContext.isComplete()) {
             if (false)
                 return tileContext.parent.getBE().getBlockShape();

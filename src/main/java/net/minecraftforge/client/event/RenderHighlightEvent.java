@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
 
 public class RenderHighlightEvent extends Event {
@@ -51,6 +52,7 @@ public class RenderHighlightEvent extends Event {
         return partialTick;
     }
 
+    @Cancelable
     public static class Block extends RenderHighlightEvent {
 
         public Block() {

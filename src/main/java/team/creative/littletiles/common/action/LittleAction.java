@@ -102,9 +102,14 @@ public abstract class LittleAction<T> extends CreativePacket {
     
     public final void executeServer(ServerPlayer player) {
         try {
-            action(player);
+            LittleTiles.LOGGER.info("LT action server {} player={}", getClass().getSimpleName(), player.getGameProfile().getName());
+            T result = action(player);
+            LittleTiles.LOGGER.info("LT action server {} result={} success={}", getClass().getSimpleName(), result, wasSuccessful(result));
         } catch (LittleActionException e) {
+            LittleTiles.LOGGER.info("LT action server {} failed: {}", getClass().getSimpleName(), e.getLocalizedMessage());
             player.sendSystemMessage(Component.literal(e.getLocalizedMessage()));
+        } catch (Throwable t) {
+            LittleTiles.LOGGER.error("LT action server {} crashed", getClass().getSimpleName(), t);
         }
     }
     

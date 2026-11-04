@@ -105,6 +105,11 @@ public class LittleTilesClient implements ClientModInitializer {
     
     @Override
     public void onInitializeClient() {
+        net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin.register(context -> {
+            context.addModels(new net.minecraft.resources.ResourceLocation(LittleTiles.MODID, "chisel_background#inventory"));
+            context.addModels(new net.minecraft.resources.ResourceLocation(LittleTiles.MODID, "glove_background#inventory"));
+            context.addModels(new net.minecraft.resources.ResourceLocation(LittleTiles.MODID, "blueprint_background#inventory"));
+        });
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         load(bus);
         registerKeys(new RegisterKeyMappingsEvent());
@@ -150,12 +155,28 @@ public class LittleTilesClient implements ClientModInitializer {
             bus.post(new RenderLevelStageEvent(RenderLevelStageEvent.Stage.AFTER_LEVEL, context.matrixStack(), context.tickDelta(), context.camera(), context.frustum(), context
                     .projectionMatrix()));
         });
+        WorldRenderEvents.BLOCK_OUTLINE.register((context, outline) -> {
+            if (mc.hitResult == null)
+                return true;
+            var event = new net.minecraftforge.client.event.RenderHighlightEvent.Block(mc.hitResult, context.matrixStack(), context.consumers(), context.camera(), context
+                    .tickDelta());
+            MinecraftForge.EVENT_BUS.post(event);
+            return !event.isCanceled();
+        });
     }
     
     public static final Minecraft mc = Minecraft.getInstance();
     public static boolean previewEventLogged = false;
     public static boolean previewTickLogged = false;
     public static boolean previewResultLogged = false;
+    
+    public static void onKeyPressed(int key, int scancode) {
+        if (mc.screen != null || mc.options == null)
+            return;
+        for (KeyMapping mapping : mc.options.keyMappings)
+            if (mapping instanceof LittleKeyMapping little && mapping.matches(key, scancode))
+                little.customClick();
+    }
     
     public static final IKeyConflictContext LITTLE_KEY_CONTEXT = new IKeyConflictContext() {
         
@@ -232,7 +253,7 @@ public class LittleTilesClient implements ClientModInitializer {
         
         mirror = new LittleKeyMapping("key.little.mirror", LITTLE_KEY_CONTEXT, InputConstants.KEY_G, "key.categories.littletiles");
         mark = new LittleKeyMapping("key.little.mark", LITTLE_KEY_CONTEXT, InputConstants.KEY_M, "key.categories.littletiles");
-        configure = new LittleKeyMapping("key.little.config.item", LITTLE_KEY_CONTEXT, InputConstants.KEY_C, "key.categories.littletiles");
+        configure = new LittleKeyMapping("key.little.config.item", LITTLE_KEY_CONTEXT, InputConstants.KEY_V, "key.categories.littletiles");
         
         undo = new LittleKeyMapping("key.little.undo", LITTLE_KEY_CONTEXT, KeyModifier.CONTROL, InputConstants.KEY_Z, "key.categories.littletiles");
         redo = new LittleKeyMapping("key.little.redo", LITTLE_KEY_CONTEXT, KeyModifier.CONTROL, InputConstants.KEY_Y, "key.categories.littletiles");
@@ -295,6 +316,7 @@ public class LittleTilesClient implements ClientModInitializer {
         BlockEntityRenderers.register(LittleTilesRegistry.BE_TILES_TYPE_RENDERED.get(), x -> blockEntityRenderer);
         BuiltinItemRendererRegistry.INSTANCE.register(LittleTilesRegistry.ITEM_TILES.get(), new LittleItemRenderer());
         BuiltinItemRendererRegistry.INSTANCE.register(LittleTilesRegistry.PREMADE.get(), new LittleItemRenderer());
+        BuiltinItemRendererRegistry.INSTANCE.register(LittleTilesRegistry.CHISEL.get(), new LittleItemRenderer());
         
         ResourceLocation filled = new ResourceLocation(LittleTiles.MODID, "filled");
         ClampedItemPropertyFunction function = (stack, level, entity, x) -> ((ItemColorIngredient) stack.getItem()).getColor(stack) / (float) ColorIngredient.BOTTLE_SIZE;
@@ -442,6 +464,7 @@ public class LittleTilesClient implements ClientModInitializer {
     public static class LittleKeyMapping extends KeyMapping {
         
         private boolean ignoreModifier = false;
+        private int customClicks;
         
         public LittleKeyMapping(String description, IKeyConflictContext keyConflictContext, int keyCode, String category) {
             super(description, InputConstants.Type.KEYSYM, keyCode, category);
@@ -456,10 +479,17 @@ public class LittleTilesClient implements ClientModInitializer {
             return this;
         }
         
-        public boolean isActiveAndMatches(Key keyCode) {
-            if (ignoreModifier)
-                return keyCode != InputConstants.UNKNOWN && keyCode.equals(getDefaultKey());
-            return keyCode.equals(getDefaultKey());
+        public void customClick() {
+            customClicks++;
+        }
+        
+        @Override
+        public boolean consumeClick() {
+            if (customClicks > 0) {
+                customClicks--;
+                return true;
+            }
+            return false;
         }
         
         public boolean same(KeyMapping other) {

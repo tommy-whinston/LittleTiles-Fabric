@@ -203,6 +203,8 @@ public class LittleTiles implements ModInitializer {
         
         if (net.fabricmc.loader.api.FabricLoader.getInstance().getEnvironmentType() == net.fabricmc.api.EnvType.CLIENT)
             LittleTilesGuiRegistry.init();
+        else
+            LittleTilesGuiRegistry.init();
         LittleBlocks.init();
     }
     

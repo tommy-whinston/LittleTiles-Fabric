@@ -34,6 +34,8 @@
                ],
     "client":  [
                    "client.MinecraftMixin",
+                   "client.KeyboardHandlerMixin",
+                   "client.GuiColorPlateMixin",
                    "client.EntityRenderersAccessor",
                    "client.MultiPlayerGameModeAccessor",
                    "client.level.ClientLevelMixin",

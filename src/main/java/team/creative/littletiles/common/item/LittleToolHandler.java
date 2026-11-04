@@ -24,6 +24,7 @@ import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import team.creative.creativecore.common.util.inventory.ContainerSlotView;
 import team.creative.creativecore.common.util.math.base.Facing;
+import team.creative.littletiles.LittleTiles;
 import team.creative.littletiles.LittleTilesGuiRegistry;
 import team.creative.littletiles.api.common.ingredient.ILittleIngredientInventory;
 import team.creative.littletiles.api.common.tool.ILittlePlacer;
@@ -128,17 +129,23 @@ public class LittleToolHandler {
         HitResult result = Minecraft.getInstance().hitResult;
         if (!(result instanceof BlockHitResult))
             return false;
+        LittleTiles.LOGGER.info("LT tool onRightInteract stack={} hit={}", stack, result);
         PlacementPosition position = LittleTilesClient.PREVIEW_RENDERER.getPosition(player, level, stack, (BlockHitResult) result);
-        if (iTile.onRightClick(level, player, stack, position.copy(), (BlockHitResult) result) && iTile instanceof ILittlePlacer placer && placer.hasTiles(stack)) {
+        boolean accepted = iTile.onRightClick(level, player, stack, position.copy(), (BlockHitResult) result);
+        LittleTiles.LOGGER.info("LT tool onRightClick accepted={} hasTiles={}", accepted, iTile instanceof ILittlePlacer placer && placer.hasTiles(stack));
+        if (accepted && iTile instanceof ILittlePlacer placer && placer.hasTiles(stack)) {
             if (LittleTilesClient.INTERACTION.start(true)) {
                 PlacementPreview preview = placer.getPlacement(player, level, stack, position, false);
+                LittleTiles.LOGGER.info("LT tool placement preview={}", preview);
                 if (preview == null)
                     return true;
                 Boolean placed = LittleTilesClient.ACTION_HANDLER.execute(new LittleActionPlace(PlaceAction.CURRENT_ITEM, preview));
+                LittleTiles.LOGGER.info("LT tool placed={}", placed);
                 if (!placed)
                     player.displayClientMessage(net.minecraft.network.chat.Component.translatable("littletiles.message.place_failed"), true);
                 LittleTilesClient.PREVIEW_RENDERER.removeMarked();
-            }
+            } else
+                LittleTiles.LOGGER.info("LT tool interaction busy");
             iTile.onDeselect(level, stack, player);
             return true;
         }
@@ -164,6 +171,7 @@ public class LittleToolHandler {
                 
                 while (LittleTilesClient.configure.consumeClick())
                     if (stack.getItem() instanceof ILittleTool) {
+                        LittleTiles.LOGGER.info("LT key configure stack={}", stack);
                         GuiConfigure gui = ((ILittleTool) stack.getItem()).getConfigure(mc.player, ContainerSlotView.mainHand(mc.player));
                         if (gui != null)
                             LittleTilesGuiRegistry.OPEN_CONFIG.open(mc.player);

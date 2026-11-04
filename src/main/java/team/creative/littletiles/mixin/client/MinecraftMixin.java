@@ -27,6 +27,7 @@ import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.event.InputEvent.InteractionKeyMappingTriggered;
 import net.minecraftforge.common.ForgeHooks;
 import team.creative.littletiles.api.common.tool.ILittleTool;
+import team.creative.littletiles.LittleTiles;
 import team.creative.littletiles.client.LittleTilesClient;
 import team.creative.littletiles.common.math.vec.LittleHitResult;
 
@@ -114,7 +115,11 @@ public class MinecraftMixin {
             ItemStack stack = mc.player.getItemInHand(hand);
             if (!(stack.getItem() instanceof ILittleTool))
                 continue;
+            if (!(stack.getItem() instanceof team.creative.littletiles.api.common.tool.ILittlePlacer placer) || !placer.hasTiles(stack))
+                return;
+            LittleTiles.LOGGER.info("LT tool useItemOn hand={} stack={}", hand, stack);
             InteractionResult result = LittleTilesClient.INTERACTION_HANDLER.useItemOn(mc.level, mc.player, hand, blockhitresult);
+            LittleTiles.LOGGER.info("LT tool useItemOn result={}", result);
             if (result.shouldSwing())
                 mc.player.swing(hand);
             info.cancel();

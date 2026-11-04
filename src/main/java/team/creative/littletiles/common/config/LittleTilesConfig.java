@@ -259,7 +259,7 @@ public class LittleTilesConfig {
     public static class Building {
         
         @CreativeConfig
-        public boolean invertStickToGrid = false;
+        public boolean invertStickToGrid = true;
         
         @CreativeConfig
         public int maxSavedActions = 32;
