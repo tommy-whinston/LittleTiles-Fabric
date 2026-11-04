@@ -121,7 +121,11 @@ public class LittleTilesClient implements ClientModInitializer {
             if (ACTION_HANDLER != null)
                 ACTION_HANDLER.setting.refreshGrid(client.player);
         });
-        ClientTickEvents.END_CLIENT_TICK.register(client -> bus.post(new TickEvent.ClientTickEvent(TickEvent.Phase.END)));
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            bus.post(new TickEvent.ClientTickEvent(TickEvent.Phase.END));
+            if (client.level != null)
+                bus.post(new TickEvent.LevelTickEvent(TickEvent.Phase.END, client.level));
+        });
         WorldRenderEvents.AFTER_SETUP.register(context -> bus.post(new RenderLevelStageEvent(RenderLevelStageEvent.Stage.AFTER_SKY, context.matrixStack(), context.tickDelta(), context
                 .camera(), context.frustum(), context.projectionMatrix())));
         WorldRenderEvents.AFTER_TRANSLUCENT.register(context -> {

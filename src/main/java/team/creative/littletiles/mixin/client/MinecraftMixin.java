@@ -88,6 +88,19 @@ public class MinecraftMixin {
         }
     }
     
+    @Inject(method = "pickBlock", at = @At("HEAD"), cancellable = true)
+    private void pickBlock(CallbackInfo info) {
+        Minecraft mc = asMinecraft();
+        if (mc.player == null)
+            return;
+        InteractionKeyMappingTriggered event = ForgeHooksClient.onClickInput(2, mc.options.keyPickItem, InteractionHand.MAIN_HAND);
+        if (event.isCanceled()) {
+            if (event.shouldSwingHand())
+                mc.player.swing(InteractionHand.MAIN_HAND);
+            info.cancel();
+        }
+    }
+    
     @Inject(method = "startUseItem", at = @At("HEAD"), cancellable = true)
     private void startUseItem(CallbackInfo info) {
         Minecraft mc = asMinecraft();

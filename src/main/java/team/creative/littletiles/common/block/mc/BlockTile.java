@@ -428,6 +428,12 @@ public class BlockTile extends BaseEntityBlock implements LittlePhysicBlock, Sim
             return InteractionResult.PASS;
         if (level.isClientSide)
             return useClient(state, level, pos, player, hand, result);
+        if (player instanceof net.minecraft.server.level.ServerPlayer server) {
+            Vec3 eye = player.getEyePosition();
+            Vec3 look = eye.add(player.getViewVector(1.0F).scale(team.creative.creativecore.common.util.mc.PlayerUtils.getReach(player)));
+            if (LittleTilesServer.playerRightClickServer(server, eye, look, hand))
+                return InteractionResult.SUCCESS;
+        }
         return InteractionResult.PASS;
     }
     

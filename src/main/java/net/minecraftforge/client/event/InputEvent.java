@@ -2,10 +2,12 @@ package net.minecraftforge.client.event;
 
 import net.minecraft.client.KeyMapping;
 import net.minecraft.world.InteractionHand;
+import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
 
 public class InputEvent extends Event {
 
+    @Cancelable
     public static class InteractionKeyMappingTriggered extends InputEvent {
 
         private final int button;

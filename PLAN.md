@@ -58,7 +58,7 @@ Status markers: `[x]` done, `[~]` in progress, `[ ]` planned.
 
 **Done when:** a tile block can be placed, seen, broken and previewed correctly in normal play.
 
-### Stage 6 - Server/client separation and stability - `[ ]` planned
+### Stage 6 - Server/client separation and stability - `[x]` done
 
 - Audit common classes for direct references to client-only classes
   (`Minecraft`, `LocalPlayer`, `ClientLevel`, `SoundInstance`, `RenderBox`).
@@ -70,7 +70,7 @@ Status markers: `[x]` done, `[~]` in progress, `[ ]` planned.
 **Done when:** a dedicated server starts with no client-class errors, and structures/premades
 initialize on both sides.
 
-### Stage 7 - Structures and animation - `[ ]` planned
+### Stage 7 - Structures and animation - `[~]` in progress
 
 - [x] Structure registry, premade registry, example structures and recipes.
 - [ ] Place and use fixed structures, chairs, beds, storage, lights, item holders.
@@ -193,7 +193,7 @@ initialize on both sides.
 
 **Готово, когда:** блок тайлов можно поставить, увидеть, сломать и увидеть корректное превью.
 
-### Этап 6 - Разделение клиента и сервера, стабильность - `[ ]` запланировано
+### Этап 6 - Разделение клиента и сервера, стабильность - `[x]` готово
 
 - Проверить общие классы на прямые ссылки на клиентские классы
   (`Minecraft`, `LocalPlayer`, `ClientLevel`, `SoundInstance`, `RenderBox`).
@@ -206,7 +206,7 @@ initialize on both sides.
 **Готово, когда:** сервер запускается без клиентских ошибок, а структуры и премейды
 инициализируются с обеих сторон.
 
-### Этап 7 - Структуры и анимации - `[ ]` запланировано
+### Этап 7 - Структуры и анимации - `[~]` в работе
 
 - [x] Реестр структур, реестр премейдов, примеры структур и рецепты.
 - [ ] Установка и использование fixed-структур, стульев, кроватей, хранилищ, света,

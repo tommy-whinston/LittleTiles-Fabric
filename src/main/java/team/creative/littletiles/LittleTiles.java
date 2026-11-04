@@ -125,6 +125,10 @@ public class LittleTiles implements ModInitializer {
         LittleTilesRegistry.RECIPE_SERIALIZERS.register(FMLJavaModLoadingContext.get().getModEventBus());
         
         LittlePacketTypes.init();
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.END_SERVER_TICK.register(server -> MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.TickEvent.ServerTickEvent(
+                net.minecraftforge.event.TickEvent.Phase.END)));
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.END_WORLD_TICK.register(world -> MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.TickEvent.LevelTickEvent(
+                net.minecraftforge.event.TickEvent.Phase.END, world)));
         MinecraftForge.EVENT_BUS.post(new FMLCommonSetupEvent());
     }
     

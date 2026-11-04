@@ -21,8 +21,12 @@ public class LittleItemRenderer implements BuiltinItemRendererRegistry.DynamicIt
             return;
         
         LittleGroup group = placer.getTiles(stack);
-        if (group == null || group.isEmptyIncludeChildren())
+        if (group == null || group.isEmptyIncludeChildren()) {
+            pose.pushPose();
+            Minecraft.getInstance().getBlockRenderer().renderSingleBlock(net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(), pose, buffer, light, overlay);
+            pose.popPose();
             return;
+        }
         
         List<RenderBox> boxes = group.getRenderingBoxes(false);
         boxes.addAll(group.getRenderingBoxes(true));

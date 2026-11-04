@@ -27,6 +27,7 @@
                    "server.level.ServerEntityMixin",
                    "server.level.ServerEntityAccessor",
                    "server.level.ChunkMapAccessor",
+                   "server.level.ChunkMapTrackedEntityMixin",
                    "server.network.ServerGamePacketListenerImplAccessor",
                    "server.network.ServerGamePacketListenerImplMixin",
                    "server.network.ServerboundCustomPayloadPacketMixin"
