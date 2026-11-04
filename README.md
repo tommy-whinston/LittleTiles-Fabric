@@ -15,11 +15,12 @@ source (618 main Java files, data, assets, mixins) and **compiles and builds wit
 The default `1.20.1` branch remains the buildable base.
 
 The Fabric entrypoints are adapted, the **dedicated server starts successfully** (`Done`) and the
-**client launches, connects to a server and enters the world**. Placing a tile block and checking
-its rendering are the next stage. Several client/render pieces are still temporary stubs or
-no-ops (`ModelData`, `QuadLighter`, CreativeCore model classes, buffer uploads, capabilities and
-some interaction paths), so the mod is **not fully playable yet**. Sodium, The One Probe,
-Chisel/ChiselsAndBits and Oculus are disabled for the first compile pass.
+**client launches, connects to a server and enters the world**. Tile blocks can be **placed,
+rendered and broken**; structures, premades, example structures and recipes load. Remaining work
+is tracked in [PORT_STATUS.md](PORT_STATUS.md) and [PLAN.md](PLAN.md). Several client/render pieces
+are still temporary stubs or no-ops (`ModelData`, CreativeCore model classes, buffer uploads,
+capabilities and some interaction paths), so the mod is **not fully playable yet**. Sodium, The One
+Probe, Chisel/ChiselsAndBits and Oculus are disabled for this pass.
 
 See [PORTING.md](PORTING.md) and the staged [PLAN.md](PLAN.md).
 
@@ -62,16 +63,16 @@ with the original source and, later, so addons can be recompiled against it.
 
 ### Roadmap
 
-- [ ] Registries: blocks, items, block entity types, sounds, recipe types
-- [ ] Core tile data model and block entities
-- [ ] Networking through CreativeCore's packet system
-- [ ] Chunk data storage and synchronization
-- [ ] Custom tile/chunk rendering pipeline
-- [ ] Tools, recipes, GUIs and structures
-- [ ] Fabric API events / mixins replacing Forge events
-- [ ] Item/block models on Fabric's model loading API
+- [x] Registries: blocks, items, block entity types, sounds, recipe types
+- [x] Core tile data model and block entities
+- [x] Networking through CreativeCore's packet system
+- [x] Chunk data storage and synchronization (basic)
+- [~] Custom tile/chunk rendering pipeline
+- [~] Tools, recipes, GUIs and structures
+- [x] Fabric API events / mixins replacing Forge events
+- [x] Item/block models on Fabric's model loading API (with temporary fallbacks)
 - [ ] Sodium compatibility (optional, after the vanilla renderer works)
-- [ ] Multiplayer and world compatibility testing
+- [~] Multiplayer and world compatibility testing
 
 ### Credits
 
@@ -94,11 +95,13 @@ with the original source and, later, so addons can be recompiled against it.
 ошибок**. Основная ветка `1.20.1` остаётся рабочей базой.
 
 Точки входа Fabric адаптированы, **выделенный сервер успешно запускается** (`Done`), а
-**клиент запускается, подключается к серверу и входит в мир**. Следующий этап — поставить блок
-тайлов и проверить его рендер. Часть клиента и рендера пока являются временными заглушками или
-no-op (`ModelData`, `QuadLighter`, модельные классы CreativeCore, загрузка буферов, capabilities
-и некоторые пути взаимодействия), поэтому мод **ещё не полностью играбельный**. Sodium, The One
-Probe, Chisel/ChiselsAndBits и Oculus отключены для первого прохода компиляции.
+**клиент запускается, подключается к серверу и входит в мир**. Блоки тайлов можно
+**ставить, рендерить и ломать**; структуры, премейды, примеры структур и рецепты загружаются.
+Оставшаяся работа — в [PORT_STATUS.md](PORT_STATUS.md) и [PLAN.md](PLAN.md). Часть клиента и
+рендера пока являются временными заглушками или no-op (`ModelData`, модельные классы
+CreativeCore, загрузка буферов, capabilities и некоторые пути взаимодействия), поэтому мод
+**ещё не полностью играбельный**. Sodium, The One Probe, Chisel/ChiselsAndBits и Oculus
+отключены для этого прохода.
 
 Подробнее — в [PORTING.md](PORTING.md) и поэтапном [PLAN.md](PLAN.md).
 
@@ -143,16 +146,16 @@ src/main/resources/                             fabric.mod.json, миксины,
 
 ### План
 
-- [ ] Реестры: блоки, предметы, типы block entity, звуки, типы рецептов
-- [ ] Базовая модель тайлов и block entities
-- [ ] Сеть через пакетную систему CreativeCore
-- [ ] Хранение и синхронизация данных чанков
-- [ ] Собственный рендер тайлов и чанков
-- [ ] Инструменты, рецепты, GUI и структуры
-- [ ] События Fabric API / миксины вместо событий Forge
-- [ ] Модели предметов и блоков на API загрузки моделей Fabric
+- [x] Реестры: блоки, предметы, типы block entity, звуки, типы рецептов
+- [x] Базовая модель тайлов и block entities
+- [x] Сеть через пакетную систему CreativeCore
+- [x] Хранение и синхронизация данных чанков (базово)
+- [~] Собственный рендер тайлов и чанков
+- [~] Инструменты, рецепты, GUI и структуры
+- [x] События Fabric API / миксины вместо событий Forge
+- [x] Модели предметов и блоков на API загрузки моделей Fabric (с временными заглушками)
 - [ ] Совместимость с Sodium (опционально, после обычного рендера)
-- [ ] Тестирование мультиплеера и совместимости миров
+- [~] Тестирование мультиплеера и совместимости миров
 
 ### Благодарности
 
