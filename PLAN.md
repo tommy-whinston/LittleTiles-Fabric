@@ -73,10 +73,10 @@ initialize on both sides.
 ### Stage 7 - Structures and animation - `[~]` in progress
 
 - [x] Structure registry, premade registry, example structures and recipes.
-- [ ] Place and use fixed structures, chairs, beds, storage, lights, item holders.
-- [ ] Doors and animated structures: state transitions, moving structures, sound.
-- [ ] Structure persistence, children connections and chunk reload.
-- [ ] Render animated structures through the correct render stages.
+- [~] Place and use fixed structures, chairs, beds, storage, lights, item holders.
+- [~] Doors and animated structures: state transitions, moving structures, sound.
+- [x] Structure persistence, children connections and chunk reload.
+- [~] Render animated structures through the correct render stages.
 
 **Done when:** every built-in structure can be placed, used, saved and loaded.
 
