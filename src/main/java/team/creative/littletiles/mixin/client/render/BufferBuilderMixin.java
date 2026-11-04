@@ -40,11 +40,11 @@ public class BufferBuilderMixin implements ChunkBufferUploader {
     }
     
     public int uploadIndex(int facing) {
-        throw new UnsupportedOperationException();
+        return uploadIndex();
     }
     
     public void upload(int facing, ByteBuffer buffer) {
-        throw new UnsupportedOperationException();
+        upload(buffer);
     }
     
     public void addSprite(TextureAtlasSprite texture) {}

@@ -23,7 +23,7 @@ public interface ChunkBufferDownloader {
         }
         
         public ByteBuffer downloaded(int facing) {
-            throw new UnsupportedOperationException();
+            return buffer;
         }
         
     }

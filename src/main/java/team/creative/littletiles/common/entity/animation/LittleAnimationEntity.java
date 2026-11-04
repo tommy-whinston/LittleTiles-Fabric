@@ -12,6 +12,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.Environment;
+import net.fabricmc.api.EnvType;
 import team.creative.creativecore.common.network.CreativePacket;
 import team.creative.creativecore.common.util.math.vec.Vec3d;
 import team.creative.littletiles.LittleTilesRegistry;
@@ -83,7 +85,12 @@ public class LittleAnimationEntity extends LittleEntity<LittleAnimationEntityPhy
     
     protected void beforeInitalPlacement() {
         if (level().isClientSide)
-            getSubLevel().renderManager = LittleAnimationRenderManager.of(this);
+            initRenderManager();
+    }
+    
+    @Environment(EnvType.CLIENT)
+    protected void initRenderManager() {
+        getSubLevel().renderManager = LittleAnimationRenderManager.of(this);
     }
     
     protected LittleSubLevel createLevel() {
@@ -186,6 +193,7 @@ public class LittleAnimationEntity extends LittleEntity<LittleAnimationEntityPhy
     }
     
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void initSubLevelClient(StructureAbsolute absolute, CompoundTag extraData) {
         if (changedLevel) {
             changedLevel = false;
@@ -217,6 +225,7 @@ public class LittleAnimationEntity extends LittleEntity<LittleAnimationEntityPhy
     }
     
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public LittleEntityRenderManager getRenderManager() {
         return ((LittleAnimationLevel) subLevel).renderManager;
     }

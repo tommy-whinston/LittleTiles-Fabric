@@ -25,6 +25,8 @@ import net.minecraft.world.phys.HitResult.Type;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.Environment;
+import net.fabricmc.api.EnvType;
 import team.creative.creativecore.common.level.IOrientatedLevel;
 import team.creative.creativecore.common.level.ISubLevel;
 import team.creative.creativecore.common.network.CreativePacket;
@@ -167,6 +169,7 @@ public abstract class LittleEntity<T extends LittleEntityPhysic> extends Entity 
     // ================Rendering================
     
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public abstract LittleEntityRenderManager getRenderManager();
     
     // ================Ticking================

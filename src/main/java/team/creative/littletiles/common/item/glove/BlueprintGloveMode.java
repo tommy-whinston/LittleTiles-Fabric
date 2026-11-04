@@ -89,7 +89,11 @@ public class BlueprintGloveMode extends GloveMode {
     }
     
     public LittleElement getPreviewElement(ItemStack stack) {
-        throw new UnsupportedOperationException();
+        LittleGroup group = getTiles(stack);
+        if (group != null && !group.isEmpty())
+            for (LittleTile tile : group)
+                return tile;
+        return null;
     }
     
     public void loadGui(GuiGlove gui) {}

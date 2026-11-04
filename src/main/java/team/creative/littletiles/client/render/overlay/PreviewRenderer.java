@@ -68,6 +68,8 @@ public class PreviewRenderer implements LevelAwareHandler {
     
     public static final ResourceLocation WHITE_TEXTURE = new ResourceLocation(LittleTiles.MODID, "textures/preview.png");
     public static Minecraft mc = Minecraft.getInstance();
+    public static boolean previewTickLogged = false;
+    public static boolean previewResultLogged = false;
     
     private boolean lastLowResolution;
     private CompoundTag lastCached;
@@ -183,6 +185,11 @@ public class PreviewRenderer implements LevelAwareHandler {
             ItemStack stack = mc.player.getMainHandItem();
             PoseStack pose = new PoseStack();
             
+            if (!previewTickLogged) {
+                previewTickLogged = true;
+                LittleTiles.LOGGER.info("LT preview tick stack={} hit={} isLittle={}", stack, mc.hitResult, PlacementHelper.isLittleBlock(stack));
+            }
+            
             if (!LittleAction.canPlace(player)) {
                 handleUndoAndRedo(false);
                 return;
@@ -233,6 +240,11 @@ public class PreviewRenderer implements LevelAwareHandler {
                         boolean allowLowResolution = marked != null ? marked.allowLowResolution() : true;
                         PlacementPreview result = getPreviews(player, level, stack, position, isCentered(stack, iTile), isFixed(stack, iTile), allowLowResolution);
                         
+                        if (!previewResultLogged) {
+                            previewResultLogged = true;
+                            LittleTiles.LOGGER.info("LT preview result={} mode={} pos={} stack={}", result, mode, position, stack);
+                        }
+                        
                         if (result != null) {
                             BlockPos pos = result.position.getPos();
                             
@@ -258,6 +270,14 @@ public class PreviewRenderer implements LevelAwareHandler {
                                 pose.popPose();
                             }
                             bufferSource.endBatch();
+                            
+                            BufferBuilder builder = Tesselator.getInstance().getBuilder();
+                            double alpha = (float) (Math.sin(System.nanoTime() / 200000000D) * 0.2 + 0.5);
+                            int colorAlpha = (int) (alpha * iTile.getPreviewAlphaFactor() * 255);
+                            for (RenderBox box : previewBoxes) {
+                                box.setColor(0x33CCFF);
+                                box.renderPreview(pose, builder, colorAlpha);
+                            }
                             
                             VertexConsumer lineConsumer = mc.renderBuffers().bufferSource().getBuffer(RenderType.lines());
                             for (RenderBox box : previewBoxes)

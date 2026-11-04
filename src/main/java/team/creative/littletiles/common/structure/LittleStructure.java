@@ -35,6 +35,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.Environment;
+import net.fabricmc.api.EnvType;
 import team.creative.creativecore.common.network.CreativePacket;
 import team.creative.creativecore.common.util.math.base.Axis;
 import team.creative.creativecore.common.util.math.base.Facing;
@@ -421,6 +423,7 @@ public abstract class LittleStructure implements ISignalSchedulable, ILevelPosit
     }
     
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void loadUpdatePacket(CompoundTag nbt) {
         load(nbt);
     }
@@ -1020,19 +1023,23 @@ public abstract class LittleStructure implements ISignalSchedulable, ILevelPosit
     }
     
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void renderTick(PoseStack pose, MultiBufferSource buffer, BlockPos pos, float partialTickTime) {}
     
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public double getMaxRenderDistance() {
         return 0;
     }
     
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public AABB getRenderBoundingBox() {
         return null;
     }
     
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void getRenderingBoxes(BlockPos pos, RenderType layer, IndexedCollector<LittleRenderBox> boxes) {}
     
     public void collectExtraBoxes(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context, List<ABB> boxes) {}

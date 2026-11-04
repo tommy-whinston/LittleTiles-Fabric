@@ -45,6 +45,8 @@ import net.minecraft.world.ticks.BlackholeTickAccess;
 import net.minecraft.world.ticks.LevelTickAccess;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.Environment;
+import net.fabricmc.api.EnvType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import team.creative.creativecore.common.level.IOrientatedLevel;
@@ -78,9 +80,11 @@ public class LittleAnimationLevel extends Level implements LittleSubLevel, Itera
     public LittleAnimationChunkCache chunks;
     private final List<LevelBlockChangeListener> blockChangeListeners = new ArrayList<>();
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public LittleEntityRenderManager renderManager;
     private HashSet<BlockPos> trackedChanges;
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     private BlockStatePredictionHandler blockStatePredictionHandler;
     
     public LittleAnimationLevel(Level level) {
@@ -103,6 +107,7 @@ public class LittleAnimationLevel extends Level implements LittleSubLevel, Itera
     }
     
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public LittleEntityRenderManager getRenderManager() {
         return renderManager;
     }
@@ -112,6 +117,7 @@ public class LittleAnimationLevel extends Level implements LittleSubLevel, Itera
     }
     
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void handleBlockChangedAckExtender(int sequence) {
         ((BlockStatePredictionHandlerExtender) this.blockStatePredictionHandler).setLevel(this);
         this.blockStatePredictionHandler.endPredictionsUpTo(sequence, null);
@@ -119,12 +125,14 @@ public class LittleAnimationLevel extends Level implements LittleSubLevel, Itera
     }
     
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void setServerVerifiedBlockStateExtender(BlockPos pos, BlockState state, int p_233656_) {
         if (!this.blockStatePredictionHandler.updateKnownServerState(pos, state))
             super.setBlock(pos, state, p_233656_, 512);
     }
     
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void syncBlockStateExtender(BlockPos pos, BlockState state, Vec3 vec) {
         BlockState blockstate = this.getBlockState(pos);
         if (blockstate != state) {
@@ -137,6 +145,7 @@ public class LittleAnimationLevel extends Level implements LittleSubLevel, Itera
     }
     
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public BlockStatePredictionHandler blockStatePredictionHandler() {
         return blockStatePredictionHandler;
     }
@@ -358,6 +367,7 @@ public class LittleAnimationLevel extends Level implements LittleSubLevel, Itera
     }
     
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void addParticle(ParticleOptions p_195590_1_, boolean p_195590_2_, double x, double y, double z, double p_195590_9_, double p_195590_11_, double p_195590_13_) {
         if (getOrigin() == null)
             return;

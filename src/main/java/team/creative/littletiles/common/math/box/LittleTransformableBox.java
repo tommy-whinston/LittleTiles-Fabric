@@ -18,6 +18,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.Environment;
+import net.fabricmc.api.EnvType;
 import team.creative.creativecore.common.util.math.base.Axis;
 import team.creative.creativecore.common.util.math.base.Facing;
 import team.creative.creativecore.common.util.math.box.ABB;
@@ -967,11 +969,13 @@ public class LittleTransformableBox extends LittleBox {
     }
     
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public LittleRenderBox getRenderingBox(LittleGrid grid) {
         return new LittleRenderBoxTransformable(grid, this);
     }
     
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public LittleRenderBox getRenderingBox(LittleGrid grid, LittleVec vec) {
         LittleTransformableBox box = copy();
         box.add(vec);
@@ -979,11 +983,13 @@ public class LittleTransformableBox extends LittleBox {
     }
     
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public LittleRenderBox getRenderingBox(LittleGrid grid, BlockState state) {
         return new LittleRenderBoxTransformable(grid, this, state);
     }
     
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public LittleRenderBox getRenderingBox(LittleGrid grid, LittleElement element) {
         return new LittleRenderBoxTransformable(grid, this, element);
     }

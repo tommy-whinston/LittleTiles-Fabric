@@ -77,6 +77,8 @@ public interface ILittlePlacer extends ILittleTool {
     
     @OnlyIn(Dist.CLIENT)
     public default PlacementMode getPlacementMode(ItemStack stack) {
+        if (LittleTilesClient.ACTION_HANDLER == null || LittleTilesClient.ACTION_HANDLER.setting == null)
+            return PlacementMode.getDefault();
         return LittleTilesClient.ACTION_HANDLER.setting.placementMode();
     }
     

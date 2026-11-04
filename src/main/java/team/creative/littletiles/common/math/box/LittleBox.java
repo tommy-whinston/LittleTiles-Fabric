@@ -20,6 +20,8 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.fabricmc.api.Environment;
+import net.fabricmc.api.EnvType;
 import team.creative.creativecore.common.util.math.base.Axis;
 import team.creative.creativecore.common.util.math.base.Facing;
 import team.creative.creativecore.common.util.math.box.ABB;
@@ -1168,11 +1170,13 @@ public class LittleBox {
     // ================Rendering================
     
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public LittleRenderBox getRenderingBox(LittleGrid grid) {
         return new LittleRenderBox(grid, this);
     }
     
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public LittleRenderBox getRenderingBox(LittleGrid grid, LittleVec vec) {
         LittleBox box = copy();
         box.add(vec);
@@ -1180,11 +1184,13 @@ public class LittleBox {
     }
     
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public LittleRenderBox getRenderingBox(LittleGrid grid, BlockState state) {
         return new LittleRenderBox(grid, this, state);
     }
     
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public LittleRenderBox getRenderingBox(LittleGrid grid, BlockState state, LittleVec vec) {
         LittleBox box = copy();
         box.add(vec);
@@ -1192,6 +1198,7 @@ public class LittleBox {
     }
     
     @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public LittleRenderBox getRenderingBox(LittleGrid grid, LittleElement element) {
         return new LittleRenderBox(grid, this, element);
     }

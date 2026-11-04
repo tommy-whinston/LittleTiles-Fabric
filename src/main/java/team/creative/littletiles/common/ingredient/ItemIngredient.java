@@ -116,7 +116,16 @@ public class ItemIngredient extends LittleIngredient<ItemIngredient> implements 
     }
     
     public int getMinimumCount(ItemIngredient other, int availableCount) {
-        throw new UnsupportedOperationException();
+        int count = -1;
+        for (ItemIngredientEntry entry : content) {
+            for (ItemIngredientEntry otherEntry : other.content) {
+                if (entry.is(otherEntry)) {
+                    int required = (int) Math.ceil((double) entry.count / otherEntry.count);
+                    count = Math.max(count, required);
+                }
+            }
+        }
+        return Math.min(count, availableCount);
     }
     
     public List<ItemIngredientEntry> getContent() {

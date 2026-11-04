@@ -107,9 +107,9 @@ public class LittleTilesClient implements ClientModInitializer {
     public void onInitializeClient() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         load(bus);
+        registerKeys(new RegisterKeyMappingsEvent());
         ClientLifecycleEvents.CLIENT_STARTED.register(client -> {
             bus.post(new FMLClientSetupEvent());
-            bus.post(new RegisterKeyMappingsEvent());
             bus.post(new RegisterColorHandlersEvent.Item());
             bus.post(new RegisterColorHandlersEvent.Block());
             bus.post(new RegisterAdditional());
@@ -140,6 +140,10 @@ public class LittleTilesClient implements ClientModInitializer {
                 bus.post(new RenderLevelStageEvent(stage, context.matrixStack(), context.tickDelta(), context.camera(), context.frustum(), context.projectionMatrix()));
         });
         WorldRenderEvents.END.register(context -> {
+            if (!previewEventLogged) {
+                previewEventLogged = true;
+                LittleTiles.LOGGER.info("LT preview event fired");
+            }
             bus.post(new TickEvent.RenderTickEvent(TickEvent.Phase.END));
             bus.post(new RenderLevelStageEvent(RenderLevelStageEvent.Stage.AFTER_WEATHER, context.matrixStack(), context.tickDelta(), context.camera(), context.frustum(), context
                     .projectionMatrix()));
@@ -149,6 +153,9 @@ public class LittleTilesClient implements ClientModInitializer {
     }
     
     public static final Minecraft mc = Minecraft.getInstance();
+    public static boolean previewEventLogged = false;
+    public static boolean previewTickLogged = false;
+    public static boolean previewResultLogged = false;
     
     public static final IKeyConflictContext LITTLE_KEY_CONTEXT = new IKeyConflictContext() {
         
