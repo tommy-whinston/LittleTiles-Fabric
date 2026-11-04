@@ -18,7 +18,21 @@ public class BufferBuilderMixin implements ChunkBufferUploader {
     }
     
     public void upload(ByteBuffer buffer) {
-        // TODO: port Forge BufferBuilder#putBulkData(ByteBuffer)
+        if (buffer == null || !buffer.hasRemaining())
+            return;
+        
+        BufferBuilderAccessorExt accessor = (BufferBuilderAccessorExt) this;
+        int required = accessor.littletilesGetNextElementByte() + buffer.remaining();
+        accessor.littletilesEnsureCapacity(required);
+        
+        ByteBuffer destination = accessor.littletilesGetBuffer();
+        destination.position(accessor.littletilesGetNextElementByte());
+        destination.put(buffer.duplicate());
+        
+        accessor.littletilesSetNextElementByte(required);
+        int vertexSize = accessor.littletilesGetFormat().getVertexSize();
+        if (vertexSize > 0)
+            accessor.littletilesSetVertices(required / vertexSize);
     }
     
     public boolean hasFacingSupport() {

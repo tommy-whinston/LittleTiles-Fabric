@@ -43,6 +43,7 @@
                    "client.network.ClientPacketListenerAccessor",
                    "client.network.ClientPacketListenerMixin",
                    "client.render.BufferBuilderMixin",
+                   "client.render.BufferBuilderAccessorExt",
                    "client.render.RebuildTaskMixin",
                    "client.render.RenderChunkMixin",
                    "client.render.VertexBufferMixin",
