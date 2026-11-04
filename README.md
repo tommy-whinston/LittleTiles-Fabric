@@ -24,6 +24,12 @@ Probe, Chisel/ChiselsAndBits and Oculus are disabled for this pass.
 
 See [PORTING.md](PORTING.md) and the staged [PLAN.md](PLAN.md).
 
+### Download
+
+The latest pre-release jar is available on the
+[GitHub Releases page](https://github.com/tommy-whinston/LittleTiles-Fabric/releases/tag/v0.1.0-alpha.1).
+It is an alpha build: keep backups and expect unfinished gameplay.
+
 ### Requirements
 
 | | |
@@ -104,6 +110,12 @@ CreativeCore, загрузка буферов, capabilities и некоторы�
 отключены для этого прохода.
 
 Подробнее — в [PORTING.md](PORTING.md) и поэтапном [PLAN.md](PLAN.md).
+
+### Скачать
+
+Последний pre-release jar лежит на
+[странице GitHub Releases](https://github.com/tommy-whinston/LittleTiles-Fabric/releases/tag/v0.1.0-alpha.1).
+Это alpha-сборка: делайте бэкапы и учитывайте, что геймплей ещё не доделан.
 
 > Это ранний **каркас**, а не играбельный порт.
 
