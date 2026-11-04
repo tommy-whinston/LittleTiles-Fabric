@@ -2,7 +2,7 @@
 
 ## English
 
-This is the **work-in-progress port branch**. The default `1.20.1` branch contains the working
+This is the **work-in-progress port branch**. A pre-release is available at [v0.1.0-alpha.1](https://github.com/tommy-whinston/LittleTiles-Fabric/releases/tag/v0.1.0-alpha.1). The default `1.20.1` branch contains the working
 base; this branch contains the imported upstream source and the Fabric port.
 
 - Upstream source: LittleTiles `1.20`, commit `c5694e16070fd10460a093df817149128936ba86`.
@@ -37,7 +37,7 @@ remaining rendering and structure work.
 
 ## Русский
 
-Это **рабочая ветка порта**. Базовая ветка `1.20.1` содержит рабочую основу; здесь лежат
+Это **рабочая ветка порта**. Pre-release доступен: [v0.1.0-alpha.1](https://github.com/tommy-whinston/LittleTiles-Fabric/releases/tag/v0.1.0-alpha.1). Базовая ветка `1.20.1` содержит рабочую основу; здесь лежат
 импортированные исходники upstream и Fabric-порт.
 
 - Исходники: LittleTiles `1.20`, коммит `c5694e16070fd10460a093df817149128936ba86`.

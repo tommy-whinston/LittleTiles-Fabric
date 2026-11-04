@@ -105,7 +105,7 @@ initialize on both sides.
 
 **Done when:** no missing model/texture warnings, and optional mods do not crash.
 
-### Stage 11 - Release - `[ ]` planned
+### Stage 11 - Release - `[~]` in progress
 
 - Bilingual docs and status.
 - CI green, reproducible build, release jar.
@@ -246,7 +246,7 @@ initialize on both sides.
 **Готово, когда:** нет предупреждений о missing model/texture, а опциональные моды
 не вызывают крашей.
 
-### Этап 11 - Релиз - `[ ]` запланировано
+### Этап 11 - Релиз - `[~]` в работе
 
 - Двуязычная документация и статус.
 - Зелёный CI, воспроизводимая сборка, релизный jar.
