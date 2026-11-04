@@ -134,7 +134,9 @@ public class LittleToolHandler {
                 PlacementPreview preview = placer.getPlacement(player, level, stack, position, false);
                 if (preview == null)
                     return true;
-                LittleTilesClient.ACTION_HANDLER.execute(new LittleActionPlace(PlaceAction.CURRENT_ITEM, preview));
+                Boolean placed = LittleTilesClient.ACTION_HANDLER.execute(new LittleActionPlace(PlaceAction.CURRENT_ITEM, preview));
+                if (!placed)
+                    player.displayClientMessage(net.minecraft.network.chat.Component.translatable("littletiles.message.place_failed"), true);
                 LittleTilesClient.PREVIEW_RENDERER.removeMarked();
             }
             iTile.onDeselect(level, stack, player);

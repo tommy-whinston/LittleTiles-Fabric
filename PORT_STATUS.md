@@ -3,58 +3,70 @@
 ## English
 
 This is the **work-in-progress port branch**. The default `1.20.1` branch contains the working
-base; this branch contains the imported upstream source.
+base; this branch contains the imported upstream source and the Fabric port.
 
-- Upstream source: LittleTiles `1.20`, commit `c5694e16070fd10460a093df817149128936ba86`
+- Upstream source: LittleTiles `1.20`, commit `c5694e16070fd10460a093df817149128936ba86`.
 - Imported: 618 main Java files, 158 data files, assets and the upstream mixin configuration.
-- **Compile status: `compileJava` and `build` succeed with 0 errors.**
-- **Dedicated server: starts successfully and reaches `Done (17.274s)!`**
-- **Client: launches, initializes LWJGL/OpenAL, reloads resources and builds the texture
-  atlases.** It also **connects to a dedicated server and enters the world**; no crash was
-  observed during the first 20 seconds in the world.
+- **Build:** `compileJava` and `build` succeed with 0 errors.
+- **Dedicated server:** starts and reaches `Done`.
+- **Client:** launches, connects to the dedicated server and enters the world.
+- **Structures:** the structure registry, premade registry and example structures load on the
+  client (21 premades); the server loads 20 premades.
+- **Recipes:** the custom `crafting_shaped_premade` serializer is registered and the shipped
+  recipes load.
+- **Tiles:** tile blocks can be placed on the client and server; they render through
+  `BETilesRenderer` with cropped UVs and correct full-block lighting.
+- **Preview:** the placement preview is visible and renders the real structure blocks.
+- **Items:** `multi_tiles` and `premade` use a 3D item renderer for inventory icons.
 
 Known runtime issues and temporary shortcuts:
 
-- Structure registration currently throws while loading client-only classes; it is wrapped in a
-  try/catch, so the game starts but structures are not initialized.
-- Example structures fail to load; custom `crafting_shaped_premade` recipes are not registered.
-- The `littletiles:missing` model is missing its inventory/block model.
-- CreativeCore config loading prints stack traces during client startup.
-- Several client/render pieces are temporary stubs or no-ops (`ModelData`, `QuadLighter`,
-  CreativeCore model classes, buffer uploads, capabilities and some interaction paths).
+- Some common classes still reference client-only classes, so the server logs `Cannot load class`
+  for `RenderBox`/`SoundInstance` in a few paths and skips those example/premade paths.
+- Animated structures (`doors`, moving structures) are not fully rendered yet; the chunk
+  pipeline is currently disabled for tile blocks in favour of `BETilesRenderer`.
+- CreativeCore client model helpers (`CreativeBakedBoxModel`, `CreativeItemModel`,
+  `QuadLighter`) are still simplified; the full chunk/model pipeline is not parity yet.
+- Tile face culling, translucent tiles, ambient occlusion and break particles are incomplete.
+- Invalid placement can fail silently; a user-facing message is not implemented yet.
 - Sodium, The One Probe, Chisel/ChiselsAndBits and Oculus are disabled for this pass.
-- Some client-only behavior was removed from common classes so the dedicated server can load
-  them (tool handler, client interaction paths, client-only particles).
+- The `littletiles:missing` block/item model has a temporary fallback texture.
 
-The next stage is placing a tile block in the world and checking its rendering.
+The next stage is Stage 6 in `PLAN.md`: server/client separation and stability, followed by the
+remaining rendering and structure work.
 
 ## Русский
 
-Это **рабочая ветка порта**. В основной ветке `1.20.1` лежит рабочая база; здесь находятся
-импортированные исходники оригинала.
+Это **рабочая ветка порта**. Базовая ветка `1.20.1` содержит рабочую основу; здесь лежат
+импортированные исходники upstream и Fabric-порт.
 
-- Исходники: LittleTiles `1.20`, коммит `c5694e16070fd10460a093df817149128936ba86`
-- Импортировано: 618 основных Java-файлов, 158 файлов данных, ресурсы и оригинальный конфиг
-  миксинов.
-- **Статус компиляции: `compileJava` и `build` проходят без ошибок.**
-- **Выделенный сервер: успешно запускается и доходит до `Done (17.274s)!`**
-- **Клиент: запускается, инициализирует LWJGL/OpenAL, перезагружает ресурсы и собирает
-  текстурные атласы.** Он также **подключается к выделенному серверу и входит в мир**; краша
-  за первые 20 секунд в мире не было.
+- Исходники: LittleTiles `1.20`, коммит `c5694e16070fd10460a093df817149128936ba86`.
+- Импортировано: 618 основных Java-файлов, 158 файлов данных, ресурсы и конфигурация миксинов.
+- **Сборка:** `compileJava` и `build` проходят с 0 ошибок.
+- **Выделенный сервер:** запускается и доходит до `Done`.
+- **Клиент:** запускается, подключается к серверу и входит в мир.
+- **Структуры:** реестр структур, реестр премейдов и примеры структур загружаются на клиенте
+  (21 премейд); сервер загружает 20 премейдов.
+- **Рецепты:** сериализатор `crafting_shaped_premade` зарегистрирован, штатные рецепты
+  загружаются.
+- **Тайлы:** блоки тайлов ставятся на клиенте и сервере и рендерятся через `BETilesRenderer`
+  с обрезанными UV и корректным освещением полных блоков.
+- **Превью:** превью установки видно, оно показывает реальные блоки структуры.
+- **Предметы:** у `multi_tiles` и `premade` есть 3D-иконки структур в инвентаре.
 
 Известные проблемы и временные упрощения:
 
-- Регистрация структур пока падает при загрузке клиентских классов; она обёрнута в try/catch,
-  поэтому игра стартует, но структуры не инициализируются.
-- Примеры структур не загружаются; кастомные рецепты `crafting_shaped_premade` не
-  зарегистрированы.
-- У модели `littletiles:missing` отсутствует inventory/block-модель.
-- Загрузка конфига CreativeCore печатает stack trace при старте клиента.
-- Часть клиента и рендера — временные заглушки или no-op (`ModelData`, `QuadLighter`,
-  модельные классы CreativeCore, загрузка буферов, capabilities и некоторые пути
-  взаимодействия).
+- Часть общих классов всё ещё ссылается на клиентские классы, поэтому сервер пишет
+  `Cannot load class` для `RenderBox`/`SoundInstance` и пропускает некоторые пути примеров
+  и премейдов.
+- Анимированные структуры (двери, движущиеся структуры) пока не рендерятся полностью;
+  chunk pipeline для блоков тайлов отключён в пользу `BETilesRenderer`.
+- Клиентские модельные классы CreativeCore (`CreativeBakedBoxModel`, `CreativeItemModel`,
+  `QuadLighter`) всё ещё упрощены; полного паритета с upstream нет.
+- Отсечение граней, прозрачные тайлы, ambient occlusion и частицы ломания не доделаны.
+- При неудачной установке нет понятного сообщения — она может молча не срабатывать.
 - Sodium, The One Probe, Chisel/ChiselsAndBits и Oculus отключены для этого прохода.
-- Из общих классов убрано часть клиентского поведения, чтобы выделенный сервер мог их
-  загрузить (tool handler, клиентские пути взаимодействия, клиентские частицы).
+- У блока/предмета `littletiles:missing` временная запасная текстура.
 
-Следующий этап — поставить блок тайлов в мире и проверить его рендер.
+Следующий этап — этап 6 в `PLAN.md`: разделение клиента и сервера, стабильность, затем
+оставшийся рендер и структуры.

@@ -1,4 +1,6 @@
 {
-    "loader": "creativecore:rendered",
-    "item": "littletiles:blockingredient"
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "littletiles:block/colored_clean"
+    }
 }

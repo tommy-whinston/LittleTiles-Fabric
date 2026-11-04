@@ -282,10 +282,12 @@ public class LittleTilesConfig {
         public void configured(Side side) {
             LittleGrid.configure(highest);
             LittlePremadeRegistry.reload();
-            try {
-                ItemMultiTiles.reloadExampleStructures();
-            } catch (Throwable t) {
-                LittleTiles.LOGGER.error("Could not reload example structures", t);
+            if (net.fabricmc.loader.api.FabricLoader.getInstance().getEnvironmentType() == net.fabricmc.api.EnvType.CLIENT) {
+                try {
+                    ItemMultiTiles.reloadExampleStructures();
+                } catch (Throwable t) {
+                    LittleTiles.LOGGER.error("Could not reload example structures", t);
+                }
             }
         }
     }

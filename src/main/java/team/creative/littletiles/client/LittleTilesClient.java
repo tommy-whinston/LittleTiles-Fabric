@@ -46,6 +46,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.event.TickEvent;
@@ -75,6 +76,7 @@ import team.creative.littletiles.client.render.entity.LittleEntityRenderer;
 import team.creative.littletiles.client.render.entity.LittleSitRenderer;
 import team.creative.littletiles.client.render.entity.RenderSizedTNTPrimed;
 import team.creative.littletiles.client.render.item.ItemRenderCache;
+import team.creative.littletiles.client.render.item.LittleItemRenderer;
 import team.creative.littletiles.client.render.item.LittleModelItemBackground;
 import team.creative.littletiles.client.render.item.LittleModelItemPreview;
 import team.creative.littletiles.client.render.item.LittleModelItemTilesBig;
@@ -120,18 +122,23 @@ public class LittleTilesClient implements ClientModInitializer {
                 ACTION_HANDLER.setting.refreshGrid(client.player);
         });
         ClientTickEvents.END_CLIENT_TICK.register(client -> bus.post(new TickEvent.ClientTickEvent(TickEvent.Phase.END)));
+        WorldRenderEvents.AFTER_SETUP.register(context -> bus.post(new RenderLevelStageEvent(RenderLevelStageEvent.Stage.AFTER_SKY, context.matrixStack(), context.tickDelta(), context
+                .camera(), context.frustum(), context.projectionMatrix())));
+        WorldRenderEvents.AFTER_TRANSLUCENT.register(context -> {
+            for (RenderLevelStageEvent.Stage stage : new RenderLevelStageEvent.Stage[] { RenderLevelStageEvent.Stage.AFTER_SOLID_BLOCKS,
+                    RenderLevelStageEvent.Stage.AFTER_CUTOUT_MIPPED_BLOCKS_BLOCKS, RenderLevelStageEvent.Stage.AFTER_CUTOUT_BLOCKS, RenderLevelStageEvent.Stage.AFTER_ENTITIES,
+                    RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS, RenderLevelStageEvent.Stage.AFTER_TRIPWIRE_BLOCKS })
+                bus.post(new RenderLevelStageEvent(stage, context.matrixStack(), context.tickDelta(), context.camera(), context.frustum(), context.projectionMatrix()));
+        });
         WorldRenderEvents.END.register(context -> {
-            if (!renderEventLogged) {
-                renderEventLogged = true;
-                LittleTiles.LOGGER.info("WorldRenderEvents.END fired");
-            }
             bus.post(new TickEvent.RenderTickEvent(TickEvent.Phase.END));
             bus.post(new RenderLevelStageEvent(RenderLevelStageEvent.Stage.AFTER_WEATHER, context.matrixStack(), context.tickDelta(), context.camera(), context.frustum(), context
+                    .projectionMatrix()));
+            bus.post(new RenderLevelStageEvent(RenderLevelStageEvent.Stage.AFTER_LEVEL, context.matrixStack(), context.tickDelta(), context.camera(), context.frustum(), context
                     .projectionMatrix()));
         });
     }
     
-    public static boolean renderEventLogged = false;
     public static final Minecraft mc = Minecraft.getInstance();
     
     public static final IKeyConflictContext LITTLE_KEY_CONTEXT = new IKeyConflictContext() {
@@ -270,6 +277,8 @@ public class LittleTilesClient implements ClientModInitializer {
         blockEntityRenderer = new BETilesRenderer();
         BlockEntityRenderers.register(LittleTilesRegistry.BE_TILES_TYPE.get(), x -> blockEntityRenderer);
         BlockEntityRenderers.register(LittleTilesRegistry.BE_TILES_TYPE_RENDERED.get(), x -> blockEntityRenderer);
+        BuiltinItemRendererRegistry.INSTANCE.register(LittleTilesRegistry.ITEM_TILES.get(), new LittleItemRenderer());
+        BuiltinItemRendererRegistry.INSTANCE.register(LittleTilesRegistry.PREMADE.get(), new LittleItemRenderer());
         
         ResourceLocation filled = new ResourceLocation(LittleTiles.MODID, "filled");
         ClampedItemPropertyFunction function = (stack, level, entity, x) -> ((ItemColorIngredient) stack.getItem()).getColor(stack) / (float) ColorIngredient.BOTTLE_SIZE;

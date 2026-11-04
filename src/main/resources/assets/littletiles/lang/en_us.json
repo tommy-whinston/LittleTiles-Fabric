@@ -406,5 +406,6 @@
     "gui.filter.and": "All",
     "gui.filter.not_or": "None",
     "gui.filter.not_and": "Not all",
-    "gui.signal.length": "Length"
+    "gui.signal.length": "Length",
+    "littletiles.message.place_failed": "Could not place tiles here"
 }

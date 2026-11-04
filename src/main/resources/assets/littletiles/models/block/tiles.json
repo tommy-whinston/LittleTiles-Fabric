@@ -1,4 +1,6 @@
 {
-    "loader": "creativecore:rendered",
-    "block": "littletiles:empty"
+    "parent": "minecraft:block/cube_all",
+    "textures": {
+        "all": "littletiles:block/colored_stone"
+    }
 }

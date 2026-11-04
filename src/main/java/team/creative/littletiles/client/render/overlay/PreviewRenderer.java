@@ -68,8 +68,6 @@ public class PreviewRenderer implements LevelAwareHandler {
     
     public static final ResourceLocation WHITE_TEXTURE = new ResourceLocation(LittleTiles.MODID, "textures/preview.png");
     public static Minecraft mc = Minecraft.getInstance();
-    public static boolean previewTickLogged = false;
-    public static boolean previewResultLogged = false;
     
     private boolean lastLowResolution;
     private CompoundTag lastCached;
@@ -185,11 +183,6 @@ public class PreviewRenderer implements LevelAwareHandler {
             ItemStack stack = mc.player.getMainHandItem();
             PoseStack pose = new PoseStack();
             
-            if (!previewTickLogged) {
-                previewTickLogged = true;
-                LittleTiles.LOGGER.info("PreviewRenderer.tick stack={} hit={} isLittle={}", stack, mc.hitResult, PlacementHelper.isLittleBlock(stack));
-            }
-            
             if (!LittleAction.canPlace(player)) {
                 handleUndoAndRedo(false);
                 return;
@@ -240,11 +233,6 @@ public class PreviewRenderer implements LevelAwareHandler {
                         boolean allowLowResolution = marked != null ? marked.allowLowResolution() : true;
                         PlacementPreview result = getPreviews(player, level, stack, position, isCentered(stack, iTile), isFixed(stack, iTile), allowLowResolution);
                         
-                        if (!previewResultLogged) {
-                            previewResultLogged = true;
-                            LittleTiles.LOGGER.info("Preview result={} mode={} position={} stack={}", result, mode, position, stack);
-                        }
-                        
                         if (result != null) {
                             BlockPos pos = result.position.getPos();
                             
@@ -252,16 +240,24 @@ public class PreviewRenderer implements LevelAwareHandler {
                             pose.translate(pos.getX() - cam.x, pos.getY() - cam.y, pos.getZ() - cam.z);
                             processMarkKey(player, iTile, stack, result);
                             
-                            BufferBuilder builder = Tesselator.getInstance().getBuilder();
-                            
-                            double alpha = (float) (Math.sin(System.nanoTime() / 200000000D) * 0.2 + 0.5);
-                            int colorAlpha = (int) (alpha * iTile.getPreviewAlphaFactor() * 255);
-                            
                             List<RenderBox> previewBoxes = result.previews.getPlaceBoxes(result.position.getVec());
+                            var blockRenderer = mc.getBlockRenderer();
+                            var bufferSource = mc.renderBuffers().bufferSource();
                             for (RenderBox box : previewBoxes) {
-                                box.setColor(0x33CCFF);
-                                box.renderPreview(pose, builder, colorAlpha);
+                                if (box.state == null || box.state.isAir())
+                                    continue;
+                                float sizeX = box.maxX - box.minX;
+                                float sizeY = box.maxY - box.minY;
+                                float sizeZ = box.maxZ - box.minZ;
+                                if (sizeX <= 0 || sizeY <= 0 || sizeZ <= 0)
+                                    continue;
+                                pose.pushPose();
+                                pose.translate(box.minX, box.minY, box.minZ);
+                                pose.scale(sizeX, sizeY, sizeZ);
+                                blockRenderer.renderSingleBlock(box.state, pose, bufferSource, net.minecraft.client.renderer.LightTexture.FULL_BRIGHT, net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY);
+                                pose.popPose();
                             }
+                            bufferSource.endBatch();
                             
                             VertexConsumer lineConsumer = mc.renderBuffers().bufferSource().getBuffer(RenderType.lines());
                             for (RenderBox box : previewBoxes)
@@ -271,8 +267,21 @@ public class PreviewRenderer implements LevelAwareHandler {
                             if (LittleActionHandlerClient.isUsingSecondMode() != iTile.snapToGridByDefault(stack)) {
                                 List<RenderBox> cubes = iTile.getPositingCubes(level, pos, stack);
                                 if (cubes != null)
-                                    for (RenderBox cube : cubes)
-                                        cube.renderPreview(pose, builder, colorAlpha);
+                                    for (RenderBox cube : cubes) {
+                                        if (cube.state == null || cube.state.isAir())
+                                            continue;
+                                        float sizeX = cube.maxX - cube.minX;
+                                        float sizeY = cube.maxY - cube.minY;
+                                        float sizeZ = cube.maxZ - cube.minZ;
+                                        if (sizeX <= 0 || sizeY <= 0 || sizeZ <= 0)
+                                            continue;
+                                        pose.pushPose();
+                                        pose.translate(cube.minX, cube.minY, cube.minZ);
+                                        pose.scale(sizeX, sizeY, sizeZ);
+                                        blockRenderer.renderSingleBlock(cube.state, pose, bufferSource, net.minecraft.client.renderer.LightTexture.FULL_BRIGHT, net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY);
+                                        pose.popPose();
+                                    }
+                                bufferSource.endBatch();
                             }
                             
                             pose.popPose();
